@@ -513,6 +513,13 @@
        (funcall-stm-handler j-read-char (sm melded-stream stream)
 			    eof-error-p eof-value blocking-p)))))
 
+(defun %read-key (stream eof-error-p eof-value recursive-p blocking-p)
+  (etypecase stream
+    (function
+     (funcall stream 'stream-read-key))
+    (simple-stream			; XXX
+     (%read-char stream eof-error-p eof-value recursive-p blocking-p))))
+
 (defun %unread-char (stream character)
   (declare (type simple-stream stream) (ignore character))
   (with-stream-class (simple-stream stream)
