@@ -111,8 +111,6 @@ compile, using the host compiler, the code rather than just using eval.")
     (setf (gethash hash-name (function-code-sizes *image*)) new-size))
   funobj)
 
-(defconstant +code-vector-entry-factor+ 1)
-
 (defclass movitz-funobj-pass1 ()
   ((name
     :initarg :name
