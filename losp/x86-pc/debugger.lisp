@@ -455,7 +455,7 @@ be provided for those cases."
 		       ((:fresh-lines *backtrace-do-fresh-lines*) *backtrace-do-fresh-lines*)
 		       (conflate *backtrace-do-conflate*)
 		       (length *backtrace-length*)
-		       print-returns
+		       print-returns conflate-interrupts
 		       ((:print-frames *backtrace-print-frames*) *backtrace-print-frames*))
   (let ((*print-safely* t)
 	(*standard-output* *debug-io*)
@@ -483,7 +483,7 @@ be provided for those cases."
 	       (integer
 		(let* ((interrupt-frame stack-frame)
 		       (funobj (interrupt-frame-ref interrupt-frame :esi :lisp)))
-		  (if (and conflate
+		  (if (and conflate-interrupts conflate
 			   ;; When the interrupted function has a stack-frame, conflate it.
 			   (typep funobj 'function)
 			   (= 1 (ldb (byte 1 5) (funobj-debug-info funobj))))
