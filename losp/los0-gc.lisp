@@ -247,7 +247,7 @@ Preserve EAX and EBX."
 	    (:leal (:edx :ecx 8) :eax))))
     (do-it)))
 
-(defun install-los0-consing (&optional (space-kilobytes 2048))
+(defun install-los0-consing (&optional (space-kilobytes 1024))
   (let ((size (* space-kilobytes #x100)))
     (setf (%run-time-context-slot 'nursery-space)
       (allocate-duo-space size))
