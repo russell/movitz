@@ -102,6 +102,9 @@
     ((throw)
      (throw (eval-form (second form) env)
        (eval-form (third form) env)))
+    ((unwind-protect)
+     (unwind-protect (eval-form (second form) env)
+       (eval-progn (cddr form) env)))
     (t (eval-funcall form env))))
 
 (defun eval-progn (forms env)
