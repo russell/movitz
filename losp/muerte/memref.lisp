@@ -96,8 +96,7 @@
 			 (index-var (gensym "memref-index-")))
 		     `(let ((,object-var ,object)
 			    (,index-var ,index))
-			(with-inline-assembly (:returns :untagged-fixnum-ecx
-							:type (unsiged-byte 16))
+			(with-inline-assembly (:returns :untagged-fixnum-ecx)
 			  (:compile-two-forms (:eax :ecx) ,object-var ,index-var)
 			  (:sarl ,(1- movitz:+movitz-fixnum-shift+) :ecx)
 			  (:movzxw (:eax :ecx ,(offset-by 2)) :ecx)))))
