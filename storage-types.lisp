@@ -73,6 +73,7 @@
   :std-instance #x40
   :run-time-context #x50
   :infant-object #x65
+  :illegal #x13
 
   ;; :simple-vector #x20
   ;; :character-vector 
@@ -397,7 +398,8 @@ integer (native lisp) value."
     :accessor movitz-vector-symbolic-data))
   (:slot-align type -2))
 
-
+(defun movitz-type-word-size (type)
+  (truncate (sizeof (intern (symbol-name type) :movitz)) 4))
 
 (defun movitz-svref (vector index)
   (elt (movitz-vector-symbolic-data vector) index))
