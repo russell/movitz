@@ -75,14 +75,17 @@
     (not (apply function args))))
 
 (defun unbound-function (&edx edx &rest args)
-  (declare (ignore args))
+  "This is the function that is the unbound value for function cells."
+  (declare (dynamic-extent args))
   (let ((function-name (typecase edx
 			 (symbol
 			  edx)
 			 (compiled-function
 			  (funobj-name edx))
 			 (t '(unknown)))))
-    (error 'undefined-function :name function-name)))
+    (error 'undefined-function-call
+	   :name function-name
+	   :arguments (copy-list args))))
 
 ;;; funobj object
 
