@@ -135,6 +135,32 @@
        (let ((,var (pop ,cons-var)))
 	 ,@declarations-and-body))))
 
+(define-compiler-macro member (&whole form item list &key (key ''identity) (test ''eql)
+			       &environment env)
+  (let* ((test (or (and (movitz:movitz-constantp test env)
+			(translate-program (movitz:movitz-eval test env) :muerte.cl :cl))
+		   (and (consp test) (eq 'function (car test))
+			(cadr test))))
+	 (key (or (and (movitz:movitz-constantp key env)
+		       (translate-program (movitz:movitz-eval key env) :muerte.cl :cl))
+		  (and (consp key) (eq 'function (car key))
+		       (cadr key)))))
+    (cond
+     ((and test (symbolp test) (eq key 'identity))
+      `(do ((item ,item)
+	    (p ,list (cdr p)))
+	   ((endp p) nil)
+	 (when (,test (car p) item)
+	   (return p))))
+     ((and test (symbolp test)
+	   key (symbolp key))
+      `(do ((item ,item)
+	    (p ,list (cdr p)))
+	   ((endp p) nil)
+	 (when (,test (car p) (,key item))
+	   (return p))))
+     (t form))))
+
 (defmacro letf* (bindings &body body &environment env)
   "Does what one might expect, saving the old values and setting the generalized
   variables to the new values in sequence.  Unwind-protects and get-setf-method
