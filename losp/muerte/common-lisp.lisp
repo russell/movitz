@@ -43,6 +43,7 @@
 (require :muerte/eval)
 (require :muerte/los-closette)
 (require :muerte/environment)
+(require :muerte/interrupt)
 (require :muerte/streams)
 (require :muerte/restarts)
 (require :muerte/conditions)
