@@ -290,7 +290,7 @@
     :initform 0)
    (values
     :binary-type #.(* 4 +movitz-multiple-values-limit+))
-   (get-cons-pointer
+   (cons-pointer
     :binary-type code-vector-word
     :initform nil
     :map-binary-write 'movitz-intern-code-vector
@@ -302,7 +302,7 @@
     :map-binary-write 'movitz-intern-code-vector
     :map-binary-read-delayed 'movitz-word-code-vector
     :binary-tag :primitive-function)
-   (get-cons-pointer-non-pointer
+   (cons-non-pointer
     :binary-type code-vector-word
     :map-binary-write 'movitz-intern-code-vector
     :map-binary-read-delayed 'movitz-word-code-vector
@@ -312,7 +312,7 @@
     :map-binary-write 'movitz-intern-code-vector
     :map-binary-read-delayed 'movitz-word-code-vector
     :binary-tag :primitive-function)
-   (get-cons-pointer-non-header
+   (cons-non-header
     :binary-type code-vector-word
     :map-binary-write 'movitz-intern-code-vector
     :map-binary-read-delayed 'movitz-word-code-vector

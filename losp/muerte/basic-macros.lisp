@@ -1078,7 +1078,7 @@ busy-waiting loop on P4."
 	 (:load-lexical (:lexical-binding ,size-var) :eax)
 	 (:locally (:movl :esp (:edi (:edi-offset :atomically-continuation))))
 	 ;; Now inside atomically section.
-	 (:call-local-pf get-cons-pointer)
+	 (:call-local-pf cons-pointer)
 	 ,@code
 	 ,@(when fixed-size-p
 	     `((:load-lexical (:lexical-binding ,size-var) :ecx)))
@@ -1105,7 +1105,7 @@ busy-waiting loop on P4."
 	 (:load-lexical (:lexical-binding ,size-var) :eax)
 	 (:locally (:movl :esp (:edi (:edi-offset :atomically-continuation))))
 	 ;; Now inside atomically section.
-	 (:call-local-pf get-cons-pointer-non-pointer)
+	 (:call-local-pf cons-non-pointer)
 	 ,@code
 	 ,@(when fixed-size-p
 	     `((:load-lexical (:lexical-binding ,size-var) :ecx)))
@@ -1132,7 +1132,7 @@ busy-waiting loop on P4."
 	 (:load-lexical (:lexical-binding ,size-var) :eax)
 	 (:locally (:movl :esp (:edi (:edi-offset :atomically-continuation))))
 	 ;; Now inside atomically section.
-	 (:call-local-pf get-cons-pointer-non-header)
+	 (:call-local-pf cons-non-header)
 	 ,@code
 	 ,@(when fixed-size-p
 	     `((:load-lexical (:lexical-binding ,size-var) :ecx)))

@@ -132,7 +132,7 @@
 	(do-it)))))
   
 
-(define-primitive-function los0-get-cons-pointer ()
+(define-primitive-function los0-cons-pointer ()
   "Return in EAX the next object location with space for EAX words, with tag 6.
 Preserve ECX."
   (macrolet
@@ -250,7 +250,7 @@ duo-space where each space is KB-SIZE kilobytes."
 		      (setf (%run-time-context-slot ',slot context) code-vector)))))
       (install-primitive los0-fast-cons muerte::fast-cons)
       (install-primitive los0-box-u32-ecx muerte::box-u32-ecx)
-      (install-primitive los0-get-cons-pointer muerte::get-cons-pointer)
+      (install-primitive los0-cons-pointer muerte::cons-pointer)
       (install-primitive los0-cons-commit muerte::cons-commit))
     (if (eq context (current-run-time-context))
 	(setf (%run-time-context-slot 'muerte::nursery-space)
