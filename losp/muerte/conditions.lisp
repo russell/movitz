@@ -285,7 +285,7 @@ Return the condition object, if there was one."
 			(format t "~%Condition for debugger: ~Z" condition)
 			(format t "~%No abort restart is active. Halting CPU.")
 			(halt-cpu))))
-   (t (let ((*debugger-invoked-stack-frame* (stack-frame-uplink (current-stack-frame))))
+   (t (let ((*debugger-invoked-stack-frame* (stack-frame-uplink nil (current-stack-frame))))
 	(funcall *debugger-function* condition))))
   (format *debug-io* "~&Debugger ~@[on ~S ]returned!~%Trying to abort...~%" condition)
   (let ((r (find-restart 'abort)))
