@@ -235,7 +235,7 @@ attempts to decode the vendor part of the address using *ether-vendors*."
   (values))
 
 						    
-(defun make-ethernet-packet ()
-  (make-array +max-ethernet-frame-size+
+(defun make-ethernet-packet (&optional (size +max-ethernet-frame-size+))
+  (make-array size
 	      :element-type '(unsigned-byte 8)
 	      :fill-pointer t))
