@@ -895,7 +895,7 @@ where zot is not in foo's scope, but _is_ in foo's extent."
 			 (:globally (:cmpl (:edi (:edi-offset unbound-function))
 					   ,register))
 			 (:je '(:sub-program ()
-				(:load-constant ,movitz-name :ecx)
+				(:load-constant ,movitz-name :edx)
 				(:int 98))))
 		 :modifies nil
 		 :functional-p t

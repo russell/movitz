@@ -215,7 +215,7 @@
 	  (70
 	   (error "[EIP=~@Z] Index ~@Z out of bounds ~@Z for ~S." $eip $ecx $ebx (@ $eax)))
 	  (98
-	   (let ((name (@ $ecx)))
+	   (let ((name (@ $edx)))
 	     (when (symbolp name)
 	       (error 'undefined-function :name name))))
 	  (99
