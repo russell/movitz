@@ -120,20 +120,10 @@
      (not (eq (movitz-accessor symbol movitz-symbol function-value)
 	      (load-global-constant movitz::unbound-function))))))
 
-(defun %other-to-symbol (x)
-  (with-inline-assembly (:returns :eax)
-    (:compile-form (:result-mode :eax) x)
-    (:leal (:eax 2) :ecx)
-    (:testb 7 :cl)
-    (:jnz '(:sub-program ()
-	    (:compile-form (:result-mode :ignore)
-	     (error "Not an other heap-object: ~S" x))
-	    (:jmp 'continue)))
-   continue
-    (:addl 1 :eax)))
-
 (defun make-symbol (name)
-  (let ((symbol (%other-to-symbol (malloc-clumps 3))))
+  (eval-when (:compile-toplevel)
+    (assert (= 1 (- (movitz:tag :symbol) (movitz:tag :other)))))
+  (let ((symbol (%word-offset (malloc-clumps 3) 1)))
     (setf-movitz-accessor (symbol movitz-symbol package) nil)
     (setf-movitz-accessor (symbol movitz-symbol hash-key) (sxhash name))
     (setf (symbol-flags symbol) 0
