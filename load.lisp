@@ -46,7 +46,7 @@
 	    (excl:load-system :movitz)
 	    (setf excl:*tenured-bytes-limit* #x2000000)
 	    (setf (system::gsgc-parameter :generation-spread) 12)
-	    (sys:resize-areas :new (* 16 1024 1024)))
+	    (sys:resize-areas :new (* 64 1024 1024)))
 
 #+clisp (load "packages")
 #+clisp (defconstant movitz::&all 'movitz::&all) ; CLisp has this wonderful bug..
