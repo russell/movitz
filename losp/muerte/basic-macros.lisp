@@ -543,7 +543,7 @@
     (assert (typep (movitz::eval-form place env) type))
     nil)
    (t (if (member type '(standard-gf-instance function pointer atom
-			 integer fixnum cons symbol character null list
+			 integer fixnum positive-fixnum cons symbol character null list
 			 string vector simple-vector vector-u8 vector-u16))
 	  `(unless (typep ,place ',type)
 	     (with-inline-assembly (:returns :non-local-exit)
