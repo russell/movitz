@@ -1,6 +1,6 @@
 ;;;;------------------------------------------------------------------
 ;;;; 
-;;;;    Copyright (C) 2001-2004, 
+;;;;    Copyright (C) 2001-2005, 
 ;;;;    Department of Computer Science, University of Tromso, Norway.
 ;;;; 
 ;;;;    For distribution policy, see the accompanying file COPYING.
@@ -1723,7 +1723,8 @@ in an instance whose metaclass is standard-class."))
   x)
 
 (defmethod print-object ((x illegal-object) stream)
-  (print-unreadable-object (x stream :type t :identity t))
+  (error "Won't print illegal-object ~Z." x)
+  ;; (print-unreadable-object (x stream :type t :identity t))
   x)
 
 ;;;
