@@ -177,7 +177,7 @@
   (loop with unknown-counter = 0
       for stack-frame = (current-stack-frame) then (previous-stack-frame stack-frame)
       unless (zerop (mod stack-frame 4))
-      do (format t "[#x~8,'0x]" stack-frame)
+      do (format t "[frame #x~8,'0x]" stack-frame)
       and do (loop-finish)
       do (let ((movitz-name (funobj-name (stack-frame-funobj stack-frame))))
 	   (typecase movitz-name
@@ -191,7 +191,8 @@
 		     (edi (get-word (+ (* 4 (interrupt-frame-index :edi)) stack-frame)))
 		     (eip (get-word (+ (* 4 (interrupt-frame-index :eip)) stack-frame)))
 		     (exception (get-word (+ (* 4 (interrupt-frame-index :exception)) stack-frame))))
-		(when r (format t " (ret #x~X {EAX: #x~X, ECX: #x~X, EDI: #x~X, EIP: #x~X, exception ~D})"
+		(when r (format t "#x~X (ret #x~X {EAX: #x~X, ECX: #x~X, EDI: #x~X, EIP: #x~X, exception ~D})"
+				stack-frame
 				r eax ecx edi eip exception))))
 	     (movitz-symbol
 	      (let ((name (movitz-print movitz-name)))

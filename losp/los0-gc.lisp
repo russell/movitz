@@ -61,7 +61,7 @@
 	 `(with-inline-assembly (:returns :eax)
 	   retry-cons
 	    ;; Set up thread-atomical execution
-	    (:locally (:movl ,(movitz::atomically-status-simple-pf 'fast-cons)
+	    (:locally (:movl ,(movitz::atomically-status-simple-pf 'fast-cons t)
 			     (:edi (:edi-offset atomically-status))))
 	    (:locally (:movl (:edi (:edi-offset nursery-space)) :edx))
 	    (:movl (:edx 2) :ecx)

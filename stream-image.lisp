@@ -79,7 +79,7 @@
 		   (read-binary 'movitz-symbol (image-stream image)))
 		  (:other
 		   (setf (image-stream-position image)
-		     (+ 4 (extract-pointer word)))
+		     (+ 0 (extract-pointer word)))
 		   (let* ((type-code (read-binary 'u8 (image-stream image)))
 			  (type-tag (enum-symbolic-value 'other-type-byte type-code)))
 		     (setf (image-stream-position image)
