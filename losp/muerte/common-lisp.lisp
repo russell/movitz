@@ -43,11 +43,11 @@
 (require :muerte/eval)
 (require :muerte/los-closette)
 (require :muerte/environment)
-(require :muerte/interrupt)
 (require :muerte/streams)
 (require :muerte/restarts)
 (require :muerte/conditions)
 (require :muerte/read)
+(require :muerte/interrupt)
 (require :muerte/scavenge)
 (require :muerte/simple-streams)
 
