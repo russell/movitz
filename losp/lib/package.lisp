@@ -46,6 +46,7 @@
 	   
 	   ;; :lib/misc
 	   #:checksum-octets
+	   #:add-u16-ones-complement
 	   #:make-counter-u32
 	   #:u32-add
 	   
