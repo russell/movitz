@@ -53,7 +53,7 @@
   (setf (memref frame (* 4 (int-frame-index reg)) 0 type) x))
 
 (define-primitive-function muerte::default-interrupt-trampoline ()
-  "Default interrupt handler."
+  "Default first-stage interrupt handler."
   #.(cl:list* 'with-inline-assembly '(:returns :nothing)
 	      (cl:loop :for i :from 0 :to movitz::+idt-size+
 		:append (cl:if (cl:member i '(8 10 11 12 13 14 17))
@@ -80,7 +80,7 @@
     ;;  8: ebp
     ;;  4: esi
     ;;  0: edi
-
+    
     (:pushl (:esp 48))			; EFLAGS
     (:pushl :cs)			; push CS
     (:call (:pc+ 0))			; push EIP.
@@ -241,6 +241,8 @@
 	   ;; (print-dynamic-context); what's this?
 	   (throw :debugger nil))
 	  (112
+	   (setf (%run-time-context-slot 'nursery-space)
+	     (memref (%run-time-context-slot 'nursery-space) -6 3 :lisp))
 	   (error "Out of memory. Please take out the garbage."))
 	  (t (funcall (if (< 16 number 50) #'warn #'error)
 		      "Exception occurred: ~D, EIP: ~@Z, EAX: ~@Z, ECX: ~@Z, ESI: ~@Z"
@@ -267,6 +269,13 @@
   (setf (pic8259-irq-mask) #xfffe)
   (with-inline-assembly (:returns :nothing) (:sti)))
 
+(defun cli ()
+  (with-inline-assembly (:returns :nothing)
+    (:cli)))
+
+(defun sti ()
+  (with-inline-assembly (:returns :nothing)
+    (:sti)))
 
 (defun interrupt-handler (n)
   (let ((vector (load-global-constant interrupt-handlers)))
