@@ -53,8 +53,8 @@
 	    (io-delay 5000)
 	    (setf (dp8390 #x1f) tmp))
 	  (cond
-	   ((not (and (= (logand #b00111111 (dp8390 ($page0-read cr)))
-			 ($command stop abort-complete))
+	   ((not (and #+ignore (= (logand #b00111111 (dp8390 ($page0-read cr)))
+				  ($command stop abort-complete))
 		      (eq 'ne2000 (ne-x000-probe io-base))))
 	    (format t "failed.~%"))
 	   (t (let ((device (make-ne2000 io-base)))
