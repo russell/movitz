@@ -24,6 +24,7 @@
      (:locally (:bound (:edi (:edi-offset stack-bottom)) :esp))))
 
 (defun check-stack-limit ()
+  (declare (without-check-stack-limit))	; we do it explicitly..
   (check-stack-limit))
 
 (defun stack-top ()
