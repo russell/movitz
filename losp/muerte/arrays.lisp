@@ -326,7 +326,7 @@
 		(:compile-form (:result-mode :ignore)
 		 (error "Value not (unsigned-byte 32): ~S" value))))
 	(:shrl #.movitz:+movitz-fixnum-shift+ :ebx)
-	(:movw :bx (:eax (:ecx 4) #.(bt:slot-offset 'movitz:movitz-vector 'movitz::data)))
+       	(:movl :ebx (:eax (:ecx 4) #.(bt:slot-offset 'movitz:movitz-vector 'movitz::data)))
 	(:leal ((:ebx #.movitz:+movitz-fixnum-factor+)) :ebx)
 	(:jmp 'done)
 
