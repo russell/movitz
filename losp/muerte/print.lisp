@@ -202,8 +202,7 @@
 	    (null
 	     (write-string (symbol-name nil) stream))
 	    ((or cons tag5)
-	     (let ((level *print-level*)
-		   (length *print-length*))
+	     (let ((level *print-level*))
 	       (cond
 		((and level (minusp level))
 		 (write-char #\# stream))
@@ -227,7 +226,7 @@
 				     (write (cdr c))
 				     (write-char #\) stream)))))))
 		     (write-char #\( stream)
-		     (write-cons object stream length))))))
+		     (write-cons object stream *print-length*))))))
 	    (integer
 	     (write-integer object stream *print-base* *print-radix*))
 	    (string
