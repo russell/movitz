@@ -618,7 +618,7 @@
 (defmethod image-classes-map ((image symbolic-image))
   '(muerte.cl:null muerte.cl:cons muerte.cl:fixnum muerte.cl:symbol
     muerte.cl:character muerte.cl:function muerte.cl:condition
-    muerte.cl:integer muerte.cl:ratio
+    muerte.cl:integer muerte.cl:ratio muerte.cl:complex
     muerte.cl:vector muerte.cl:string muerte.cl:bit-vector muerte.cl:array
     muerte.cl:class muerte.cl:standard-class
     muerte.cl:standard-generic-function
@@ -1472,6 +1472,9 @@ this image will not be Multiboot compatible."
 	    (hash-table
 	     (make-movitz-hash-table expr))
 	    (ratio
+	     (make-instance 'movitz-ratio
+	       :value expr)
+	     #+ignore
 	     (let ((slot-descriptions (gethash 'muerte.cl::ratio
 					       (image-struct-slot-descriptions *image*)
 					       nil)))

@@ -718,6 +718,8 @@ BUFFER-SIZE is the number of words in the buffer."
 
 (defun complicated-class-of (object)
   (typecase object
+    (ratio
+     (find-class 'ratio))
     (std-instance
      (movitz-accessor object movitz-std-instance class))
     (standard-gf-instance

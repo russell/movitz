@@ -179,6 +179,8 @@
 		 (make-other-typep :bignum 0))
 		((negative-bignum)
 		 (make-other-typep :bignum #xff))
+		((ratio)
+		 (make-other-typep :ratio))
 		((integer)
 		 `(with-inline-assembly-case ()
 		    (do-case (t :boolean-zf=1 :labels (done))
@@ -556,12 +558,11 @@
 (define-simple-typep (bignum bignump) (x)
   (typep x 'bignum))
 
+(define-simple-typep (rational rationalp) (x)
+  (typep x '(or fixnum bignum ratio)))
+
 (define-simple-typep (number numberp) (x)
-  "Currently, only integers and ratios are supported."
-  (or (typep x 'fixnum)
-      (and (typep x 'tag6)
-	   (or (typep x 'bignum)
-	       (ratio-p x)))))
+  (typep x 'rational))
 
 (define-simple-typep (function functionp) (x)
   (typep x 'function))

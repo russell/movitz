@@ -69,6 +69,8 @@
   :basic-vector #x22
   :funobj #x3a
   :bignum #x4a
+  :ratio #x52
+  :complex #x5a
   :defstruct #x20
   :std-instance #x40
   :run-time-context #x50
@@ -1255,3 +1257,38 @@ integer (native lisp) value."
 	(#x00 x)
 	(#xff (- x))))
     header))
+
+(define-binary-class movitz-ratio (movitz-heap-object-other)
+  ((type
+    :binary-type other-type-byte
+    :initform :ratio)
+   (dummy0
+    :binary-type u8
+    :initform 0)
+   (dummy1
+    :binary-type lu16
+    :initform 0)
+   (dummy2
+    :binary-type word
+    :initform 0)
+   (numerator
+    :binary-type word
+    :map-binary-read-delayed 'movitz-word
+    :map-binary-write 'movitz-read-and-intern)
+   (denominator
+    :binary-type word
+    :map-binary-read-delayed 'movitz-word
+    :map-binary-write 'movitz-read-and-intern)
+   (value
+    :reader movitz-ratio-value
+    :initarg :value))
+  (:slot-align type #.+other-type-offset+))
+
+(defmethod write-binary-record ((obj movitz-ratio) stream)
+  (declare (ignore stream))
+  (let ((value (movitz-ratio-value obj)))
+    (check-type value ratio)
+    (setf (slot-value obj 'numerator) (numerator value)
+	  (slot-value obj 'denominator) (denominator value))
+    (call-next-method)))
+	 
