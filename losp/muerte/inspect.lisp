@@ -175,6 +175,8 @@ after the point that called this stack-frame."
   (etypecase old
     (cons
      (cons (car old) (cdr old)))
+    (bignum
+     (copy-bignum old))
     (std-instance
      (allocate-std-instance (std-instance-class old)
 			    (std-instance-slots old)))
