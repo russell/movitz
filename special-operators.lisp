@@ -1001,6 +1001,18 @@ on the current result."
       :env local-env
       :form sub-form)))
 
+(define-special-operator muerte::++%2op (&all all &form form &env env &result-mode result-mode)
+  (destructuring-bind (term1 term2)
+      (cdr form)
+    (let ((returns (ecase (result-mode-type result-mode)
+		     ((:function :multiple-values :eax :push) :eax)
+		     ((:ebx :ecx :edx) result-mode)
+		     ((:lexical-binding) result-mode))))
+      (compiler-values ()
+	:returns returns
+	:code `((:add ,(movitz-binding term1 env) ,(movitz-binding term2 env) ,returns))))))
+    
+
 (define-special-operator muerte::+%2op (&all all &form form &env env &result-mode result-mode)
   (assert (not (eq :boolean result-mode)) ()
     "Boolean result-mode for +%2op makes no sense.")
