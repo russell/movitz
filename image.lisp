@@ -419,7 +419,7 @@
     :initform nil
     :map-binary-write 'movitz-read-and-intern
     :map-binary-read-delayed 'movitz-word)
-   (align-segment-descriptors :binary-type 4)
+   ;; (align-segment-descriptors :binary-type 4)
    (segment-descriptor-table :binary-type :label)
    (segment-descriptor-0
     :binary-type segment-descriptor
@@ -543,14 +543,14 @@
    (cons-pointer
     :accessor image-cons-pointer)
    (read-map-hash
-    :initform (make-hash-table :test #'eq) ; lisp object => movitz object
+    :initform (make-hash-table :test #'eql) ; lisp object => movitz object
     :reader image-read-map-hash)
    (inverse-read-map-hash
-    :initform (make-hash-table :test #'eq) ; lisp object => movitz object
+    :initform (make-hash-table :test #'eql) ; lisp object => movitz object
     :reader image-inverse-read-map-hash)
    (oblist
     :reader image-oblist
-    :initform (make-hash-table :test #'eq))
+    :initform (make-hash-table :test #'eql))
    (global-environment
     :initform (make-global-movitz-environment)
     :reader image-global-environment)
