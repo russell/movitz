@@ -369,5 +369,12 @@
 (defun %word-offset (word offset)
   (%word-offset word offset))
 
-
-
+(defun check-type-failed (value type &optional place-name type-description)
+  (cond
+   ((and place-name type-description)
+    (error "The value of ~S, ~S, is not ~A."
+	   place-name value type-description))
+   (place-name
+    (error "The value of ~S, ~S, is not of type ~S."
+	   place-name value type))
+   (t (error "~S is not of type ~S." value type))))
