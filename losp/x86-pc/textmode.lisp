@@ -127,10 +127,11 @@
   (declare (special muerte.lib::*scroll-offset*))
   (incf muerte.lib::*scroll-offset*)
   (loop with stride = (* 2 *screen-stride*)
-      for y below *screen-height*
+      for y below (1- *screen-height*)
       as src from (+ *screen* stride) by stride
       as dst from *screen* by stride
-      do (textmode-copy-line dst src *screen-width*))
+      do (textmode-copy-line dst src *screen-width*)
+      finally (textmode-clear-line 0 (1- *screen-height*)))
   (signal 'newline))
 
 (defun textmode-clear-line (from-column line)
