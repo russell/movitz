@@ -285,7 +285,7 @@
 
 (defun typep (object type-specifier)
   (block nil
-    (etypecase type-specifier
+    (typecase type-specifier
       (symbol
        (let ((typep-function (gethash type-specifier *simple-typespecs*)))
 	 (when typep-function
