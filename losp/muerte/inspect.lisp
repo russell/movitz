@@ -87,8 +87,9 @@ after the point that called this stack-frame."
 
 (defun stack-ref-p (pointer)
   (let ((top (load-global-constant-u32 stack-top))
-	(bottom (with-inline-assembly (:returns :untagged-fixnum-ecx)
-		  (:movl :esp :ecx))))
+	(bottom (with-inline-assembly (:returns :eax)
+		  (:movl :esp :eax)
+		  (:shll #.movitz:+movitz-fixnum-shift+ :eax))))
     (<= bottom pointer top)))
 
 (defun stack-ref (pointer offset index type)
