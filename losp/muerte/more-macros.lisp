@@ -312,7 +312,9 @@ respect to multiple threads."
   `(with-inline-assembly (:returns :eax :type (unsigned-byte 14))
      (:compile-form (:result-mode :eax) ,x)
      (:movzxw (:eax ,(bt:slot-offset 'movitz::movitz-bignum 'movitz::length))
-	      :eax)))
+	      :eax)
+     (:testb 3 :al)			; Just to be sure..
+     (:jnz '(:sub-program () (:int 63)))))
 
 ;;; Some macros that aren't implemented, and we want to give compiler errors.
 
