@@ -531,6 +531,7 @@ with the single member of <type-specifier>."
 	     (type-specifier-encode (apply deriver (cdr type-specifier))))))))))
 
 (defun member-type-encode (&rest member-objects)
+  "Encode a member type-specifier holding member-objects."
   (declare (dynamic-extent members))
   (multiple-value-bind (code integer-range members include complement)
       (type-specifier-encode nil)
