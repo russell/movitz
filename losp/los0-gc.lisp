@@ -169,7 +169,8 @@ Preserve EAX and EBX."
 			       (:edi (:edi-offset atomically-status))))
 		    (:int 113)		; This interrupt can be retried.
 		    (:jmp 'retry-cons)))
-	    (:movl ,(dpb 1 (byte 16 16) (movitz:tag :bignum 0))
+	    (:movl ,(dpb movitz:+movitz-fixnum-factor+
+			 (byte 16 16) (movitz:tag :bignum 0))
 		   (:edx :eax 2))
 	    (:movl :ecx (:edx :eax 6))
 	    (:addl 8 :eax)
