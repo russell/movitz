@@ -268,3 +268,26 @@ The unit clump is 8 bytes, or two words."
 	   (+ -1 object-location
 	      #.(movitz::movitz-type-word-size :movitz-struct)
 	      (* 2 (truncate (+ (structure-object-length object) 1) 2))))))))
+
+(defun %bignum-bigits (x)
+  (%bignum-bigits x))
+
+(defun copy-bignum (old)
+  (check-type old bignum)
+  (let* ((length (1+ (%bignum-bigits old)))
+	 (new (malloc-data-words length)))
+    (with-inline-assembly (:returns :eax)
+      (:compile-two-forms (:eax :ebx) new old)
+      (:compile-form (:result-mode :edx) length)
+     copy-bignum-loop
+      (:subl #.movitz:+movitz-fixnum-factor+ :edx)
+      (:movl (:ebx :edx #.movitz:+other-type-offset+) :ecx)
+      (:movl :ecx (:eax :edx #.movitz:+other-type-offset+))
+      (:jnz 'copy-bignum-loop))))
+
+(defun print-bignum (x)
+  (check-type x bignum)
+  (dotimes (i (1+ (%bignum-bigits x)))
+    (format t "~8,'0X " (memref x -6 i :unsigned-byte32)))
+  (terpri)
+  (values))
