@@ -142,11 +142,11 @@ integer: that many words pushed on stack."
     :initform nil
     :accessor dynamic-extent-scope-members)))
 
-(defun dynamic-extent-allocation (env)
+(defun find-dynamic-extent-scope (env)
   (loop for e = env then (movitz-environment-uplink e)
       while e
       do (when (typep e 'with-dynamic-extent-allocation-env)
-	   (return e))))
+	   (return (allocation-env-scope e)))))
 
 (defun dynamic-extent-object-offset (scope-env object)
   (loop with offset = 0

@@ -1,6 +1,6 @@
 ;;;;------------------------------------------------------------------
 ;;;; 
-;;;;    Copyright (C) 2000-2004,
+;;;;    Copyright (C) 2000-2005,
 ;;;;    Department of Computer Science, University of Tromso, Norway
 ;;;; 
 ;;;; Filename:      basic-macros.lisp
@@ -662,10 +662,14 @@
        (do-case (t :same)
 	 (:endp (:lexical-binding cell) (:returns-mode))))))
 
-(define-compiler-macro cons (x y)
-  `(with-inline-assembly (:returns :eax :side-effects nil :type cons)
-     (:compile-two-forms (:eax :ebx) ,x ,y)
-     (:globally (:call (:edi (:edi-offset fast-cons))))))
+(define-compiler-macro cons (car cdr)
+  `(compiled-cons ,car ,cdr))
+
+(define-compiler-macro list (&whole form &rest elements &environment env)
+  (case (length elements)
+    (0 nil)
+    (1 `(cons ,(car elements) nil))
+    (t form)))
 
 #+ignore
 (define-compiler-macro apply (&whole form function &rest args)

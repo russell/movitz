@@ -1370,3 +1370,23 @@ is zero (i.e. not found)."
 	:env allocation-env))))
 						       
   
+(define-special-operator muerte::compiled-cons
+    (&all all &form form &env env &funobj funobj)
+  (destructuring-bind (car cdr)
+      (cdr form)
+    (let ((dynamic-extent-scope (find-dynamic-extent-scope env)))
+      (cond
+       (dynamic-extent-scope
+	(compiler-values ()
+	  :returns :eax
+	  :functional-p t
+	  :type 'cons
+	  :code (append (make-compiled-two-forms-into-registers car :eax cdr :ebx funobj env)
+			`((:stack-cons ,(make-instance 'movitz-cons)
+				       ,dynamic-extent-scope)))))
+       (t (compiler-values ()
+	    :returns :eax
+	    :functional-p t
+	    :type 'cons
+	    :code (append (make-compiled-two-forms-into-registers car :eax cdr :ebx funobj env)
+			  `((:globally (:call (:edi (:edi-offset fast-cons))))))))))))
