@@ -94,7 +94,11 @@
     :reader type-error-expected-type)
    (datum
     :initarg :datum
-    :reader type-error-datum)))
+    :reader type-error-datum))
+  (:report (lambda (c s)
+	     (format s "The object ~S is not of type ~S."
+		     (type-error-datum c)
+		     (type-error-expected-type c)))))
 
 (define-condition control-error (error) ())
 
