@@ -75,7 +75,7 @@ of string delimited by start and end."
 	 (t (error "There is junk in the string ~S." (substring string start end))))))))
 
 
-(defconstant +simple-token-terminators+ '(#\space #\tab #\newline #\) #\())
+(defconstant +simple-token-terminators+ '(#\space #\tab #\newline #\) #\( #\'))
 
 (defun find-token-end (string &key (start 0) (end (length string)))
   (do ((i start (1+ i)))
