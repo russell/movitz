@@ -5950,7 +5950,7 @@ cleanup-forms etc.) to <to-env> with <return-code>'s result intact."
 						   return-mode)
 		      `((:jmp ',to-label)))))
      ((plusp num-dynamic-slots)
-      ;; (warn "num-dynamic-slots: ~S" num-dynamic-slots)
+      ;; (warn "num-dynamic-slots: ~S, distance: ~D" num-dynamic-slots stack-distance)
       (compiler-values ()
 	:returns :non-local-exit
 	:code (append return-code
@@ -5966,10 +5966,8 @@ cleanup-forms etc.) to <to-env> with <return-code>'s result intact."
 				   (:locally (:call (:edi (:edi-offset dynamic-unwind-next))))
 				   (:locally (:movl :eax (:edi (:edi-offset dynamic-env))))
 				   (:jc '(:sub-program () (:int 63))))))
-		      (make-compiled-stack-restore stack-distance
-						   (exit-result-mode to-env)
-						   return-mode)
-		      `((:jmp ',to-label)))))
+		      `((:leal (:esp ,(* 4 stack-distance)) :esp)
+			(:jmp ',to-label)))))
      (t (error "unknown!")))))
 
 (defun make-compiled-push-current-values ()
