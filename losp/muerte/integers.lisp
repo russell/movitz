@@ -510,6 +510,7 @@ Preserve EAX and EBX."
 		 (+ y x))
 		((negative-fixnum positive-bignum)
 		 (with-inline-assembly (:returns :eax :labels (retry-not-size1
+							       retry-jumper
 							       not-size1
 							       copy-bignum-loop
 							       add-bignum-loop
@@ -577,12 +578,14 @@ Preserve EAX and EBX."
 		     (+ y x)
 		   ;; Assume x is smallest.
 		   (with-inline-assembly (:returns :eax :labels (retry-not-size1
+								 retry-jumper
 								 not-size1
 								 copy-bignum-loop
 								 add-bignum-loop
 								 add-bignum-done
 								 no-expansion
-								 pfix-pbig-done))
+								 pfix-pbig-done
+								 zero-padding-loop))
 		     (:compile-two-forms (:eax :ebx) y x)
 		     (:testl :ebx :ebx)
 		     (:jz 'pfix-pbig-done)
