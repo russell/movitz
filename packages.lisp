@@ -1197,6 +1197,7 @@
 	   #:basic-restart
 	   #:illegal-object
 	   #:run-time-context
+	   #:current-run-time-context
 	   
 	   make-funobj
 	   funobj-type
