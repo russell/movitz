@@ -533,7 +533,3 @@ be provided for those cases."
 	       (t (format t "~&?: ~Z" funobj))))))
   (values))
 
-(defun fixnum-word (fixnum)
-  (with-inline-assembly (:returns :eax)
-    (:compile-form (:result-mode :eax) fixnum)
-    (:shrl #.movitz::+movitz-fixnum-shift+ :eax)))
