@@ -808,20 +808,32 @@ s#+ignore
 (defmacro with-paging (options &body body)
   (declare (ignore options))
   `(block paging
-     (let ((*paging-offset* 2))
+     (let ((paging-offset 2))
        (handler-bind
 	   ((newline (lambda (condition)
 		       (declare (ignore condition))
-		       (when (>= (incf *paging-offset*)
-				 muerte.x86-pc::*screen-height*)
-			 (format t "~&more? ")
-			 (loop
+		       (when (and paging-offset
+				  (>= (incf paging-offset)
+				      muerte.x86-pc::*screen-height*))
+			 (format t "~&more? (y/n/a) ")
+			 (prog ()
+			  loop
 			   (case (muerte.x86-pc.keyboard:poll-char)
-			     ((#\esc #\n #\N)
+			     ((#\esc)
+			      (break "Console pager"))
+			     ((#\n #\N)	; No more
 			      (return-from paging (values)))
-			     ((#\y #\Y #\space #\newline)
-			      (setf *paging-offset* 1)
-			      (return))))))))
+			     ((#\a #\A)	; Quit paging
+			      (setf paging-offset nil))
+			     ((#\newline #\x)
+			      (setf paging-offset
+				(1- muerte.x86-pc::*screen-height*)))
+			     ((#\y #\Y #\space) ; One more page
+			      (setf paging-offset 1))
+			     (t (go loop))))
+			 (write-char #\return)
+			 (clear-line *standard-output* 0 (cursor-y *standard-output*))
+			 ))))
 	 ,@body))))
 
 (defun tp (x) (dotimes (i x) (print i)))
