@@ -341,6 +341,10 @@
 (defparameter +message+ "Ok.")
 (defparameter +halt-message+ "Halt!")
 
+(defun make-vga-string (string)
+  (loop for char across string
+      collect (complex (logior #x0700 (char-code char)) 2)))
+
 (defun mkasm-loader (image-size load-address call-address)
   "Make the 32-bit loader."
   (assert (<= load-address call-address (+ load-address image-size)) ()
@@ -404,9 +408,7 @@
 ;;;     (:halt)
 ;;;     (:jmp 'eternal)			; OS returned?
      ;; (% align 2)
-     i-am-32 (% fun ((lambda () 
-		       (loop for char across ,+message+
-			   collect (complex (logior #x0700 (char-code char)) 2)))))
+     i-am-32 (% fun (make-vga-string ,+message+))
 ;;;     halt-msg (% fun ((lambda () 
 ;;;			(loop for char across ,+halt-message+
 ;;;			    collect (complex (logior #x4700 (char-code char)) 2)))))
