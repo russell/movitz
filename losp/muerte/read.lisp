@@ -267,6 +267,18 @@ of string delimited by start and end."
 					 :initial-contents contents-list)
 			     form-end
 			     string end)))
+	      (#\* (let* ((token-end (find-token-end string :start (incf i) :end end))
+			  (bit-vector (make-array (- token-end i) :element-type 'bit)))
+		     (do ((p i (1+ p))
+			  (q 0 (1+ q)))
+			 ((>= p token-end))
+		       (case (schar string p)
+			 (#\0 (setf (aref bit-vector q) 0))
+			 (#\1 (setf (aref bit-vector q) 1))
+			 (t (error "Illegal bit-vector element: ~S" (schar string p)))))
+		     (values bit-vector
+			     token-end
+			     string end)))
 	      (#\s (multiple-value-bind (struct-form form-end)
 		       (simple-read-from-string string eof-error-p eof-value :start (1+ i) :end end)
 		     (check-type struct-form list)
