@@ -2981,7 +2981,7 @@ bindings are located in the appropriate register, so no stack location is needed
 (defun single-value-register (mode)
   (ecase mode
     ((:eax :single-value :multiple-values :function) :eax)
-    ((:ebx :ecx :edx :esi :esp) mode)))
+    ((:ebx :ecx :edx :esi :esp :ebp) mode)))
 
 (defun result-mode-register (mode)
   (case mode
@@ -3155,7 +3155,7 @@ loading borrowed bindings."
 		   result-mode :eax
 		   (install-for-single-value binding binding-location :eax t)))))
 	    (t (case (result-mode-type result-mode)
-		 ((:single-value :eax :ebx :ecx :edx :esi :esp)
+		 ((:single-value :eax :ebx :ecx :edx :esi :esp :ebp)
 		  (install-for-single-value binding binding-location
 					    (single-value-register result-mode) nil))
 		 (:push
