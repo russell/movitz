@@ -966,8 +966,7 @@
   (error "numargs-case at illegal position."))
 
 (defmacro movitz-backquote (expression)
-  (declare (ignore expression))
-  `(warn "movitz-backquote!"))
+  `(un-backquote ',expression 0))
 
 (define-compiler-macro spin-wait-pause ()
   "Insert a pause instruction, which improves performance of
