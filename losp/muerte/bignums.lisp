@@ -466,7 +466,7 @@ that the msb isn't zero. DO NOT APPLY TO NON-BIGNUM VALUES!"
 
 (defun bignum-set-zerof (bignum)
   (check-type bignum bignum)
-  (dotimes (i (logior 1 (%bignum-bigits bignum)))
+  (dotimes (i (%bignum-bigits bignum))
     (setf (memref bignum -2 i :lisp) 0))
   bignum)
 
