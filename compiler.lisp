@@ -1457,7 +1457,9 @@ a (lexical-extent) sub-function might care about its parent frame-map."
   "These optimizations may rearrange register usage in a way that is incompatible
 with other optimizations that track register usage. So this is performed just once,
 initially."
-  (labels
+  unoptimized-code
+  #+ignore
+  (labels				; This stuff doesn't work..
       ((explain (always format &rest args)
 	 (when (or always *explain-peephole-optimizations*)
 	   (warn "Peephole: ~?~&----------------------------" format args)))
@@ -1488,16 +1490,15 @@ initially."
 	as i1 = (first pc)		; current instruction, collected by default.
 	and i2 = (second pc) and i3 = (third pc)
 	while pc
- 	do (cond
-	    ((let ((regx (register-operand (twop-src i1 :movl)))
-		   (regy (register-operand (twop-dst i1 :movl))))
-	       (and regx regy
-		    (eq regx (twop-dst i2 :movl))
-		    (eq regx (twop-src i3 :cmpl))
-		    (eq regy (twop-dst i3 :cmpl))))
-	     (setq p (list `(:cmpl ,(twop-src i2) ,(twop-src i1)))
-		   next-pc (nthcdr 3 pc))
-	     (explain nil "4: ~S for ~S" p (subseq pc 0 4))))
+ 	do (let ((regx (register-operand (twop-src i1 :movl)))
+		 (regy (register-operand (twop-dst i1 :movl))))
+	     (when (and regx regy
+			(eq regx (twop-dst i2 :movl))
+			(eq regx (twop-src i3 :cmpl))
+			(eq regy (twop-dst i3 :cmpl)))
+	       (setq p (list `(:cmpl ,(twop-src i2) ,regx) i1)
+		     next-pc (nthcdr 3 pc))
+	       (explain t "4: ~S for ~S [regx ~S, regy ~S]" p (subseq pc 0 5) regx regy)))
 	nconc p)))
 
 (defun optimize-code-internal (unoptimized-code recursive-count &rest key-args
