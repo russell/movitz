@@ -732,6 +732,10 @@
 		 #'compute-slots)
 	       class))
     (values))
+  
+  (defun finalize-inheritance (class)
+    (error "Don't know how to finalize-inheritance for class ~S of class ~S."
+	   class (class-of class)))
 
 ;;; Class precedence lists
 
