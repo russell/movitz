@@ -309,12 +309,10 @@ respect to multiple threads."
 
 
 (define-compiler-macro %bignum-bigits (x)
-  `(with-inline-assembly (:returns :eax)
+  `(with-inline-assembly (:returns :eax :type (unsigned-byte 14))
      (:compile-form (:result-mode :eax) ,x)
      (:movzxw (:eax ,(bt:slot-offset 'movitz::movitz-bignum 'movitz::length))
-	      :ecx)
-     (:leal ((:ecx ,movitz:+movitz-fixnum-factor+))
-	    :eax)))
+	      :eax)))
 
 ;;; Some macros that aren't implemented, and we want to give compiler errors.
 

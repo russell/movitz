@@ -1243,7 +1243,15 @@ integer (native lisp) value."
    (length
     :binary-type lu16
     :initarg :length
-    :accessor movitz-bignum-length)
+    :accessor movitz-bignum-length
+    :map-binary-write (lambda (x &optional type)
+			(declare (ignore type))
+			(check-type x (unsigned-byte 14))
+			(* x 4))
+    :map-binary-read (lambda (x &optional type)
+		       (declare (ignore type))
+		       (assert (zerop (mod x 4)))
+		       (truncate x 4)))
    (bigit0 :binary-type :label)
    (value
     :initarg :value
