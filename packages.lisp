@@ -1140,8 +1140,9 @@
 	   #:package-object-internal-symbols
 	   #:package-object-external-symbols
 
-	   #:map-heap-words
-	   #:map-stack-words
+	   #:map-lisp-vals
+	   #:map-header-vals
+	   #:map-stack-vector
 
 	   #:%memory-map%
 	   #:%memory-map-roots%
