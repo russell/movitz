@@ -824,7 +824,7 @@ a cons is an offset (the car) from some other code-vector (the cdr)."
    that function's code-vector."
   (let ((code-vector
 	 (movitz-symbol-value (movitz-read name))))
-    (unless (and code-vector (not (eq 'muerte::unbound code-vector)))
+    (unless (and code-vector (not (eq 'unbound code-vector)))
       (cerror "Install an empty vector instead."
 	      "Global constant primitive function ~S is not defined!" name)
       (setf code-vector
@@ -922,7 +922,7 @@ a cons is an offset (the car) from some other code-vector (the cdr)."
 	      (setf (slot-value run-time-context gcf-name) 0)
 	      (cond
 	       ((or (not gcf-funobj)
-		    (eq 'muerte::unbound gcf-funobj))
+		    (eq 'unbound gcf-funobj))
 		(warn "Global constant function ~S is not defined!" gcf-name))
 	       (t (check-type gcf-funobj movitz-funobj)
 		  (setf (slot-value run-time-context gcf-name)
