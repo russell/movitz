@@ -205,12 +205,8 @@ after the point that called this stack-frame."
     (structure-object
      (copy-structure old))))
 
-(defvar *objects-equalp-last-x*)
-(defvar *objects-equalp-last-y*)
-
 (defun objects-equalp (x y)
-  (setf *objects-equalp-last-x* x
-	*objects-equalp-last-y* y)
+  "Basically, this verifies whether x is a shallow-copy of y, or vice versa."
   (or (eql x y)
       (if (not (and (typep x 'pointer)
 		    (typep y 'pointer)))
