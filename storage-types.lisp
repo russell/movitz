@@ -94,7 +94,8 @@
 	  (ash wide-tag 8)))
 
 (defun tag-name (number)
-  (bt:enum-symbolic-value 'other-type-byte number))
+  (find number '(:even-fixnum :odd-fixnum :cons :character :null :other :symbol)
+	:key 'tag))
 
 (defun extract-tag (word)
   (tag-name (ldb (byte 3 0) word)))
