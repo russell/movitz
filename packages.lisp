@@ -1327,10 +1327,12 @@
 	   #:movitz-object-browser-properties
 	   #:movitz-heap-object
 	   
+	   #:movitz-basic-vector
 	   #:movitz-vector
 	   #:movitz-vector-num-elements
 	   #:movitz-vector-element-type
 	   #:movitz-vector-symbolic-data
+	   #:basic-vector-type-tag
 	   #:vector-type-tag
 	   
 	   #:movitz-symbol

@@ -233,6 +233,8 @@
 		    (:cmpb ,(movitz:tag :character) :al)))
 		((function compiled-function)
 		 (make-other-typep :funobj))
+		((basic-vector)
+		 (make-other-typep :basic-vector))
 		((vector array)
 		 (make-other-typep :vector))
 		(simple-vector

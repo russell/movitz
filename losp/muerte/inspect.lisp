@@ -211,6 +211,7 @@ The unit clump is 8 bytes, or two words."
   (malloc-clumps clumps))
 
 (defun malloc-words (words)
+  "Allocate space for at least (+ 2 words) cells/words."
   (malloc-clumps (1+ (truncate (1+ words) 2))))
 
 (defun malloc-data-words (words)

@@ -658,6 +658,8 @@ Returns list in EAX and preserves numargs in ECX."
      (movitz-accessor object movitz-funobj-standard-gf standard-gf-class))
     (string
      (find-class 'string))
+    (basic-vector
+     (find-class 'vector))
     (vector
      (find-class 'vector))
     (function
