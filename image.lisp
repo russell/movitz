@@ -39,6 +39,18 @@
     :map-binary-write 'movitz-intern-code-vector
     :map-binary-read-delayed 'movitz-word-code-vector
     :binary-tag :primitive-function)
+   (fast-cddr
+    :binary-type code-vector-word
+    :initform nil
+    :map-binary-write 'movitz-intern-code-vector
+    :map-binary-read-delayed 'movitz-word-code-vector
+    :binary-tag :primitive-function)
+   (fast-cdddr
+    :binary-type code-vector-word
+    :initform nil
+    :map-binary-write 'movitz-intern-code-vector
+    :map-binary-read-delayed 'movitz-word-code-vector
+    :binary-tag :primitive-function)
    (fast-car-ebx
     :binary-type code-vector-word
     :initform nil
@@ -128,12 +140,6 @@
    (stack-top				; stack-top must be right after stack-bottom
     :binary-type word			; in order for the bound instruction to work.
     :initform #x100000)
-   (bochs-flags
-    :binary-type lu32
-    :initform 0)
-   (bochs-flags2
-    :binary-type lu32
-    :initform 0)
    ;;
    (unbound-value
     :binary-type word
@@ -421,6 +427,9 @@
    (segment-descriptor-7
     :binary-type segment-descriptor
     :initform (make-segment-descriptor))
+   (bochs-flags
+    :binary-type lu32
+    :initform 0)
    )
   (:slot-align null-cons -1))
 
