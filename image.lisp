@@ -358,9 +358,9 @@
    (interrupt-descriptor-table
     :binary-type word
     :accessor movitz-run-time-context-interrupt-descriptor-table
-    :initarg :interrupt-descriptor-table
+    :initform (make-array 256 :initial-element 'muerte::default-interrupt-trampoline)
     :map-binary-read-delayed 'movitz-word
-    :map-binary-write 'map-idt-to-array)
+    :map-binary-write 'map-interrupt-trampolines-to-idt)
    (toplevel-funobj
     :binary-type word
     :initform nil
@@ -813,8 +813,6 @@ a cons is an offset (the car) from some other code-vector (the cdr)."
 							       'segment-descriptor-table))
 		      16))
       (warn "Segment descriptor table is not aligned on a 16-byte boundary."))
-    (setf (movitz-run-time-context-interrupt-descriptor-table (image-run-time-context *image*))
-      (movitz-read (make-initial-interrupt-descriptors)))
     (setf (image-t-symbol *image*) (movitz-read t))
     ;; (warn "NIL value: #x~X" (image-nil-word *image*))
     *image*))
