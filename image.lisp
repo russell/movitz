@@ -730,8 +730,8 @@
   (assert (eq type 'word))
   (movitz-word-by-image *image* word))
 
-(defun movitz-word-and-print (word)
-  (movitz-print (movitz-word word)))
+(defun movitz-word-and-print (word &optional (type 'word))
+  (movitz-print (movitz-word word type)))
 
 (defmethod movitz-word-by-image ((image symbolic-image) word)
   (case (extract-tag word)
