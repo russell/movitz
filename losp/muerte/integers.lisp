@@ -1152,7 +1152,7 @@
 		     (incf r (ash (* x (ldb (byte 29 i) y)) i)))))
 		((ratio ratio)
 		 (make-rational (* (ratio-numerator x) (ratio-numerator y))
-				(* (ratio-denominator x) (ratio-denominator x))))
+				(* (ratio-denominator x) (ratio-denominator y))))
 		((ratio t)
 		 (make-rational (* y (ratio-numerator x))
 				(ratio-denominator x)))
