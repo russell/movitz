@@ -95,8 +95,8 @@ at the start-stack-frame location."
   (loop for nether-frame = start-stack-frame then frame
       and frame = (stack-frame-uplink start-stack-frame) then (stack-frame-uplink frame)
       while (plusp frame)
-      do (let ((funobj (stack-frame-funobj frame)))
-	   (typecase funobj
+      do (let ((funobj (stack-frame-funobj frame t)))
+	   (etypecase funobj
 	     (integer
 	      (error "Don't know how to scavenge across an interrupt frame."))
 	     (function
