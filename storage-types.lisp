@@ -514,9 +514,12 @@ integer (native lisp) value."
 		       (:any-t
 			(map 'vector #'movitz-read initial-contents))
 		       (t initial-contents))
-      :fill-pointer (if (integerp fill-pointer)
-			fill-pointer
-		      size))))
+      :fill-pointer (cond
+		     ((not (typep size '(unsigned-byte 14)))
+		      0)
+		     ((integerp fill-pointer)
+		      fill-pointer)
+		     (t size)))))
 
 (defun make-movitz-string (string)
   (make-movitz-vector (length string)
