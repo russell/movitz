@@ -56,14 +56,14 @@
     (tftp/ethernet-write :129.242.16.151 file-name data
 			 :mac (polling-arp :129.242.16.1
 					   (lambda ()
-					     (eql #\esc (muerte.x86-pc.keyboard:poll-char)))))))
+					     (eql #\space (muerte.x86-pc.keyboard:poll-char)))))))
 
 (defun tftp/ethernet-write (ip file-name data-vector
 			    &key (mode "octet") mac quiet
 				 (timeout 2)
 				 (data-length (length data-vector))
 				 (breaker (lambda ()
-					    (eql #\esc (muerte.x86-pc.keyboard:poll-char)))))
+					    (eql #\space (muerte.x86-pc.keyboard:poll-char)))))
   "TFTP write data-vector to file-name on host ip using *ip4-nic*.
 The host's MAC is looked up by ARP unless provided."
   (let ((speak (if quiet nil *query-io*))

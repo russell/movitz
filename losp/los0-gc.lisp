@@ -234,7 +234,7 @@ duo-space where each space is KB-SIZE kilobytes."
 	      (break "GC break.")
 	    (loop			; This is  a nice opportunity to poll the keyboard..
 	      (case (muerte.x86-pc.keyboard:poll-char)
-		((#\esc)
+		((#\escape)
 		 (break "Los0 GC keyboard poll."))
 		((nil)
 		 (return)))))))))
@@ -310,8 +310,8 @@ duo-space where each space is KB-SIZE kilobytes."
       (values))))
 
 
-(defparameter *x* #4000())		; Have this in static space.
-(defparameter *xx* #4000())		; Have this in static space.
+(defparameter *x* #4000(nil))		; Have this in static space.
+(defparameter *xx* #4000(nil))		; Have this in static space.
 
 
 (defun stop-and-copy (&optional evacuator)
