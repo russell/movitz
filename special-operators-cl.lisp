@@ -278,7 +278,25 @@ where zot is not in foo's scope, but _is_ in foo's extent."
 								     :init-with-register ,final-form
 								     ;; :init-with-type ,final-form
 								     ))))
-					    (t (append init-code
+					    ((typep final-form 'constant-object-binding)
+					     #+ignore
+					     (warn "type: ~S or ~S" final-form 
+						   (type-specifier-primary type))
+					     (append (if functional-p
+							 nil
+						       (compiler-call #'compile-form-unprotected
+							 :env init-env
+							 :defaults all
+							 :form init-form
+							 :result-mode :ignore
+							 :modify-accumulate let-modifies))
+						     `((:init-lexvar
+							,binding
+							:init-with-register ,final-form
+							:init-with-type ,(type-specifier-primary type)
+							))))
+					    (t ;; (warn "for ~S ~S ~S" binding init-register final-form)
+					       (append init-code
 						       `((:init-lexvar
 							  ,binding
 							  :init-with-register ,init-register
