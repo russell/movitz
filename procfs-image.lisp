@@ -1,6 +1,6 @@
 ;;;;------------------------------------------------------------------
 ;;;; 
-;;;;    Copyright (C) 2001-2004, 
+;;;;    Copyright (C) 2001-2005, 
 ;;;;    Department of Computer Science, University of Tromso, Norway.
 ;;;; 
 ;;;;    For distribution policy, see the accompanying file COPYING.
@@ -124,6 +124,8 @@
 	  (movitz-vector-symbolic-data expr)))
     (movitz-fixnum
      (movitz-fixnum-value expr))
+    (movitz-bignum
+     (movitz-bignum-value expr))
     (movitz-basic-vector
      (map 'vector #'movitz-print (movitz-vector-symbolic-data expr)))
     (movitz-cons
