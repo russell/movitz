@@ -41,8 +41,9 @@
 				(hard-type 1) (prot-type #x0800)
 				(hard-size 6) (prot-size 4))
   (if packet
-      (setf (fill-pointer packet) 64)
-    (setf packet (make-array 64 :element-type 'muerte::u8)))
+      (setf (fill-pointer packet) (max +min-ethernet-frame-size+
+				       (+ start 28)))
+    (setf packet (make-array +min-ethernet-frame-size+ :element-type 'muerte::u8)))
   (setf (aref packet (+ start 0)) (ldb (byte 8 8) hard-type)
 	(aref packet (+ start 1)) (ldb (byte 8 0) hard-type)
 	(aref packet (+ start 2)) (ldb (byte 8 8) prot-type)
