@@ -1054,6 +1054,15 @@ on the current result."
       :forward all
       :form (cons operator arguments))))
 
+(define-special-operator muerte::compiler-macro-call (&all all &form form &env env)
+  (destructuring-bind (operator &rest arguments)
+      (cdr form)
+    (assert (movitz-compiler-macro-function operator env) ()
+      "There is no compiler-macro ~S." operator)
+    (compiler-call #'compile-compiler-macro-form
+      :forward all
+      :form (cons operator arguments))))
+
 (define-special-operator muerte::do-result-mode-case (&all all &result-mode result-mode &form form)
   (loop for (cases . then-forms) in (cddr form)
       do (when (or (eq cases 'muerte.cl::t)
