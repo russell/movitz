@@ -351,7 +351,7 @@ and any element of range1."
   (let ((x (or (= -1 code)
 	       (and (member x members :test #'movitz-eql) t)
 	       (cond
-		((typep x 'movitz-nil)
+		((typep x 'movitz-null)
 		 (type-code-p 'symbol code))
 		((basic-typep x 'fixnum)
 		 (or (type-code-p 'integer code)

@@ -1040,7 +1040,8 @@ busy-waiting loop on P4."
      (do-case (t :boolean-cf=1 :labels (boundp-done))
        (:compile-form (:result-mode :eax) ,symbol)
        (:cmpl :edi :eax)
-       (:je 'boundp-done)		; if ZF=0, then CF=0
+       (:cmc)
+       (:je 'boundp-done)		; if ZF=1, then CF=1 after CMC
        (:call-local-pf dynamic-find-binding)
        (:jc 'boundp-done)
        (:movl (:eax #.(bt:slot-offset 'movitz:movitz-symbol 'movitz::value)) :eax)
@@ -1054,6 +1055,9 @@ busy-waiting loop on P4."
   `(progn
      (defparameter ,name ,init-form ,docstring)
      (define-symbol-macro ,name (%symbol-global-value ',name))))
+
+(define-compiler-macro assembly-register (register)
+  `(with-inline-assembly (:returns ,register)))
 
 (require :muerte/setf)
 

@@ -20,6 +20,9 @@
 
 (defvar *image*)
 
+(define-symbol-macro *movitz-nil*
+    (image-nil-object *image*))
+
 (define-unsigned lu16 2 :little-endian)
 (define-unsigned lu32 4 :little-endian)
 
