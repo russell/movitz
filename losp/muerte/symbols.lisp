@@ -56,8 +56,11 @@
 (defun set (symbol value)
   (setf (symbol-value symbol) value))
 
-(defmacro %symbol-global-value (symbol)
+(define-compiler-macro %symbol-global-value (symbol)
   `(memref ,symbol ,(bt:slot-offset 'movitz:movitz-symbol 'movitz::value) 0 :lisp))
+
+(defun %symbol-global-value (symbol)
+  (%symbol-global-value symbol))
 
 (defun symbol-function (symbol)
   (let ((function-value
