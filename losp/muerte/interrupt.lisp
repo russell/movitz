@@ -337,9 +337,9 @@ is off, e.g. because this interrupt/exception is routed through an interrupt gat
 	     (unwind-protect
 		 (progn
 		   (setf (%run-time-context-slot 'stack-bottom) new-bottom
-			 (%run-time-context-slot 'dynamic-env) 0
+			 ;; (%run-time-context-slot 'dynamic-env) 0
 			 (segment-register :es) (segment-register :ds))
-		   (format *debug-io* "~&Stack-warning: Bumped stack-bottom by ~D to #x~X. Reset ENV and ES.~%"
+		   (format *debug-io* "~&Stack-warning: Bumped stack-bottom by ~D to #x~X. Reset ES.~%"
 			   (- old-bottom new-bottom)
 			   new-bottom)
 		   (break "Stack overload exception ~D at EIP=~@Z, ESP=~@Z, bottom=#x~X, ENV=#x~X."
@@ -350,7 +350,7 @@ is off, e.g. because this interrupt/exception is routed through an interrupt gat
 	       (format *debug-io* "~&Stack-warning: Resetting stack-bottom to #x~X.~%"
 		       old-bottom)
 	       (setf (%run-time-context-slot 'stack-bottom) old-bottom
-		     (%run-time-context-slot 'dynamic-env) old-dynamic-env
+		     ;; (%run-time-context-slot 'dynamic-env) old-dynamic-env
 		     (segment-register :es) old-es))))
 	  (69
 	   (error "Not a function: ~S" (dereference $edx)))
