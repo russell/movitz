@@ -39,7 +39,9 @@
 	muerte.mop
 	muerte.debug
 	#+ignore muerte.x86-pc.serial))
-	
+
+(require :los0-gc)
+
 (in-package muerte.init)
 
 (declaim (special muerte::*multiboot-data*))
@@ -838,12 +840,16 @@ s#+ignore
     (incf extended-memsize (io-port #x71 :unsigned-byte8))
     (format t "Extended memory: ~D KB" extended-memsize))
 
+;;;  (loop for i from  #x40600 below #x80000
+;;;      do (setf (memref i 0 0 :unsigned-byte32) #xababe13))
+  
+  (install-los0-consing)
+  
   (let ((*repl-readline-context* (make-readline-context :history-size 16))
 	(*backtrace-stack-frame-barrier* (stack-frame-uplink (current-stack-frame)))
 	#+ignore (*error-no-condition-for-debugger* t)
 	(*debugger-function* #'los0-debugger)
 	(*package* nil))
-
     (with-simple-restart (continue "Abort LOS0 boot-up initialization.")
       (setf *cpu-features*
 	(find-cpu-features))
@@ -944,5 +950,5 @@ s#+ignore
 	   (#\esc (break "Under the bridge."))
 	   (#\e (error "this is an error!"))))))))
 
-    
+
 (genesis)
