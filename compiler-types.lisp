@@ -223,7 +223,7 @@ with the single member of <type-specifier>."
     (symbol
      (typep x 'movitz-symbol))
     ((vector array)
-     (typep x 'movitz-vector))
+     (typep x '(or movitz-basic-vector movitz-vector)))
     (fixnum
      (typep x 'movitz-fixnum))
     (bignum
