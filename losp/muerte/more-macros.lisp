@@ -292,3 +292,13 @@ respect to multiple threads."
 (defmacro ignore-errors (&body body)
   `(handler-case (progn ,@body)
      (error (c) (values nil c))))
+
+(defmacro with-slots (slot-entries instance-form &body declarations-and-forms)
+  (let ((object-var (gensym "with-slots-object-")))
+    `(symbol-macrolet ,(mapcar (lambda (entry)
+				 (let ((var (if (atom entry) entry (car entry)))
+				       (slot (if (atom entry) entry (cadr entry))))
+				   `(,var (slot-value ,object-var ',slot))))
+			       slot-entries)
+       (let ((,object-var ,instance-form))
+	 ,@declarations-and-forms))))
