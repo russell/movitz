@@ -491,6 +491,10 @@ Returns list in EAX and preserves numargs in ECX."
 (define-primitive-function ensure-heap-cons-variable ()
   "Call with lended variable (a cons) in EAX. Preserves EDX."
   (with-inline-assembly (:returns :multiple-values)
+    ;; Be defensive: Check that EAX is LISTP.
+    (:leal (:eax -1) :ecx)
+    (:testb 3 :cl)
+    (:jnz '(:sub-program () (:int 50)))
     (:cmpl :ebp :eax)			; is cons above stack-frame?
     (:jge 'return-ok)
     (:cmpl :esp :eax)			; is cons below stack-frame?
