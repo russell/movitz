@@ -1,6 +1,6 @@
 ;;;;------------------------------------------------------------------
 ;;;; 
-;;;;    Copyright (C) 2001,2000, 2002-2004,
+;;;;    Copyright (C) 2001,2000, 2002-2005,
 ;;;;    Department of Computer Science, University of Tromso, Norway
 ;;;; 
 ;;;; Filename:      bootblock.lisp
@@ -35,32 +35,32 @@
 
 (defun mkasm16-bios-print ()
   "Print something to the terminal.  [es:si] points to the text"
-  `((movzxb (:si) :cx)
-    (incw :si)
-    (movb #xe :ah)
-    (movw 7 :bx)
-    :print-loop
-    (lodsb)
-    (int #x10)
-    (loop ':print-loop)
-    (ret)))
+  `((:movzxb (:si) :cx)
+    (:incw :si)
+    (:movb #xe :ah)
+    (:movw 7 :bx)
+    print-loop
+    (:lodsb)
+    (:int #x10)
+    (:loop 'print-loop)
+    (:ret)))
 
 (defun mkasm16-format-hex ()
   "Format a 16-bit word (in DX) into hex string (in DI)"
-  `((std)
-    (movw 4 :cx)
-    (addw :cx :di)
-    (decw :di)
-    :format-loop
-    (movb :dl :bl)
-    (andw #x0f bx)
-    (movb ('hex-table bx) :al)
-    (stosb)
-    (shrw :dx 4)
-    (decw :cx)
-    (jnz ':format-loop)
-    (cld)
-    (ret)
+  `((:std)
+    (:movw 4 :cx)
+    (:addw :cx :di)
+    (:decw :di)
+    format-loop
+    (:movb :dl :bl)
+    (:andw #x0f bx)
+    (:movb ('hex-table bx) :al)
+    (:stosb)
+    (:shrw :dx 4)
+    (:decw :cx)
+    (:jnz 'format-loop)
+    (:cld)
+    (:ret)
     hex-table (% format nil "0123456789abcdef")))
 
 (defconstant +SECTOR-SIZE+ 512)
