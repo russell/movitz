@@ -44,6 +44,12 @@ run-time context.")
   "Use these assembly-instruction prefixes when accessing the global
 run-time context.")
 
+(defvar *compiler-allow-untagged-word-bits* 0
+  "Allow (temporary) untagged values of this bit-size to exist, because
+the system ensures one way or another that there can be no pointers below
+this size.")
+
+
 (defvar *compiler-compile-eval-whens* t
   "When encountering (eval-when (:compile-toplevel) <code>),
 compile, using the host compiler, the code rather than just using eval.")
