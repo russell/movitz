@@ -63,7 +63,7 @@
 						  (point))
 					   (progn (forward-sexp 1)
 						  (point)))))
-      (if (and (string-equal "method" definition-type)
+      (if (and (equalp "method" definition-type)
 	       (char-equal 58 (string-to-char lambda-list)))
 	  (let ((qualifier lambda-list)
 		;; XXX we only deal with one (potential) qualifier..
