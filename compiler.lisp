@@ -3489,7 +3489,9 @@ loading borrowed bindings."
 	       (append (make-load-lexical lended-binding :eax funobj t frame-map)
 		       (unless (or (typep lended-binding 'borrowed-binding)
 				   (getf (binding-lended-p lended-binding) :dynamic-extent-p))
-			 (append `((:globally (:call (:edi (:edi-offset ensure-heap-cons-variable)))))
+			 (append `((:pushl :edx)
+				   (:globally (:call (:edi (:edi-offset ensure-heap-cons-variable))))
+				   (:popl :edx))
 				 (make-store-lexical lended-binding :eax t frame-map)))
 		       `((:movl :eax
 				(,funobj-register

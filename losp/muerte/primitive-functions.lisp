@@ -571,7 +571,7 @@ BUFFER-SIZE is the number of words in the buffer."
     (:ret)))
 
 (define-primitive-function ensure-heap-cons-variable ()
-  "Call with lended variable (a cons) in EAX. Preserves EDX."
+  "Call with lended variable (a cons) in EAX."
   (with-inline-assembly (:returns :multiple-values)
     ;; Be defensive: Check that EAX is LISTP.
     (:leal (:eax -1) :ecx)
@@ -582,12 +582,10 @@ BUFFER-SIZE is the number of words in the buffer."
     (:cmpl :esp :eax)			; is cons below stack-frame?
     (:jl 'return-ok)
     ;; must migrate cell onto heap
-    (:pushl :edx)
     (:movl (:eax 3) :ebx)		; cdr
     (:movl (:eax -1) :eax)		; car
-    (:locally (:call (:edi (:edi-offset fast-cons))))
-    (:popl :edx)
-    return-ok
+    (:locally (:jmp (:edi (:edi-offset fast-cons))))
+   return-ok
     (:ret)))
 
 (define-primitive-function box-u32-ecx ()
@@ -614,7 +612,7 @@ BUFFER-SIZE is the number of words in the buffer."
 	    
 
 (define-primitive-function unbox-u32 ()
-  "Load (ldb (byte 32 0) EAX) into ECX."
+  "Load (ldb (byte 32 0) EAX) into ECX. Preserve EAX and EBX."
   (macrolet
       ((do-it ()
 	 `(with-inline-assembly (:returns :multiple-values)
