@@ -26,20 +26,18 @@
     expander))
 
 (defun assembly-macroexpand (prg amenv)
-  (let* ((fix-tail nil)
-	 (new-prg
-	  (loop for (p . tail) on prg
-	      as expander = (and (consp p)
-				 (symbolp (car p))
-				 (assembly-macro-expander (car p) amenv))
-	      if expander
-	      append (funcall expander p)
-	      else if (consp p)
-	      append (list (assembly-macroexpand p amenv))
-	      else append (list p)
-	      unless (listp tail)
-	      do (setf fix-tail tail))))
-    (when fix-tail
-      (setf (cdr (last new-prg)) fix-tail))
-    new-prg))
+  #+cmu (declare (optimize (safety 0)))	; Circumvent CMUCL bug in loop for-as-on-list.
+  (loop for (p . tail) on prg
+      as expander = (and (consp p)
+			 (symbolp (car p))
+			 (assembly-macro-expander (car p) amenv))
+      if expander
+      append (funcall expander p) into result
+      else if (consp p)
+      append (list (assembly-macroexpand p amenv)) into result
+      else append (list p) into result
+      when (not (listp tail))
+      do (setf (cdr (last result)) tail)
+	 (return result)
+      finally (return result)))
 
