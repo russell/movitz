@@ -155,7 +155,6 @@
        (:movw :bx :es)
        (:xorw :bx :bx)
 
-       
        (:int #x13)			; Call BIOS routine
        (:jc 'read-error)
        (:movzxb :al :ecx)
@@ -285,7 +284,7 @@
        ;; Data
        welcome         (% format 8 "Loading Movitz ~D..~%"
 			  ,(incf *bootblock-build*))
-       entering        (% format 8 ")~%Enter..")
+       entering        (% format 8 "~%Enter..")
        error           (% format 8 "Failed!)")
        track-start-msg (% format 8 "(")
        track-end-msg   (% format 8 ")")
