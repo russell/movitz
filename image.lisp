@@ -804,17 +804,18 @@ a cons is an offset (the car) from some other code-vector (the cdr)."
 		     (movitz-nil)
 		     (t (warn "not a symbol for plist: ~S has ~S" symbol plist)))))
 	  ;; pull in global properties
+	  (loop for var in (image-compile-time-variables *image*)
+	      do (let ((mname (movitz-read var))
+		       (mvalue (movitz-read (symbol-value var))))
+		   (setf (movitz-symbol-value mname) mvalue)))
 	  (setf (movitz-constant-block-global-properties constant-block)
-	    (movitz-read (nconc (mapcan #'(lambda (var)
-					 (list (movitz-read var) (movitz-read (symbol-value var))))
-				     (image-compile-time-variables *image*))
-			     (list :setf-namespace (movitz-environment-setf-function-names
-						    *movitz-global-environment*)
-				   :trampoline-funcall%1op (find-primitive-function
-							    'muerte::trampoline-funcall%1op)
-				   :trampoline-funcall%2op (find-primitive-function
-							    'muerte::trampoline-funcall%2op)
-				   :packages (make-packages-hash))))))
+	    (movitz-read (list :packages (make-packages-hash)
+			       :setf-namespace (movitz-environment-setf-function-names
+						*movitz-global-environment*)
+			       :trampoline-funcall%1op (find-primitive-function
+							'muerte::trampoline-funcall%1op)
+			       :trampoline-funcall%2op (find-primitive-function
+							'muerte::trampoline-funcall%2op)))))
 	(with-binary-file (stream path
 				  :check-stream t
 				  :direction :output
