@@ -21,6 +21,9 @@
     this would allow for a cache-size of 1 or 2, say. And it'd be
     possible to determine these cases dynamically.
 
+  - It might be feasible to locate some specialization-tables directly
+    in the instance structure. For example eql-specialized methods.
+
 
 ** Function calls via symbols
 
@@ -44,3 +47,9 @@
     install in the old FS a code-vector that updates the caller
     function's references to the new FS, before trampolining to the
     new FS. The performance gain could be substantial.
+
+
+** Caching strategies
+
+  - Might e.g. write-combining or other relaxed memory coherence
+    models be used, e.g. within one "thread" area?
