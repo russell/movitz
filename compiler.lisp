@@ -5704,7 +5704,8 @@ fifth:  all compiler-values for form1, as a list."
     (check-type binding lexical-binding)
     (case (operator result-mode)
       (:ignore
-       (compiler-values ()))
+       (compiler-values ()
+	 :final-form binding))
       (t (let ((returns (ecase (result-mode-type result-mode)
 			  ((:function :multiple-values :eax)
 			   :eax)
