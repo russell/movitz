@@ -536,15 +536,16 @@ with the single member of <type-specifier>."
   (multiple-value-bind (code integer-range members include complement)
       (type-specifier-encode nil)
     (dolist (x member-objects)
-      (multiple-value-setq (code integer-range members include complement)
-	(multiple-value-call #'encoded-types-or
-	  code integer-range members include complement
-	  (etypecase x
-	    (movitz-fixnum
-	     (type-values () :integer-range (make-numscope (movitz-fixnum-value x)
-							   (movitz-fixnum-value x))))
-	    (movitz-object
-	     (type-values () :members (list x)))))))
+      (let ((member (movitz-read x)))
+	(multiple-value-setq (code integer-range members include complement)
+	  (multiple-value-call #'encoded-types-or
+	    code integer-range members include complement
+	    (etypecase member
+	      (movitz-fixnum
+	       (type-values () :integer-range (make-numscope (movitz-fixnum-value member)
+							     (movitz-fixnum-value member))))
+	      (movitz-object
+	       (type-values () :members (list member))))))))
     (values code integer-range members include complement)))
 
 (defun encoded-emptyp (code integer-range members include complement)
