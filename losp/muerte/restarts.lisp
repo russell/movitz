@@ -199,12 +199,6 @@
 		(restart-args restart)))))))
   restart)
 
-(defmacro with-simple-restart ((name format-control &rest format-arguments)
-					    &body body)
-  `(with-basic-restart (,name 'with-simple-restart nil nil
-			      ,format-control ,@format-arguments)
-     ,@body))
-
 ;;;;
 
 (defun abort (&optional condition)

@@ -316,6 +316,12 @@ respect to multiple threads."
      (:testb 3 :al)			; Just to be sure..
      (:jnz '(:sub-program () (:int 63)))))
 
+(defmacro with-simple-restart ((name format-control &rest format-arguments)
+					    &body body)
+  `(with-basic-restart (,name 'with-simple-restart nil nil
+			      ,format-control ,@format-arguments)
+     ,@body))
+
 ;;; Some macros that aren't implemented, and we want to give compiler errors.
 
 (defmacro define-unimplemented-macro (name)
