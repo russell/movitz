@@ -793,9 +793,9 @@
 		(:shll 2 :ecx)
 		(:addl :ebx :eax)
 		(:into)
-		(:testb ,(mask-field (byte (+ 2 movitz::+movitz-fixnum-shift+) 0) -1)
-			:al)
-		(:jnz '(:sub-program () (:int 63)))
+;;;		(:testb ,(mask-field (byte (+ 2 movitz::+movitz-fixnum-shift+) 0) -1)
+;;;			:al)
+;;;		(:jnz '(:sub-program () (:int 63)))
 		(:addl :eax :ecx)
 		(:shrl ,movitz::+movitz-fixnum-shift+ :ecx) ; scale down address
 		(,prefixes :movl (:ecx) :ecx)))))
