@@ -5742,7 +5742,9 @@ cleanup-forms etc.) to <to-env> with <return-code>'s result intact."
       (stack-delta from-env to-env)
     (assert stack-distance)
     (assert (null unwind-protects) ()
-      "Lexical unwind-protect not implemented.")
+      "Lexical unwind-protect not implemented, to-env: ~S." to-env)
+    (when (plusp num-dynamic-slots)
+      (warn "Lexical jump across ~D specials." num-dynamic-slots))
     (cond
      ((and (eq t stack-distance)
 	   (zerop num-dynamic-slots))
