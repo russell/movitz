@@ -311,3 +311,13 @@ respect to multiple threads."
        (let ((,object-var ,instance-form))
 	 ,@declarations-and-forms))))
 
+
+;;; Some macros that aren't implemented, and we want to give compiler errors.
+
+(defmacro define-unimplemented-macro (name)
+  `(defmacro ,name (&rest args)
+     (declare (ignore args))
+     (error ,(format nil "Macro ~A is not implemented yet." name))))
+
+(define-unimplemented-macro with-open-file)
+(define-unimplemented-macro restart-case)
