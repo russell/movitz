@@ -5972,6 +5972,9 @@ and a list of any intervening unwind-protect environment-slots."
 	      (:pushl :edi)
 	      (:subl 4 :edx)
 	      (:jnz ',restify-alloca-loop)
+	      ,@(when *compiler-auto-stack-checks-p*
+		  `((,*compiler-local-segment-prefix*
+		     :bound (:edi ,(global-constant-offset 'stack-bottom)) :esp)))
 	      (:leal (:esp 5) :edx)
 	      (:andl -7 :edx))		; Make EDX a proper consp into the alloca area.
 	    (cond
