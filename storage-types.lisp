@@ -67,9 +67,9 @@
   :other 6
   :symbol 7
   
-  :vector #x10
+  :vector #x1a
   :defstruct #x20
-  :funobj #x30
+  :funobj #x3a
   :std-instance #x40
   :run-time-context #x50
   :infant-object #x65
@@ -81,6 +81,8 @@
   )
 
 (defconstant +fixnum-tags+ '(:even-fixnum :odd-fixnum))
+(defparameter +scan-skip-word+ #x00000003)
+
 
 (defun tag (type)
   (bt:enum-value 'other-type-byte type))
