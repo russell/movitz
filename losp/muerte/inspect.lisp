@@ -70,12 +70,19 @@ after the point that called this stack-frame."
   (let ((uplink (stack-frame-uplink stack frame)))
     (when (and uplink (not (= 0 uplink)))
       (let ((funobj (stack-frame-funobj stack uplink)))
-	(when (typep funobj 'function)
+	(cond
+	 ((typep funobj 'function)
 	  (let* ((code-vector (funobj-code-vector funobj))
 		 (eip (stack-frame-ref stack frame 1 :unsigned-byte32))
 		 (delta (- eip 8 (* #.movitz::+movitz-fixnum-factor+ (object-location code-vector)))))
 	    (when (below delta (length code-vector))
-	      (values delta code-vector funobj))))))))
+	      (values delta code-vector funobj))))
+	 ((eq 0 funobj)
+	  (let* ((code-vector (symbol-value 'default-interrupt-trampoline))
+		 (eip (stack-frame-ref stack frame 1 :unsigned-byte32))
+		 (delta (- eip 8 (* #.movitz::+movitz-fixnum-factor+ (object-location code-vector)))))
+	    (when (below delta (length code-vector))
+	      (values delta code-vector funobj)))))))))
 
 (defun stack-frame-ref (stack frame index &optional (type ':lisp))
   "If stack is provided, stack-frame is an index into that stack vector.
