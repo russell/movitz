@@ -87,6 +87,8 @@
 		     (case type-tag
 		       (:funobj
 			(read-binary 'movitz-funobj (image-stream image)))
+		       (:basic-vector
+			(read-binary 'movitz-basic-vector (image-stream image)))
 		       (:vector
 			(read-binary 'movitz-vector (image-stream image)))
 		       (:defstruct

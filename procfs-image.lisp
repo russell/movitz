@@ -110,6 +110,7 @@
     ((not movitz-object)
      expr)
     ((or movitz-nil movitz-constant-block) nil)
+    (movitz-std-instance expr)
     (movitz-symbol
      (intern (movitz-print (movitz-symbol-name expr))))
     (movitz-string
@@ -117,7 +118,7 @@
 	  (movitz-vector-symbolic-data expr)))
     (movitz-fixnum
      (movitz-fixnum-value expr))
-    (movitz-vector
+    ((or movitz-vector movitz-basic-vector)
      (map 'vector #'movitz-print (movitz-vector-symbolic-data expr)))
     (movitz-cons
      (cons (movitz-print (movitz-car expr))
