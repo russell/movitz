@@ -53,6 +53,7 @@
 	 (file-position (image-stream *image*) ,v)))))
 
 (define-enum other-type-byte (u8)
+  :fixnum 0
   :even-fixnum 0
   :odd-fixnum 4
   :cons 1
@@ -757,6 +758,7 @@ integer (native lisp) value."
     :accessor funobj-env)   
    (extent
     :initarg :extent
+    :initform :unused
     :accessor movitz-funobj-extent)
    (usage
     :initform nil
@@ -1283,4 +1285,3 @@ integer (native lisp) value."
     (setf (slot-value obj 'numerator) (numerator value)
 	  (slot-value obj 'denominator) (denominator value))
     (call-next-method)))
-	 
