@@ -42,9 +42,6 @@
 	   :endian :big
 	   :type ,type))
 
-(require :lib/net/arp)
-(require :lib/net/tftp)
-
 (defclass ip4-stack ()
   ((interface
     :initarg :interface
@@ -74,6 +71,9 @@
   (12 source)
   (16 destination)
   (20 options))
+
+(require :lib/net/arp)
+(require :lib/net/tftp)
 
 (defun ip-protocol (packet &optional (start 14))
   (ip4-ref packet start +ip-header-protocol+ :unsigned-byte8))
