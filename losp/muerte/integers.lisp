@@ -1526,13 +1526,13 @@ Preserve EAX and EBX."
 	  0
 	(reduce #'logior integers)))))
 
-(define-compiler-macro logior (&whole form &rest integers)
+(define-compiler-macro logior (&whole form &rest integers &environment env)
   (let ((constant-folded-integers (loop for x in integers
 				      with folded-constant = 0
-				      if (and (movitz:movitz-constantp x)
-					      (not (zerop (movitz::movitz-eval x))))
+				      if (and (movitz:movitz-constantp x env)
+					      (not (zerop (movitz:movitz-eval x env))))
 				      do (setf folded-constant
-					   (logior folded-constant (movitz::movitz-eval x)))
+					   (logior folded-constant (movitz:movitz-eval x env)))
 				      else collect x into non-constants
 				      finally (return (if (= 0 folded-constant)
 							  non-constants
