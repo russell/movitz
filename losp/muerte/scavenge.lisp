@@ -124,7 +124,7 @@ start-location and end-location."
 	  (error "Scanned unknown basic-vector #x~Z at address #x~X." x scan))
 	 ((scavenge-typep x :old-vector)
 	  (error "Scanned old-vector #x~Z at address #x~X." x scan))
-	 ((eq x (fixnum-word 3))
+	 ((eq x (%lispval-object 3))
 	  (incf scan)
 	  (let ((delta (memref scan 0 0 :lisp)))
 	    (check-type delta positive-fixnum)
