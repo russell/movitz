@@ -1118,7 +1118,7 @@
 	   #:package-object-use-list
 	   #:package-object-internal-symbols
 	   #:package-object-external-symbols
-	   
+
 	   vector-element-type
 	   vector-element-size
 	   with-subvector-accessor
@@ -1268,6 +1268,8 @@
 	   #:code-vector%1op
 	   #:code-vector%2op
 	   #:code-vector%3op
+	   #:code-vector-word
+	   #:lu32
 	   
 	   #:+movitz-fixnum-factor+
 	   #:+movitz-fixnum-shift+
@@ -1280,6 +1282,7 @@
 	   #:movitz-vector-num-elements
 	   #:movitz-vector-element-type
 	   #:movitz-vector-symbolic-data
+	   #:vector-type-tag
 	   
 	   #:movitz-symbol
 	   #:movitz-string
