@@ -47,6 +47,7 @@
 (require :muerte/restarts)
 (require :muerte/conditions)
 (require :muerte/read)
+(require :muerte/scavenge)
 (require :muerte/simple-streams)
 
 (require :muerte/io-port)
