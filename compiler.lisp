@@ -739,12 +739,11 @@ a (lexical-extent) sub-function might care about its parent frame-map."
 					   have-normalized-ecx-p)))
 		     (let ((optimized-function-code
 			    (optimize-code function-code
-					   :keep-labels (append
-							 (subseq (movitz-funobj-const-list funobj)
-								 0 (movitz-funobj-num-jumpers funobj))
-							 '(entry%1op
-							   entry%2op
-							   entry%3op)))))
+					   :keep-labels (append (subseq (movitz-funobj-const-list funobj)
+									0 (movitz-funobj-num-jumpers funobj))
+								'(entry%1op
+								  entry%2op
+								  entry%3op)))))
 		       (cons numargs optimized-function-code))))))))
     (let ((code1 (cdr (assoc 1 code-specs)))
 	  (code2 (cdr (assoc 2 code-specs)))
