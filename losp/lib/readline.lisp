@@ -19,16 +19,16 @@
 (provide :lib/readline)
 
 (defpackage muerte.readline
-  (:use muerte.cl muerte.lib)
-  (:export readline
-	   readline-buffer
-	   make-readline-buffer
-	   readline-buffer-string
-	   readline-buffer-cursor-position
-	   readline-buffer-cursor-end
-	   make-readline-context
-	   contextual-readline
-	   complete-symbol-name))
+  (:use #:muerte.cl #:muerte.lib)
+  (:export #:readline
+	   #:readline-buffer
+	   #:make-readline-buffer
+	   #:readline-buffer-string
+	   #:readline-buffer-cursor-position
+	   #:readline-buffer-cursor-end
+	   #:make-readline-context
+	   #:contextual-readline
+	   #:complete-symbol-name))
 
 (in-package muerte.readline)
 

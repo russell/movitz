@@ -20,10 +20,10 @@
 (provide :lib/net/ip4)
 
 (defpackage muerte.ip4
-  (:use muerte.cl muerte muerte.ethernet muerte.lib)
-  (:export pprint-ip4
-	   ip4-test
-	   ip4-free))
+  (:use #:muerte.cl #:muerte #:muerte.ethernet #:muerte.lib)
+  (:export #:pprint-ip4
+	   #:ip4-test
+	   #:ip4-free))
 
 (require :lib/net/arp)
 

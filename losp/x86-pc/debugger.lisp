@@ -17,20 +17,20 @@
 (provide :x86-pc/debugger)
 
 (defpackage muerte.debug
-  (:use muerte.cl muerte muerte.x86-pc)
-  (:export *debugger-function*
-	   *debugger-condition*
-	   *backtrace-conflate-names*
-	   *backtrace-do-conflate*
-	   *backtrace-max-frames*
-	   *backtrace-max-args*
-	   *backtrace-on-error*
-	   *backtrace-stack-frame-barrier*
-	   *backtrace-do-fresh-lines*
-	   *backtrace-be-spartan-p*
-	   *backtrace-print-length*
-	   *backtrace-print-level*
-	   backtrace
+  (:use #:muerte.cl #:muerte #:muerte.x86-pc)
+  (:export #:*debugger-function*
+	   #:*debugger-condition*
+	   #:*backtrace-conflate-names*
+	   #:*backtrace-do-conflate*
+	   #:*backtrace-max-frames*
+	   #:*backtrace-max-args*
+	   #:*backtrace-on-error*
+	   #:*backtrace-stack-frame-barrier*
+	   #:*backtrace-do-fresh-lines*
+	   #:*backtrace-be-spartan-p*
+	   #:*backtrace-print-length*
+	   #:*backtrace-print-level*
+	   #:backtrace
 	   ))
 
 (in-package muerte.debug)

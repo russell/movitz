@@ -23,7 +23,7 @@
 (provide :lib/net/ip6)
 
 (defpackage muerte.ip6
-  (:use muerte.cl muerte.lib muerte.x86-pc muerte.ethernet)
+  (:use #:muerte.cl #:muerte.lib #:muerte.x86-pc #:muerte.ethernet)
   (:export #:packet-version
 	   #:packet-source
 	   #:packet-destination

@@ -18,7 +18,7 @@
 (provide :lib/toplevel)
 
 (defpackage muerte.toplevel
-  (:use muerte.cl muerte)
+  (:use #:muerte.cl #:muerte)
   (:export #:define-toplevel-command
 	   #:invoke-toplevel-command
 	   #:*toplevel-commands*))
