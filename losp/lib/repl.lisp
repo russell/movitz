@@ -29,7 +29,7 @@
 
 (defun default-repl-prompter ()
   (fresh-line)
-  (when (plusp *repl-level*)
+  (when (or (plusp *repl-level*) *repl-prompt-context*)
     (format t "[~D~@[~A~]] " *repl-level* *repl-prompt-context*))
   (format t "~A> " (package-name *package*)))
 
