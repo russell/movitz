@@ -890,7 +890,9 @@ a cons is an offset (the car) from some other code-vector (the cdr)."
 			(warn "Multiboot load-address #x~x is below the 1MB mark."
 			      load-address))
 		      (when (> (+ mb-file-position (sizeof mb)) 8192)
-			(warn "Multiboot header at position ~D is above the 8KB mark."))
+			(warn "Multiboot header at position ~D is above the 8KB mark, ~
+this image will not be Multiboot compatible."
+			      (+ mb-file-position (sizeof mb))))
 		      (assert (file-position stream mb-file-position) ()
 			"Couldn't set file-position for ~W to ~W."
 			(pathname stream)
