@@ -68,8 +68,6 @@
 			:eax)
 	      basic-vector-length-ok)))
        (do-it)))
-    (old-vector
-     (vector-fill-pointer sequence))
     (list
      (do ((x sequence (cdr x))
 	  (length 0 (1+ length)))

@@ -557,7 +557,7 @@
     nil)
    (t (if (member type '(standard-gf-instance function pointer atom
 			 integer fixnum positive-fixnum cons symbol character null list
-			 string vector simple-vector vector-u8 vector-u16))
+			 string vector simple-vector vector-u8 vector-u16 code-vector))
 	  `(unless (typep ,place ',type)
 	     (with-inline-assembly (:returns :non-local-exit)
 	       (:int 66)))
