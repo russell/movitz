@@ -187,11 +187,11 @@
 		 (cond
 		  ((eq 0 offset)
 		   `(with-inline-assembly (:returns :eax)
-		      (:compile-two-forms (:ecx :ebx) ,object ,index)
+		      (:compile-two-forms (:ebx :ecx) ,object ,index)
 		      (:xorl :eax :eax)
 		      (:movb ,(movitz:tag :character) :al)
-		      (:sarl ,movitz::+movitz-fixnum-shift+ :ebx) ; scale index
-		      (:movb (:ecx :ebx ,(offset-by 1)) :ah)))
+		      (:sarl ,movitz::+movitz-fixnum-shift+ :ecx) ; scale index
+		      (:movb (:ebx :ecx ,(offset-by 1)) :ah)))
 		  (t (let ((object-var (gensym "memref-object-")))
 		       `(let ((,object-var ,object))
 			  (with-inline-assembly (:returns :eax)
