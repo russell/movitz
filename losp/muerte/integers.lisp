@@ -362,6 +362,12 @@
 		   
 		    pfix-pbig-done)
 		   ))
+		(((integer * -1) (integer 0 *))
+		 (- y (- x)))
+		(((integer 0 *) (integer * -1))
+		 (- x (- y)))
+		(((integer * -1) (integer * -1))
+		 (+ (- x) (- y)))
 		)))
 	(do-it)))
    (t (&rest terms)
