@@ -722,7 +722,7 @@ where zot is not in foo's scope, but _is_ in foo's extent."
 				;; catcher
 				(:locally (:pushl (:edi (:edi-offset dynamic-env))))
 				(:pushl ',label-set-name)
-				(:pushl :eax)
+				(:locally (:pushl (:edi (:edi-offset unbound-function))))
 				(:pushl :ebp)
 				(:locally (:movl :esp (:edi (:edi-offset dynamic-env)))))
 			      maybe-store-esp-code
