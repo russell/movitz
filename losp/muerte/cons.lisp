@@ -19,7 +19,7 @@
 (in-package muerte)
 
 (define-primitive-function fast-cdr-car (cell)
-  "Compute both the car and the cdr of a cell."
+  "Compute both the car (into EBX) and the cdr (into EAX) of a cell."
   (with-inline-assembly (:returns :eax)
     (:leal (:eax -1) :ecx)
     (:testb 3 :cl)
