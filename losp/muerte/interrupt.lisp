@@ -64,7 +64,7 @@
     `(memref ,frame (dit-frame-offset ,reg) :type ,type)))
 
 (defun dit-frame-ref (stack frame reg &optional (type :lisp))
-  (stack-frame-ref stack frame (dit-frame-index reg) type))
+  (stack-frame-ref stack (+ frame (dit-frame-index reg)) 0 type))
 
 (define-compiler-macro (setf dit-frame-ref) (&whole form value stack frame reg
 					     &optional (type :lisp)
@@ -74,14 +74,15 @@
       form
     `(setf (memref ,frame (dit-frame-offset ,reg) :type ,type) ,value)))
 
-;;;(defun (setf dit-frame-ref) (x reg type &optional (frame *last-dit-frame*))
-;;;  (setf (memref frame (dit-frame-offset reg) 0 type) x))
-
 (defun dit-frame-casf (stack dit-frame)
   "Compute the `currently active stack-frame' when the interrupt occurred."
-  (let ((ebp (dit-frame-ref stack dit-frame :ebp))
+  (let ((atomically-location (dit-frame-ref stack dit-frame :atomically-continuation :location))
+	(ebp (dit-frame-ref stack dit-frame :ebp))
 	(esp (dit-frame-esp stack dit-frame)))
     (cond
+     ((and (not (= 0 atomically-location))
+	   (= 0 (ldb (byte 2 0) (dit-frame-ref stack dit-frame :atomically-continuation :unsigned-byte8))))
+      (stack-frame-ref stack atomically-location 0))
      ((null ebp)			; special dynamic control-transfer mode
       (stack-frame-ref stack (dit-frame-ref stack dit-frame :dynamic-env) 0))
      ((< esp ebp)
