@@ -30,6 +30,15 @@
 (defvar *default-image-init-file* #p"losp/los0.lisp")
 (defvar *default-image-file* #p"los0-image")
 
+(defvar *movitz-host-features* *features*
+  "The *features* of the host implementation.")
+
+(defmacro with-host-environment (options &body body)
+  "Execute body in a `normal' host environment."
+  (declare (ignore options))
+  `(let ((*features* *movitz-host-features*))
+     ,@body))
+
 (defmacro print-unreadable-movitz-object ((object stream &rest key-args) &body body)
   "Just like print-unreadable-object, just adorn output so as to
 make clear it's a Movitz object, with extra <..>"
