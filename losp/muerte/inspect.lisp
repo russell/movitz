@@ -237,6 +237,10 @@ Otherwise, stack-frame is an absolute location."
 
 (defun objects-equalp (x y)
   "Basically, this verifies whether x is a shallow-copy of y, or vice versa."
+  (assert (not (with-inline-assembly (:returns :boolean-zf=1)
+		 (:load-lexical (:lexical-binding x) :eax)
+		 (:cmpl #x13 :eax)))
+      (x) "Checking illegal ~S for object-equalp." x)
   (or (eql x y)
       (cond
        ((not (objects-equalp (class-of x) (class-of y)))
