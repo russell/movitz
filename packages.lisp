@@ -1141,6 +1141,7 @@
 	   #:map-heap-words
 	   #:map-stack-words
 	   #:malloc-clumps
+	   #:malloc-data-clumps
 	   #:malloc-cons-pointer
 	   #:malloc-buffer-start
 
