@@ -20,11 +20,9 @@
 (in-package muerte)
 
 (defun first (x)
-  (declare (type list x))
   (car x))
 
 (defun rest (x)
-  (declare (type list x))
   (cdr x))
 
 ;; Compiler-macros for first and rest in basic-macros.lisp.
