@@ -274,12 +274,13 @@
 		     $eip
 		     (interrupt-frame-ref :error-code :unsigned-byte32 0 interrupt-frame)
 		     $eax $ebx $ecx))
-	  ((61)
+	  ((60)
 	   ;; EAX failed type in EDX. May be restarted by returning with a new value in EAX.
 	   (with-simple-restart (continue "Retry with a different value.")
 	     (error 'type-error :datum (dereference $eax) :expected-type (dereference $edx)))
 	   (format *query-io* "Enter a new value: ")
 	   (setf (dereference $eax) (read *query-io*)))
+	  (61 (error 'type-error :datum (dereference $eax) :expected-type 'list))
 	  (62 (error "Trying to save too many values: ~@Z." $ecx))
 	  (63 (error "Primitive assertion error. EIP=~@Z, ESI=~@Z." $eip $esi))
 	  (64 (error 'type-error :datum (dereference $eax) :expected-type 'integer))
