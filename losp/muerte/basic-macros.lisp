@@ -439,7 +439,7 @@
    ((and (movitz:movitz-constantp x env)
 	 (not (typep (movitz:movitz-eval x env)
 		     '(and integer (not fixnum)))))
-    `(eq ',x ,y))
+    `(eq ',(movitz:movitz-eval x env) ,y))
    (t `(with-inline-assembly (:returns :boolean-zf=1)
 	 (:compile-two-forms (:eax :ebx) ,x ,y)
 	 (:call-global-pf fast-eql)))))
