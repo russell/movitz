@@ -865,6 +865,10 @@
 							    direct-slots))
 				      :allocation (slot-definition-allocation (car direct-slots)))))
   
+  (defun compute-effective-slot-definition (class name direct-slots)
+    (declare (ignore name direct-slots))
+    (error "Don't know how to compute-effective-slot-definition for class ~S of class ~S."
+	   class (class-of class)))
   
 
 ;;;;
