@@ -170,7 +170,8 @@
 	  (internal-write object)
 	(handler-case (internal-write object)
 	  (serious-condition (c)
-	    (format t "#<printer error for ~Z: [~A]>" object c)))))))
+	    (print-unreadable-object (c *standard-output* :type t :identity t)
+	      (format t " while printing ~Z" object))))))))
 
 (defun internal-write (object)
   (let ((stream *standard-output*))
