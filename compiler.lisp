@@ -2348,6 +2348,9 @@ falling below the label."
     :initarg :shadowing-variable
     :reader shadowing-variable)))
 
+(defmethod binding-store-type ((binding dynamic-binding))
+  (multiple-value-list (type-specifier-encode t)))
+
 (defun stack-frame-offset (stack-frame-position)
   (* -4 (1+ stack-frame-position)))
 
