@@ -306,8 +306,8 @@ that reads from <io-base-form> plus some offset."
 		  (:cmpl :ecx (:esp))
 		  (:jbe 'end-io-read-loop)
 		  (:inw :dx :ax)
-		  (:addl 1 :ecx)
-		  (:movw :ax (:ebx ,(+ offset -2) (:ecx 2)))
+		  (:addl 2 :ecx)
+		  (:movw :ax (:ebx ,(+ offset -2) :ecx))
 		  (:jmp 'io-read-loop)
 		  (:popl :eax)		; increment :esp, and put a lispval in :eax.
 		 end-io-read-loop)))
@@ -439,8 +439,8 @@ that reads from <io-base-form> plus some offset."
 		 io-read-loop
 		  (:cmpl :ecx (:esp))
 		  (:jbe 'end-io-read-loop)
-		  (:addl 1 :ecx)
-		  (:movw (:ebx ,(+ offset -2) (:ecx 2)) :ax)
+		  (:addl 2 :ecx)
+		  (:movw (:ebx ,(+ offset -2) :ecx) :ax)
 		  (:outw :ax :dx)
 		  (:jmp 'io-read-loop)
 		  (:popl :eax)		; increment :esp, and put a lispval in :eax.
