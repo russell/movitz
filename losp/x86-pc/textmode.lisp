@@ -69,12 +69,12 @@
 (defun textmode-write-char (c)
   (case c
     (#\newline
-     (setf *cursor-x* 0)
      (cond
       ((>= (1+ *cursor-y*) *screen-height*)
        (textmode-scroll-down)
        (setf *cursor-y* (1- *screen-height*)))
       (t (incf *cursor-y*)))
+     (setf *cursor-x* 0)
      (move-vga-cursor 0 *cursor-y*))
     (#\backspace
      (if (/= 0 *cursor-x*)
@@ -125,6 +125,7 @@
 
 (defun textmode-scroll-down ()
   (declare (special muerte.lib::*scroll-offset*))
+  (signal 'newline)
   (incf muerte.lib::*scroll-offset*)
   (loop with stride = (* 2 *screen-stride*)
       for y below *screen-height*
