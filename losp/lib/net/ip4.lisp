@@ -252,10 +252,27 @@
 
 ;;;; UDP
 
+(defun udp-src-port (packet &optional (start 34))
+  (bvref-u16 packet start 0))
+
+(defun (setf udp-src-port) (value packet &optional (start 34))
+  (setf (bvref-u16 packet start 0) value))
+
+(defun udp-dst-port (packet &optional (start 34))
+  (bvref-u16 packet start 2))
+
+(defun udp-length (packet &optional (start 34))
+  (bvref-u16 packet start 4))
+
+(defun udp-checksum (packet &optional (start 34))
+  (bvref-u16 packet start 6))
+
+
 (defmethod udp-input ((stack ip4-stack) packet ip-start udp-start)
   (warn "Got UDP packet of length ~D from ~@v/ip4:pprint-ip4/."
 	(- (length packet) udp-start)
 	ip-start packet))
+
 
 ;;;; TCP
 
