@@ -103,7 +103,7 @@
 
 ;;; Unwind-protect entry:
 ;;;   12: parent
-;;;    8: eip
+;;;    8: jumper index (=> eip)
 ;;;    4: tag = #:unwind-protect-tag
 ;;;    0: ebp/stack-frame
 
@@ -176,7 +176,8 @@ with EAX still holding the tag."
     (:locally (:movl :ebx (:edi (:edi-offset dynamic-env))))
     (:movl (:eax 0) :ebp)		; install clean-up's stack-frame (but keep our ESP)
     (:movl (:ebp -4) :esi)		; ..and install clean-up's funobj in ESI
-    (:call (:eax 8))
+    (:movl (:eax 8) :edx)
+    (:call (:esi :edx #.(bt:slot-offset 'movitz:movitz-funobj 'movitz::constant0)))
     (:popl :edx)			; restoure our EDX
     (:popl :ebp)			; restore our EBP
     (:subl 4 :edx)			; ..slide EDX to next position inside stack-frame.
