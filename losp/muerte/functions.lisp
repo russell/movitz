@@ -313,6 +313,11 @@ as that vector."
   (check-type funobj compiled-function)
   (movitz-accessor-u16 funobj movitz-funobj debug-info))
 
+(defun funobj-frame-num-unboxed (funobj)
+  "The number of unboxed slots in this function's stack-frame(s)."
+  (declare (ignore funobj))
+  0)
+
 (defun make-funobj (&key (name :unnamed)
 			 (code-vector (funobj-code-vector #'constantly-prototype))
 			 (constants nil)
