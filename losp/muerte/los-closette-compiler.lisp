@@ -1111,7 +1111,7 @@
 	    (generic-function-lambda-list gf) lambda-list
 	    (generic-function-methods gf) ()
 	    (generic-function-method-class gf) method-class
-	    (generic-function-method-combination gf) *the-standard-method-combination*)
+	    (generic-function-method-combination gf) (symbol-value '*the-standard-method-combination*))
       (finalize-generic-function gf)
       gf))
 
