@@ -1204,7 +1204,7 @@ on the current result."
 				       (:globally (:call (:edi (:edi-offset dynamic-unwind-next))))
 				       (:store-lexical ,next-continuation-step-binding :eax :type t)
 				       ))))
-			;; now outside of m-v-prog1's cloak, with final dynamic-slot in ESP..
+			;; now outside of m-v-prog1's cloak, with final dynamic-slot in ..
 			;; ..unwind it and transfer control.
 			;;
 			;; * 12 dynamic-env uplink
