@@ -688,9 +688,8 @@ a cons is an offset (the car) from some other code-vector (the cdr)."
 			      (when init-file
 				(movitz-compile-file init-file))
 			      *image*)
-		    *i* (when (boundp '*image*) *image*))
-	     ;; #+acl (excl:gc)
-	     *image*))
+		    *i* (when (boundp '*image*) *image*)))
+  *image*)
 
 (defun dump-image (&key (path *default-image-file*) ((:image *image*) *image*)
 			(multiboot-p t) ignore-dump-count)
