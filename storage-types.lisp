@@ -835,7 +835,11 @@ integer (native lisp) value."
     :accessor movitz-funobj-usage)
    (sub-function-binding-usage		; a plist used during lexical analysis
     :initform nil
-    :accessor sub-function-binding-usage))
+    :accessor sub-function-binding-usage)
+   (entry-protocol
+    :initform :default
+    :initarg :entry-protocol
+    :reader funobj-entry-protocol))
   (:slot-align type -2))
 
 (defmethod write-binary-record ((obj movitz-funobj) stream)

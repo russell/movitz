@@ -160,6 +160,7 @@ lexical environment that a closure funobj captures."))
     :initform nil
     :accessor key-vars)
    (need-normalized-ecx-p
+    :initarg :need-normalized-ecx-p
     :accessor need-normalized-ecx-p)
    (frame-map
     :accessor frame-map)

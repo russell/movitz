@@ -46,6 +46,19 @@
     (:movb 3 :cl)
     (:jmp (:esi -6))))
 
+(define-primitive-function trampoline-cl-dispatch-1or2 ()
+  "Jump to the entry-point designated by :cl, which must be 1 or 2."
+  (with-inline-assembly (:returns :nothing)
+    (:cmpb 1 :cl)
+    (:jne 'not-one)
+    (:jmp (:esi #.(bt:slot-offset 'movitz:movitz-funobj 'movitz:code-vector%1op)))
+   not-one
+    (:cmpb 2 :cl)
+    (:jne 'not-two)
+    (:jmp (:esi #.(bt:slot-offset 'movitz:movitz-funobj 'movitz:code-vector%2op)))
+   not-two
+    (:int 100)))
+
 (define-primitive-function no-code-vector ()
   "This is the default code-vector, which never should be called."
   (with-inline-assembly (:returns :nothing)
