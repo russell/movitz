@@ -285,7 +285,9 @@ where zot is not in foo's scope, but _is_ in foo's extent."
 							  :init-with-type ,(type-specifier-primary type))))))))
 					(t init-code)))
 				 (when (plusp (num-specials local-env))
-				   `((:locally (:movl :esp (:edi (:edi-offset dynamic-env))))))
+				   `((:locally (:call (:edi ,(bt:slot-offset 'movitz-run-time-context
+									     'dynamic-variable-install))))
+				     (:locally (:movl :esp (:edi (:edi-offset dynamic-env))))))
 				 (if (not recompile-body-p)
 				     body-code
 				   (progn #+ignore (warn "recompile..") ; XXX
@@ -1106,11 +1108,14 @@ where zot is not in foo's scope, but _is_ in foo's extent."
 			  (:jmp ',loop)
 			  ,no-more-symbols
 			  (:popl :eax)	; remove extra pre-pushed tail
+			  (:movl :ecx :edx)
+			  (:locally (:call (:edi ,(bt:slot-offset 'movitz-run-time-context
+								  'dynamic-variable-install))))
 			  (:locally (:movl :esp (:edi (:edi-offset dynamic-env)))) ; install env
 			  ;; ecx = N/fixnum
 			  ;; (:shll 4 :ecx) ; ecx = 16*N
 			  ;; (:leal (:esp :ecx -4) :eax) ; eax = esp + 16*N - 4
-			  (:pushl :ecx)	; Save number of bindings.
+			  (:pushl :edx)	; Save number of bindings.
 			  #+ignore (:pushl :eax))) ; push address of first binding's tail
 		      body-code
 		      (when (eq body-returns :push)
