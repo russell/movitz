@@ -779,7 +779,9 @@ knowing there are EQL specialized methods."
     (let ((x (std-gf-classes-to-emf-table gf)))
       (cond
        ((not x)
-	(warn "Auto-bootstrapping CLOS.")
+	(unless (get 'clos-bootsrap 'breaking-on-auto-bootstrap)
+	  (setf (get 'clos-bootsrap 'breaking-on-auto-bootstrap) t)
+	  (break "Auto-bootstrapping CLOS."))
 	(clos-bootstrap)
 	(unless (get 'clos-bootstrap 'have-bootstrapped)
 	  (error "Giving up auto-bootstrapping of CLOS."))
