@@ -150,13 +150,14 @@ it's supposed to have been found by e.g. dynamic-locate-catch-tag."
   "Install each dynamic binding entry between that in ESP and current dynamic-env.
 Preserve EDX."
   (with-inline-assembly (:returns :nothing)
+    ;; Default binding strategy is naive deep binding, so this is a NOP.
     (:ret)))
 
 (define-primitive-function dynamic-variable-uninstall (dynamic-env)
   "Uninstall each dynamic binding between 'here' (i.e. the current 
 dynamic environment pointer) and the dynamic-env pointer provided in EDX.
 This must be done without affecting 'current values'! (i.e. eax, ebx, ecx, or CF),
-and also EDX must not be affected."
+and also EDX must be preserved."
   (with-inline-assembly (:returns :nothing)
     ;; Default binding strategy is naive deep binding, so this is a NOP.
     (:ret)))
@@ -309,6 +310,10 @@ with EAX still holding the tag."
     (:testl :edi :edi)			; clear ZF
    search-failed
     (:ret)))				; success: ZF=0, eax=value
+
+
+
+;;;;;;;;;;;;;; Heap allocation protocol
 
 (define-primitive-function get-cons-pointer ()
   "Return in EAX the next object location with space for EAX words, with tag 6.
