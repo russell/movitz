@@ -313,7 +313,7 @@ where zot is not in foo's scope, but _is_ in foo's extent."
 				   `((:locally (:call (:edi ,(bt:slot-offset 'movitz-run-time-context
 									     'dynamic-variable-install))))
 				     (:locally (:movl :esp (:edi (:edi-offset dynamic-env))))))
-				 (if (not recompile-body-p)
+				 (if (or nil (not recompile-body-p))
 				     body-code
 				   (progn #+ignore (warn "recompile..") ; XXX
 					  (compile-body)))
@@ -659,7 +659,6 @@ where zot is not in foo's scope, but _is_ in foo's extent."
 	 (lexical-catch-tag-variable (gensym "tagbody-lexical-catch-tag-"))
 	 (label-set-name (gensym "label-set-"))
 	 (tagbody-env (make-instance 'tagbody-env
-			:label-set-name label-set-name
 			:uplink env
 			:funobj funobj
 			:save-esp-variable save-esp-variable
