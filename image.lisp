@@ -1378,9 +1378,10 @@ a cons is an offset (the car) from some other code-vector (the cdr)."
 			   (movitz-print (movitz-funobj-code-vector funobj)))))
       (when verbose
 	(pprint command) (terpri) (force-output))
-      (if destination
-	  (excl::run-shell-command (format nil "./udp6-send.py ~A 1 ~S" destination command))
-	command))))
+      command
+      #+allegro (if destination
+		    (excl::run-shell-command (format nil "./udp6-send.py ~A 1 ~S" destination command))
+		  command))))
 	    
 
 ;;; "Printer"
