@@ -722,6 +722,26 @@
     (let* ((physicalp (movitz::eval-form physicalp env))
 	   (prefixes (if physicalp '(:gs-override) ())))
       (ecase type
+	(:unsigned-byte32
+	 (assert (= 4 movitz:+movitz-fixnum-factor+))
+	 (if (not (movitz:movitz-constantp offset env))
+	     form
+	   (let ((offset (movitz:movitz-eval offset env))
+		 (addr-var (gensym "memref-int-address-"))
+		 (value-var (gensym "memref-int-value-")))
+	     `(let ((,value-var ,value)
+		    (,addr-var (+ ,address ,index)))
+		(with-inline-assembly (:returns :untagged-fixnum-ecx)
+		  (:compile-form (:result-mode :untagged-fixnum-ecx) ,addr-var)
+		  (:testb ,(logior movitz:+movitz-fixnum-zmask+
+				   (* 3 movitz:+movitz-fixnum-factor+))
+			  :cl)
+		  (:jnz '(:sub-program () (:int 70)))
+		  (:shrl ,movitz:+movitz-fixnum-shift+ :ecx) ; a fixnum (zerop (mod x 4)) shifted
+		  (:pushl :ecx)		; ..twice left is still a fixnum!
+		  (:compile-form (:result-mode :untagged-fixnum-ecx) ,value-var)
+		  (:popl :eax)
+		  (:movl :ecx (:eax ,offset)))))))
 	(:lisp
 	 (assert (= 4 movitz:+movitz-fixnum-factor+))
 	 `(with-inline-assembly (:returns :untagged-fixnum-eax)
