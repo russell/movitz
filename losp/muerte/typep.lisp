@@ -406,7 +406,8 @@
 	    form)))))
 
 (defmacro define-typep (tname lambda &body body)
-  (let ((fname (format nil "~A-~A" 'typep tname)))
+  (let ((fname (with-standard-io-syntax
+		 (format nil "~A-~A" 'typep tname))))
     `(progn
        (eval-when (:compile-toplevel)
 	 (setf (gethash (intern ,(symbol-name tname))
@@ -426,10 +427,11 @@
 	   (defun ,fname ,lambda ,@body)))))
 
 (defmacro deftype (&whole form name lambda &body body)
-  (let ((fname (intern (format nil "~A-~A" 'deftype name))))
+  (let ((fname (intern (with-standard-io-syntax
+			 (format nil "~A-~A" 'deftype name)))))
     `(progn
        (eval-when (:compile-toplevel)
-	 (unless (eq (symbol-package (car ',form)) (find-package :common-lisp))
+	 (unless (eq (symbol-package (cadr ',form)) (find-package :common-lisp))
 	   ,form)
 	 (setf (gethash (translate-program ',name :cl :muerte.cl)
 			*compiler-derived-typespecs*)
