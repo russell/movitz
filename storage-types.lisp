@@ -72,6 +72,7 @@
   :funobj #x30
   :std-instance #x40
   :run-time-context #x50
+  :infant-object #x65
 
   ;; :simple-vector #x20
   ;; :character-vector 
