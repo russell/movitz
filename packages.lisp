@@ -1165,6 +1165,7 @@
 	   funobj-lambda-list
 	   funobj-name
 	   funobj-num-constants
+	   funobj-num-jumpers
 	   funobj-constant-ref
 	   funobj-debug-info
 	   install-function
