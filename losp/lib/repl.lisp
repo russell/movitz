@@ -52,6 +52,7 @@
 		      (invoke-restart 'muerte::next-line
 				      (muerte.readline:contextual-readline *repl-readline-context*)))))
 		(simple-read-from-string buffer-string t t))
+	    (fresh-line)		; Let the user know something happened.
 	    (flet ((process-expresion (form previous-package printp &rest results)
 		     (declare (dynamic-extent results))
 		     (unless (packagep *package*)
