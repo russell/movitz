@@ -224,11 +224,6 @@
     :map-binary-read-delayed 'movitz-word-code-vector
     :binary-tag :primitive-function
     :binary-type code-vector-word)
-   (restify-dynamic-extent
-    :binary-type code-vector-word
-    :map-binary-write 'movitz-intern-code-vector
-    :map-binary-read-delayed 'movitz-word-code-vector
-    :binary-tag :primitive-function)
    (box-u32-ecx
     :binary-type code-vector-word
     :map-binary-write 'movitz-intern-code-vector
