@@ -1111,7 +1111,8 @@
 	   stack-frame-call-site
 	   stack-frame-ref
 	   check-stack-limit
-	   
+
+	   *build-number*
 	   *error-no-condition-for-debugger*
 	   formatted-error
 

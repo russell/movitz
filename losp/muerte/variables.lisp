@@ -37,3 +37,5 @@
 (defparameter *debugger-hook* nil)
 
 (defvar internal-time-units-per-second)
+
+(defvar *build-number* :unknown)
