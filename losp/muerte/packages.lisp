@@ -82,14 +82,14 @@
       (unless status
 	(let ((name (subseq name start end)))
 	  (map-into name key name)
-	  (setf symbol (make-symbol name))
+	  (setf symbol (%create-symbol name package))
 	  (when (eq package (find-package :keyword))
 	    (setf (symbol-flags symbol)
 	      #.(bt:enum-value 'movitz::movitz-symbol-flags '(:constant-variable)))
 	    (setf (symbol-value symbol)
 	      symbol))))
       (unless (symbol-package symbol)
-	(setf-movitz-accessor (symbol movitz-symbol package) package))
+	(setf (memref symbol (movitz-type-slot-offset 'movitz-symbol 'package)) package))
       (unless status
 	(if (eq package (find-package :keyword))
 	    (setf (gethash (symbol-name symbol) (package-object-external-symbols package)) symbol)
