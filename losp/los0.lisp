@@ -790,6 +790,10 @@ s#+ignore
    (t (describe x)))
   (values))
 
+(muerte.toplevel:define-toplevel-command :bochs-trace (form)
+  (muerte::with-bochs-tracing ()
+    (eval form)))
+
 (muerte.toplevel:define-toplevel-command :mapkey (code-char)
   (let ((char (etypecase code-char
 		(character code-char)
