@@ -337,7 +337,7 @@
 		   (:cmpl ,(movitz:basic-vector-type-tag :u32) :ecx)
 		   (:jne 'not-u32-vector)
 		   (:call-global-constant unbox-u32)
-		   (:movl :eax
+		   (:movl :ecx
 			  (:ebx :edx ,(bt:slot-offset 'movitz:movitz-basic-vector 'movitz::data)))
 		   (:jmp 'return)
 
@@ -628,7 +628,7 @@ and return accessors for that subsequence (fast & unsafe accessors, that is)."
       (setf (fill-pointer array) length)))
     (cond
      (initial-element
-      (check-type initial-element (unsigned-byte 8))
+      (check-type initial-element bit)
       (dotimes (i length)
 	(setf (aref array i) initial-element)))
      (initial-contents
