@@ -1,7 +1,7 @@
 ;;;;------------------------------------------------------------------
 ;;;; 
 ;;;;    Copyright (C) 20012000, 2002-2004,
-;;;;    Department of Computer Science, University of Tromsø, Norway
+;;;;    Department of Computer Science, University of Tromso, Norway
 ;;;; 
 ;;;; Filename:      movitz.lisp
 ;;;; Description:   
@@ -30,7 +30,8 @@
 (defvar *default-image-init-file* #p"losp/los0.lisp")
 (defvar *default-image-file* #p"los0-image")
 
-(defmacro with-movitz-syntax (() &body body)
+(defmacro with-movitz-syntax (options &body body)
+  (declare (ignore options))
   `(let ((*readtable* (copy-readtable)))
      (set-dispatch-macro-character #\# #\'
 				   (lambda (stream subchar arg)
