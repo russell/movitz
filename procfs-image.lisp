@@ -109,7 +109,7 @@
     (cons (mapcar #'movitz-print expr))
     ((not movitz-object)
      expr)
-    ((or movitz-nil movitz-run-time-context) nil)
+    ((or movitz-null movitz-run-time-context) nil)
     (movitz-std-instance expr)
     (movitz-symbol
      (intern (movitz-print (movitz-symbol-name expr))))
