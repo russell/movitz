@@ -56,13 +56,8 @@
 (defun set (symbol value)
   (setf (symbol-value symbol) value))
 
-(defun symbol-global-value (symbol)
-  (if symbol
-      (let ((x (movitz-accessor symbol movitz-symbol value)))
-	(if (eq x (load-global-constant unbound-value))
-	    (error 'unbound-value :name symbol)
-	  x))
-    nil))
+(defmacro %symbol-global-value (symbol)
+  `(memref ,symbol ,(bt:slot-offset 'movitz:movitz-symbol 'movitz::value) 0 :lisp))
 
 (defun symbol-function (symbol)
   (let ((function-value
