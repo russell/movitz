@@ -25,10 +25,12 @@
 (defvar *error-no-condition-for-debugger* nil
   "If true, don't create a simple-error object just for the debugger,
  (presumably) since this might trigger another bug.")
-
+(defvar *disable-interrupts-on-error* t)
 
 (defun error (&rest arguments)
   (declare (dynamic-extent arguments))
+  (when *disable-interrupts-on-error*
+    (cli))
   (unless arguments
     (error 'wrong-argument-count
 	   :function #'error
