@@ -383,11 +383,6 @@ integer (native lisp) value."
     object)
    (t (call-next-method))))
     
-(defun vector-type-tag (element-type)
-  (dpb (enum-value 'movitz-vector-element-type element-type)
-       (byte 8 8)
-       (enum-value 'other-type-byte :vector)))
-
 (defun basic-vector-type-tag (element-type)
   (dpb (enum-value 'movitz-vector-element-type element-type)
        (byte 8 8)
