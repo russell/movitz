@@ -331,14 +331,14 @@
   (getf (load-global-constant global-properties) property))
 
 (define-compiler-macro object-location (object)
-  `(with-inline-assembly (:returns :eax)
-     (:compile-form (:result-mode :eax) ,object)
-     (:andb #xf8 :al)))
+  `(with-inline-assembly (:returns :register)
+     (:compile-form (:result-mode :register) ,object)
+     (:andl ,(* -2 movitz::+movitz-fixnum-factor+) (:result-register))))
+
   
 (defun object-location (object)
   "The location is the object's address divided by fixnum-factor."
   (object-location object))
-
 
 (defun halt-cpu ()
   (halt-cpu))
