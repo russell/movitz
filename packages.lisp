@@ -1284,7 +1284,15 @@
 	   movitz-read-and-intern
 	   movitz-word
 	   word
-	   
+
+	   #:*warn-function-change-p*
+	   #:*compiler-do-optimize*
+	   #:*compiler-use-cmov-p*
+	   #:*compiler-auto-stack-checks-p*
+	   #:*compiler-local-segment-prefix*
+	   #:*compiler-global-segment-prefix*
+	   #:*compiler-compile-eval-whens*
+	   #:*compiler-compile-macro-expanders*
 	   )
   (:import-from muerte
 		#:translate-program
