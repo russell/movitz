@@ -534,6 +534,10 @@ BUFFER-SIZE is the number of words in the buffer."
   
 (defun malloc-cons-pointer ()
   "Return current cons-pointer in 8-byte units since buffer-start."
+  (let ((x (%run-time-context-slot 'nursery-space)))
+    (when (typep x 'vector)
+      (truncate (aref x 0) 8)))
+  #+ignore
   (with-inline-assembly (:returns :eax)
     (:locally (:movl (:edi (:edi-offset nursery-space)) :eax))
     (:movl (:eax 4) :eax)
