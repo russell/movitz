@@ -138,9 +138,11 @@
   (let ((the-value (eval value)))
     `(progn
        (eval-when (:compile-toplevel)
-	 (defparameter ,name ',the-value)
-	 (pushnew ',name (movitz::image-compile-time-variables movitz::*image*)))
-       (defparameter ,name ',the-value))))
+	 (defvar ,name)
+	 (unless (member ',name (movitz::image-compile-time-variables movitz::*image*))
+	   (setf ,name ',the-value)
+	   (push ',name (movitz::image-compile-time-variables movitz::*image*))))
+       (defvar ,name 'uninitialized-compile-time-variable))))
 
 (defmacro let* (var-list &body body)
   (labels ((expand (rest-vars body)
