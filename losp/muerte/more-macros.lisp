@@ -205,7 +205,14 @@ respect to multiple threads."
        ,eof-value))
 
 
-
+(defmacro with-bochs-tracing ((&optional (value 1)) &body body)
+  "Bochs magic."
+  `(let ((old-flags (muerte::%run-time-context-slot 'bochs-flags)))
+     (unwind-protect
+	 (progn
+	   (setf (muerte::%run-time-context-slot 'bochs-flags) ,value)
+	   ,@body)
+       (setf (muerte::%run-time-context-slot 'bochs-flags) old-flags))))
 
   
   
