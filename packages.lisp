@@ -1293,7 +1293,8 @@
 	   #:+movitz-fixnum-shift+
 	   #:+movitz-fixnum-zmask+
 	   #:+scan-skip-word+
-	   #:constant0
+	   #:+code-vector-word-offset+
+	   #:+code-vector-transient-word+
 	   
 	   #:movitz-object-browser-properties
 	   #:movitz-heap-object
