@@ -128,6 +128,12 @@
    (stack-top				; stack-top must be right after stack-bottom
     :binary-type word			; in order for the bound instruction to work.
     :initform #x100000)
+   (bochs-flags
+    :binary-type lu32
+    :initform 0)
+   (bochs-flags2
+    :binary-type lu32
+    :initform 0)
    ;;
    (unbound-value
     :binary-type word
