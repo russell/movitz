@@ -426,7 +426,8 @@
   (let ((fname (intern (format nil "~A-~A" 'deftype name))))
     `(progn
        (eval-when (:compile-toplevel)
-	 ,form
+	 (unless (eq (symbol-package ',name) (find-package :common-lisp))
+	   ,form)
 	 (setf (gethash (translate-program ',name :cl :muerte.cl)
 			*compiler-derived-typespecs*)
 	   (lambda ,lambda ,@body))
