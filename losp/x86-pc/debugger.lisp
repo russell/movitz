@@ -500,7 +500,7 @@ be provided for those cases."
 			(cond
 			 ((eq 0 casf-funobj)
 			  (values 'default-interrupt-trampoline
-				  (code-vector-offset (slot-value 'default-interrupt-trampoline)
+				  (code-vector-offset (symbol-value 'default-interrupt-trampoline)
 						      eip)))
 			 ((not (typep casf-funobj 'function))
 			  ;; Hm.. very suspicius
