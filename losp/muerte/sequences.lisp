@@ -290,6 +290,9 @@
 			       (let ((next-i (position-if predicate p :key key :from-end t)))
 				 (if next-i (+ i 1 next-i) i)))))))))))))))
 
+(defun position-if-not (predicate sequence &rest key-args)
+  (declare (dynamic-extent key-args))
+  (apply #'position-if (complement predicate) sequence key-args))
 
 (defun nreverse (sequence)
   (sequence-dispatch sequence
