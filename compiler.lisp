@@ -140,7 +140,7 @@ This way, we ensure that no undue side-effects on the funobj occur during pass 1
 	       lambda-form)
     (coerce lambda-form 'function)))
 
-(defun make-compiled-funobj (name lambda-list declarations form env top-level-p funobj)
+(defun make-compiled-funobj (name lambda-list declarations form env top-level-p &key funobj)
   "Compiler entry-point for making a (lexically) top-level function."
   (handler-bind (((or warning error)
 		  (lambda (c)

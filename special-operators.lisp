@@ -259,7 +259,7 @@ and the correspondig returns mode (secondary value)."
 					 (declare (ignore c))
 					 (format *error-output* "~&;; In function ~S:~&" name))))
       (let* ((*compiling-function-name* name)
-	     (funobj (make-compiled-funobj name formals declarations body env nil nil)))
+	     (funobj (make-compiled-funobj name formals declarations body env nil)))
 	(setf (movitz-funobj-symbolic-name funobj) name)
 	(setf (movitz-env-named-function name) funobj))))
   (compiler-values ()))
