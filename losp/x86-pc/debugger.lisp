@@ -429,6 +429,7 @@ be provided for those cases."
   (declare (dynamic-extent args))
   (handler-case (apply #'print-stack-frame-arglist args)
     (serious-condition (conditon)
+      (declare (ignore conditon))
       (write-string "#<error printing frame>"))))
 
 (defun backtrace (&key stack

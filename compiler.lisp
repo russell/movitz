@@ -6161,7 +6161,7 @@ and a list of any intervening unwind-protect environment-slots."
 		(let ((x (multiple-value-call #'encoded-integer-types-add
 			   (type-specifier-encode type0)
 			   (type-specifier-encode type1))))
-		  (warn "thunked: ~S ~S -> ~S" term0 term1)
+		  ;; (warn "thunked: ~S ~S -> ~S" term0 term1 x)
 		  x))
 	      (list term0 term1)
 	      ))))
