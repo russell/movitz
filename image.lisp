@@ -355,6 +355,13 @@
    (physical-address-offset
     :binary-type lu32
     :initform (image-ds-segment-base *image*))
+   (nursery-space
+    :binary-type word
+    :initform nil
+    :map-binary-write 'movitz-read-and-intern
+    :map-binary-read-delayed (lambda (x type)
+			       (declare (ignore x type))
+			       (movitz-read nil)))
    (stack-vector
     :binary-type word
     :initform nil
@@ -694,12 +701,11 @@ a cons is an offset (the car) from some other code-vector (the cdr)."
 
 (defun create-image (&key (init-file *default-image-init-file*)
 			  (start-address #x100000))
-  (#+allegro excl:tenuring #-allegro progn
-	     (psetq *image* (let ((*image* (make-movitz-image start-address)))
-			      (when init-file
-				(movitz-compile-file init-file))
-			      *image*)
-		    *i* (when (boundp '*image*) *image*)))
+  (psetq *image* (let ((*image* (make-movitz-image start-address)))
+		   (when init-file
+		     (movitz-compile-file init-file))
+		   *image*)
+	 *i* (when (boundp '*image*) *image*))
   *image*)
 
 (defun dump-image (&key (path *default-image-file*) ((:image *image*) *image*)
