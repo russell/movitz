@@ -5742,9 +5742,8 @@ cleanup-forms etc.) to <to-env> with <return-code>'s result intact."
       (stack-delta from-env to-env)
     (assert stack-distance)
     (assert (null unwind-protects) ()
-      "Lexical unwind-protect not implemented, to-env: ~S." to-env)
-    (when (plusp num-dynamic-slots)
-      (warn "Lexical jump across ~D specials." num-dynamic-slots))
+      "Lexical unwind-protect not implemented, to-env: ~S. (this is not supposed to happen)"
+      to-env)
     (cond
      ((and (eq t stack-distance)
 	   (zerop num-dynamic-slots))
@@ -5762,7 +5761,14 @@ cleanup-forms etc.) to <to-env> with <return-code>'s result intact."
 			:env to-env
 			:result-mode (exit-result-mode to-env)
 			:form `(muerte::with-cloak (,return-mode)
-				 (muerte::dynamic-unwind ,num-dynamic-slots)))
+				 (muerte::with-inline-assembly (:returns :nothing)
+				   ;; Compute target dynamic-env
+				   (:locally (:movl (:edi (:edi-offset dynamic-env)) :eax))
+				   ,@(loop repeat num-dynamic-slots
+					 collect `(:movl (:eax 12) :eax))
+				   (:locally (:call (:edi (:edi-offset dynamic-unwind-next))))
+				   (:locally (:movl :eax (:edi (:edi-offset dynamic-env))))
+				   (:jc '(:sub-program () (:int 63))))))
 		      `((:load-lexical ,(save-esp-variable to-env) :esp)
 			(:jmp ',to-label)))))
      ((zerop num-dynamic-slots)
@@ -5782,7 +5788,14 @@ cleanup-forms etc.) to <to-env> with <return-code>'s result intact."
 			:env to-env
 			:result-mode (exit-result-mode to-env)
 			:form `(muerte::with-cloak (,return-mode)
-				 (muerte::dynamic-unwind ,num-dynamic-slots)))
+				 (muerte::with-inline-assembly (:returns :nothing)
+				   ;; Compute target dynamic-env
+				   (:locally (:movl (:edi (:edi-offset dynamic-env)) :eax))
+				   ,@(loop repeat num-dynamic-slots
+					 collect `(:movl (:eax 12) :eax))
+				   (:locally (:call (:edi (:edi-offset dynamic-unwind-next))))
+				   (:locally (:movl :eax (:edi (:edi-offset dynamic-env))))
+				   (:jc '(:sub-program () (:int 63))))))
 		      (make-compiled-stack-restore stack-distance
 						   (exit-result-mode to-env)
 						   return-mode)
