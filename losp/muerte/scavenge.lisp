@@ -193,7 +193,7 @@ at the start-stack-frame location."
 	(cond
 	 ((location-in-object-p dit-code-vector location)
 	  dit-code-vector)
-	 ((match-funobj esi))
+	 ((match-funobj esi location))
 	 (t (break "DIT returns outside DIT??")))))
      ((match-funobj casf-funobj location))
      ((match-funobj esi location))
