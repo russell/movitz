@@ -344,13 +344,13 @@ Preserve EAX and EBX."
 ;;;;
 
 (deftype positive-fixnum ()
-  `(integer 0 ,movitz:+movitz-most-positive-fixnum+))
+  '(integer 0 #.movitz:+movitz-most-positive-fixnum+))
 
 (deftype positive-bignum ()
-  `(integer ,(1+ movitz:+movitz-most-positive-fixnum+) *))
+  `(integer #.(cl:1+ movitz:+movitz-most-positive-fixnum+) *))
 
 (deftype negative-fixnum ()
-  `(integer ,movitz:+movitz-most-negative-fixnum+ -1))
+  `(integer #.movitz:+movitz-most-negative-fixnum+ -1))
 
 (defun fixnump (x)
   (typep x 'fixnum))
