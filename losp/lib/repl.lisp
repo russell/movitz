@@ -83,6 +83,7 @@
 					    (copy-list results)))
 		     (values-list results)))
 	      (let ((restart (and (integerp form)
+				  muerte:*debugger-dynamic-context*
 				  (muerte:find-restart-by-index form
 								muerte:*debugger-dynamic-context*))))
 		(cond
