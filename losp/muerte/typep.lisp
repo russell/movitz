@@ -289,7 +289,7 @@
 			   `(typep ,object 'integer))
 			  ((null lower-limit)
 			   `(let ((x ,object))
-			      (and (typep x 'integer) (<= x upper-limit))))
+			      (and (typep x 'integer) (<= x ,upper-limit))))
 			  ((and (null upper-limit)
 				(= (1+ movitz:+movitz-most-positive-fixnum+) lower-limit))
 			   `(with-inline-assembly-case ()
