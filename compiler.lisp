@@ -1,7 +1,7 @@
 ;;;;------------------------------------------------------------------
 ;;;; 
 ;;;;    Copyright (C) 2001,2000, 2002-2004,
-;;;;    Department of Computer Science, University of Tromsø, Norway
+;;;;    Department of Computer Science, University of Tromso, Norway
 ;;;; 
 ;;;; Description:   A simple lisp compiler.
 ;;;; Author:        Frode Vatvedt Fjeld <frodef@acm.org>
@@ -29,6 +29,7 @@ Hurst debugging, improves performance.")
 (defvar *compiler-compile-macro-expanders* t)
 
 (defvar *compiling-function-name*)
+(defvar muerte.cl:*compile-file-pathname* nil)
 
 (defun duplicatesp (list)
   "Returns TRUE iff at least one object occurs more than once in LIST."
@@ -1797,8 +1798,6 @@ falling below the label."
     ;; :initarg :store-type
     :accessor binding-store-type)))
 
-(defclass funobj-binding (function-binding) ())
-(defclass closure-binding (function-binding located-binding) ())
 (defclass lexical-binding (variable-binding) ())
 (defclass located-binding (lexical-binding) ())
 
@@ -1810,6 +1809,8 @@ falling below the label."
     :initarg :parent-funobj
     :reader function-binding-parent)))
 
+(defclass funobj-binding (function-binding) ())
+(defclass closure-binding (function-binding located-binding) ())
 (defclass lambda-binding (function-binding) ())
 
 #+ignore
