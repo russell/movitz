@@ -1110,12 +1110,9 @@ on the current result."
 	(let ((constant-term2 (eval-form term2 env)))
 	  (check-type constant-term2 (signed-byte 30))
 	  (compile-constant-add constant-term2 term1)))
-       (t (compiler-call #'compile-form-unprotected
+       (t (compiler-call #'compile-apply-symbol
 	    :forward all
-	    :form `(muerte::with-inline-assembly (:returns :eax :side-effects nil)
-		     (:compile-two-forms (:ebx :eax) ,term1 ,term2)
-		     (:addl :ebx :eax)
-		     (:into))))))))
+	    :form `(muerte.cl:+ ,term1 ,term2)))))))
 
 (define-special-operator muerte::include (&form form)
   (let ((*require-dependency-chain*
