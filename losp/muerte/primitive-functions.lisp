@@ -437,8 +437,8 @@ Returns list in EAX and preserves numargs in ECX."
 
 (defun malloc-initialize (buffer-start buffer-size)
   "BUFFER-START: the (fixnum) 4K address. BUFFER-SIZE: The size in 4K units."
-  (check-type buffer-start integer);  unsigned-byte)
-  (check-type buffer-size integer);  unsigned-byte)
+  (check-type buffer-start integer)
+  (check-type buffer-size integer)
   (with-inline-assembly (:returns :nothing)
     (:compile-form (:result-mode :eax) buffer-start)
     (:shll #.(cl:- 12 movitz::+movitz-fixnum-shift+) :eax)
