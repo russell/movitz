@@ -266,9 +266,8 @@
 				      :eax)))
 			  ((= 1 (logcount (1+ (- upper-limit lower-limit))))
 			   `(with-inline-assembly (:returns :boolean-zf=1)
-			      (:compile-form (:result-mode :eax) ,object)
-			      (:leal (:eax ,(* movitz:+movitz-fixnum-factor+
-					       (- lower-limit)))
+			      (:compile-form (:result-mode :ecx) ,object)
+			      (:subl ,(* movitz:+movitz-fixnum-factor+ lower-limit)
 				     :ecx)
 			      (:testl ,(logxor #xffffffff
 					       (* movitz:+movitz-fixnum-factor+
