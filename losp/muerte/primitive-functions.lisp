@@ -246,10 +246,10 @@ with EAX still holding the tag."
     (:jecxz 'no-stack-binding)
     (:cmpl :eax (:ecx))
     (:je 'success)
-    (:locally (:movl (:edi (:edi-offset stack-top)) :edx))
+;;;    (:locally (:movl (:edi (:edi-offset stack-top)) :edx))
    search-loop
-    (:cmpl :edx (:ecx 12))
-    (:jnc '(:sub-program () (:int 97)))
+;;;    (:cmpl :edx (:ecx 12))
+;;;    (:jnc '(:sub-program () (:int 97)))
     (:movl (:ecx 12) :ecx)		; parent
     (:jecxz 'no-stack-binding)
     (:cmpl :eax (:ecx))			; compare name
@@ -276,10 +276,10 @@ with EAX still holding the tag."
     (:jecxz 'no-binding)
     (:cmpl :eax (:ecx))
     (:je 'success)
-    (:locally (:movl (:edi (:edi-offset stack-top)) :edx))
+;;;    (:locally (:movl (:edi (:edi-offset stack-top)) :edx))
    search-loop
-    (:cmpl :edx (:ecx 12))
-    (:jnc '(:sub-program () (:int 97)))
+;;;    (:cmpl :edx (:ecx 12))
+;;;    (:jnc '(:sub-program () (:int 97)))
     (:movl (:ecx 12) :ecx)		; parent
     (:jecxz 'no-binding)
     (:cmpl :eax (:ecx))			; compare name
