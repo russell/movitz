@@ -74,7 +74,8 @@
     (list
      (do ((x sequence (cdr x))
 	  (length 0 (1+ length)))
-	 ((null x) length)))))
+	 ((null x) length)
+       (declare (index length))))))
 
 (defun length%list (sequence)
   (do ((length 0 (1+ length))
