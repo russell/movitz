@@ -79,10 +79,10 @@
 
 (defvar *ne2000* nil)
 
-(defun polling-arp (ip &optional (waiter #'false))
+(defun polling-arp (ip &optional (breaker #'false))
   (loop with ip = (ip4-address ip) and nic = *ip4-nic* and transmit-time = 0
       for packet = (muerte.ethernet:receive nic)
-      until (funcall waiter)
+      until (funcall breaker)
       do (when (and packet
 		    (eq +ether-type-arp+ (ether-type packet))
 		    (eq +arp-op-reply+ (arp-operation packet))
