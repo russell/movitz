@@ -35,9 +35,10 @@
 
 (defun read-eval-print (&optional (*repl-readline-context* *repl-readline-context*)
 				  (*repl-level* (1+ *repl-level*)))
-  (if (stringp *repl-prompter*)
-      (format t *repl-prompter* *repl-level* *package*)
-    (funcall *repl-prompter*))
+  (let ((muerte:*print-safely* t))
+    (if (stringp *repl-prompter*)
+	(format t *repl-prompter* *repl-level* *package*)
+      (funcall *repl-prompter*)))
   (handler-case
       (let ((previous-package *package*)
 	    (buffer-string (muerte.readline:contextual-readline *repl-readline-context*)))
@@ -62,7 +63,8 @@
 		       (warn "* was unbound!")
 		       (setf * nil))
 		     (when printp
-		       (apply #'format t *repl-print-format* results))
+		       (let ((muerte:*print-safely* t))
+			 (apply #'format t *repl-print-format* results)))
 		     (psetq +++ ++ ++ + + form)
 		     (psetq *** ** ** * * (car results))
 		     (psetq /// // // / / (if *repl-consless*
