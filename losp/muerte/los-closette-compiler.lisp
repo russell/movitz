@@ -847,6 +847,10 @@
       (loop for i upfrom 0 as slot in effective-slots
 	  do (setf (slot-definition-location slot) i))
       effective-slots))
+  
+  (defun compute-slots (class)
+    (error "Don't know how to compute-slots for class ~S of class ~S."
+	   class (class-of class)))
       
   (defun std-compute-effective-slot-definition (class name direct-slots)
     (declare (ignore name))
