@@ -263,6 +263,10 @@
 		   (write-string "#:" stream))
 		 (write-symbol-name object stream))
 		(t (error "Huh?")))))
+	    (bit-vector
+	     (write-string "#*")
+	     (dotimes (i (length object))
+	       (write (aref object i) :radix nil)))
 	    (vector
 	     (let ((level *print-level*)
 		   (length *print-length*))
