@@ -380,7 +380,7 @@ respect to multiple threads."
 
 (defmacro without-interrupts (&body body)
   (let ((var (gensym "interrupts-enabled-p-")))
-    `(let ((,var (logbitp ,(position :if +eflags-map+) (eflags))))
+    `(let ((,var (logbitp ,(position :if (symbol-value '+eflags-map+)) (eflags))))
        (unwind-protect (progn (cli) ,@body)
 	 (when ,var (sti))))))
 
