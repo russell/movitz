@@ -26,7 +26,7 @@
   (with-inline-assembly (:returns :eax)
     (:compile-form (:result-mode :eax) character)
     (:cmpb #.(movitz::tag :character) :al)
-    (:jne '(:sub-program (not-a-character) (:int 60)))
+    (:jne '(:sub-program (not-a-character) (:int 66)))
     (:shrl #.(cl:- 8 movitz::+movitz-fixnum-shift+) :eax)))
 
 (defun code-char (code)
