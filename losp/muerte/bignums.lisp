@@ -391,10 +391,10 @@ that the msb isn't zero. DO NOT APPLY TO NON-BIGNUM VALUES!"
 	      (:movl :edi :edx)
 	      (:movl :edi :eax)		; Safe EAX
 	      (:cld)
-	      (:movl (:ebp -4) :esi)
 	     shift-short-lsb
 	      (:shll :cl (:ebx (:offset movitz-bignum bigit0)))
 	     done
+	      (:movl (:ebp -4) :esi)
 	      )))
       (do-it))))
 
