@@ -428,14 +428,13 @@
 	 (movitz:movitz-eval y env)))
    ((movitz:movitz-constantp y env)
     `(eql ,y ,x))
-   ((movitz:movitz-constantp x env)
-    (let ((x (movitz:movitz-eval x env)))
-      (typecase x
-	(number
-	 `(= ,x ,y))
-	(t `(eq ,x ,y)))))
-   (t form)))
-
+   ((and (movitz:movitz-constantp x env)
+	 (not (typep (movitz:movitz-eval x env)
+		     '(and integer (not fixnum)))))
+    `(eq ',x ,y))
+   (t `(with-inline-assembly (:returns :boolean-zf=1)
+	 (:compile-two-forms (:eax :ebx) ,x ,y)
+	 (:call-global-constant fast-eql)))))
 
 (define-compiler-macro values (&rest sub-forms)
   `(inline-values ,@sub-forms))

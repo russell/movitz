@@ -379,6 +379,41 @@
 	    (:ret))))
     (do-it)))
 
+(define-primitive-function fast-eql (x y)
+  "Compare EAX and EBX under EQL, result in ZF.
+Preserve EAX and EBX."
+  (macrolet
+      ((do-it ()
+	 `(with-inline-assembly (:returns :nothing) ; unspecified
+	    (:cmpl :eax :ebx)		; EQ?
+	    (:je 'done)
+	    (:leal (:eax ,(- (movitz:tag :other))) :ecx)
+	    (:testb 7 :cl)
+	    (:jne 'done)
+	    (:leal (:ebx ,(- (movitz:tag :other))) :ecx)
+	    (:testb 7 :cl)
+	    (:jne 'done)
+	    (:movl (:eax ,movitz:+other-type-offset+) :ecx)
+	    (:cmpb ,(movitz:tag :bignum) :cl)
+	    (:jne 'done)
+	    (:cmpl :ecx (:ebx ,movitz:+other-type-offset+))
+	    (:jne 'done)
+	    ;; Ok.. we have two bignums of identical sign and size.
+	    (:shrl 16 :ecx)
+	    (:leal ((:ecx ,movitz:+movitz-fixnum-factor+) ,movitz:+movitz-fixnum-factor+)
+		   :edx)		; counter
+	   compare-loop
+	    (:subl ,movitz:+movitz-fixnum-factor+ :edx)
+	    (:jz 'done)
+	    (:movl (:eax :edx ,(+ -4 (bt:slot-offset 'movitz:movitz-bignum 'movitz::bigit0)))
+		   :ecx)
+	    (:cmpl :ecx
+		   (:ebx :edx ,(+ -4 (bt:slot-offset 'movitz:movitz-bignum 'movitz::bigit0))))
+	    (:je 'compare-loop)
+	   done
+	    (:ret))))
+    (do-it)))
+
 (define-primitive-function fast-compare-fixnum-real (n1 n2)
   "Compare (known) fixnum <n1> with real <n2>."
   (macrolet
