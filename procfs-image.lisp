@@ -270,12 +270,12 @@
 
 
 #+allegro
-(top-level:alias ("bochs" 0) (&rest forms)
+(top-level:alias ("bochs" 0) (&optional form)
   (with-bochs-image ()
     (with-simple-restart (continue "Exit this bochs session [pid=~D]" (image-pid *image*))
-      (if forms
-	  (let ((x (multiple-value-list (eval (cons 'progn forms)))))
-	    (format t "~{~&~W~}" x)
-	    (values-list x))
+      (if form
+	  (let ((x (eval form)))
+	    (format t "~&~W" x)
+	    x)
 	(invoke-debugger "Established connection to Bochs [pid=~D]."
 			 (image-pid *image*))))))
