@@ -518,6 +518,8 @@
 	  :index index :type :character))
 
 (defun (setf char) (value string index)
+  (check-type string string)
+  (check-type value character)
   (assert (below index (array-dimension string 0)))
   (setf (memref string (movitz-type-slot-offset 'movitz-basic-vector 'data)
 		:index index :type :character) value))
@@ -531,6 +533,7 @@
 
 (defun (setf schar) (value string index)
   (check-type string string)
+  (check-type value character)
   (assert (below index (length string)))
   (setf (memref string (movitz-type-slot-offset 'movitz-basic-vector 'data)
 		:index index :type :character)
