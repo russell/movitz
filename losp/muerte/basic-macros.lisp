@@ -62,6 +62,13 @@
      (muerte::define-compiler-macro-compile-time ,name ,lambda-list ,body)
      ',name))
 
+(defmacro define-primitive-function (function-name lambda-list docstring &body body)
+  (declare (ignore lambda-list))
+  (assert (stringp docstring) (docstring)
+    "Mandatory docstring for define-primitive-function.")
+  `(make-primitive-function ,function-name ,docstring
+			    ,(cons 'cl:progn body)))
+
 (defmacro defpackage (package-name &rest options)
   (pushnew '(:use) options :key #'car)
   (let ((uses (cdr (assoc :use options))))

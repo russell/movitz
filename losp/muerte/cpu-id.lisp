@@ -204,17 +204,6 @@ This is an illegal instruction on lesser CPUs."
     (:cld)
     (:movl 2 :ecx)
     (:stc)))
-
-(define-compiler-macro read-time-stamp-counter ()
-  `(with-inline-assembly-case ()
-     (do-case (:register :same)
-       (:std)
-       (:rdtsc)
-       (:movl :edi :edx)
-       (:leal ((:eax ,movitz:+movitz-fixnum-factor+)) (:result-register))
-       (:cld))
-     (do-case (t :multiple-values)
-       (:compile-form (:result-mode :multiple-values) (no-macro-call read-time-stamp-counter)))))
 		      
 (defun clear-time-stamp-counter ()
   "Reset the i686 time-stamp-counter.
