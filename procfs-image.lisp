@@ -167,8 +167,7 @@
 
 (defun interrupt-frame-index (name)
   (- 5 (position name
-		 '(nil :eflags :eip :error-code :exception :ebp nil
-		   :ecx :eax :edx :ebx :esi :edi))))
+		 (symbol-value 'muerte::+dit-frame-map+))))
 
 (defun debug-get-object (word spartan)
   (if spartan
@@ -202,7 +201,8 @@
 		       (edi (get-word (+ (* 4 (interrupt-frame-index :edi)) stack-frame)))
 		       (eip (get-word (+ (* 4 (interrupt-frame-index :eip)) stack-frame)))
 		       (esi (get-word (+ (* 4 (interrupt-frame-index :esi)) stack-frame)))
-		       (exception (get-word (+ (* 4 (interrupt-frame-index :exception)) stack-frame))))
+		       (exception (get-word (+ (* 4 (interrupt-frame-index :exception-vector))
+					       stack-frame))))
 		  (format t "#x~X {EAX: #x~X, ECX: #x~X, EDX: #x~X, EDI: #x~X, ESI: #x~X, EIP: #x~X, exception ~D}"
 			  stack-frame
 			  eax ecx edx edi esi eip exception)))
