@@ -213,6 +213,7 @@
       (setf (console-char console x y)
 	(console-char console x (1+ y)))))
   (clear-line console 0 (1- (console-height console)))
+  (signal 'muerte::newline)
   nil)
 
 (defmethod scroll-down :after (console)
