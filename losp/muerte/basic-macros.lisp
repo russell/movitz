@@ -1,6 +1,6 @@
 ;;;;------------------------------------------------------------------
 ;;;; 
-;;;;    Copyright (C) 20012000, 2002-2004,
+;;;;    Copyright (C) 2000-2004,
 ;;;;    Department of Computer Science, University of Tromso, Norway
 ;;;; 
 ;;;; Filename:      basic-macros.lisp
