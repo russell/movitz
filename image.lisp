@@ -398,8 +398,11 @@
     :initform 3)
    (protect-non-pointer-count
     :binary-type lu32
-    :initform (* 4 (- (bt:slot-offset 'movitz-constant-block 'non-pointers-end)
-		      (bt:slot-offset 'movitz-constant-block 'non-pointers-start))))
+    :initform nil
+    :map-binary-write (lambda (x type)
+			(declare (ignore x type))
+			(- (bt:slot-offset 'movitz-constant-block 'non-pointers-end)
+			   (bt:slot-offset 'movitz-constant-block 'non-pointers-start))))
    (non-pointers-start :binary-type :label) ; ========= NON-POINTER-START =======
    ;; (align-segment-descriptors :binary-type 4)
    (segment-descriptor-table :binary-type :label)
