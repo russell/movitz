@@ -83,9 +83,11 @@
 			 (compiled-function
 			  (funobj-name edx))
 			 (t '(unknown)))))
-    (error 'undefined-function-call
-	   :name function-name
-	   :arguments (copy-list args))))
+    (with-simple-restart (continue "Return NIL from ~S." function-name)
+      (error 'undefined-function-call
+	     :name function-name
+	     :arguments (copy-list args))))
+  nil)
 
 ;;; funobj object
 
