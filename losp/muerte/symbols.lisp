@@ -149,7 +149,9 @@
   (let ((symbol (%word-offset (malloc-clumps 3) 1)))
     (setf-movitz-accessor (symbol movitz-symbol package) package)
     (setf-movitz-accessor (symbol movitz-symbol name) name)
-    (setf-movitz-accessor (symbol movitz-symbol hash-key) (sxhash name))
+    (setf (memref symbol #.(bt:slot-offset 'movitz:movitz-symbol 'movitz::hash-key)
+		  0 :unsigned-byte16)
+      (sxhash name))
     (setf (symbol-flags symbol) flags
 	  (symbol-plist symbol) plist
 	  (symbol-function symbol) function
