@@ -51,3 +51,5 @@
   (etypecase x
     (integer 1)
     (ratio (ratio-denominator x))))
+
+(defconstant pi #xea7632a/4aa1a8b)
