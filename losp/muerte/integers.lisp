@@ -2119,8 +2119,12 @@
 	 
 
 (defun dpb (newbyte bytespec integer)
-  (logior (mask-field bytespec (ash newbyte (byte-position bytespec)))
-	  (logandc2 integer (mask-field bytespec -1))))
+  (logior (if (= 0 newbyte)
+	      0
+	    (mask-field bytespec (ash newbyte (byte-position bytespec))))
+	  (if (= 0 integer)
+	      0
+	    (logandc2 integer (mask-field bytespec -1)))))
 
 (defun mask-field (bytespec integer)
   (ash (ldb bytespec integer) (byte-position bytespec)))
