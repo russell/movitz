@@ -122,24 +122,24 @@ Doubly quoted forms are copied verbatim (sans the quotes)."
        ((and (symbolp (car program))
 	     (eq (symbol-package (car program)) from-package))
 	(cons (translate-symbol (car program))
-	      (muerte::translate-program (rest program) from-package to-package
-						:when when
-						:remove-double-quotes-p remove-double-quotes-p
-						:quote-symbol quote-symbol)))
+	      (muerte::translate-program (cdr program) from-package to-package
+					 :when when
+					 :remove-double-quotes-p remove-double-quotes-p
+					 :quote-symbol quote-symbol)))
        ((consp (car program))
 	(cons (muerte::translate-program (car program) from-package to-package
-						:when when
-						:remove-double-quotes-p remove-double-quotes-p
-						:quote-symbol quote-symbol)
+					 :when when
+					 :remove-double-quotes-p remove-double-quotes-p
+					 :quote-symbol quote-symbol)
 	      (muerte::translate-program (cdr program) from-package to-package
-						:when when
-						:remove-double-quotes-p remove-double-quotes-p
-						:quote-symbol quote-symbol)))
+					 :when when
+					 :remove-double-quotes-p remove-double-quotes-p
+					 :quote-symbol quote-symbol)))
        (t (cons (car program)
 		(muerte::translate-program (cdr program) from-package to-package
-						  :when when
-						  :remove-double-quotes-p remove-double-quotes-p
-						  :quote-symbol quote-symbol)))))))
+					   :when when
+					   :remove-double-quotes-p remove-double-quotes-p
+					   :quote-symbol quote-symbol)))))))
 
 (defun decode-normal-lambda-list (lambda-list &optional host-symbols-p)
   "3.4.1 Ordinary Lambda Lists.
