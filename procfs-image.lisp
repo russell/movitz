@@ -72,6 +72,12 @@
 	 (pid (bochs-parameter :pid ,path)))
      (procfs:with-procfs-attached (,procfs-var pid :direction :io)
        (let ((,image-var (make-instance 'bochs-image
+			   :ds-segment-base (if (boundp '*previous-image*)
+						(image-ds-segment-base *previous-image*)
+					      0)
+			   :cs-segment-base (if (boundp '*previous-image*)
+						(image-cs-segment-base *previous-image*)
+					      0)
 			   :pid pid
 			   :procfs ,procfs-var
 			   :stream (procfs:procfs-connection-mem-stream ,procfs-var)
