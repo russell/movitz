@@ -1991,3 +1991,9 @@ Preserve EAX and EBX."
 	 (t (values (1- q) (+ r divisor))))))
    (t (n &optional (divisor 1))
       (floor n divisor))))
+
+(defun isqrt (natural)
+  "=> natural-root"
+  (check-type natural (integer 0 *))
+  (do ((i 0 (1+ i)))
+      ((> (* i i) natural) (1- i))))
