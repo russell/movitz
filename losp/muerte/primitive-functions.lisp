@@ -731,7 +731,7 @@ BUFFER-SIZE is the number of words in the buffer."
     (function
      (find-class 'function))
     (structure-object
-     (find-class (structure-object-name object)))
+     (structure-object-name object))
     (character
      (find-class 'character))
     (run-time-context
