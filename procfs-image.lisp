@@ -104,6 +104,26 @@
 (defun register32 (register-name)
   (image-register32 *image* register-name))
 
+(defmethod image-movitz-to-lisp-object ((image procfs-image) expr)
+  (etypecase expr
+    (cons (mapcar #'movitz-print expr))
+    ((not movitz-object)
+     expr)
+    ((or movitz-nil movitz-constant-block) nil)
+    (movitz-symbol
+     (intern (movitz-print (movitz-symbol-name expr))))
+    (movitz-string
+     (map 'string #'identity
+	  (movitz-vector-symbolic-data expr)))
+    (movitz-fixnum
+     (movitz-fixnum-value expr))
+    (movitz-vector
+     (map 'vector #'movitz-print (movitz-vector-symbolic-data expr)))
+    (movitz-cons
+     (cons (movitz-print (movitz-car expr))
+	   (movitz-print (movitz-cdr expr))))))
+
+
 (defmethod report-gdtr ((image bochs-image))
   (assert (file-position (image-stream image)
 			 (bochs-image-gdtr-address image)))
