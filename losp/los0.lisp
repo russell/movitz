@@ -595,9 +595,6 @@ s#+ignore
 	(memref-int #x1000004 0 0 :unsigned-byte8)))
 
 
-
-
-
 ;;;;;
 
 ;;;;;;;;;;;;;;; CL
@@ -863,6 +860,7 @@ s#+ignore
     (let ((* nil) (** nil) (*** nil)
 	  (/ nil) (// nil) (/// nil)
 	  (+ nil) (++ nil) (+++ nil))
+      (format t "~&Movitz image Los0 build ~D." *build-number*)
       (loop
 	(catch :top-level-repl		; If restarts don't work, you can throw this..
 	  (with-simple-restart (abort "Abort to the top command level.")
