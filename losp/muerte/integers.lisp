@@ -1132,3 +1132,19 @@
 		(gcd gcd (car rest)))
 	   (rest (cdr numbers) (cdr rest)))
 	  ((null rest) gcd)))))
+
+(defun floor (n &optional (divisor 1))
+  "This is floor written in terms of truncate."
+  (numargs-case
+   (1 (n) n)
+   (2 (n divisor)
+      (multiple-value-bind (q r)
+	  (truncate n divisor)
+	(cond
+	 ((<= 0 q)
+	  (values q r))
+	 ((= 0 r)
+	  (values q 0))
+	 (t (values (1- q) (+ r divisor))))))
+   (t (n &optional (divisor 1))
+      (floor n divisor))))
