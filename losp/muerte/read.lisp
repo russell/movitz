@@ -188,9 +188,7 @@ of string delimited by start and end."
 		      (setf string next-string
 			    end next-string-end))
 		    (setf i (1- element-end))
-		    (if (match-caller 'eval-time)
-			(time (push element list))
-		      (push element list)))))))))
+		    (push element list))))))))
     (simple-read-delimited-list delimiter next-string next-start next-end
 				:tail-delimiter tail-delimiter
 				:list list)))
