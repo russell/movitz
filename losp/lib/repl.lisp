@@ -35,7 +35,7 @@
 (defparameter *repl-prompter* 'default-repl-prompter)
 (defparameter *repl-prompt-context* nil)
 (defparameter *repl-print-format* "~@{~&~W~}")
-(defvar *repl-readline-context*)
+(defvar *repl-readline-context* nil)
 (defvar *repl-consless* nil)
 
 (defun default-repl-prompter ()
