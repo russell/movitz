@@ -396,8 +396,8 @@ integer (native lisp) value."
 (defmethod update-movitz-object ((movitz-vector movitz-basic-vector) (vector vector))
   (when (eq :any-t (movitz-vector-element-type movitz-vector))
     (loop for i from 0 below (length vector)
-	do (setf (svref (movitz-vector-symbolic-data movitz-vector) i)
-	     (movitz-read (svref vector i)))))
+	do (setf (aref (movitz-vector-symbolic-data movitz-vector) i)
+	     (movitz-read (aref vector i)))))
   (values))
 
 (defmethod write-binary-record ((obj movitz-basic-vector) stream)
