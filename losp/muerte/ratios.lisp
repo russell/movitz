@@ -22,7 +22,7 @@
 (in-package muerte)
 
 (defstruct (ratio (:constructor make-ratio (numerator denominator))
-	    (:superclass number))
+	    (:superclass rational))
   numerator denominator)
 
 (defun make-rational (numerator denominator)
