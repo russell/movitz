@@ -144,12 +144,17 @@
 	       ((integerp (car map))
 		(car map))
 	       ((eq :ecx (car map))
-		(cond
-		 ((= #xb1 (aref code (- call-site 5)))
-		  ;; Assume it's a (:movb x :cl) instruction
-		  (aref code (- call-site 4)))
-		 (t ;; now we should search further for where ecx may be set..
-		  nil)))))))))))
+		(let ((load-ecx-index (- call-site 4)))
+		  (loop while (and (plusp load-ecx-index)
+				   (= #x90 (aref code load-ecx-index))) ; Skip any NOPs
+		      do (decf load-ecx-index))
+		  (cond
+		   ((= #xb1 (aref code (- load-ecx-index 1)))
+		    ;; Assume it's a (:movb x :cl) instruction
+		    (aref code load-ecx-index))
+		   (t ;; now we should search further for where ecx may be set..
+		    (format t "{no ECX at ~D in ~S}" call-site funobj)
+		    nil))))))))))))
 
 (defun signed8-index (s8)
   "Convert a 8-bit twos-complement signed integer bitpattern to
