@@ -24,6 +24,10 @@
 (define-unsigned lu32 4 :little-endian)
 
 (defconstant +code-vector-word-offset+ 2)
+(defconstant +code-vector-transient-word+
+    (ldb (byte 32 0)
+	 (- +code-vector-word-offset+)))
+
 (defconstant +movitz-multiple-values-limit+ 127)
 
 (defvar *bq-level* 0)
