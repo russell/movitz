@@ -48,7 +48,7 @@
 
 (defun assert-package (name)
   (or (find-package name)
-      (error "There is no package named ~S." name)))
+      (error "There is no package named ~S." (string name))))
 
 (defun find-symbol-string (name start end key &optional (package *package*))
   (check-type name string)
