@@ -711,9 +711,8 @@ The valid parameters are~{ ~S~}."
 	as sub-form-result-mode = buried-result-modes
 	then (or (cdr sub-form-result-mode)
 		 sub-form-result-mode)
-	as current-result-mode = (if (endp (cdr sub-form)) all but the
-				     ;; last form have result-mode as
-				     ;; declared
+	as current-result-mode = (if (endp (cdr sub-form))
+				     ;; all but the last form have result-mode as declared
 				     result-mode
 				   (car sub-form-result-mode))
 	as last-form-p = (endp (cdr sub-form))
