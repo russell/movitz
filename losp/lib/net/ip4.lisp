@@ -492,8 +492,9 @@
   (unless *ip4-router*
     (setf *ip4-router* (ip4-address :129.242.16.1)))
   ;; This is to announce our presence on the LAN..
-  (polling-arp *ip4-router* (lambda ()
-			      (eql #\esc (muerte.x86-pc.keyboard:poll-char))))
+  (assert (polling-arp *ip4-router* (lambda ()
+				      (eql #\esc (muerte.x86-pc.keyboard:poll-char))))
+      () "Unable to resolve ~/ip4:pprint-ip4/ by ARP." *ip4-router*)
   (values *ip4-nic* *ip4-ip*))
 
 (defun ip4-test ()
