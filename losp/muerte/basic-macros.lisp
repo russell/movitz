@@ -1005,10 +1005,10 @@ busy-waiting loop on P4."
 
 (defmacro load-global-constant (name &key thread-local)
   (if thread-local
-      `(with-inline-assembly (:returns :eax)
-	 (:locally (:movl (:edi (:edi-offset ,name)) :eax)))
-    `(with-inline-assembly (:returns :eax)
-       (:globally (:movl (:edi (:edi-offset ,name)) :eax)))))
+      `(with-inline-assembly (:returns :register)
+	 (:locally (:movl (:edi (:edi-offset ,name)) (:result-register))))
+    `(with-inline-assembly (:returns :register)
+       (:globally (:movl (:edi (:edi-offset ,name)) (:result-register))))))
 
 (defmacro load-global-constant-u32 (name &key thread-local)
   (if thread-local
