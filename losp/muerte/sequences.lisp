@@ -591,8 +591,7 @@
 		 (mapf (first-sequence-ref i) (second-sequence-ref j))))))
 	  )))
    (t (function first-sequence &rest more-sequences)
-      (declare (dynamic-extent more-sequences)
-	       (ignore function first-sequence more-sequences))
+      (declare (ignore function first-sequence more-sequences))
       (error "MAP not implemented."))))
 
 (defun map-for-list (function first-sequence &rest more-sequences)

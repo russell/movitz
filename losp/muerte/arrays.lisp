@@ -250,8 +250,7 @@
 
        done))
    (t (vector &rest subscripts)
-      (declare (dynamic-extent subscripts)
-	       (ignore vector subscripts))
+      (declare (ignore vector subscripts))
       (error "Multi-dimensional arrays not implemented."))))
 
 (defun (setf aref) (value vector &rest subscripts)
@@ -334,8 +333,7 @@
 	(:compile-form (:result-mode :ignore) (error "Not a vector: ~S" vector))
        done))
    (t (value vector &rest subscripts)
-      (declare (dynamic-extent subscripts)
-	       (ignore value vector subscripts))
+      (declare (ignore value vector subscripts))
       (error "Multi-dimensional arrays not implemented."))))
 
 
