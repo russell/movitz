@@ -408,6 +408,9 @@
 			(declare (ignore x type))
 			(- (bt:slot-offset 'movitz-constant-block 'non-pointers-end)
 			   (bt:slot-offset 'movitz-constant-block 'non-pointers-start))))
+   (bochs-flags
+    :binary-type lu32
+    :initform 0)
    (non-pointers-start :binary-type :label) ; ========= NON-POINTER-START =======
    ;; (align-segment-descriptors :binary-type 4)
    (segment-descriptor-table :binary-type :label)
@@ -446,13 +449,9 @@
    (segment-descriptor-7
     :binary-type segment-descriptor
     :initform (make-segment-descriptor))
-   (bochs-flags
-    :binary-type lu32
-    :initform 0)
    (scratch0				; A non-GC-root scratch register
     :binary-type lu32
     :initform 0)
-
    (non-pointers-end :binary-type :label) ; ========= NON-POINTER-END =======
    
    (atomically-status
@@ -795,6 +794,10 @@ a cons is an offset (the car) from some other code-vector (the cdr)."
       (ldb (byte 3 0) (image-nil-word *image*))
       (tag :null))
     (setf (image-constant-block *image*) (make-movitz-constant-block))
+    (unless (= 0 (mod (+ (image-nil-word *image*) (slot-offset 'movitz-constant-block
+							       'segment-descriptor-table))
+		      16))
+      (warn "Segment descriptor table is not aligned on a 16-byte boundary."))
     (setf (movitz-constant-block-interrupt-descriptor-table (image-constant-block *image*))
       (movitz-read (make-initial-interrupt-descriptors)))
     (setf (image-t-symbol *image*) (movitz-read t))
