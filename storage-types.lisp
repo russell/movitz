@@ -1023,7 +1023,7 @@ integer (native lisp) value."
 
 (define-binary-class movitz-struct (movitz-heap-object-other)
   ((name
-    :binary-lisp-type word
+    :binary-type word
     :map-binary-write 'movitz-intern
     :map-binary-read-delayed 'movitz-word
     :reader movitz-struct-name
