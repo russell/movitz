@@ -19,6 +19,9 @@
   
 (in-package muerte)
 
+(deftype index ()
+  '(integer 0 #x1ffffffe))
+
 (defun sequencep (x)
   (or (typep x 'vector)
       (typep x 'cons)))
@@ -691,6 +694,7 @@
        (with-subvector-accessor (sequence-ref sequence start end)
 	 (do ((i start (1+ i)))
 	     ((>= i end))
+	   (declare (index i))
 	   (setf (sequence-ref i) item))))))
   sequence)
 
@@ -712,6 +716,7 @@
 		 (i (+ start1 length -1) (1- i))
 		 (j (+ start2 length -1) (1- j)))
 	       ((< i start1) sequence-1)
+	     (declare (index i j length))
 	     (setf (sequence-1-ref i)
 	       (sequence-1-ref j)))))
 	(list
