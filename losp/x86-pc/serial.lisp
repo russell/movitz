@@ -1,6 +1,6 @@
 ;;;;------------------------------------------------------------------
 ;;;; 
-;;;;    Copyright (C) 2001-2004, 
+;;;;    Copyright (C) 2001-2005, 
 ;;;;    Department of Computer Science, University of Tromso, Norway.
 ;;;; 
 ;;;;    For distribution policy, see the accompanying file COPYING.
@@ -18,7 +18,7 @@
 (provide :x86-pc/serial)
 
 (defpackage muerte.x86-pc.serial
-  (:use muerte.cl muerte.lib muerte.x86-pc)
+  (:use muerte.cl muerte.lib muerte.x86-pc muerte)
   (:export uart-probe
 	   uart-divisor
 	   uart-baudrate
@@ -147,6 +147,28 @@ The io-base, the UART's name, and the FIFO size."
 ;;;(defun uart-read-char (io-base)
 ;;;  (loop until ))
 
+(defun uart-write-char (io-base char)
+  (loop until (logbitp 5 (io-register8 io-base +uart-read-lsr+)))
+  (setf (io-port (+ io-base +uart-write-transmitter-buffer+) :character)
+    char))
+
+(defun make-serial-write-char (&key (io-base (or (some #'uart-probe +uart-probe-addresses+)
+						 (error "No serial port found.")))
+				    (baudrate 9600)
+				    (word-length 8)
+				    (parity :none)
+				    (stop-bits 1))
+  (setf (uart-baudrate io-base) baudrate
+	(io-register8 io-base +uart-write-lcr+) (encode-uart-lcr word-length parity stop-bits))
+  (setf (io-register8 io-base +uart-write-fcr+) 0)
+  (lambda (char &optional stream)
+    (case char
+      (#\newline
+       (uart-write-char io-base #\return)))
+    (uart-write-char io-base char)
+    (muerte::%write-char char (muerte::output-stream-designator stream))))
+
+
 (defun com (string &key (io-base (or (some #'uart-probe +uart-probe-addresses+)
 				     (error "No serial port found.")))
 			(baudrate 9600)
@@ -157,7 +179,6 @@ The io-base, the UART's name, and the FIFO size."
 	(io-register8 io-base +uart-write-lcr+) (encode-uart-lcr word-length parity stop-bits))
   (setf (io-register8 io-base +uart-write-fcr+) 0)
   (loop for c across string
-      do (loop until (logbitp 5 (io-register8 io-base +uart-read-lsr+)))
-	 (setf (io-port (+ io-base +uart-write-transmitter-buffer+) :character) c))
+      do (uart-write-char io-base c))
   io-base)
 
