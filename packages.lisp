@@ -1129,6 +1129,7 @@
 	   #:stack-frame-ref
 	   #:check-stack-limit
 	   #:dit-frame-ref
+	   #:dit-frame-casf
 	   #:interrupt-default-handler
 	   #:exception-handler
 
