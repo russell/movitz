@@ -44,8 +44,14 @@
 	(t `(make-prototyped-function (constantly ,value)
 				      constantly-prototype
 				      (value ,value))))))
-   (t (error "Non-constant constantly forms not yet supported: ~S" form)
-      form)))
+   (t (let ((value-var (gensym "constantly-value-")))
+	`(let ((,value-var ,value-form))
+	   (lambda (&rest ignore)
+	     (declare (ignore ignore))
+	     ,value-var))))))
+
+(defun constantly (x)
+  (compiler-macro-call constantly x))
 
 (defun complement-prototype (&rest args)
   (declare (dynamic-extent args))
