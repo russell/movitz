@@ -172,10 +172,10 @@
 	      ((keywordp symbol)
 	       (format t "~&~W == keyword~%" symbol))
 	      ((fboundp symbol)
-	       (format t "~&~W == function arglist: ~A~%"
+	       (format t "~&~W == function ~:A~%"
 		       symbol (funobj-lambda-list (symbol-function symbol))))
 	      ((boundp symbol)
-	       (format t "~&~W == variable value: ~S~%"
+	       (format t "~&~W == variable ~S~%"
 		       symbol (symbol-value symbol)))
 	      (t (format t "~&~W~%" symbol))))))
     (let ((string (string string)))
