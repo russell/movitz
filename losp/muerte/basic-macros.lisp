@@ -73,7 +73,8 @@
   (pushnew '(:use) options :key #'car)
   (let ((uses (cdr (assoc :use options))))
     (setf uses (mapcar (lambda (use)
-			 (if (member use '(:cl :common-lisp) :test #'string=)
+			 (if (member use (cons :common-lisp (package-nicknames :common-lisp))
+				     :test #'string=)
 			     :muerte.cl
 			   use))
 		       uses))
