@@ -294,7 +294,11 @@ Parameters: struct-name."
 			   (slot-number ,slot-number)))
 		(defclass ,struct-name (structure-object) ()
 			  (:metaclass structure-class)
-			  (:slots ,canonical-slot-descriptions))
+			  (:slots ,(loop for (name) in canonical-slot-descriptions
+				       as location upfrom 0
+				       collect (movitz-make-instance 'structure-slot-definition
+								     :name name
+								     :location location))))
 		',struct-name))
 	    (list
 	     `(progn
@@ -332,10 +336,3 @@ Parameters: struct-name."
 (defun structure-object-name (x)
   (movitz-accessor x movitz-struct name))
 
-(defmacro with-accessors (slot-entries instance-form &body declarations-and-forms)
-  (let ((instance-variable (gensym "with-accessors-instance-")))
-    `(let ((,instance-variable ,instance-form))
-       (declare (ignorable ,instance-variable))
-       (symbol-macrolet ,(loop for (variable-name accessor-name) in slot-entries
-			     collecting `(,variable-name (,accessor-name ,instance-variable)))
-	 ,@declarations-and-forms))))
