@@ -172,8 +172,8 @@
       (%create-symbol (symbol-name symbol))
     (let ((x (%word-offset (malloc-clumps 3) 1)))
       (dotimes (i 6)
-	(setf (memref x #.movitz:+other-type-offset+ i :lisp)
-	  (memref symbol #.movitz:+other-type-offset+ i :lisp)))
+	(setf (memref x #.(cl:- (movitz:tag :symbol)) i :lisp)
+	  (memref symbol #.(cl:- (movitz:tag :symbol)) i :lisp)))
       x)))
 
 (defun symbol-flags (symbol)
