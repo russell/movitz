@@ -189,7 +189,12 @@
 
 (define-compiler-macro do (var-specs (end-test-form &rest result-forms) &body declarations-and-body)
   (flet ((var-spec-let-spec (var-spec)
-	   (if (symbolp var-spec) var-spec (subseq var-spec 0 2)))
+	   (cond
+	    ((symbolp var-spec)
+	     var-spec)
+	    ((cddr var-spec)
+	     (subseq var-spec 0 2))
+	    (t var-spec)))
 	 (var-spec-var (var-spec)
 	   (if (symbolp var-spec) var-spec (car var-spec)))
 	 (var-spec-step-form (var-spec)
@@ -220,7 +225,12 @@
 
 (defmacro do* (var-specs (end-test-form &rest result-forms) &body declarations-and-body)
   (flet ((var-spec-let-spec (var-spec)
-	   (if (symbolp var-spec) var-spec (subseq var-spec 0 2)))
+	   (cond
+	    ((symbolp var-spec)
+	     var-spec)
+	    ((cddr var-spec)
+	     (subseq var-spec 0 2))
+	    (t var-spec)))
 	 (var-spec-var (var-spec)
 	   (if (symbolp var-spec) var-spec (car var-spec)))
 	 (var-spec-step-form (var-spec)
