@@ -54,8 +54,21 @@
      (t (sequence-double-dispatch-error ,seq0 ,seq1))))
 
 (defun length (sequence)
-  (sequence-dispatch sequence
-    (vector
+  (etypecase sequence
+    (basic-vector
+     (macrolet
+	 ((do-it ()
+	    `(with-inline-assembly (:returns :eax)
+	       (:compile-form (:result-mode :ebx) sequence)
+	       (:movl (:ebx ,(bt:slot-offset 'movitz:movitz-basic-vector 'movitz::num-elements))
+		      :eax)
+	       (:testl ,(logxor #xffffffff (1- (expt 2 14))) :eax)
+	       (:jnz 'basic-vector-length-ok)
+	       (:movzxw (:ebx #.(bt:slot-offset 'movitz::movitz-basic-vector 'movitz::fill-pointer))
+			:eax)
+	      basic-vector-length-ok)))
+       (do-it)))
+    (old-vector
      (vector-fill-pointer sequence))
     (list
      (do ((x sequence (cdr x))

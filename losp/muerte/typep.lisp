@@ -235,8 +235,10 @@
 		 (make-other-typep :funobj))
 		((basic-vector)
 		 (make-other-typep :basic-vector))
-		((vector array)
+		((old-vector)
 		 (make-other-typep :vector))
+		((vector array)
+		 `(typep ,object '(or old-vector basic-vector)))
 		(simple-vector
 		 (make-vector-typep :any-t))
 		(string
@@ -280,7 +282,7 @@
 				(= (1+ movitz:+movitz-most-positive-fixnum+) lower-limit))
 			   `(with-inline-assembly-case ()
 			      (do-case (t :boolean-zf=1 :labels (plusp-ok))
-				(:compile-form (:result-mode :eax) ,object)
+			(:compile-form (:result-mode :eax) ,object)
 				(:leal (:eax ,(- (movitz:tag :other))) :ecx)
 				(:testb 7 :cl)
 				(:jnz 'plusp-ok)
