@@ -250,7 +250,11 @@
     (:unsigned-byte8
      (setf (memref object offset index :unsigned-byte8) value))
     (:unsigned-byte16
-     (setf (memref object offset index :unsigned-byte8) value))
+     (setf (memref object offset index :unsigned-byte16) value))
+    (:unsigned-byte32
+     (setf (memref object offset (* index 2) :unsigned-byte16) (ldb (byte 16 0) value)
+	   (memref object offset (+ 1 (* index 2)) :unsigned-byte16) (ldb (byte 14 16) value))
+     value)
     (:lisp
      (setf (memref object offset index :lisp) value))))
 
