@@ -244,6 +244,9 @@
 
   
 (defun set-textmode (mode-state)
+  (unless (= #xb8000 (vga-memory-map))
+    (break "This is only likely to work on VGA based at #xb8000, yours is at ~S."
+	   (vga-memory-map)))
   (setf (vga-state) mode-state)
   (ecase (vga-character-height)
     (8 (write-font +vga-font-8x8+ 8))
