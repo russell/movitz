@@ -472,7 +472,7 @@ be provided for those cases."
 	     (typecase funobj
 	       (integer
 		(let* ((interrupt-frame stack-frame)
-		       (funobj (interrupt-frame-ref :esi :lisp 0 interrupt-frame)))
+		       (funobj (dit-frame-ref :esi :lisp 0 interrupt-frame)))
 		  (if (and conflate-interrupts conflate
 			   ;; When the interrupted function has a stack-frame, conflate it.
 			   (typep funobj 'function)
@@ -482,9 +482,9 @@ be provided for those cases."
 		      (incf count)
 		      (print-leadin stack-frame count conflate-count)
 		      (setf conflate-count 0)
-		      (let ((exception (interrupt-frame-ref :exception :unsigned-byte32
+		      (let ((exception (dit-frame-ref :exception-vector :unsigned-byte32
 							    0 interrupt-frame))
-			    (eip (interrupt-frame-ref :eip :unsigned-byte32
+			    (eip (dit-frame-ref :eip :unsigned-byte32
 						      0  interrupt-frame)))
 			(typecase funobj
 			  (function
