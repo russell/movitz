@@ -473,6 +473,11 @@ Returns list in EAX and preserves numargs in ECX."
 	    (:int 107)))
     (:shrl 1 :eax)))
 
+(defun malloc-end ()
+  "Return the last location of the (dynamically allocated) heap area."
+  (+ (malloc-buffer-start)
+     (* 2 (malloc-cons-pointer))))
+
 (define-primitive-function fast-cons ()
   "Allocate a cons cell. Call with car in eax and cdr in ebx."
   (with-inline-assembly (:returns :multiple-values)
