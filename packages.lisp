@@ -1271,6 +1271,7 @@
 	   #:read-time-stamp-counter
 	   #:clear-time-stamp-counter
 	   #:eflags
+	   #:decode-eflags
 	   #:load-idt
 	   #:segment-register
 	   #:control-register-lo12
