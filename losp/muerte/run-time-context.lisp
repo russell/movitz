@@ -114,10 +114,6 @@
 				    (name :anonymous))
   (check-type parent run-time-context)
   (let ((context (%shallow-copy-object parent #.(movitz::movitz-type-word-size 'movitz-run-time-context))))
-;;;	 #+ignore
-;;;	 (malloc-pointer-words #.(cl:truncate (bt:sizeof 'movitz::movitz-run-time-context) 4))))
-;;;    (memcopy context parent -6 0 0 #.(bt:sizeof 'movitz::movitz-run-time-context)
-;;;	     :unsigned-byte8)
     (setf (%run-time-context-slot 'name context) name
 	  (%run-time-context-slot 'self context) context)
     (setf (%run-time-context-segment-base 'segment-descriptor-thread-context context) 
