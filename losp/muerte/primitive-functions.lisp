@@ -714,4 +714,7 @@ The number of values (untagged) is returned in ECX, even if CF=0."
 
 ;;;;;;
 
-
+(define-primitive-function ret-trampoline ()
+  "This is the global RET trampoline, used to achieve stack discipline."
+  (with-inline-assembly (:returns :multiple-values)
+    (:ret)))

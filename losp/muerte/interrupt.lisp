@@ -124,6 +124,14 @@ is off, e.g. because this interrupt/exception is routed through an interrupt gat
 
 	    (:locally (:movl 0 (:edi (:edi-offset atomically-continuation))))
 	    
+	    ;; Do RET atomicification
+	    (:movl (:ebp ,(dit-frame-offset :eip)) :ecx)
+	    (:cmpb ,(realpart (ia-x86:asm :ret)) (:ecx))
+	    (:jne 'not-at-ret-instruction)
+	    (:locally (:movl (:edi (:edi-offset ret-trampoline)) :ecx))
+	    (:movl :ecx (:ebp ,(dit-frame-offset :eip)))
+	   not-at-ret-instruction
+	    
 	    (:xorl :eax :eax)		; Ensure safe value
 	    (:xorl :edx :edx)		; Ensure safe value
 
