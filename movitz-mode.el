@@ -108,7 +108,7 @@
 	     (fi:eval-in-lisp "movitz::*bootblock-build*")
 	     display-shortcut)
     (call-process "/bin/sh" nil 0 nil "-c"
-		  (format "cd ~/src/movitz && DISPLAY=\"%s\" ~/tmp/bochs-cvs/bochs -nocp > bochs-parameters"
+		  (format "DISPLAY=\"%s\" ~/tmp/bochs-cvs/bochs -nocp > bochs-parameters"
 			  display-shortcut))))
 
 (defun movitz-compile-file ()
