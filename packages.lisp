@@ -1120,12 +1120,23 @@
 	   #:package-object-internal-symbols
 	   #:package-object-external-symbols
 
+	   #:map-heap-words
+	   #:map-stack-words
+	   #:malloc-clumps
+	   #:malloc-cons-pointer
+	   #:malloc-buffer-start
+
+	   #:%word-offset
+	   #:%run-time-context-slot
+	   #:shallow-copy
+	   
 	   vector-element-type
 	   vector-element-size
 	   with-subvector-accessor
 	   svref%unsafe
 	   bvref-u16
 	   object-location
+	   location-in-object-p
 	   inline-malloc
 	   define-compile-time-variable
 	   define-primitive-function
