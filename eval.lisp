@@ -111,6 +111,8 @@
   "3.1.2.1.1 Symbols as Forms"
   (declare (ignore top-level-p))
   (cond
+   ((keywordp form)
+    (eval-self-evaluating form env top-level-p))
    ((typep (movitz-binding form env) 'constant-object-binding)
     (translate-program (movitz-print (constant-object (movitz-binding form env)))
 		       :cl :muerte.cl))
