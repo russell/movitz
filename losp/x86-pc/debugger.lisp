@@ -429,7 +429,7 @@ be provided for those cases."
 (defun safe-print-stack-frame-arglist (&rest args)
   (declare (dynamic-extent args))
   (handler-case (apply #'print-stack-frame-arglist args)
-    (t (conditon)
+    (serious-condition (conditon)
       (write-string "#<error printing frame>"))))
 
 (defun backtrace (&key ((:frame initial-stack-frame)
