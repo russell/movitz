@@ -45,9 +45,10 @@
 	 ((< number (length reqs))
 	  (nth number reqs))
 	 ((< number (+ (length reqs) (length opts)))
-	  `(or null ,(nth (- number (length reqs)) opts)))
+	  (let ((x (nth (- number (length reqs)) opts)))
+	    (if (eq x t) t `(or null ,x))))
 	 (rest
-	  `(or null ,rest))
+	  (if (eq rest t) t `(or null ,rest)))
 	 (t 'null))))))
 
 (defun type-specifier-primary (type-specifier)
