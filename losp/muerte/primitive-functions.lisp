@@ -122,7 +122,7 @@ with EAX still holding the tag."
   (with-inline-assembly (:returns :push)
     (:pushl :ebp)
     (:movl :esp :ebp)			; set up a pseudo stack-frame
-    (:pushl :esi)			; for consistency
+    (:pushl 4)
     
     (:globally (:movl (:edi (:edi-offset unwind-protect-tag)) :edx))
     (:locally (:movl (:edi (:edi-offset dynamic-env)) :ecx))
