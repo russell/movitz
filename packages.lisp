@@ -1100,6 +1100,7 @@
 	   simple-read-from-string
 	   print-word
 	   fixnump below
+	   print-unreadable-movitz-object
 
 	   stack-ref
 	   with-each-dynamic-context
@@ -1208,6 +1209,8 @@
 	   #:io-delay
 	   #:io-port-read-sequence
 	   #:io-port-write-sequence
+	   #:%io-port-read-succession
+	   #:%io-port-write-succession
 	   #:with-io-register-syntax
 	   #:with-register-syntax
 	   #:cpu-id
