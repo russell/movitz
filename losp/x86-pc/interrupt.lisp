@@ -19,11 +19,6 @@
 
 (in-package muerte.x86-pc)
 
-(defmacro end-of-interrupt ()
-  '(with-inline-assembly (:returns :nothing)
-    (:movb #x20 :al)
-    (:outb :al #x20)))
-
 (defun idt-init ()
   (init-pic8259 32 40)
   (setf (pic8259-irq-mask) #xffff)
