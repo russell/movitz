@@ -5602,7 +5602,7 @@ fifth:  all compiler-values for form1, as a list."
 	  :modifies nil
 	  :final-form form
 	  :code `((:load-constant ,form :eax)
-		  (:call (:edi ,(global-constant-offset 'dynamic-load))))))
+		  (:call (:edi ,(global-constant-offset 'dynamic-variable-lookup))))))
        (t (check-type binding dynamic-binding)
 	  (compiler-values ()
 	    :returns :eax
@@ -5610,7 +5610,7 @@ fifth:  all compiler-values for form1, as a list."
 	    :modifies nil
 	    :final-form form
 	    :code `((:load-constant ,form :eax)
-		    (:call (:edi ,(global-constant-offset 'dynamic-load))))))))))
+		    (:call (:edi ,(global-constant-offset 'dynamic-variable-lookup))))))))))
 
 (define-compiler compile-lambda-form (&form form)
   "3.1.2.2.4 Lambda Forms"

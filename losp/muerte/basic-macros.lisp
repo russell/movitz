@@ -1078,7 +1078,7 @@ busy-waiting loop on P4."
        (:leal (:eax ,(- (movitz:tag :symbol))) :ecx)
        (:testb 7 :cl)
        (:jne '(:sub-program () (:int 66)))
-       (:call-local-pf dynamic-load-unprotected)
+       (:call-local-pf dynamic-variable-lookup-unbound)
        (:globally (:cmpl (:edi (:edi-offset unbound-value)) :eax)))))
 
 (defmacro define-global-variable (name init-form &optional docstring)

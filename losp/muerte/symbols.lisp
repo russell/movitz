@@ -45,14 +45,14 @@
     (symbol
      (with-inline-assembly (:returns :eax)
        (:compile-form (:result-mode :eax) symbol)
-       (:call-local-pf dynamic-load)))))
+       (:call-local-pf dynamic-variable-lookup)))))
 
 (defun %unbounded-symbol-value (symbol)
   "Return the symbol's value without checking if it's bound or not."
   (check-type symbol symbol)
   (with-inline-assembly (:returns :eax)
     (:compile-form (:result-mode :eax) symbol)
-    (:call-local-pf dynamic-load-unprotected)
+    (:call-local-pf dynamic-variable-lookup-unbound)
    done))
 
 (defun (setf symbol-value) (value symbol)
@@ -63,7 +63,7 @@
      (with-inline-assembly (:returns :ebx)
        (:compile-form (:result-mode :eax) symbol)
        (:compile-form (:result-mode :ebx) value)
-       (:call-local-pf dynamic-store)))))
+       (:call-local-pf dynamic-variable-store)))))
 
 (defun set (symbol value)
   (setf (symbol-value symbol) value))
