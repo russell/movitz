@@ -117,7 +117,7 @@
     :initarg :tag
     :reader throw-error-tag))
   (:report (lambda (c s)
-	     (format s "Cannot throw to tag ~Z." (throw-error-tag c)))))
+	     (format s "Cannot throw to tag `~S'." (throw-error-tag c)))))
 
 (define-condition wrong-argument-count (program-error)
   ((function
