@@ -395,7 +395,7 @@ so that we can be reasonably sure of dst's size."
 
 (defun copy-funobj (old-funobj &optional (name (funobj-name old-funobj)))
   (let* ((num-constants (funobj-num-constants old-funobj))
-	 (funobj (malloc-pointer-words (+ #.(cl:truncate (bt:sizeof 'movitz:movitz-funobj) 4)
+	 (funobj (malloc-pointer-words (+ #.(movitz::movitz-type-word-size 'movitz-funobj)
 					  num-constants))))
     (setf (memref funobj #.(bt:slot-offset 'movitz:movitz-funobj 'movitz:type) 0 :unsigned-byte16)
       (memref old-funobj #.(bt:slot-offset 'movitz:movitz-funobj 'movitz:type) 0 :unsigned-byte16))
