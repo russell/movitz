@@ -450,7 +450,8 @@ be provided for those cases."
     (loop with conflate-count = 0 with count = 0
 	for stack-frame = initial-stack-frame
 	then (let ((uplink (stack-frame-uplink stack-frame)))
-	       (assert (> uplink stack-frame))
+	       (assert (> uplink stack-frame) ()
+		 "Backtracing uplink ~S from frame ~S." uplink stack-frame)
 	       uplink)
 	as funobj = (stack-frame-funobj stack-frame t)
 	do (flet ((print-leadin (stack-frame count conflate-count)
