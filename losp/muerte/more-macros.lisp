@@ -129,26 +129,15 @@
        ,@declarations-and-body)))
 
 (defmacro dolist ((var list-form &optional result-form) &body declarations-and-body)
-  (let ((cons-var (gensym "dolist-cons-var-"))
+  (let ((cons-var (gensym (format nil "dolist-cons-var-~A-" var)))
 	(loop-tag (gensym "dolist-loop-tag-")))
-    (multiple-value-bind (body declarations)
-	(movitz::parse-declarations-and-body declarations-and-body 'muerte.cl:declare)
-      `(let ((,cons-var ,list-form) ,var)
-	 (declare ,@declarations)
-	 (block nil
-	   (tagbody
-	     ,loop-tag
-	     (when ,cons-var
-	       (setq ,var (pop ,cons-var))
-	       ,@body
-	       (go ,loop-tag)))
-	   ,result-form))
-      #+ignore
-      `(do* ((,cons-var ,list-form (cdr ,cons-var))
-	     (,var (car ,cons-var) (car ,cons-var)))
-	   ((null ,cons-var) ,result-form)
-	 ,@declarations-and-body))))
-
+    `(prog ((,cons-var ,list-form))
+       ,loop-tag
+       (when ,cons-var
+	 (let ((,var (pop ,cons-var)))
+	   ,@declarations-and-body)
+	 (go ,loop-tag))
+       ,(when result-form `(return ,result-form)))))
 
 (defmacro letf* (bindings &body body &environment env)
   "Does what one might expect, saving the old values and setting the generalized
