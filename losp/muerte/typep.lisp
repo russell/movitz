@@ -575,6 +575,13 @@
 
 ;;;
 
+(define-typep rational (x &optional (lower-limit '*) (upper-limit '*))
+  (and (typep x 'rational)
+       (or (eq lower-limit '*)
+	   (<= lower-limit x))
+       (or (eq upper-limit '*)
+	   (<= x upper-limit))))
+
 (define-typep and (x &rest types)
   (declare (dynamic-extent types))
   (dolist (type types t)
