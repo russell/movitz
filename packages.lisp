@@ -1097,6 +1097,7 @@
 	   numargs-case
 	   movitz-accessor
 	   simple-read-from-string
+	   #:read-key
 	   print-word
 	   fixnump below
 	   print-unreadable-movitz-object

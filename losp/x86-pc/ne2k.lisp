@@ -47,7 +47,7 @@
   (let ((io-space (make-io-space :range io-base #x20)))
     (with-io-space-lock ()
       (when (null (io-space-occupants io-space))
-	(format t "Probing for ne2k NIC at #x~X.." io-base)
+	(format *query-io* "~&Probing for ne2k NIC at #x~X.." io-base)
 	(with-dp8390 (dp8390 io-base)
 	  (let ((tmp (dp8390 #x1f)))
 	    (io-delay 5000)

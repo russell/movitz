@@ -568,9 +568,12 @@ Return as primary value the offset of the optional source link-layer address, if
   
 (defvar *ne2000* nil)
 
-(defun ip6-test (&optional (ne2000 (or *ne2000*
-				       (setf *ne2000* (some #'muerte.x86-pc.ne2k:ne2k-probe muerte.x86-pc.ne2k:+ne2k-probe-addresses+))
-				       (error "No ethernet device."))))
+(defun ip6-test (&optional (ne2000 
+			    (or *ne2000*
+				(setf *ne2000*
+				  (some #'muerte.x86-pc.ne2k:ne2k-probe
+					muerte.x86-pc.ne2k:*ne2k-probe-addresses*))
+				(error "No ethernet device."))))
   (let* ((link-local-address (link-local-address-by-mac (mac-address ne2000)))
 	 (solicited-node-address (solicited-node-address link-local-address))
 	 (neighbor-cache (make-neighbor-cache)))
