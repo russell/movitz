@@ -232,6 +232,13 @@ after the point that called this stack-frame."
 		  (test funobj-num-jumpers)
 		  (dotimes (i (funobj-num-constants x) t)
 		    (unless (test funobj-constant-ref i)))))
+	    (symbol
+	     (and (test memref -7 0 :lisp)
+		  (test memref -7 1 :lisp)
+		  (test memref -7 2 :lisp)
+		  (test memref -7 3 :lisp)
+		  (test memref -7 4 :lisp)
+		  (test memref -7 5 :lisp)))
 	    (vector
 	     (and (typep y 'vector)
 		  (test array-element-type)
