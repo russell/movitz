@@ -45,12 +45,12 @@
 	  (terpri)
 	  (multiple-value-bind (form buffer-pointer)
 	      (handler-bind
-		  (#+ignore (muerte::missing-delimiter
-			     (lambda (c)
-			       (declare (ignore c))
-			       (format t "~&> ")
-			       (invoke-restart 'muerte::next-line
-					       (muerte.readline:contextual-readline *repl-readline-context*)))))
+		  ((muerte::missing-delimiter
+		    (lambda (c)
+		      (declare (ignore c))
+		      (format t "~&> ")
+		      (invoke-restart 'muerte::next-line
+				      (muerte.readline:contextual-readline *repl-readline-context*)))))
 		(simple-read-from-string buffer-string t t))
 	    (multiple-value-call
 		(lambda (form previous-package &rest results)
@@ -74,11 +74,11 @@
 		(apply 'muerte.toplevel:invoke-toplevel-command
 		       form
 		       (loop for arg = (multiple-value-bind (arg x)
-					   (simple-read-from-string buffer-string nil 'eof
+					   (simple-read-from-string buffer-string nil '#0=#:eof
 								    :start buffer-pointer)
 					 (setq buffer-pointer x)
 					 arg)
-			   until (eq arg 'eof)
+			   until (eq arg '#0#)
 			   collect arg)))))))
     #+ignore (muerte.readline::readline-break (c)
 	       (declare (ignore c))
