@@ -161,7 +161,7 @@
     :map-binary-write 'movitz-intern-code-vector
     :map-binary-read-delayed 'movitz-word-code-vector
     :binary-tag :primitive-function)
-   (dynamic-find-binding
+   (dynamic-load-unprotected
     :map-binary-write 'movitz-intern-code-vector
     :binary-tag :primitive-function
     :map-binary-read-delayed 'movitz-word-code-vector
@@ -476,6 +476,9 @@
     :initform 0)
    (non-pointers-end :binary-type :label) ; ========= NON-POINTER-END =======
    (scratch1
+    :binary-type word
+    :initform 0)
+   (scratch2
     :binary-type word
     :initform 0)
    (ret-trampoline
