@@ -150,7 +150,7 @@ at the start-stack-frame location."
 	     (function
 	      (assert (= 0 (funobj-frame-num-unboxed funobj)))
 	      (map-heap-words function (+ nether-frame 2) frame))
-	     ((eql 0)
+	     ((eql 0)			; An interrupt-frame?
 	      ;; 1. Scavenge the interrupt-frame
 	      (map-heap-words function
 			      (+ nether-frame 2)
