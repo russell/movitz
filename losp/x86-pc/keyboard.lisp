@@ -23,6 +23,7 @@
 	   ;; read-char
 	   poll-keypress
 	   read-keypress
+	   poll-key
 	   set-leds
 	   cpu-reset))
 
@@ -155,7 +156,7 @@ Secondly, whether this was a release event is returned."
 	   (aref *scan-codes* key-code))))
 ;;;  (< -1 key-code (length *scan-codes*)))
 
-(defun read-key ()
+(defun get-key ()
   (when (lowlevel-event-p)
     (multiple-value-bind (key-code release-p)
 	(lowlevel-read)
@@ -175,7 +176,7 @@ Secondly, whether this was a release event is returned."
 
 (defun poll-keypress ()
   (multiple-value-bind (key release-p)
-      (read-key)
+      (get-key)
     (unless release-p
       (values key *qualifier-state*))))
 
@@ -189,6 +190,7 @@ Secondly, whether this was a release event is returned."
   (multiple-value-bind (key qualifiers)
       (poll-keypress)
     (cond
+     ((not key) nil)
      ((symbolp key)
       (case key
 	(:up #\^p)
@@ -204,8 +206,16 @@ Secondly, whether this was a release event is returned."
 		    (- (char-code #\a)))))
      (t key))))
 
-;;;(defun read-char ()
-;;;  (loop when (poll-char) return it))
+(defun poll-key ()
+  (multiple-value-bind (key qualifiers)
+      (poll-keypress)
+    (if (and (characterp key)
+	     (qualifier-p :ctrl qualifiers)
+	     (char<= #\a (char-downcase key) #\z))
+	(code-char (+ (char-code #\^a)
+		      (char-code (char-downcase key))
+		      (- (char-code #\a))))
+      key)))
 
 (defun set-leds (led0 led1 led2)
   (loop while (logbitp 1 (io-port #x64 :unsigned-byte8)))
