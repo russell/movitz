@@ -993,10 +993,10 @@ next-emf as its target for call-next-method."
 (defclass run-time-context (t)
   ()
   (:metaclass built-in-class)
-  (:size #.(bt:sizeof 'movitz::movitz-constant-block))
-  (:slot-map #.(movitz::slot-map 'movitz::movitz-constant-block
-			       (cl:+ (bt:slot-offset 'movitz::movitz-constant-block
-						     'movitz::constant-block-start)
+  (:size #.(bt:sizeof 'movitz::movitz-run-time-context))
+  (:slot-map #.(movitz::slot-map 'movitz::movitz-run-time-context
+			       (cl:+ (bt:slot-offset 'movitz::movitz-run-time-context
+						     'movitz::run-time-context-start)
 				     0))))
 
 (defclass stream () ())

@@ -499,6 +499,8 @@ Side-effects each binding's binding-store-type."
 		   (setf (binding-store-type binding)
 		     (cond
 		      ((not (null (type-analysis-thunks analysis)))
+;;;		       (when (not (rest (type-analysis-thunks analysis)))
+;;;			 (warn "One thunk: ~S for ~S" binding (first (type-analysis-thunks analysis))))
 		       (multiple-value-list (type-specifier-encode t)))
 		      (t (type-analysis-encoded-type analysis))))
 		   #+ignore
@@ -1520,7 +1522,7 @@ There is (propably) a bug in the peephole optimizer." recursive-count))
 	     (when (instruction-is op :call)
 	       (let ((x (global-constant-operand (second op))))
 		 (flet ((try (name)
-			  (and (eql x (slot-offset 'movitz-constant-block name))
+			  (and (eql x (slot-offset 'movitz-run-time-context name))
 			       name)))
 		   (cond
 		    ((not x) nil)
@@ -3555,7 +3557,7 @@ loading borrowed bindings."
 		((atom tree)
 		 tree)
 		((eq :edi-offset (car tree))
-		 (check-type (cadr tree) symbol "a Movitz constant-block label")
+		 (check-type (cadr tree) symbol "a Movitz run-time-context label")
 		 (+ (global-constant-offset (cadr tree))
 		    (reduce #'+ (cddr tree))))
 		(t (cons (fix-edi-offset (car tree))

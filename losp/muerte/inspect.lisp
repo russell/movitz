@@ -303,7 +303,7 @@ Obviously, this correspondence is not guaranteed to hold e.g. across GC."
       (run-time-context
        (<= object-location
 	   location
-	   (+ -1 object-location #.(movitz::movitz-type-word-size :movitz-constant-block))))
+	   (+ -1 object-location #.(movitz::movitz-type-word-size :movitz-run-time-context))))
       (std-instance
        (<= object-location
 	   location

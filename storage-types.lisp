@@ -621,7 +621,7 @@ integer (native lisp) value."
   (assert (eq type 'word))
   (cond
    ((eq 'muerte::unbound obj)
-    (binary-slot-value (image-constant-block *image*) 'unbound-function))
+    (binary-slot-value (image-run-time-context *image*) 'unbound-function))
    ((typep obj 'movitz-funobj)
     (movitz-intern obj))
    ((symbolp obj)
@@ -987,7 +987,7 @@ integer (native lisp) value."
    (length
     :binary-type lu16
     :initarg :length
-    :accessor movitz-bignum-length
+    :accessor movitz-struct-length
     :map-binary-write (lambda (x &optional type)
 			(declare (ignore type))
 			(check-type x (unsigned-byte 14))

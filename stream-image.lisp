@@ -51,7 +51,7 @@
       (value)
     "Unable to set memory-stream's file-position to #x~X." value))
 
-(defmethod image-constant-block ((image stream-image))
+(defmethod image-run-time-context ((image stream-image))
   (movitz-word (image-register32 image :edi)))
 
 (defmethod movitz-word-by-image ((image stream-image) word)
@@ -65,11 +65,11 @@
 		   (make-instance 'movitz-character :char (code-char (ldb (byte 8 8) word))))
 		  (:null
 		   #+ignore
-		   (assert (= (- word (tag :null)) (image-constant-block-address image)) (word)
+		   (assert (= (- word (tag :null)) (image-run-time-context-address image)) (word)
 		     "The word #x~8,'0X has NIL tag but isn't NIL." word)
 		   (setf (image-stream-position image) 0 #+ignore (- word (tag :null)))
-		   (let ((object (read-binary 'movitz-constant-block (image-stream image))))
-		     (setf (movitz-heap-object-word (movitz-constant-block-null-symbol object))
+		   (let ((object (read-binary 'movitz-run-time-context (image-stream image))))
+		     (setf (movitz-heap-object-word (movitz-run-time-context-null-symbol object))
 		       word)
 		     object))
 		  (:symbol

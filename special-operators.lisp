@@ -632,7 +632,7 @@ The valid parameters are~{ ~S~}."
       (cdr form)
     (assert (not argument))
     (compiler-values ()
-      :code `((:call (:edi ,(slot-offset 'movitz-constant-block if-name))))
+      :code `((:call (:edi ,(slot-offset 'movitz-run-time-context if-name))))
       :returns :nothing)))
 
 (define-special-operator inlined-not (&all forward &form form &result-mode result-mode)

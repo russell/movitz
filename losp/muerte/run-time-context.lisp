@@ -48,7 +48,7 @@
 		(equal context '(current-run-time-context))))
       form
     (let ((slot-name (movitz:movitz-eval slot-name env)))
-      (ecase (bt:binary-slot-type 'movitz::movitz-constant-block (intern (symbol-name slot-name) :movitz))
+      (ecase (bt:binary-slot-type 'movitz::movitz-run-time-context (intern (symbol-name slot-name) :movitz))
 	(movitz:word
 	 `(with-inline-assembly (:returns :eax)
 	    (:compile-form (:result-mode :eax) ,value)
@@ -114,8 +114,8 @@
 (defun clone-run-time-context (&key (parent (current-run-time-context))
 				    (name :anonymous))
   (check-type parent run-time-context)
-  (let ((context (malloc-pointer-words #.(cl:truncate (bt:sizeof 'movitz::movitz-constant-block) 4))))
-    (memcopy context parent -6 0 0 #.(bt:sizeof 'movitz::movitz-constant-block)
+  (let ((context (malloc-pointer-words #.(cl:truncate (bt:sizeof 'movitz::movitz-run-time-context) 4))))
+    (memcopy context parent -6 0 0 #.(bt:sizeof 'movitz::movitz-run-time-context)
 	     :unsigned-byte8)
     (setf (%run-time-context-slot 'name context) name
 	  (%run-time-context-slot 'self context) context)
