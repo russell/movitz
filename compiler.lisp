@@ -44,14 +44,14 @@ run-time context.")
   "Use these assembly-instruction prefixes when accessing the global
 run-time context.")
 
-(defvar *compiler-physical-segment-prefix* '(:gs-override)
+(defparameter *compiler-physical-segment-prefix* '(:gs-override)
   "Use this instruction prefix when accessing a physical memory location (i.e. typically some memory-mapped hardware device).")
 
-(defvar *compiler-nonlocal-lispval-read-segment-prefix* '(:fs-override)
+(defparameter *compiler-nonlocal-lispval-read-segment-prefix* '(:fs-override)
   "Use this segment prefix when reading a lispval at (potentially)
 non-local locations.")
 
-(defvar *compiler-nonlocal-lispval-write-segment-prefix* '(:fs-override)
+(defparameter *compiler-nonlocal-lispval-write-segment-prefix* '(:fs-override)
   "Use this segment prefix when writing a lispval at (potentially)
 non-local locations.")
 
