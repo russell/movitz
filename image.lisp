@@ -549,7 +549,8 @@
     muerte:run-time-context
     muerte.mop:standard-effective-slot-definition
     muerte.mop:funcallable-standard-class
-    muerte:basic-restart))
+    muerte:basic-restart
+    muerte:illegal-object))
 
 (defun class-object-offset (name)
   (+ (bt:slot-offset 'movitz-vector 'data)
