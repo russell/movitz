@@ -704,6 +704,7 @@ where zot is not in foo's scope, but _is_ in foo's extent."
 			  `((:xorl :ebx :ebx)
 			    (:globally (:call (:edi (:edi-offset dynamic-locate-catch-tag))))
 			    (:jnc '(:sub-program () (:int 108)))
+			    (:locally (:bound (:edi (:edi-offset stack-bottom)) :eax))
 			    (:movl :eax :esp)
 			    (:movl (:esp) :ebp)
 			    (:movl (:ebp -4) :esi)
