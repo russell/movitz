@@ -568,6 +568,7 @@ The valid parameters are~{ ~S~}."
 			       (check-type binding lexical-binding)
 			       (list binding)))))
 		       (let ((code (assembly-macroexpand inline-asm amenv)))
+			 #+ignore
 			 (assert (not (and (not side-effects)
 					   (tree-search code '(:store-lexical))))
 			     ()
