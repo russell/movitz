@@ -31,7 +31,11 @@
     :reader image-start-address)
    (nil-word
     :initarg :nil-word
-    :initform #x65
+    :initform (if (boundp '*image*)
+		  (image-nil-word *image*)
+		(progn
+		  (format *query-io* "~&Please enter the stream-images NIL value: ")
+		  (read *query-io*)))
     :reader image-nil-word)))
 
 (defmethod image-register32 ((image stream-image) register-name)
