@@ -85,6 +85,7 @@
 			     ',integer-list
 			     ',name-list))))
 	     (eval-when (:compile-toplevel)
+	       ,@constant-declarations
 	       (export ',constant-exports))
 	     ,@constant-declarations
 	     ',type-name))))
