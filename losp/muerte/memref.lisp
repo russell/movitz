@@ -785,6 +785,23 @@
 		    (:addl :ebx :ecx)
 		    (:shrl ,movitz::+movitz-fixnum-shift+ :ecx) ; scale down address
 		    (,prefixes :movzxb (:ecx) :ecx)))))))
+	(:signed-byte8
+	 (cond
+	  ((and (eq 0 offset) (eq 0 index))
+	   `(with-inline-assembly (:returns :ecx :type (signed-byte 8))
+	      (:compile-form (:result-mode :untagged-fixnum-ecx) ,address)
+	      (,prefixes :movsxb (:ecx) :ecx)
+	      (:shll ,movitz:+movitz-fixnum-shift+ :ecx)))
+	  (t (let ((address-var (gensym "memref-int-address-")))
+	       `(let ((,address-var ,address))
+		  (with-inline-assembly (:returns :ecx :type (signed-byte 8))
+		    (:compile-two-forms (:eax :ecx) ,offset ,index)
+		    (:load-lexical (:lexical-binding ,address-var) :ebx)
+		    (:addl :eax :ecx)
+		    (:addl :ebx :ecx)
+		    (:shrl ,movitz::+movitz-fixnum-shift+ :ecx) ; scale down address
+		    (,prefixes :movsxb (:ecx) :ecx)
+		    (:shll ,movitz:+movitz-fixnum-shift+ :ecx)))))))
 	(:unsigned-byte16
 	 (cond
 	  ((and (eq 0 offset) (eq 0 index))
