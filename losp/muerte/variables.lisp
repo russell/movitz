@@ -38,4 +38,4 @@
 
 (defvar internal-time-units-per-second)
 
-(defvar *build-number* :unknown)
+(declaim (special *build-number*))
