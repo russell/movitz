@@ -17,10 +17,6 @@
 (require :lib/net/ethernet)
 (provide :lib/net/arp)
 
-(defpackage muerte.ip4
-  (:use muerte.cl muerte muerte.ethernet muerte.lib)
-  (:export ))
-
 (in-package muerte.ip4)
 
 (define-named-integer arp-op (:export-constants t)

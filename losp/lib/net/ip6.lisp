@@ -14,32 +14,29 @@
 ;;;;                
 ;;;;------------------------------------------------------------------
 
-(require :common-lisp)
 (require :x86-pc/all)
 (require :x86-pc/pit8253)
 (require :x86-pc/ne2k)
 (require :lib/named-integers)
 (require :lib/misc)
-(require :lib/malloc-init)
 (require :lib/net/ethernet)
 (provide :lib/net/ip6)
 
 (defpackage muerte.ip6
   (:use muerte.cl muerte.lib muerte.x86-pc muerte.ethernet)
-  (:export
-   packet-version
-   packet-source
-   packet-destination
-   packet-length
-   packet-traffic-class
-   packet-next-header
-   packet-flow-label
-   packet-hop-limit
+  (:export #:packet-version
+	   #:packet-source
+	   #:packet-destination
+	   #:packet-length
+	   #:packet-traffic-class
+	   #:packet-next-header
+	   #:packet-flow-label
+	   #:packet-hop-limit
 
-   pprint-ip6
-   ip6-test
-   ip6-free
-   ))
+	   #:pprint-ip6
+	   #:ip6-test
+	   #:ip6-free
+	   ))
 
 (in-package muerte.ip6)
 

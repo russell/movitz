@@ -1,6 +1,6 @@
 ;;;;------------------------------------------------------------------
 ;;;; 
-;;;;    Copyright (C) 2001-2003, 
+;;;;    Copyright (C) 2001-2004, 
 ;;;;    Department of Computer Science, University of Tromsø, Norway.
 ;;;; 
 ;;;;    For distribution policy, see the accompanying file COPYING.
@@ -15,6 +15,7 @@
 ;;;;------------------------------------------------------------------
 
 (require :common-lisp)
+(require :lib/package)
 (provide :lib/readline)
 
 (defpackage muerte.readline

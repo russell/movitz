@@ -14,16 +14,9 @@
 ;;;;                
 ;;;;------------------------------------------------------------------
 
+(require :lib/package)
 (require :lib/readline)
 (provide :lib/repl)
-
-(defpackage muerte.lib
-  (:export *repl-level*
-	   *repl-prompter*
-	   *repl-prompt-context*
-	   *repl-print-format*
-	   *repl-readline-context*
-	   read-eval-print))
 
 (in-package muerte.lib)
 

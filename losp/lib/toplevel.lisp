@@ -14,13 +14,14 @@
 ;;;;                
 ;;;;------------------------------------------------------------------
 
+(require :lib/package)
 (provide :lib/toplevel)
 
 (defpackage muerte.toplevel
   (:use muerte.cl muerte)
-  (:export define-toplevel-command
-	   invoke-toplevel-command
-	   *toplevel-commands*))
+  (:export #:define-toplevel-command
+	   #:invoke-toplevel-command
+	   #:*toplevel-commands*))
 
 (in-package muerte.toplevel)
 

@@ -14,17 +14,18 @@
 ;;;;                
 ;;;;------------------------------------------------------------------
 
-(provide :lib/net/ip4)
-
-;; (require :x86-pc/ne2k)
+(require :lib/package)
 (require :lib/misc)
-(require :lib/net/arp)
+(require :lib/net/ethernet)
+(provide :lib/net/ip4)
 
 (defpackage muerte.ip4
   (:use muerte.cl muerte muerte.ethernet muerte.lib)
   (:export pprint-ip4
 	   ip4-test
 	   ip4-free))
+
+(require :lib/net/arp)
 
 (in-package muerte.ip4)
 

@@ -1,6 +1,6 @@
 ;;;;------------------------------------------------------------------
 ;;;; 
-;;;;    Copyright (C) 2001-2002, 
+;;;;    Copyright (C) 2001-2002, 2004, 
 ;;;;    Department of Computer Science, University of Tromsø, Norway.
 ;;;; 
 ;;;;    For distribution policy, see the accompanying file COPYING.
@@ -14,11 +14,8 @@
 ;;;;                
 ;;;;------------------------------------------------------------------
 
+(require :lib/package)
 (provide :lib/bcd)
-
-(defpackage muerte.lib
-  (:export bcd-to-integer
-	   integer-to-bcd))
 
 (in-package muerte.lib)
 

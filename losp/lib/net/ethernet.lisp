@@ -14,41 +14,40 @@
 ;;;;                
 ;;;;------------------------------------------------------------------
 
-(require :common-lisp)
 (require :lib/named-integers)
 
 (provide :lib/net/ethernet :load-priority 0)
 
 (defpackage muerte.ethernet 
-  (:use muerte.cl muerte :muerte.lib)
-  (:export make-ethernet-packet
-	   ether-destination
-	   ether-source
-	   ether-type
-	   ethernet-device
-	   transmit
-	   receive
-	   packet-error
-	   packet
-	   packet-available-p
-	   mac-address
-	   accept-broadcasts-p
-	   accept-multicast-addresses
-	   promiscuous-p
-	   pprint-mac
-	   ether-mac-vendor
-	   format-ethernet-packet
-	   ether-802.3-p
-	   ether-802.3-llc-type
-	   ether-802.3-llc-dsap
-	   ether-802.3-llc-ssap
-	   ether-802.3-snap-p
-	   ether-802.3-snap-type
-	   +source-mac+
-	   +destination-mac+
-	   +max-ethernet-frame-size+
-	   +min-ethernet-frame-size+
-	   +broadcast-address+))
+  (:use muerte.cl muerte muerte.lib)
+  (:export #:make-ethernet-packet
+	   #:ether-destination
+	   #:ether-source
+	   #:ether-type
+	   #:ethernet-device
+	   #:transmit
+	   #:receive
+	   #:packet-error
+	   #:packet
+	   #:packet-available-p
+	   #:mac-address
+	   #:accept-broadcasts-p
+	   #:accept-multicast-addresses
+	   #:promiscuous-p
+	   #:pprint-mac
+	   #:ether-mac-vendor
+	   #:format-ethernet-packet
+	   #:ether-802.3-p
+	   #:ether-802.3-llc-type
+	   #:ether-802.3-llc-dsap
+	   #:ether-802.3-llc-ssap
+	   #:ether-802.3-snap-p
+	   #:ether-802.3-snap-type
+	   #:+source-mac+
+	   #:+destination-mac+
+	   #:+max-ethernet-frame-size+
+	   #:+min-ethernet-frame-size+
+	   #:+broadcast-address+))
 	   
 (in-package muerte.ethernet)
 

@@ -1,6 +1,6 @@
 ;;;;------------------------------------------------------------------
 ;;;; 
-;;;;    Copyright (C) 2001, 2003, 
+;;;;    Copyright (C) 2001, 2003-2004, 
 ;;;;    Department of Computer Science, University of Tromsø, Norway.
 ;;;; 
 ;;;;    For distribution policy, see the accompanying file COPYING.
@@ -18,12 +18,6 @@
 (provide :lib/misc)
 
 (in-package muerte.lib)
-
-(defpackage muerte.lib
-  (:export checksum-octets
-	   make-counter-u32
-	   u32-add
-	   ))
 
 (defun checksum-octets (packet &optional (start 0) (end (length packet)))
   "Generate sum of 16-bit big-endian words for a sequence of octets."

@@ -14,19 +14,9 @@
 ;;;;                
 ;;;;------------------------------------------------------------------
 
-;; (require :common-lisp)
+(require :lib/package)
 (require :lib/malloc-init)
 (provide :lib/named-integers)
-
-(defpackage muerte.lib
-  (:use muerte.cl muerte)
-  (:export define-named-integer
-	   named-integer-case
-	   named-integer
-	   integer-name
-	   name->integer
-	   names->integer
-	   with-named-integers-syntax))
 
 (in-package muerte.lib)
 

@@ -14,22 +14,8 @@
 ;;;;                
 ;;;;------------------------------------------------------------------
 
+(requore :lib/package)
 (provide :lib/console)
-
-(defpackage muerte.lib
-  (:use muerte)
-  (:export console
-	   console-width
-	   console-height
-	   cursor-x
-	   cursor-y
-	   console-char
-	   scroll-down
-	   put-string
-	   clear-line
-	   clear-console
-	   local-echo-p
-	   with-saved-excursion))
 
 (in-package muerte.lib)
 
