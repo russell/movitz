@@ -1189,6 +1189,7 @@
 	   map-active-restarts
 	   with-basic-restart
 
+	   #:code-vector
 	   #:vector-u8
 	   #:vector-u16
 	   #:vector-u32
