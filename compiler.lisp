@@ -44,6 +44,10 @@ run-time context.")
   "Use these assembly-instruction prefixes when accessing the global
 run-time context.")
 
+(defvar *compiler-physical-segment-prefix* '(:gs-override)
+  "Use this instruction prefix when accessing a physical memory location
+(i.e. typically some memory-mapped hardware device).")
+
 (defvar *compiler-allow-untagged-word-bits* 0
   "Allow (temporary) untagged values of this bit-size to exist, because
 the system ensures one way or another that there can be no pointers below

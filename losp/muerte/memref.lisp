@@ -628,7 +628,9 @@
 	  (not (movitz:movitz-constantp physicalp env)))
       form
     (let* ((physicalp (movitz::eval-form physicalp env))
-	   (prefixes (if physicalp '(:gs-override) ())))
+	   (prefixes (if (not physicalp)
+			 ()
+		       movitz:*compiler-physical-segment-prefix*)))
       (ecase (movitz::eval-form type)
 	(:lisp
 	 `(with-inline-assembly (:returns :eax)
@@ -720,7 +722,9 @@
 	(warn "setf memref-int form: ~S, ~S ~S" form type physicalp)
 	form)
     (let* ((physicalp (movitz::eval-form physicalp env))
-	   (prefixes (if physicalp '(:gs-override) ())))
+	   (prefixes (if (not physicalp)
+			 ()
+		       movitz:*compiler-physical-segment-prefix*)))
       (ecase type
 	(:unsigned-byte32
 	 (assert (= 4 movitz:+movitz-fixnum-factor+))

@@ -1366,6 +1366,7 @@
 	   #:*compiler-auto-stack-checks-p*
 	   #:*compiler-local-segment-prefix*
 	   #:*compiler-global-segment-prefix*
+	   #:*compiler-physical-segment-prefix*
 	   #:*compiler-compile-eval-whens*
 	   #:*compiler-compile-macro-expanders*
 	   #:*compiler-allow-untagged-word-bits*
