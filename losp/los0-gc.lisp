@@ -113,7 +113,7 @@
       (symbol-function 'new-malloc-clumps))
     (setf (symbol-function 'new-malloc-clumps)
       old-malloc))
-  (setf (interrupt-handler 113)
+  (setf (exception-handler 113)
     (lambda (exception interrupt-frame)
       (declare (ignore exception interrupt-frame))
       (format t "~&;; Handling out-of-memory exception..")

@@ -240,15 +240,14 @@
 	nil))))
 
 
-(defun interrupt-handler (n)
+(defun exception-handler (n)
   (let ((vector (load-global-constant interrupt-handlers)))
     (svref vector n)))
 
-(defun (setf interrupt-handler) (handler n)
+(defun (setf exception-handler) (handler n)
   (check-type handler function)
   (let ((vector (load-global-constant interrupt-handlers)))
     (setf (svref vector n) handler)))
-
 
 (defun cli ()
   (with-inline-assembly (:returns :nothing)
