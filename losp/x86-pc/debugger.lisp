@@ -499,7 +499,7 @@ be provided for those cases."
 			  (function
 			   (let ((delta (code-vector-offset (funobj-code-vector funobj) eip)))
 			     (if delta
-				 (format t "{Exception ~D in ~W at PC offset ~D."
+				 (format t "{Exception ~D in ~W at PC offset ~D.}"
 					 exception (funobj-name funobj) delta)
 			       (format t "{Exception ~D in ~W at EIP=#x~X.}"
 				       exception (funobj-name funobj) eip))))
