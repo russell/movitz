@@ -383,7 +383,6 @@ that the msb isn't zero. DO NOT APPLY TO NON-BIGNUM VALUES!"
 	      (:shldl :cl :eax :edx)
 	      (jnz 'overflow)
 	     shift-short-loop
-	      (:int 32)
 	      (:movl (:ebx :esi (:offset movitz-bignum bigit0 -4))
 		     :eax)
 	      (:shldl :cl :eax (:ebx :esi (:offset movitz-bignum bigit0)))
