@@ -3859,7 +3859,7 @@ as the lexical variable-name, and add a new shadowing dynamic binding for <forma
 			    and do (setq need-normalized-ecx-p t))))))
 	(assert (not (minusp stack-setup-size)))
 	(let ((stack-frame-init-code
-	       (append (when (and do-check-stack-p
+	       (append (when (and do-check-stack-p use-stack-frame-p
 				  *compiler-auto-stack-checks-p*
 				  (not (without-check-stack-limit-p env)))
 			 `((,*compiler-local-segment-prefix*
