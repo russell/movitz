@@ -276,6 +276,8 @@
 		       (if (not (eql dim 1))
 			   form
 			 (cond
+			  ((eq et '*)
+			   (make-other-typep :basic-vector))
 			  ((movitz:movitz-subtypep et '(unsigned-byte 8))
 			   (make-basic-vector-typep :u8))
 			  ((movitz:movitz-subtypep et '(unsigned-byte 32))
@@ -560,6 +562,8 @@
 
 (define-simple-typep (hash-table hash-table-p))
 (define-simple-typep (package packagep))
+
+;;;
 
 (define-typep and (x &rest types)
   (declare (dynamic-extent types))
