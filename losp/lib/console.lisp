@@ -14,7 +14,7 @@
 ;;;;                
 ;;;;------------------------------------------------------------------
 
-(requore :lib/package)
+(require :lib/package)
 (provide :lib/console)
 
 (in-package muerte.lib)
