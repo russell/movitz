@@ -39,15 +39,9 @@
 (defun ratio-p (x)
   (typep x 'ratio))
 
-(define-compiler-macro %ratio-numerator (x)
-  `(memref ,x ,(bt:slot-offset 'movitz::movitz-ratio 'movitz::numerator) 0 :lisp))
-
 (defun ratio-numerator (x)
   (check-type x ratio)
   (%ratio-numerator x))
-
-(define-compiler-macro %ratio-denominator (x)
-  `(memref ,x ,(bt:slot-offset 'movitz::movitz-ratio 'movitz::denominator) 0 :lisp))
 
 (defun ratio-denominator (x)
   (check-type x ratio)
