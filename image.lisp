@@ -1469,7 +1469,7 @@ a cons is an offset (the car) from some other code-vector (the cdr)."
 
 			     ,@toplevel-code
 			     (muerte::halt-cpu))
-			  nil t)))
+			  nil t nil)))
 
 (defun mkasm-write-word-eax-ebx ()
   (let ((loop-label (make-symbol "write-word-loop"))
