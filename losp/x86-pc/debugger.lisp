@@ -553,7 +553,10 @@ be provided for those cases."
 					     exception
 					     primitive-name
 					     (code-vector-offset primitive-vector eip)))))))
-			    (t (format t "DIT Exception ~D with ESI=~Z and EIP=#x~X."
+			    (t ;; This should in principle never happen, but since this
+			     ;; is a debugger, making this an error or break would probably
+			     ;; just be a nuisance.
+			     (format t "DIT Exception ~D. Unable to determine current function (!) with ESI=~Z and EIP=#x~X."
 				       exception funobj eip)))))))))
 	       (function
 		(let ((name (funobj-name funobj)))
