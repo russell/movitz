@@ -3432,7 +3432,7 @@ loading borrowed bindings."
 		 (make-immediate-move value :eax)))
 	      (:untagged-fixnum-ecx
 	       (let ((value (movitz-fixnum-value object)))
-		 (check-type value (unsigned-byte 16))
+		 (check-type value (signed-byte 30))
 		 (make-immediate-move value :ecx)))
 	      (:push
 	       `((:pushl ,x)))
