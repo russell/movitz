@@ -268,7 +268,7 @@
 		(if deriver-function
 		    `(typep ,object ',(apply deriver-function (cdr type)))
 		  (case (car type)
-		    ((simple-array)
+		    ((simple-array array)
 		     (let ((et (second type))
 			   (dim (if (listp (third type))
 				    (length (third type))
@@ -401,10 +401,6 @@
 		    (t (warn "compiling typep ~S [~A]" type
 			     (package-name (symbol-package (car type))))))))))
 	    form)))))
-
-#+ignore
-(defun foo (x)
-  (typep x '(simple-array (unsigned-byte 4))))
 
 (defmacro define-typep (tname lambda &body body)
   (let ((fname (format nil "~A-~A" 'typep tname)))
