@@ -112,7 +112,7 @@ at the start-stack-frame location."
 			      (+ frame (interrupt-frame-index :ecx)))
 	      (let* ((interrupt-frame frame)
 		     (interrupted-eip-loc
-		      (interrupt-frame-ref interrupt-frame :eip :signed-byte30+2)))
+		      (interrupt-frame-ref :eip :signed-byte30+2 0 interrupt-frame)))
 		;; 2. Pop to interrupted frame
 		(setf nether-frame frame
 		      frame (stack-frame-uplink frame))
