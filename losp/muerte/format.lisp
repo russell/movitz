@@ -59,6 +59,22 @@
 	  (*print-readably* nil))
       (write x))))
 
+(defun format-float (x &optional at-sign-p colon-p w d k overflowchar padchar)
+  (declare (ignore w k overflowchar padchar at-sign-p colon-p))
+  (multiple-value-bind (integer-part decimal-part)
+      (truncate x)
+    (write-integer integer-part *standard-output* 10 t)
+    (do ((remainder decimal-part)
+	 (i 0 (1+ i)))
+	((if (not d)
+	     (or (and (plusp i) (zerop decimal-part))
+		 (>= i 16))
+	   (= i d)))
+      (multiple-value-bind (next-digit next-remainder)
+	  (truncate (* 10 remainder))
+	(setf remainder next-remainder)
+	(write-integer next-digit *standard-output* 10 nil)))))
+
 (defun find-directive (string i directive &optional recursive-skip-start
 						    (recursive-skip-end directive))
   "Return position of <directive> in <string>, starting search at <i>. Also return
@@ -142,6 +158,7 @@ clause."
 				   (nreverse prefix-parameters)))
 	      (#\X (format-integer (pop args) 16 at-sign-p colon-p
 				   (nreverse prefix-parameters)))
+	      (#\F (apply 'format-float (pop args) at-sign-p colon-p (nreverse prefix-parameters)))
 	      (#\C (if colon-p
 		       (let ((c (pop args)))
 			 (write-string (or (char-name c) c)))
@@ -292,3 +309,4 @@ clause."
      end-loop)
     (values i args)))
 
+	   
