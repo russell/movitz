@@ -988,15 +988,15 @@ a (lexical-extent) sub-function might care about its parent frame-map."
 		     (mapcar #'car rest))
 	       (vector-push 0 code-vector))))
       (setf (movitz-funobj-code-vector funobj)
+	    #+ignore
 	    (make-movitz-vector (length code-vector)
 				:fill-pointer code-length
 				:element-type 'code
 				:initial-contents code-vector)
-	    #+ignore
 	    (make-movitz-code-vector code-vector
-				     (car (slot-value funobj 'code-vector%1op))
-				     (car (slot-value funobj 'code-vector%2op))
-				     (car (slot-value funobj 'code-vector%3op))))))
+				     (slot-value funobj 'code-vector%1op)
+				     (slot-value funobj 'code-vector%2op)
+				     (slot-value funobj 'code-vector%3op)))))
   funobj)
 
 #+ignore
