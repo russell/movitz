@@ -215,11 +215,10 @@ This is an illegal instruction on lesser CPUs, and a no-op on some, such as boch
     (:wrmsr)))
 
 (define-compiler-macro eflags ()
-  `(with-inline-assembly (:returns :register)
-     ;; XXXXX Breaks stack and register disciplines!
+  `(with-inline-assembly (:returns :untagged-fixnum-ecx)
+     (:clc)				; Ensure lower 2 bits are zero..
      (:pushfl)
-     (:popl (:result-register))
-     (:shll 2 (:result-register))))
+     (:popl :ecx)))
 
 (defun eflags ()
   (eflags))
