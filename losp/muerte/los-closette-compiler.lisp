@@ -674,8 +674,9 @@
       (apply #'initialize-class-object class all-keys)))
   
   (defun make-instance-standard-class (metaclass &key name direct-superclasses direct-slots
-						      default-initargs-function)
-    (declare (ignore metaclass))
+						      default-initargs-function
+						      documentation)
+    (declare (ignore metaclass documentation))
     (let ((class (std-allocate-instance *the-class-standard-class*)))
       (setf (movitz-class-name class) name)
       (setf (class-direct-subclasses class) ())
