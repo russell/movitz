@@ -202,6 +202,28 @@
 			    (:load-lexical (:lexical-binding ,object-var) :ebx)
 			    (:sarl ,movitz::+movitz-fixnum-shift+ :ecx) ; scale offset+index
 			    (:movb (:ebx :ecx ,(offset-by 1)) :ah)))))))
+		(:location
+		 (assert (= 4 movitz::+movitz-fixnum-factor+))
+		 (cond
+		  ((and (eq 0 offset) (eq 0 index))
+		   `(with-inline-assembly (:returns :ecx)
+		      (:compile-form (:result-mode :eax) ,object)
+		      (:movl (:eax ,(offset-by 4)) :ecx)
+		      (:andl -4 :ecx)))
+		  ((eq 0 offset)
+		   `(with-inline-assembly (:returns :ecx)
+		      (:compile-two-forms (:eax :ecx) ,object ,index)
+		      (:movl (:eax :ecx ,(offset-by 4)) :ecx)
+		      (:andl -4 :ecx)))
+		  (t (let ((object-var (gensym "memref-object-")))
+		       `(let ((,object-var ,object))
+			  (with-inline-assembly (:returns :ecx)
+			    (:compile-two-forms (:ecx :ebx) ,offset ,index)
+			    (:sarl ,movitz::+movitz-fixnum-shift+ :ecx)
+			    (:load-lexical (:lexical-binding ,object-var) :eax)
+			    (:addl :ebx :ecx)
+			    (:movl (:eax :ecx ,(offset-by 4)) :ecx)
+			    (:andl -4 :ecx)))))))
 		(:unsigned-byte32
 		 (assert (= 4 movitz::+movitz-fixnum-factor+))
 		 (cond
