@@ -1101,6 +1101,8 @@
 	   print-word
 	   fixnump below
 	   print-unreadable-movitz-object
+	   
+	   #:*print-safely*
 
 	   stack-ref
 	   with-each-dynamic-context
@@ -1287,6 +1289,7 @@
 	   
 	   #:+movitz-fixnum-factor+
 	   #:+movitz-fixnum-shift+
+	   #:+scan-skip-word+
 	   #:constant0
 	   
 	   #:movitz-object-browser-properties
