@@ -43,10 +43,10 @@
 	(apply f arguments)
       (multiple-value-bind (completion completion-count)
 	  (muerte.readline:complete-symbol-name (string name)
-					      :package :keyword
-					      :filter-matches (lambda (x)
-								(and (gethash x *toplevel-commands*)
-								     t)))
+						:package :keyword
+						:filter-matches (lambda (x)
+								  (and (gethash x *toplevel-commands*)
+								       t)))
 	(case completion-count
 	  (0 (format t "~&No toplevel command named ~S." name)
 	     name)
