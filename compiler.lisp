@@ -2701,8 +2701,7 @@ the sub-program options (&optional label) as secondary value."
 					   (truncate
 					    (or (position-if (lambda (i)
 							       (member b (find-read-bindings i)))
-							     (cdr init-pc)
-							     :end 10)
+							     (cdr init-pc))
 						15)
 					    count)))))))))
 		 ;; First, make several passes while trying to locate bindings
