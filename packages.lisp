@@ -1269,6 +1269,7 @@
 	   #:%io-port-write-succession
 	   #:with-io-register-syntax
 	   #:with-register-syntax
+	   #:without-interrupts
 	   #:cpu-id
 	   #:cpu-486-class-p
 	   #:cpu-586-class-p
