@@ -168,9 +168,9 @@ with the single member of <type-specifier>."
 		(numscope-add-range new-numscope (car sub-range) (- min epsilon) epsilon))
 	      (setf new-numscope
 		(numscope-add-range new-numscope (+ max epsilon) (cdr sub-range) epsilon)))
-	     ((and a (not c))		; (warn "left prune ~D with [~D-~D]" sub-range min max)
+	     ((and a (not c))		; (warn "left prune ~D with [~D - ~D]" new-numscope min max)
 	      (setf new-numscope
-		(numscope-add-range new-numscope max (cdr sub-range) epsilon)))
+		(numscope-add-range new-numscope (+ max epsilon) (cdr sub-range) epsilon)))
 	     ((and (not d) b)		; (warn "right prune ~D with [~D-~D]" sub-range min max)
 	      (setf new-numscope
 		(numscope-add-range new-numscope (car sub-range) min epsilon)))
