@@ -683,10 +683,12 @@ a cons is an offset (the car) from some other code-vector (the cdr)."
    that function's code-vector."
   (let ((code-vector
 	 (movitz-symbol-value (movitz-read name))))
-    (assert (and code-vector
-		 (not (eq 'muerte::unbound code-vector)))
-	()
-      "Global constant primitive function ~S is not defined!" name)
+    (unless (and code-vector (not (eq 'muerte::unbound code-vector)))
+      (cerror "Install an empty vector instead."
+	      "Global constant primitive function ~S is not defined!" name)
+      (setf code-vector
+	(setf (movitz-symbol-value (movitz-read name))
+	  (movitz-read #()))))
     (check-type code-vector movitz-vector)
     code-vector))
 
