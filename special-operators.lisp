@@ -1135,6 +1135,13 @@ on the current result."
 
 ;;;
 
+(define-special-operator muerte::no-macro-call (&all all &form form)
+  (destructuring-bind (operator &rest arguments)
+      (cdr form)
+    (compiler-call #'compile-apply-symbol
+      :forward all
+      :form (cons operator arguments))))
+
 (define-special-operator muerte::do-result-mode-case (&all all &result-mode result-mode &form form)
   (loop for (cases . then-forms) in (cddr form)
       do (when (or (eq cases 'muerte.cl::t)
