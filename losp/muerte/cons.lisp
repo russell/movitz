@@ -244,4 +244,4 @@ Cons cell is in EBX, which is preserved."
   (with-inline-assembly (:returns :eax)
     (:compile-form (:result-mode :eax) car)
     (:compile-form (:result-mode :ebx) cdr)
-    (:call-global-constant fast-cons)))
+    (:call-local-pf fast-cons)))

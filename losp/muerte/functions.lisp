@@ -351,8 +351,8 @@ as that vector."
        (make-array (length code-vector)
 		   :element-type 'code
 		   :initial-contents code-vector))))
-  (let ((funobj (malloc-words (+ #.(cl:truncate (bt:sizeof 'movitz:movitz-funobj) 4)
-				 (length constants)))))
+  (let ((funobj (malloc-pointer-words (+ #.(cl:truncate (bt:sizeof 'movitz:movitz-funobj) 4)
+					 (length constants)))))
     (setf (memref funobj #.(bt:slot-offset 'movitz:movitz-funobj 'movitz:type) 0 :unsigned-byte16)
       #.(movitz:tag :funobj))
     (setf (funobj-name funobj) name
@@ -395,8 +395,8 @@ so that we can be reasonably sure of dst's size."
 
 (defun copy-funobj (old-funobj &optional (name (funobj-name old-funobj)))
   (let* ((num-constants (funobj-num-constants old-funobj))
-	 (funobj (malloc-words (+ -2 #.(cl:truncate (bt:sizeof 'movitz:movitz-funobj) 4)
-				  num-constants))))
+	 (funobj (malloc-pointer-words (+ #.(cl:truncate (bt:sizeof 'movitz:movitz-funobj) 4)
+					  num-constants))))
     (setf (memref funobj #.(bt:slot-offset 'movitz:movitz-funobj 'movitz:type) 0 :unsigned-byte16)
       (memref old-funobj #.(bt:slot-offset 'movitz:movitz-funobj 'movitz:type) 0 :unsigned-byte16))
     (setf (funobj-num-constants funobj) num-constants)

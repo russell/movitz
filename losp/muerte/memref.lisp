@@ -334,7 +334,7 @@
 		  (,index-var ,index))
 	      (with-inline-assembly (:returns :untagged-fixnum-ecx)
 		(:load-lexical (:lexical-binding ,value-var) :eax)
-		(:call-global-constant unbox-u32)
+		(:call-global-pf unbox-u32)
 		(:compile-two-forms (:ebx :eax) ,object-var ,index-var)
 		(:movl :ecx (:eax :ebx ,(movitz:movitz-eval offset env)))))))
 	(t (let ((value-var (gensym "memref-value-"))
@@ -348,7 +348,7 @@
 		    (,index-var ,index))
 		(with-inline-assembly (:returns :untagged-fixnum-ecx)
 		  (:load-lexical (:lexical-binding ,value-var) :eax)
-		  (:call-global-constant unbox-u32)
+		  (:call-global-pf unbox-u32)
 		  (:compile-two-forms (:eax :edx) ,index-var ,offset-var)
 		  (:load-lexical (:lexical-binding ,object-var) :ebx)
 		  (:std)
@@ -609,7 +609,7 @@
 	    (:addl :ecx :eax)
 	    (:shrl ,movitz::+movitz-fixnum-shift+ :eax) ; scale down address
 	    (,prefixes :movl (:eax) :ecx)
-	    (:call-global-constant box-u32-ecx)))
+	    (:call-local-pf box-u32-ecx)))
 	(:unsigned-byte16
 	 (cond
 	  ((and (eq 0 offset) (eq 0 index))

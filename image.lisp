@@ -300,14 +300,19 @@
     :initform 0)
    (values
     :binary-type #.(* 4 +movitz-multiple-values-limit+))
-   (malloc
+   (malloc-pointer-words
     :binary-type code-vector-word
     :map-binary-write 'movitz-intern-code-vector
     :map-binary-read-delayed 'movitz-word-code-vector
     :binary-tag :primitive-function)
-   (malloc-buffer
-    :binary-type lu32
-    :initform 0)
+   (malloc-non-pointer-words
+    :binary-type code-vector-word
+    :map-binary-write 'movitz-intern-code-vector
+    :map-binary-read-delayed 'movitz-word-code-vector
+    :binary-tag :primitive-function)
+;;;   (malloc-buffer
+;;;    :binary-type lu32
+;;;    :initform 0)
    (default-interrupt-trampoline
        :map-binary-write 'movitz-intern-code-vector
      :binary-tag :primitive-function

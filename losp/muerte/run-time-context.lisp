@@ -132,8 +132,7 @@
 (defun clone-run-time-context (&key (parent (current-run-time-context))
 				    (name :anonymous))
   (check-type parent run-time-context)
-  (let ((context (inline-malloc #.(bt:sizeof 'movitz::movitz-constant-block)
-				:other-tag :run-time-context)))
+  (let ((context (malloc-pointer-words #.(cl:truncate (bt:sizeof 'movitz::movitz-constant-block) 4))))
     (memcopy context parent -6 0 0 #.(bt:sizeof 'movitz::movitz-constant-block)
 	     :unsigned-byte8)
     (setf (%run-time-context-slot 'name context) name
