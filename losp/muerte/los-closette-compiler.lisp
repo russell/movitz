@@ -589,7 +589,7 @@
 ;;;
   
   (defun movitz-make-instance-funcallable (metaclass &rest all-keys &key name direct-superclasses direct-slots &allow-other-keys)
-    ;; (declare (ignore metaclass))
+    (declare (ignore all-keys))
     (let ((class (std-allocate-instance metaclass)))
       #+ignore
       (dolist (slot (class-slots (movitz-class-of class)))
@@ -650,7 +650,7 @@
 					&key name slots direct-slots ((:metaclass dummy))
 					     (direct-superclasses
 					      (list (movitz-find-class 'structure-object))))
-    (declare (ignore dummy))
+    (declare (ignore dummy all-keys))
     (assert (null direct-slots))
     (let ((class (std-allocate-instance (if (symbolp metaclass)
 					    (movitz-find-class metaclass)
