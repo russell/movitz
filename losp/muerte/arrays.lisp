@@ -106,7 +106,7 @@
   
 (defun fill-pointer (vector)
   (check-type vector vector)
-  (memref vector #.(bt:slot-offset 'movitz::movitz-vector 'movitz::fill-pointer) 0
+  (memref vector #.(bt:slot-offset 'movitz:movitz-vector 'movitz::fill-pointer) 0
 	  :unsigned-byte16))
 
 
