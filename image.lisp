@@ -1457,21 +1457,7 @@ this image will not be Multiboot compatible."
 	     (make-movitz-hash-table expr))
 	    (ratio
 	     (make-instance 'movitz-ratio
-	       :value expr)
-	     #+ignore
-	     (let ((slot-descriptions (gethash 'muerte.cl::ratio
-					       (image-struct-slot-descriptions *image*)
-					       nil)))
-	       (unless slot-descriptions
-		 (error "Don't know how to movitz-read ratios (yet)." expr))
-	       (let ((movitz-object (make-instance 'movitz-struct
-				      :class (muerte::movitz-find-class 'muerte.cl::ratio)
-				      :length (length slot-descriptions))))
-		 (setf (image-lisp-to-movitz-object *image* expr) movitz-object)
-		 (setf (slot-value movitz-object 'slot-values)
-		   (list (movitz-read (numerator expr))
-			 (movitz-read (denominator expr))))
-		 movitz-object)))
+	       :value expr))
 	    (structure-object
 	     (let ((slot-descriptions (gethash (type-of expr)
 					       (image-struct-slot-descriptions *image*)
