@@ -48,12 +48,13 @@ start-location and end-location."
 	((>= scan end-location))
       (with-simple-restart (continue-map-heap-words
 			    "Continue map-heap-words at location ~S." (1+ scan))
-	(let ((*scan* scan)
-	      (x (memref scan 0 :type :unsigned-byte16)))
-	  (declare (special *scan*))
+	(let ((x (memref scan 0 :type :unsigned-byte16))
+	      (x2 (memref scan 1 :type :unsigned-byte16)))
 	  (when verbose
 	    (format *terminal-io* " [at ~S: ~S]" scan x))
 	  (cond
+	   ((or (and (= 0 x2) (= 2 x))
+		(and (= #xffff x2) (= #xfffe x))))
 	   ((let ((tag (ldb (byte 3 0) x)))
 	      (or (= tag #.(movitz:tag :null))
 		  (= tag #.(movitz:tag :even-fixnum))
