@@ -115,10 +115,9 @@ Secondly, whether this was a release event is returned."
       (t (values (ldb (byte 7 0) first-code)
 		 (logbitp 7 first-code))))))
 
-(define-named-integer qualifier (:only-constants t)
-  (0 shift)
-  (1 ctrl)
-  (2 alt))
+(defconstant +qualifier-shift+ 0)
+(defconstant +qualifier-ctrl+ 1)
+(defconstant +qualifier-alt+ 2)
 
 (defvar *qualifier-state* 0)
 
