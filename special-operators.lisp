@@ -915,6 +915,24 @@ on the current result."
 			      cloaked-code
 			      `((:popl :ecx)
 				(:globally (:call (:edi (:edi-offset pop-current-values))))))))
+	     ((and (not (cdr cloaked-code))
+		   (instruction-is (car cloaked-code) :incf-lexvar))
+	      (destructuring-bind (binding delta &key protect-registers)
+		  (cdar cloaked-code)
+		(let ((protected-register (case cover-returns
+					    ((:eax :ebx :ecx :edx) cover-returns)
+					    (t :edx))))
+		  (assert (not (member protected-register protect-registers)) ()
+		    "Can't protect ~S. Sorry, this opertor must be smartened up."
+		    protected-register)
+		  (compiler-values ()
+		    :returns protected-register
+		    :type cover-type
+		    :code (append cover-code
+				  (make-result-and-returns-glue protected-register cover-returns)
+				  `((:incf-lexvar ,binding ,delta
+						  :protect-registers ,(cons protected-register
+									    protect-registers))))))))
 	     (t ;; just put the (singular) result of form1 on the stack..
 	      (when (not (typep cover-returns 'keyword))
 		;; if it's a (non-modified) lexical-binding, we can do better..
