@@ -390,6 +390,7 @@ Preserve EAX and EBX."
 			       (+ newspace-location (space-fresh-pointer newspace)))
 	       (setf scan-pointer fresh-pointer))
 
+	#+ignore
 	(dotimes (i (truncate (length *x*) 2))
 	  (let ((x (muerte::%word-offset (aref *x* (* i 2)) 6))
 		(y (muerte::%word-offset (aref *x* (1+ (* i 2))) 6)))
