@@ -73,7 +73,7 @@
     (:ret)))
 
 (defun new-malloc-clumps (clumps)
-  (check-type clumps (integer 0 200))
+  (check-type clumps (integer 0 1000))
   (with-inline-assembly (:returns :ebx)
    retry
     (:compile-form (:result-mode :eax) clumps)
