@@ -1155,6 +1155,7 @@
 	   vector-u8
 	   vector-u16
 	   vector-u32
+	   pointer
 	   
 	   make-funobj
 	   funobj-type
