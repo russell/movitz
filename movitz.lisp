@@ -61,6 +61,13 @@ make clear it's a Movitz object, with extra <..>"
 				     (declare (ignore subchar arg))
 				     (list 'muerte.common-lisp::function
 					   (read stream t nil t))))
+     (set-dispatch-macro-character #\# #\{
+				   (lambda (stream subchar arg)
+				     (declare (ignore subchar arg))
+				     (let ((data (read-delimited-list #\} stream)))
+				       (make-movitz-vector (length data)
+							   :element-type 'movitz-unboxed-integer-u8
+							   :initial-contents data))))
      (set-macro-character #\` (lambda (stream char)
 				(declare (ignore char))
 				(let ((*bq-level* (1+ *bq-level*)))
