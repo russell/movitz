@@ -958,15 +958,16 @@ on the current result."
 						  :protect-registers ,(cons protected-register
 									    protect-registers))))))))
 	     (t ;; just put the (singular) result of form1 on the stack..
-	      (when (not (typep cover-returns 'keyword))
-		;; if it's a (non-modified) lexical-binding, we can do better..
-		(warn "Covering non-register ~S" cover-returns))
-	      (when (type-specifier-singleton (type-specifier-primary cover-type))
-		(warn "Covering constant ~S"
-		      (type-specifier-singleton cover-type)))  
+;;;	      (when (not (typep cover-returns 'keyword))
+;;;		;; if it's a (non-modified) lexical-binding, we can do better..
+;;;		(warn "Covering non-register ~S" cover-returns))
+;;;	      (when (type-specifier-singleton (type-specifier-primary cover-type))
+;;;		(warn "Covering constant ~S"
+;;;		      (type-specifier-singleton cover-type)))  
 	      (let ((protected-register (case cover-returns
 					  ((:ebx :ecx :edx) cover-returns)
 					  (t :eax))))
+		#+ignore
 		(when (>= 2 (length cloaked-code))
 		  (warn "simple-cloaking for ~S: ~{~&~S~}" cover-returns cloaked-code))
 		(setf (stack-used cloaked-env) 1)
