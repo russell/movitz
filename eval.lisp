@@ -66,7 +66,7 @@
 	      ((muerte.cl:quote) t)
 	      ((muerte.cl:not)
 	       (movitz-constantp (second form)))
-	      ((muerte.cl:+ muerte.cl:- muerte.cl:*)
+	      ((muerte.cl:+ muerte.cl:- muerte.cl:* muerte.cl:coerce)
 	       (every (lambda (sub-form)
 			(movitz-constantp sub-form environment))
 		      (cdr form)))))
@@ -146,5 +146,9 @@
     (apply (translate-program (car form) :muerte.cl :cl)
 	   (mapcar (lambda (sub-form)
 		     (movitz-eval sub-form env nil))
+		   (cdr form))))
+   ((muerte.cl:coerce)
+    (apply #'coerce
+	   (mapcar (lambda (arg) (movitz-eval arg env nil))
 		   (cdr form))))
    (t (error "Don't know how to compile constant compound form ~A" form))))
