@@ -1,6 +1,6 @@
 ;;;;------------------------------------------------------------------
 ;;;; 
-;;;;    Copyright (C) 2001-2004, 
+;;;;    Copyright (C) 2001-2005, 
 ;;;;    Department of Computer Science, University of Tromso, Norway.
 ;;;; 
 ;;;;    For distribution policy, see the accompanying file COPYING.
@@ -349,18 +349,6 @@
 
 (defun object-tag (object)
   (object-tag object))
-
-;;;(define-compiler-macro object-location-offset (object)
-;;;  "The offset from the object's location to it's true address."
-;;;  `(with-inline-assembly (:returns :register)
-;;;     (:compile-form (:result-mode :register) ,object)
-;;;     (:shll ,movitz:+movitz-fixnum-shift+ (:result-register))
-;;;     (:andl ,(* movitz:+movitz-fixnum-factor+
-;;;		movitz:+movitz-fixnum-zmask+)
-;;;	    (:result-register))))
-;;;
-;;;(defun object-location-offset (object)
-;;;  (object-location-offset object))
 
 (defun halt-cpu ()
   (halt-cpu))
