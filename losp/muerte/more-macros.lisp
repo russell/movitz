@@ -310,3 +310,4 @@ respect to multiple threads."
 			       slot-entries)
        (let ((,object-var ,instance-form))
 	 ,@declarations-and-forms))))
+
