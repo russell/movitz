@@ -119,8 +119,20 @@
      ;; (muerte::compile-time-setq ,name ,initial-value)
      (setq ,name ,initial-value)))
 
-(defmacro defvar (name &optional value documentation)
-  `(defparameter ,name ,value ,documentation))
+(define-compiler-macro defparameter (&whole form name initial-value
+				     &optional docstring &environment env)
+  (declare (ignore docstring))
+  (if (not (movitz:movitz-constantp initial-value env))
+      form
+    (let ((mname (translate-program name :cl :muerte.cl)))
+      (setf (movitz::movitz-symbol-value (movitz:movitz-read mname))
+	(movitz:movitz-eval initial-value env))
+      `(declaim (special ,name)))))
+
+(defmacro defvar (name &optional (value nil valuep) documentation)
+  (if (not valuep)
+      `(declaim (special ,name))
+    `(defparameter ,name ,value ,documentation)))
 
 (defmacro define-compile-time-variable (name value)
   `(progn
