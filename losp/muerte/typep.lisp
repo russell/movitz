@@ -620,5 +620,11 @@
   (cond
    ((typep object result-type)
     object)
+   ((and (eq result-type 'list)
+	 (typep object 'sequence))
+    (map 'list #'identity object))
+   ((and (typep object 'sequence)
+	 (member result-type '(vector array)))
+    (make-array (length object) :initial-contents object))
    (t (error "Don't know how to coerce ~S to ~S." object result-type))))
 
