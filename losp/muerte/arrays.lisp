@@ -611,7 +611,16 @@ and return accessors for that subsequence (fast & unsafe accessors, that is)."
 
 (defun vector-push-extend (new-element vector &optional extension)
   (declare (ignore extension))
-  (vector-push new-element vector))
+  (check-type vector vector)
+  (let ((p (vector-fill-pointer vector)))
+    (declare (type (unsigned-byte 16) p))
+    (cond
+     ((< p (vector-dimension vector))
+      (setf (aref vector p) new-element
+	    (fill-pointer vector) (1+ p)))
+     (t (error "Vector-push extending not implemented yet.")))
+    p))
+
 
 (define-compiler-macro bvref-u16 (&whole form vector offset index &environment env)
   (let ((actual-index (and (movitz:movitz-constantp index env)
