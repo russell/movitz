@@ -30,7 +30,7 @@
   (declare (dynamic-extent args))
   (let ((destination
 	 (case destination
-	   ((nil) (make-array (* 2 (length control))
+	   ((nil) (make-array (* 3 (length control))
 			      :element-type 'character
 			      :fill-pointer 0))
 	   ((t) *standard-output*)
