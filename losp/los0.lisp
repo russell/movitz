@@ -16,7 +16,6 @@
 (provide :los0 :load-priority 0)
 
 (require :common-lisp)
-(require :x86-pc/interrupt)
 (require :x86-pc/all)
 (require :x86-pc/io-space)
 (require :x86-pc/ne2k)
@@ -37,7 +36,6 @@
 	muerte.ip6
 	muerte.ip4
 	muerte.mop
-	muerte.debug
 	#+ignore muerte.x86-pc.serial))
 
 (require :los0-gc)
