@@ -468,6 +468,9 @@
 (define-simple-typep (cons consp) (obj)
   (typep obj 'cons))
 
+(define-simple-typep (vector vectorp) (obj)
+  (typep obj 'vector))
+
 (define-simple-typep (pointer pointerp) (obj)
   (typep obj 'pointer))
 
