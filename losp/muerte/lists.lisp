@@ -133,7 +133,7 @@
 
 (defun nthcdr (n list)
   (do ()
-      ((= 0 n) list)
+      ((or (null list) (not (plusp n))) list)
     (decf n)
     (setf list (cdr list))))
 
@@ -200,10 +200,10 @@
 (defun copy-list (list)
   (if (null list)
       nil
-    (do* ((new-list (cons (pop list) nil))
-	  (new-tail new-list (cdr new-tail)))
-	((null list) new-list)
-      (setf (cdr new-tail) (cons (pop list) nil)))))
+    (let ((new-list (cons (pop list) nil)))
+      (do ((new-tail new-list (cdr new-tail)))
+	  ((null list) new-list)
+	(setf (cdr new-tail) (cons (pop list) nil))))))
 
 (defun list (&rest objects)
   (numargs-case
