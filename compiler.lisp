@@ -5825,9 +5825,12 @@ and a list of any intervening unwind-protect environment-slots."
 				    protect-registers protect-carry)
       (cdr instruction)
     (declare (ignore protect-registers protect-carry))
-    (when init-with-register
+    (cond
+     (init-with-register
       (assert init-with-type)
-      (values binding init-with-type))))
+      (values binding init-with-type))
+     ((not (typep binding 'temporary-name))
+      (values binding t)))))
 
 (define-find-read-bindings :init-lexvar (binding &key init-with-register &allow-other-keys)
   (declare (ignore binding))
