@@ -63,6 +63,12 @@ compile, using the host compiler, the code rather than just using eval.")
 (defvar *compiling-function-name*)
 (defvar muerte.cl:*compile-file-pathname* nil)
 
+(defvar *extended-code-expanders*
+    (make-hash-table :test #'eq))
+
+(defvar *extended-code-find-write-binding-and-type*
+    (make-hash-table :test #'eq))
+
 (defconstant +enter-stack-frame-code+
     '((:pushl :ebp)
       (:movl :esp :ebp)
@@ -5542,9 +5548,6 @@ and a list of any intervening unwind-protect environment-slots."
 	  (check-type result list "a list of read bindings")
 	  result)))))
 
-(defvar *extended-code-find-write-binding-and-type*
-    (make-hash-table :test #'eq))
-
 (defmacro define-find-write-binding-and-type (name lambda-list &body body)
   (let ((defun-name (intern
 		     (with-standard-io-syntax
@@ -5559,9 +5562,6 @@ and a list of any intervening unwind-protect environment-slots."
 	   (finder (gethash operator *extended-code-find-write-binding-and-type*)))
       (when finder
 	(funcall finder extended-instruction)))))
-
-(defvar *extended-code-expanders*
-    (make-hash-table :test #'eq))
 
 (defmacro define-extended-code-expander (name lambda-list &body body)
   (let ((defun-name (intern
