@@ -1144,6 +1144,7 @@
 	   #:malloc-data-clumps
 	   #:malloc-cons-pointer
 	   #:malloc-buffer-start
+	   #:malloc-end
 
 	   #:%word-offset
 	   #:%run-time-context-slot
