@@ -163,6 +163,37 @@ Otherwise, stack-frame is an absolute location."
        (when (member :catch types)
 	 (format t "~&catch:   ~Z: ~S" tag tag))))))
 
+(define-compiler-macro %location-object (&environment env location tag)
+  (assert (movitz:movitz-constantp tag env))
+  `(with-inline-assembly (:returns :eax)
+     (:compile-form (:result-mode :eax) ,location)
+     (:addl ,tag :eax)))
+
+(defun %find-code-vector (location &optional (stop-location (if (< location #x2000)
+								0
+							      (- location #x2000))))
+  "Find the code-vector that holds a location by searching for a code-vector object header."
+  (do ((l (logand location -2) (- l 2)))
+      ((< l stop-location)
+       (error "Unable to find code-vector for location ~S." location))
+    (multiple-value-bind (upper30 lower2)
+	(memref l 0 :type :signed-byte30+2)
+      (when (and (= 2 lower2)
+		 (= #.(movitz:basic-vector-type-tag :code))
+		 ;; If the vector has a fill-pointer, it should be equal to the length.
+		 (multiple-value-bind (len len-tag)
+		     (memref l 4 :type :signed-byte30+2)
+		   (and (= 0 len-tag)
+			(typecase len
+			  ((integer 0 #x3fff)
+			   (= len (memref l 2 :type :unsigned-byte14)))
+			  (positive-fixnum t)
+			  (t nil)))))
+	(let ((code-vector (%location-object l 6)))
+	  (check-type code-vector code-vector)
+	  (assert (location-in-object-p code-vector location))
+	  (return code-vector))))))
+
 (defun %shallow-copy-object (object word-count)
   "Copy any object with size word-count."
   (check-type word-count (integer 2 *))
@@ -373,9 +404,10 @@ Obviously, this correspondence is not guaranteed to hold e.g. across GC."
     (do ((frame start-frame))
 	((eq 0 frame))
       (let ((uplink (stack-frame-uplink nil frame)))
-	(setf (stack-frame-ref copy 0 (- frame start-frame) :lisp)
-	  (if (eql 0 uplink)
-	      0
-	    (- uplink start-frame)))
+	(unless (= 0 uplink)
+	  (setf (stack-frame-ref copy 0 (- frame start-frame) :lisp)
+	    (- uplink start-frame))
+	  
+	  )
 	(setf frame uplink)))
     copy))
