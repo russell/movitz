@@ -185,7 +185,8 @@ after the point that called this stack-frame."
 		 :fill-pointer (fill-pointer old)))
     (function
      (copy-funobj old))
-    ))
+    (structure-object
+     (copy-structure old))))
 
 (defun malloc-words (words)
   (malloc-clumps (1+ (truncate (1+ words) 2))))
