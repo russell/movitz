@@ -4788,7 +4788,7 @@ Return arg-init-code, need-normalized-ecx-p."
 	   (case (result-mode-type desired-result)
 	     ((:eax :single-value)
 	      (values (append code
-			      `((:call (:edi ,(global-constant-offset 'normalize-u32-ecx)))))
+			      `((:call (:edi ,(global-constant-offset 'box-u32-ecx)))))
 		      desired-result))
 	     (t (make-result-and-returns-glue desired-result :eax
 					      (make-result-and-returns-glue :eax :untagged-fixnum-ecx code
