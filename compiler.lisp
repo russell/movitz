@@ -599,7 +599,7 @@ of all function-bindings seen."
       finally
 	(multiple-value-bind (const-list num-jumpers jumpers-map)
 	    (layout-funobj-vector all-constants-plist
-				  jumper-sets
+				  all-jumper-sets
 				  (length (borrowed-bindings funobj)))
 	  (setf (movitz-funobj-num-jumpers funobj) num-jumpers
 		(movitz-funobj-const-list funobj) const-list
@@ -705,9 +705,9 @@ a (lexical-extent) sub-function might care about its parent frame-map."
 						       use-stack-frame-p)))))
       (let ((optimized-function-code
 	     (optimize-code function-code
-			    :keep-labels (nconc (subseq (movitz-funobj-const-list funobj)
-							0 (movitz-funobj-num-jumpers funobj))
-						'(entry%1op entry%2op)))))
+			    :keep-labels (append (subseq (movitz-funobj-const-list funobj)
+							 0 (movitz-funobj-num-jumpers funobj))
+						 '(entry%1op entry%2op)))))
 	(assemble-funobj funobj optimized-function-code)))))
 
 (defun complete-funobj-default (funobj)
@@ -731,11 +731,11 @@ a (lexical-extent) sub-function might care about its parent frame-map."
 					   have-normalized-ecx-p)))
 		     (let ((optimized-function-code
 			    (optimize-code function-code
-					   :keep-labels (nconc (subseq (movitz-funobj-const-list funobj)
-								       0 (movitz-funobj-num-jumpers funobj))
-							       '(entry%1op
-								 entry%2op
-								 entry%3op)))))
+					   :keep-labels (append (subseq (movitz-funobj-const-list funobj)
+									0 (movitz-funobj-num-jumpers funobj))
+								'(entry%1op
+								  entry%2op
+								  entry%3op)))))
 		       (cons numargs optimized-function-code))))))))
     (let ((code1 (cdr (assoc 1 code-specs)))
 	  (code2 (cdr (assoc 2 code-specs)))
