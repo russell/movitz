@@ -61,7 +61,7 @@
     (:ret)))
 
 (defun endp (x)
-  (endp x))				; compiler-macro
+  (compiler-macro-call endp x))
 
 (defun assoc (item alist &key (test 'eql) (key 'identity))
   (numargs-case
