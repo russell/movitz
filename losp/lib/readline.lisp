@@ -135,7 +135,7 @@ completion-start and completion-end are bounding indexes into completion's name.
 	when (member key terminator-keys)
 	do (when displayed-completions-p
 	     (do ((y (1+ (cursor-y console)) (1+ y)))
-		 ((>= y 25))
+		 ((>= y (console-height console)))
 	       (clear-line console 0 y)))
 	and return key
 	do (case key
