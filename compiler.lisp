@@ -54,6 +54,11 @@ compile, using the host compiler, the code rather than just using eval.")
 (defvar *compiling-function-name*)
 (defvar muerte.cl:*compile-file-pathname* nil)
 
+(defconstant +enter-stack-frame-code+
+    '((:pushl :ebp)
+      (:movl :esp :ebp)
+      (:pushl :esi)))
+
 (defun duplicatesp (list)
   "Returns TRUE iff at least one object occurs more than once in LIST."
   (if (null list)
@@ -874,11 +879,6 @@ a (lexical-extent) sub-function might care about its parent frame-map."
       (values '((:pushl :ebx))
 	      1))
      (t (error "make-2req confused by loc0: ~W, loc1: ~W" location-0 location-1)))))
-
-(defconstant +enter-stack-frame-code+
-    '((:pushl :ebp)
-      (:movl :esp :ebp)
-      (:pushl :esi)))
 
 #+ignore
 (defun make-compiled-function-body-1rest (form funobj env top-level-p)
