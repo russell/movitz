@@ -31,6 +31,7 @@
 (defvar *print-length* 8)
 (defvar *print-level* 3)
 (defvar *print-pretty* t)
+(defvar *print-circle* nil)
 
 (defvar *standard-output* #'muerte.x86-pc::textmode-console)
 (defvar *standard-input* #'muerte.x86-pc::textmode-console)
