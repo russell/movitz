@@ -611,7 +611,7 @@ Return as primary value the offset of the optional source link-layer address, if
 		   (unless request
 		     (return-from process-request))
 		   (macrolet ((profile-point ()
-				`(vector-push (pit8253-timer-count 0) timings)))
+				#+ignore `(vector-push (pit8253-timer-count 0) timings)))
 		     (profile-point)
 		     (when (and (= +ether-type-ip6+ (ether-type request))
 				(= 6 (packet-version request))
@@ -737,6 +737,7 @@ Return as primary value the offset of the optional source link-layer address, if
 			   (t (warn "Unknown IPv6 header type: #x~X"
 				    (packet-next-header request))))
 			 (profile-point)
+			 #+ignore
 			 (dotimes (i (length timings))
 			   (format t "~D: ~:D~%" i
 				   (* 838 (- #x10000 (aref timings i)))))
