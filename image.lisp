@@ -1192,7 +1192,7 @@ a cons is an offset (the car) from some other code-vector (the cdr)."
 		collect (list pc nil
 			      (format nil "  => Entry-point for ~D arguments <="
 				      (1+ (position-if (lambda (x)
-							 (= pc (* x +code-vector-entry-factor+)))
+							 (= pc x))
 						       entry-points)))
 			      nil)
 		collect (list pc
