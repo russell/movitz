@@ -576,7 +576,7 @@ Returns list in EAX and preserves numargs in ECX."
 (define-primitive-function fast-class-of-other ()
   "Return the class of an other object."
   (with-inline-assembly (:returns :multiple-values)
-    (:movl (:eax -2) :ecx)
+    (:movl (:eax #.movitz:+other-type-offset+) :ecx)
     (:cmpb #.(movitz::tag :std-instance) :cl)
     (:jne 'not-std-instance)
     (:movl (:eax #.(bt:slot-offset 'movitz::movitz-std-instance 'movitz::class)) :eax)

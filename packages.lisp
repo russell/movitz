@@ -1284,6 +1284,7 @@
 	   #:dump-image
 
 	   #:other-type-byte
+	   #:+other-type-offset+
 	   #:parse-docstring-and-declarations
 	   #:global-constant-offset
 	   #:tag #:tag-name
