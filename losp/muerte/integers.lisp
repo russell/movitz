@@ -427,6 +427,11 @@
     (list 'integer 0 (1- (ash 1 size))))
    (t (error "Illegal size for unsigned-byte."))))
 
+(deftype real (&optional (lower-limit '*) (upper-limit '*))
+  `(or (integer ,lower-limit ,upper-limit)
+       (rational ,lower-limit ,upper-limit)))
+  
+
 (define-simple-typep (bit bitp) (x)
   (or (eq x 0) (eq x 1)))
 
