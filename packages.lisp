@@ -1151,6 +1151,10 @@
 	   find-restart-from-context
 	   map-active-restarts
 	   with-basic-restart
+
+	   vector-u8
+	   vector-u16
+	   vector-u32
 	   
 	   make-funobj
 	   funobj-type
@@ -1240,6 +1244,7 @@
   (:export #:create-image
 	   #:dump-image
 
+	   #:other-type-byte
 	   #:parse-docstring-and-declarations
 	   #:global-constant-offset
 	   #:tag #:tag-name
