@@ -322,7 +322,7 @@ that the msb isn't zero. DO NOT APPLY TO NON-BIGNUM VALUES!"
      copy-bignum-loop
       (:movl (:ebx :edx #.movitz:+other-type-offset+) :ecx)
       (:movl :ecx (:eax :edx #.movitz:+other-type-offset+))
-      (:subl #.movitz:+movitz-fixnum-factor+ :edx)
+      (:subl 4 :edx)
       (:jnc 'copy-bignum-loop))))
 
 (defun print-bignum (x)
