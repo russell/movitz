@@ -1316,18 +1316,7 @@ Preserve EAX and EBX."
     (t (error "Don't know."))))
 
 (defun rem (dividend divisor)
-  (with-inline-assembly (:returns :eax)
-    (:compile-form (:result-mode :eax) dividend)
-    (:compile-form (:result-mode :ebx) divisor)
-    (:movl :eax :ecx)
-    (:orl :ebx :ecx)
-    (:testb #.movitz::+movitz-fixnum-zmask+ :cl)
-    (:jnz '(:sub-program (not-integer) (:int 107)))
-    (:cdq :eax :edx)
-    (:idivl :ebx :eax :edx)
-    (:movl :edx :eax)))
-
-
+  (nth-value 1 (truncate dividend divisor)))
 
 (defun mod (number divisor)
   "Returns second result of FLOOR."
