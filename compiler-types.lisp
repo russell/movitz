@@ -423,7 +423,7 @@ with the single member of <type-specifier>."
     (cond
      ((atom type-specifier)
       (case type-specifier
-	((t nil cons symbol keyword function array vector integer hash-table)
+	((t nil cons symbol keyword function array vector integer hash-table character)
 	 (type-values type-specifier))
 	(null
 	 (type-values () :members '(nil)))
