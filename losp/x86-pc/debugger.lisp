@@ -177,7 +177,7 @@ It is quite possible to return success without having found the result-{register
 	   (setf result-register (second p)
 		 result-position (third p)))
 	  (:or
-	   (dolist (sub-pattern (cdr p))
+	   (dolist (sub-pattern (cdr p) (return-from match-code-pattern nil))
 	     (multiple-value-bind (success-p sub-result-register sub-result-position new-ip)
 		 (match-code-pattern sub-pattern code-vector ip register)
 	       (when success-p
@@ -185,8 +185,7 @@ It is quite possible to return success without having found the result-{register
 		   (setf result-register sub-result-register
 			 result-position sub-result-position))
 		 (setf ip new-ip)
-		 (return))))
-	   (return nil))
+		 (return)))))
 	  (:* (let ((max-times (second p)) ; (:kleene-star <max-times> <sub-pattern>)
 		    (sub-pattern (third p)))
 		(dotimes (i max-times)
