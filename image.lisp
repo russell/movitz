@@ -613,7 +613,7 @@
   '(muerte.cl:null muerte.cl:cons muerte.cl:fixnum muerte.cl:symbol
     muerte.cl:character muerte.cl:function muerte.cl:condition
     muerte.cl:integer muerte.cl:ratio
-    muerte.cl:vector muerte.cl:string muerte.cl:array
+    muerte.cl:vector muerte.cl:string muerte.cl:bit-vector muerte.cl:array
     muerte.cl:class muerte.cl:standard-class
     muerte.cl:standard-generic-function
     muerte:run-time-context

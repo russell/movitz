@@ -1,7 +1,7 @@
 ;;;;------------------------------------------------------------------
 ;;;; 
 ;;;;    Copyright (C) 2003-2004, 
-;;;;    Department of Computer Science, University of Tromsoe, Norway.
+;;;;    Department of Computer Science, University of Tromso, Norway.
 ;;;; 
 ;;;;    For distribution policy, see the accompanying file COPYING.
 ;;;; 

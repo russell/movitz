@@ -118,7 +118,7 @@
 	  (movitz-vector-symbolic-data expr)))
     (movitz-fixnum
      (movitz-fixnum-value expr))
-    ((or movitz-vector movitz-basic-vector)
+    (movitz-basic-vector
      (map 'vector #'movitz-print (movitz-vector-symbolic-data expr)))
     (movitz-cons
      (cons (movitz-print (movitz-car expr))

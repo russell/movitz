@@ -78,7 +78,7 @@
 	(movitz:code-vector-word
 	 `(with-inline-assembly (:returns :eax)
 	    (:compile-form (:result-mode :eax) ,value)
-	    (:leal (:eax ,(bt:slot-offset 'movitz:movitz-vector 'movitz::data)) :ecx)
+	    (:leal (:eax ,(bt:slot-offset 'movitz:movitz-basic-vector 'movitz::data)) :ecx)
 	    (:locally (:movl :ecx (:edi (:edi-offset ,slot-name))))))))))
 
 (defun (setf %run-time-context-slot) (value slot-name &optional (context (current-run-time-context)))
