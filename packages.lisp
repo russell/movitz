@@ -1299,6 +1299,7 @@
 	   #:*default-image-init-file*
 	   #:movitz-constantp
 	   #:movitz-eval
+	   #:movitz-subtypep
 
 	   #:movitz-compile-file
 	   
