@@ -1,6 +1,6 @@
 ;;;;------------------------------------------------------------------
 ;;;; 
-;;;;    Copyright (C) 2001-2004, 
+;;;;    Copyright (C) 2001-2005, 
 ;;;;    Department of Computer Science, University of Tromso, Norway.
 ;;;; 
 ;;;;    For distribution policy, see the accompanying file COPYING.
@@ -342,8 +342,8 @@ respect to multiple threads."
 	    (:locally (:movl (:edi (:edi-offset ,slot-name)) :eax))))
 	(movitz::code-vector-word
 	 `(with-inline-assembly (:returns :eax)
-	    (:locally (:movl (:edi (:edi-offset ,slot-name)) :eax))
-	    (:subl ,movitz::+code-vector-word-offset+ :eax)))
+	    (:movl ,(ldb (byte 32 0) (- movitz::+code-vector-word-offset+)) :eax)
+	    (:locally (:addl (:edi (:edi-offset ,slot-name)) :eax))))
 	(movitz::lu32
 	 `(with-inline-assembly (:returns :untagged-fixnum-ecx)
 	    (:locally (:movl (:edi (:edi-offset ,slot-name)) :ecx))))))))
