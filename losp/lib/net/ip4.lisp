@@ -112,10 +112,12 @@
     (setf (ip4-ref packet start 10 :unsigned-byte16) checksum)))
   packet)
 
-(defun checksum-ok (x)
-  (= #xffff
-     (+ (ldb (byte 16 0) x)
-	(ash x -16))))
+(defun checksum-ok (x &rest more-xes)
+  (declare (dynamic-extent more-xes))
+  (let ((x (reduce #'add-u16-ones-complement more-xes :initial-value x)))
+    (= #xffff
+       (+ (ldb (byte 16 0) x)
+	  (ash x -16)))))
 
 (defun ip-input (stack packet start)
   (let ((header-size (* 4 (ip-header-length packet start))))
