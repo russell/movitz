@@ -427,7 +427,9 @@
        (%check stream :output)
        (funcall-stm-handler-2 j-write-char character (sm melded-stream stream))))
     (string
-     (vector-push-extend character stream))))
+     (assert (vector-push-extend character stream)
+	 () "Vector-push-extend for string stream failed pushing ~S into ~S."
+	 character stream))))
 
 (defun %read-line (stream eof-error-p eof-value recursive-p)
   (declare (ignore recursive-p))
