@@ -352,7 +352,7 @@
 		  (:compile-two-forms (:eax :edx) ,index-var ,offset-var)
 		  (:load-lexical (:lexical-binding ,object-var) :ebx)
 		  (:std)
-		  (:shrl ,movitz::+movitz-fixnum-shift+ :edx)
+		  (:sarl ,movitz::+movitz-fixnum-shift+ :edx)
 		  (:addl :eax :edx) ; EDX = offset+index
 		  (:movl :ecx (:ebx :edx))
 		  (:movl :edi :edx)
