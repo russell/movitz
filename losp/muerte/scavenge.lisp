@@ -87,7 +87,8 @@ start-location and end-location."
 	 ((typep x 'pointer)
 	  (let ((new (funcall function x)))
 	    (check-type new pointer)
-	    (setf (memref i 0 0 :lisp) new)))))))
+	    (unless (eq x new)
+	      (setf (memref i 0 0 :lisp) new))))))))
   (values))
 
 (defun map-stack-words (function start-stack-frame)
