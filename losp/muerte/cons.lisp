@@ -215,10 +215,3 @@ Cons cell is in EBX, which is preserved."
     (:compile-form (:result-mode :eax) car)
     (:compile-form (:result-mode :ebx) cdr)
     (:call-global-constant fast-cons)))
-
-#+ignore
-(defun cons (car cdr)
-  (let ((cell (inline-malloc 8 :tag :cons)))
-    (setf (car cell) car
-	  (cdr cell) cdr)
-    cell))
