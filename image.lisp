@@ -1263,9 +1263,10 @@ a cons is an offset (the car) from some other code-vector (the cdr)."
 
 (defmacro with-movitz-read-context (options &body body)
   (declare (ignore options))
-  `(let ((*movitz-reader-clean-map* (if (boundp '*movitz-reader-clean-map*)
-				     *movitz-reader-clean-map*
-				   (make-hash-table :test #'eq))))
+  `(let ((*movitz-reader-clean-map*
+	  (if (boundp '*movitz-reader-clean-map*)
+	      (symbol-value '*movitz-reader-clean-map*)
+	    (make-hash-table :test #'eq))))
      (declare (special *movitz-reader-clean-map*))
      ,@body))
 
@@ -1402,6 +1403,7 @@ a cons is an offset (the car) from some other code-vector (the cdr)."
 	 (error "Unknown Movitz object: ~S" expr)))))
 
 (defmethod make-toplevel-funobj ((*image* symbolic-image))
+  (declare (special *image*))
   (let ((toplevel-code (loop for (funobj) in (image-load-time-funobjs *image*)
 			   collect `(muerte::simple-funcall ,funobj))))
     (make-compiled-funobj 'muerte::toplevel-function ()

@@ -148,9 +148,7 @@ where zot is not in foo's scope, but _is_ in foo's extent."
 			       appending
 				 (cond
 				  ((binding-lended-p binding)
-				   (error "Huh?") ; remove this clause..
-				   (append init-code
-					   `((:initialize-lended-lexical ,binding :eax))))
+				   (error "Huh?")) ; remove this clause..
 				  ;; #+ignore
 				  ((and (typep binding 'located-binding)
 					(not (binding-lended-p binding))
@@ -757,8 +755,9 @@ where zot is not in foo's scope, but _is_ in foo's extent."
 		   ,result-form)))))))
 
 (define-special-operator require (&form form)
-  (let ((*require-dependency-chain* (and (boundp '*require-dependency-chain*)
-					 *require-dependency-chain*)))
+  (let ((*require-dependency-chain*
+	 (and (boundp '*require-dependency-chain*)
+	      (symbol-value '*require-dependency-chain*))))
     (declare (special *require-dependency-chain*))
     (destructuring-bind (module-name &optional path-spec)
 	(cdr form)

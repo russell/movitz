@@ -85,3 +85,6 @@
 			    "compiler"
 			    "special-operators"
 			    "special-operators-cl"))))))
+
+#+cmu18 (setf movitz:*compiler-compile-eval-whens* nil
+	      movitz:*compiler-compile-macro-expanders* nil)
