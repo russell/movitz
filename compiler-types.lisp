@@ -251,7 +251,7 @@ and any element of range1."
     (symbol
      (typep x 'movitz-symbol))
     ((vector array)
-     (typep x '(or movitz-basic-vector movitz-vector)))
+     (typep x 'movitz-basic-vector))
     (fixnum
      (typep x 'movitz-fixnum))
     (bignum
