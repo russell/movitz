@@ -509,6 +509,9 @@ and return accessors for that subsequence (fast & unsafe accessors, that is)."
 			       :other-tag :vector
 			       :wide-other-tag #.(bt:enum-value 'movitz::movitz-vector-element-type
 								:character))))
+	 (setf (memref a #.(bt:slot-offset 'movitz::movitz-vector 'movitz::flags)
+		       0 :unsigned-byte16)
+	   0)
 	 (setf (memref a #.(bt:slot-offset 'movitz::movitz-vector 'movitz::num-elements)
 		       0 :unsigned-byte16)
 	   dimensions)
@@ -522,6 +525,9 @@ and return accessors for that subsequence (fast & unsafe accessors, that is)."
 			       :other-tag :vector
 			       :wide-other-tag #.(bt:enum-value 'movitz::movitz-vector-element-type
 								:u8))))
+	 (setf (memref a #.(bt:slot-offset 'movitz::movitz-vector 'movitz::flags)
+		       0 :unsigned-byte16)
+	   0)
 	 (setf (memref a #.(bt:slot-offset 'movitz::movitz-vector 'movitz::num-elements)
 		       0 :unsigned-byte16)
 	   dimensions)
@@ -538,6 +544,9 @@ and return accessors for that subsequence (fast & unsafe accessors, that is)."
 			       :other-tag :vector
 			       :wide-other-tag #.(bt:enum-value 'movitz::movitz-vector-element-type
 								:u32))))
+	 (setf (memref a #.(bt:slot-offset 'movitz::movitz-vector 'movitz::flags)
+		       0 :unsigned-byte16)
+	   0)
 	 (setf (memref a #.(bt:slot-offset 'movitz::movitz-vector 'movitz::num-elements)
 		       0 :unsigned-byte16)
 	   dimensions)
