@@ -79,6 +79,15 @@
   (:report (lambda (c s)
 	     (format s "Undefined function ~S."
 		     (cell-error-name c)))))
+
+(define-condition undefined-function-call (undefined-function)
+  ((arguments
+    :initarg :arguments
+    :reader undefined-function-call-arguments))
+  (:report (lambda (c s)
+	     (format s "Undefined function ~S called with arguments ~:S."
+		     (cell-error-name c)
+		     (undefined-function-call-arguments c)))))
 		  
 (define-condition unbound-variable (cell-error)
   ()
