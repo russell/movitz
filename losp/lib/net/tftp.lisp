@@ -84,8 +84,8 @@ The host's MAC is looked up by ARP unless provided."
 		 for ack = nil then (receive *ip4-nic* ack)
 		 until
 		   (with-simple-restart (continue
-					 "Continue TFTP stop-and-wait for block ~D~@[, port ~D~]."
-					 ack-block-number port)
+					 "Continue TFTP stop-and-wait for ~S block ~D~@[, port ~D~]."
+					 file-name ack-block-number port)
 		     (when (funcall breaker)
 		       (break "TFTP/Ethernet"))
 		     (when (< (* timeout internal-time-units-per-second)
@@ -137,7 +137,8 @@ The host's MAC is looked up by ARP unless provided."
 		       (setf (fill-pointer packet) j))
 		 (format-udp-header packet :destination ip :destination-port port)
 		 (format-ethernet-packet packet (mac-address *ip4-nic*) mac +ether-type-ip4+)
-		 (write-char #\. speak)
+		 (when speak
+		   (write-char #\. speak))
 		 (transmit-stop-and-wait packet block-number port)))
 	(format speak "done.")
 	(values)))))
