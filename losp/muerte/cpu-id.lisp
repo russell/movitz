@@ -216,9 +216,9 @@ This is an illegal instruction on lesser CPUs, and a no-op on some, such as boch
 
 (define-compiler-macro eflags ()
   `(with-inline-assembly (:returns :register)
+     ;; XXXXX Breaks stack and register disciplines!
      (:pushfl)
      (:popl (:result-register))
-     (:movl (:result-register) (#x1000))
      (:shll 2 (:result-register))))
 
 (defun eflags ()
