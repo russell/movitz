@@ -49,7 +49,7 @@
 (defun eval-symbol (form env)
   "3.1.2.1.1 Symbols as Forms"
   (if (symbol-constant-variable-p form)
-      (symbol-global-value form)
+      (symbol-value form)
     (let ((binding (env-binding env form)))
       (or (and binding (cdr binding))
 	  (symbol-value form)))))
