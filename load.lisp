@@ -63,8 +63,10 @@
 			    (do () (nil)
 			      (with-simple-restart (retry "Retry loading ~S" path)
 				(return
-				  (load (or (compile-file path :print nil)
-					    (error "Compile-file of ~S failed?" path)))))))
+				  (handler-bind 
+				      (#+sbcl (sb-ext:defconstant-uneql #'continue))
+				    (load (or (compile-file path :print nil)
+					      (error "Compile-file of ~S failed?" path))))))))
 			  '("packages"
 			    "movitz"
 			    "parse"

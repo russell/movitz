@@ -867,7 +867,8 @@ a (lexical-extent) sub-function might care about its parent frame-map."
 				   load-priority
 				   (delete-file-p nil))
   (handler-bind
-      (#+ignore ((or error warning) (lambda (c)
+      (#+sbcl (sb-ext:defconstant-uneql #'continue)
+       #+ignore ((or error warning) (lambda (c)
 			     (declare (ignore c))
 			     (format *error-output* "~&;; In file ~S:" path))))
     (unwind-protect
