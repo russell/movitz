@@ -371,7 +371,7 @@
 		     `(let ((typep-object ,object))
 			(,(car type)
 			 ,@(loop for subtype in (cdr type)
-			       collect `(typep ,object ',subtype)))))
+			       collect `(typep typep-object ',subtype)))))
 		    (t (warn "compiling typep ~A" type)))))))
 	    form)))))
 
@@ -403,7 +403,8 @@
   (let ((fname (intern (format nil "~A-~A" 'deftype name))))
     `(progn
        (eval-when (:compile-toplevel)
-	 (setf (gethash ',name *compiler-derived-typespecs*)
+	 (setf (gethash (translate-program ',name :cl :muerte.cl)
+			*compiler-derived-typespecs*)
 	   (lambda ,lambda ,@body))
 	 (setf (gethash (intern ,(symbol-name name))
 			*derived-typespecs*)
