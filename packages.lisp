@@ -1367,6 +1367,8 @@
 	   #:*compiler-local-segment-prefix*
 	   #:*compiler-global-segment-prefix*
 	   #:*compiler-physical-segment-prefix*
+	   #:*compiler-nonlocal-lispval-read-segment-prefix*
+	   #:*compiler-nonlocal-lispval-write-segment-prefix*
 	   #:*compiler-compile-eval-whens*
 	   #:*compiler-compile-macro-expanders*
 	   #:*compiler-allow-untagged-word-bits*
