@@ -764,8 +764,9 @@ and return accessors for that subsequence (fast & unsafe accessors, that is)."
 			  (:addl 4 :ecx)
 			  (:andl -8 :ecx)
 			  (:jz 'init-done)
+			  (:load-lexical (:lexical-binding initial-element) :edx)
 			  init-loop
-			  (:movl :edi (:eax (:offset movitz-basic-vector data) :ecx -4))
+			  (:movl :edx (:eax (:offset movitz-basic-vector data) :ecx -4))
 			  (:subl 4 :ecx)
 			  (:jnz 'init-loop)
 			  init-done
@@ -779,6 +780,7 @@ and return accessors for that subsequence (fast & unsafe accessors, that is)."
     (cond
      (initial-contents
       (replace array initial-contents))
+     #+ignore
      (initial-element
       (dotimes (i dimension)
 	(setf (svref%unsafe array i) initial-element))))
