@@ -1302,3 +1302,18 @@ is zero (i.e. not found)."
 			  (:popl :ebp)
 			  (:leal (:esp 12) :esp)
 			  )))))))
+
+
+(define-special-operator muerte::eql%b (&form form &env env &result-mode result-mode)
+  (destructuring-bind (x y)
+      (cdr form)
+    (let ((returns (case (result-mode-type result-mode)
+		     ((:boolean-branch-on-true :boolean-branch-on-false)
+		      result-mode)
+		     (t :boolean-zf=1)))
+	  (x (movitz-binding x env))
+	  (y (movitz-binding y env)))
+      (compiler-values ()
+	:returns returns
+	:code `((:eql ,x ,y ,returns))))))
+			     
