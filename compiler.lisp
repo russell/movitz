@@ -60,6 +60,9 @@ compile, using the host compiler, the code rather than just using eval.")
 (defvar *compiler-do-type-inference* t
   "Spend time and effort performing type inference and optimization.")
 
+(defvar *compiler-produce-defensive-code* t
+  "Try make code be extra cautious.")
+
 (defvar *compiling-function-name*)
 (defvar muerte.cl:*compile-file-pathname* nil)
 
@@ -68,6 +71,7 @@ compile, using the host compiler, the code rather than just using eval.")
 
 (defvar *extended-code-find-write-binding-and-type*
     (make-hash-table :test #'eq))
+
 
 (defconstant +enter-stack-frame-code+
     '((:pushl :ebp)
