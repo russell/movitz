@@ -85,6 +85,8 @@
       "Image too large for 1.44 floppy geometry.")
     (ia-x86:read-proglist
      `(
+       (:jmp (:pc+ 0))			; some BIOSes might check for this.
+       
        ;;
        ;; We are running at address #x7c00.
        ;; First we need to initialize the data segment
