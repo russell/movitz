@@ -107,7 +107,7 @@
     :binary-tag :primitive-function)
    ;; per thread parameters
    (dynamic-env
-    :binary-type lu32
+    :binary-type word
     :initform 0)
    ;; More per-thread parameters
    (unwind-protect-tag
