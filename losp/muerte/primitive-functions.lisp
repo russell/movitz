@@ -601,8 +601,6 @@ Returns list in EAX and preserves numargs in ECX."
      (find-class (structure-object-name object)))
     (character
      (find-class 'character))
-    (basic-restart
-     (find-class 'basic-restart))
     (run-time-context
      (find-class 'run-time-context))
     (null
@@ -613,6 +611,8 @@ Returns list in EAX and preserves numargs in ECX."
      (find-class 'symbol))
     (fixnum
      (find-class 'fixnum))
+    (basic-restart
+     (find-class 'basic-restart))
     (tag6
      (error "Don't know the class of ~Z with other-type #x~X."
 	    object (with-inline-assembly (:returns :untagged-fixnum-ecx)
