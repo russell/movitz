@@ -153,6 +153,31 @@
        "Vector has no fill-pointer.")
      (%basic-vector-fill-pointer vector))))
 
+(defun copy-vector (vector)
+  (check-type vector vector)
+  (ecase (vector-element-type vector)
+    (#.(bt:enum-value 'movitz::movitz-vector-element-type :any-t)
+       (%shallow-copy-object
+	vector
+	(+ 2 (movitz-accessor vector movitz-basic-vector num-elements))))
+    (#.(bt:enum-value 'movitz::movitz-vector-element-type :u32)
+       (%shallow-copy-non-pointer-object
+	vector
+	(+ 2 (movitz-accessor vector movitz-basic-vector num-elements))))
+    ((#.(bt:enum-value 'movitz::movitz-vector-element-type :character)
+      #.(bt:enum-value 'movitz::movitz-vector-element-type :u8)
+      #.(bt:enum-value 'movitz::movitz-vector-element-type :code))
+     (%shallow-copy-non-pointer-object
+      vector
+      (+ 2 (truncate (+ 3 (movitz-accessor vector movitz-basic-vector num-elements)) 4))))
+    (#.(bt:enum-value 'movitz::movitz-vector-element-type :u16)
+       (%shallow-copy-non-pointer-object
+	vector
+	(+ 2 (truncate (+ 1 (movitz-accessor vector movitz-basic-vector num-elements)) 2))))
+    (#.(bt:enum-value 'movitz::movitz-vector-element-type :bit)
+       (%shallow-copy-non-pointer-object
+	vector
+	(+ 2 (truncate (+ 31 (movitz-accessor vector movitz-basic-vector num-elements)) 32))))))
 
 (defun (setf fill-pointer) (new-fill-pointer vector)
   (etypecase vector
