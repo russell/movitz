@@ -1042,12 +1042,12 @@ busy-waiting loop on P4."
 (define-compiler-macro boundp (symbol)
   `(with-inline-assembly-case ()
      (do-case (t :boolean-zf=0 :labels (boundp-done))
-       (:compile-form (:result-mode :eax) ,symbol)
-       (:leal (:eax ,(- (movitz:tag :symbol))) :ecx)
+       (:compile-form (:result-mode :ebx) ,symbol)
+       (:leal (:ebx ,(- (movitz:tag :symbol))) :ecx)
        (:testb 7 :cl)
        (:jne '(:sub-program () (:int 66)))
        (:call-local-pf dynamic-variable-lookup)
-       (:globally (:cmpl (:edi (:edi-offset unbound-value)) :eax)))))
+       (:globally (:cmpl (:edi (:edi-offset new-unbound-value)) :eax)))))
 
 (defmacro define-global-variable (name init-form &optional docstring)
   "A global variable will be accessed by ignoring local bindings."
