@@ -174,6 +174,8 @@
 		 `(with-inline-assembly (:returns :boolean-zf=1)
 		    (:compile-form (:result-mode :eax) ,object)
 		    (:testb ,movitz::+movitz-fixnum-zmask+ :al)))
+		((bignum)
+		 (make-other-typep :bignum))
 		((integer number rational)
 		 `(with-inline-assembly-case ()
 		    (do-case (t :boolean-zf=1 :labels (done))
@@ -510,8 +512,7 @@
   (typep x 'fixnum))
 
 (define-simple-typep (bignum bignump) (x)
-  (declare (ignore x))
-  nil)
+  (typep x 'bignum))
 
 (define-simple-typep (number numberp) (x)
   "Currently, only integer numbers are supported."
