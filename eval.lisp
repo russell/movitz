@@ -63,6 +63,7 @@
       (number t)
       (keyword t)
       (character t)
+      (string t)
       (symbol (or (movitz-env-get form 'constantp nil environment)
 		  (typep (movitz-binding form environment) 'constant-object-binding)))
       (cons (case (car form)
