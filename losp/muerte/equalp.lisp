@@ -22,7 +22,7 @@
 (in-package muerte)
 
 (defun eql (x y)
-  (eql x y))
+  (compiler-macro-call eql x y))
 
 (defun equal (x y)
   (typecase x
