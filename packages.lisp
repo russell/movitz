@@ -1186,10 +1186,12 @@
 	   map-active-restarts
 	   with-basic-restart
 
-	   vector-u8
-	   vector-u16
-	   vector-u32
-	   pointer
+	   #:vector-u8
+	   #:vector-u16
+	   #:vector-u32
+	   #:pointer
+	   #:basic-restart
+	   #:run-time-context
 	   
 	   make-funobj
 	   funobj-type
