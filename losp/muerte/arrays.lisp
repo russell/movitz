@@ -309,7 +309,8 @@
 		   (:addl ,movitz:+movitz-fixnum-factor+ :eax)
 		   (:jmp 'return)
 		  :any-t
-		   (:movl (:eax :ebx ,(bt:slot-offset 'movitz:movitz-basic-vector 'movitz::data))
+		   (,movitz:*compiler-nonlocal-lispval-read-segment-prefix*
+		    :movl (:eax :ebx ,(bt:slot-offset 'movitz:movitz-basic-vector 'movitz::data))
 			  :eax)
 		  return)))
 	   (do-it)))))
@@ -346,7 +347,8 @@
 		   ;; t?
 		   (:cmpl ,(movitz:basic-vector-type-tag :any-t) :ecx)
 		   (:jne 'not-any-t-vector)
-		   (:movl :eax
+		   (,movitz:*compiler-nonlocal-lispval-write-segment-prefix*
+		    :movl :eax
 			  (:ebx :edx ,(bt:slot-offset 'movitz:movitz-basic-vector 'movitz::data)))
 		   (:jmp 'return)
 
@@ -433,6 +435,7 @@
   `(setf (memref ,simple-vector 2 ,index :lisp) ,value))
 
 (defun svref%unsafe (simple-vector index)
+;;  (compiler-macro-call svref%unsafe simple-vector index))
   (with-inline-assembly (:returns :eax)
     (:compile-two-forms (:eax :ebx) simple-vector index)
     (:movl (:eax :ebx #.(bt:slot-offset 'movitz:movitz-basic-vector 'movitz::data)) :eax)))
