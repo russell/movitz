@@ -43,6 +43,7 @@
 	   :type ,type))
 
 (require :lib/net/arp)
+(require :lib/net/tftp)
 
 (defclass ip4-stack ()
   ((interface
