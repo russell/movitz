@@ -46,6 +46,7 @@
 	      (handler-bind
 		  ((muerte::missing-delimiter
 		    (lambda (c)
+		      (declare (ignore c))
 		      (format t "~&> ")
 		      (invoke-restart 'muerte::next-line
 				      (muerte.readline:contextual-readline *repl-readline-context*)))))
