@@ -271,15 +271,18 @@ where zot is not in foo's scope, but _is_ in foo's extent."
 	(loop for (name local-lambda-list . local-body) in macrolet-specs
 	    as cl-local-lambda-list = (translate-program local-lambda-list :muerte.cl :cl)
 	    as cl-local-body = (translate-program local-body :muerte.cl :cl)
+	    as expander = `(lambda (form env)
+			     (declare (ignorable env))
+			     (destructuring-bind ,cl-local-lambda-list
+				 (translate-program (rest form) :muerte.cl :cl)
+			       (translate-program (block ,name (let () ,@cl-local-body))
+						  :cl :muerte.cl)))
 	    do (movitz-env-add-binding local-env
 				    (make-instance 'macro-binding
 				      :name name
-				      :expander
-				      `(lambda (form env)
-					 (destructuring-bind ,cl-local-lambda-list
-					     (translate-program (rest form) :muerte.cl :cl)
-					   (translate-program (block ,name (let () ,@cl-local-body))
-							      :cl :muerte.cl))))))
+				      :expander (movitz-macro-expander-make-function expander
+										     :name name
+										     :type :macrolet))))
 	(compiler-values-bind (&all body-values &code body-code)
 	    (compiler-call #'compile-implicit-progn
 	      :defaults forward
