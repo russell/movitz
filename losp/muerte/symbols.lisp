@@ -130,7 +130,8 @@
 
 (defun makunbound (symbol)
   (setf (symbol-value symbol)
-    'unbound))
+    (load-global-constant unbound-value))
+  symbol)
 
 (defun fboundp (symbol)
   (etypecase symbol
