@@ -132,7 +132,10 @@ make clear it's a Movitz object, with extra <..>"
 				      (list 'list
 					    (list 'quote 'backquote-comma-at)
 					    (un-backquote (cadr sub-form) (1- level))))))
-			     (t (list 'list (un-backquote sub-form level)))))))))))
+			     (t (list 'list (un-backquote sub-form level))))))
+		     when (not (listp (cdr sub-form-head)))
+		     collect (list 'quote (cdr sub-form-head)))
+		 ))))
      (array
       (error "Array backquote not implemented."))
      (t (list 'quote form)))))
