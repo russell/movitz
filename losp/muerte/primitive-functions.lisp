@@ -482,11 +482,10 @@ BUFFER-SIZE is the number of words in the buffer."
     (:movl (:eax #.(movitz::class-object-offset 'symbol)) :eax)
     (:ret)))
 
-
 (define-primitive-function fast-class-of-std-instance ()
   "Return the class of a std-instance object."
   (with-inline-assembly (:returns :multiple-values)
-    (:movl (:eax #.(bt:slot-offset 'movitz::movitz-std-instance 'movitz::class))
+    (:movl (:eax (:offset movitz-std-instance class))
 	   :eax)
     (:ret)))
 
