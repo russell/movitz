@@ -807,7 +807,7 @@
 	     (:movl :edi :eax)
 	     (:cld)
 	     (:pushl :edx)
-	     (:call-global-constant normalize-u32-ecx)
+	     (:call-global-constant box-u32-ecx)
 	     (:popl :ebx)
 	     (:jmp 'done)
 	    not-size1
@@ -827,7 +827,7 @@
 	     (:movl :edi :eax)
 	     (:cld)
 	     (:pushl :edx)
-	     (:call-global-constant normalize-u32-ecx)
+	     (:call-global-constant box-u32-ecx)
 	     (:popl :ebx)
 	     (:jmp 'done)
 	    not-size2
