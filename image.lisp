@@ -105,25 +105,6 @@
     :map-binary-write 'movitz-intern-code-vector
     :map-binary-read-delayed 'movitz-word-code-vector
     :binary-tag :primitive-function)
-   ;; various constants
-   (push-current-values
-    :binary-type code-vector-word
-    :initform nil
-    :map-binary-write 'movitz-intern-code-vector
-    :map-binary-read-delayed 'movitz-word-code-vector
-    :binary-tag :primitive-function)
-   (pop-current-values
-    :binary-type code-vector-word
-    :initform nil
-    :map-binary-write 'movitz-intern-code-vector
-    :map-binary-read-delayed 'movitz-word-code-vector
-    :binary-tag :primitive-function)
-   ;; function global constants
-;;;   (unbound-function
-;;;    :binary-type word
-;;;    :binary-tag :global-function
-;;;    :map-binary-read-delayed 'movitz-word
-;;;    :map-binary-write 'movitz-intern)   
    ;; per thread parameters
    (dynamic-env
     :binary-type lu32
@@ -174,6 +155,12 @@
     :map-binary-write 'movitz-read-and-intern
     :initform 'muerte::unbound)
    ;; primitive functions global constants
+   (pop-current-values
+    :binary-type code-vector-word
+    :initform nil
+    :map-binary-write 'movitz-intern-code-vector
+    :map-binary-read-delayed 'movitz-word-code-vector
+    :binary-tag :primitive-function)
    (dynamic-find-binding
     :map-binary-write 'movitz-intern-code-vector
     :binary-tag :primitive-function
