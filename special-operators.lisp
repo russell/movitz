@@ -906,7 +906,8 @@ on the current result."
 								   (* 4 i))))))
 				cloaked-code
 				(when (<= 3 num-values)
-				  `((:locally (:movl ,(- num-values 2)
+				  `((:locally (:movl ,(* +movitz-fixnum-factor+
+							 (- num-values 2))
 						     (:edi (:edi-offset num-values))))))
 				(loop for i downfrom (- num-values 2 1) to 0
 				    collect
@@ -1224,9 +1225,10 @@ on the current result."
 			       (loop for i from (- (length sub-forms) 3) downto 0
 				   collecting
 				     `(:locally (:popl (:edi (:edi-offset values ,(* i 4))))))
-			       (make-immediate-move (- (length sub-forms) 2) :ecx)
-			       `((:locally (:movl :ecx (:edi (:edi-offset num-values))))
-				 (:addl 2 :ecx)
+			       (make-immediate-move (length sub-forms) :ecx)
+			       `((:leal ((:ecx ,+movitz-fixnum-factor+) ,(* -2 +movitz-fixnum-factor+))
+					:edx)
+				 (:locally (:movl :edx (:edi (:edi-offset num-values))))
 				 (:stc))
 			       #+ignore
 			       (make-compiled-funcall-by-symbol 'muerte.cl::values
