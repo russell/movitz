@@ -519,7 +519,8 @@
     (if (not (eq slot-name 'unbound-function))
 	(slot-offset 'movitz-run-time-context slot-name)
       (+ (slot-offset 'movitz-run-time-context 'null-symbol)
-	 (slot-offset 'movitz-symbol 'function-value)))))
+	 (slot-offset 'movitz-symbol 'function-value)
+	 (tag :symbol)))))
 
 (defun make-movitz-run-time-context ()
   (make-instance 'movitz-run-time-context
