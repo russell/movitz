@@ -1098,7 +1098,7 @@ Preserve EAX and EBX."
 			:ecx)
 	       (:leal ((:ecx 1) ,(* -1 movitz:+movitz-fixnum-factor+))
 		      :eax)		; bigits-1
-	       (:bsrl (:ebx (:ecx 4) ,(+ -4 (bt:slot-offset 'movitz:movitz-bignum 'movitz::bigit0)))
+	       (:bsrl (:ebx (:ecx 1) ,(+ -4 (bt:slot-offset 'movitz:movitz-bignum 'movitz::bigit0)))
 		      :ecx)
 	       (:shll 5 :eax)		; bits = bigits*32 + (bit-index+1)
 	       (:leal ((:ecx ,movitz:+movitz-fixnum-factor+) :eax
