@@ -303,3 +303,5 @@ Return the condition object, if there was one."
 	     (or format-control "Break was invoked.")
 	     format-arguments)))
   nil)
+
+(define-condition newline () ())
