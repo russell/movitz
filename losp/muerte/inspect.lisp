@@ -229,12 +229,12 @@ after the point that called this stack-frame."
 		  (dotimes (i (funobj-num-constants x) t)
 		    (unless (test funobj-constant-ref i)))))
 	    (symbol
-	     (and ;; (test memref -7 0 :lisp) ; value
-		  (test memref -7 1 :lisp)    ; function-value
-		  ;; (test memref -7 2 :lisp) ; plist
-		  (test memref -7 3 :lisp)    ; name
-		  ;; (test memref -7 4 :lisp) ; package
-		  (test memref -7 5 :lisp))) ; flags
+	     (and (test memref #.(bt:slot-offset 'movitz:movitz-symbol 'movitz::function-value)
+			0 :lisp)
+		  (test memref #.(bt:slot-offset 'movitz:movitz-symbol 'movitz::name)
+			0 :lisp)
+		  (test memref #.(bt:slot-offset 'movitz:movitz-symbol 'movitz::flags)
+			0 :lisp)))
 	    (vector
 	     (and (typep y 'vector)
 		  (test array-element-type)
