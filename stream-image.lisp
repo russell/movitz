@@ -34,6 +34,10 @@
     :initform #x65
     :reader image-nil-word)))
 
+(defmethod image-register32 ((image stream-image) register-name)
+  (declare (ignorable image) (ignore register-name))
+  (error "A stream-image has no CPU state."))
+
 (defmethod (setf image-stream-position) (value (image stream-image) &optional physicalp)
   (check-type value (integer 0 *))
   (assert (file-position (image-stream image)
