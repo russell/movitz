@@ -1243,7 +1243,9 @@
 	   runtime-context-slot
 	   movitz-accessor
 	   halt-cpu
-	   fixnum-word
+	   #:%object-lispval
+	   #:%lispval-object
+	   #:objects-equalp
 	   word-nibble
 	   &edx
 	   
