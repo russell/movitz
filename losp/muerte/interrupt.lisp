@@ -74,6 +74,10 @@
       form
     `(setf (memref ,frame (dit-frame-offset ,reg) :type ,type) ,value)))
 
+(defun (setf dit-frame-ref) (value stack frame reg &optional (type :lisp))
+  (setf (stack-frame-ref stack (+ frame (dit-frame-index reg)) 0 type)
+    value))
+
 (defun dit-frame-casf (stack dit-frame)
   "Compute the `currently active stack-frame' when the interrupt occurred."
   (let ((atomically-location (dit-frame-ref stack dit-frame :atomically-continuation :location))
