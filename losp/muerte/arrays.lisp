@@ -490,14 +490,17 @@
   `(memref ,vector 2 ,index :unsigned-byte32))
 
 (defun u32ref%unsafe (vector index)
-  (u32ref%unsafe vector index))
+  (compiler-macro-call u32ref%unsafe vector index))
 
 (define-compiler-macro (setf u32ref%unsafe) (value vector index)
-  `(setf (memref ,vector 2 ,index :unsigned-byte32) ,value))
+  (let ((var (gensym "setf-u32ref-value-")))
+    ;; Use var so as to avoid re-boxing of the u32 value.
+    `(let ((,var ,value))
+       (setf (memref ,vector 2 ,index :unsigned-byte32) ,var)
+       ,var)))
 
 (defun (setf u32ref%unsafe) (value vector index)
-  (setf (u32ref%unsafe vector index) value)
-  value)
+  (compiler-macro-call (setf u32ref%unsafe) value vector index))
 
 ;;; fast vector access
 
