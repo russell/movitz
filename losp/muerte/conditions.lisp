@@ -250,7 +250,8 @@ Return the condition object, if there was one."
   (declare (dynamic-extent arguments))
   (let* ((class (etypecase datum
 		  (symbol
-		   (find-class datum))
+		   (or (find-class datum nil)
+		       (error "No condition class named ~S." datum)))
 		  (string
 		   (find-class default-type))
 		  (condition
