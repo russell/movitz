@@ -240,11 +240,15 @@ with EAX still holding the tag."
   (with-inline-assembly (:returns :multiple-values)
     (:locally (:movl (:edi (:edi-offset dynamic-env)) :ecx))
     (:jecxz 'no-stack-binding)
+    ;; Be defensive: Verify that ECX is within stack.
+    (:locally (:bound (:edi (:edi-offset stack-bottom)) :ecx))
     (:cmpl :eax (:ecx))
     (:je 'success)
    search-loop
     (:movl (:ecx 12) :ecx)		; parent
     (:jecxz 'no-stack-binding)
+    ;; Be defensive: Verify that ECX is within stack.
+    (:locally (:bound (:edi (:edi-offset stack-bottom)) :ecx))
     (:cmpl :eax (:ecx))			; compare name
     (:jne 'search-loop)
     ;; fall through on success
