@@ -21,6 +21,7 @@
 (defvar *last-dit-frame* nil)
 
 (defconstant +dit-frame-map+
+    ;; Do NOT rearrange this randomly.
     '(:eflags :cs :eip :error-code :exception-vector
       :ebp
       :funobj
@@ -275,8 +276,9 @@ is off, e.g. because this interrupt/exception is routed through an interrupt gat
 		    (:int 63)))
 	    (:cmpw ,(movitz:basic-vector-type-tag :code) (:eax ,movitz:+other-type-offset+))
 	    (:jne 'pf-continuation-not-code-vector)
-	    (:leal (:eax ,movitz:+code-vector-word-offset+) :ecx)
-	    (:movl :ecx (:ebp ,(dit-frame-offset :eip)))
+	    (:movl ,movitz:+code-vector-word-offset+ (:ebp ,(dit-frame-offset :eip)))
+	    (:addl :eax (:ebp ,(dit-frame-offset :eip)))
+	    
 	    (:jmp 'normal-return)
 	    
 	   not-restart-continuation
