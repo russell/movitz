@@ -59,11 +59,7 @@
 (defun movitz-constantp (form &optional (environment nil))
   (let ((form (translate-program form :cl :muerte.cl)))
     (typecase form
-      (boolean t)
-      (number t)
       (keyword t)
-      (character t)
-      (string t)
       (symbol (or (movitz-env-get form 'constantp nil environment)
 		  (typep (movitz-binding form environment) 'constant-object-binding)))
       (cons (case (car form)
@@ -73,7 +69,8 @@
 	      ((muerte.cl:+ muerte.cl:- muerte.cl:*)
 	       (every (lambda (sub-form)
 			(movitz-constantp sub-form environment))
-		      (cdr form))))))))
+		      (cdr form)))))
+      (t t))))				; anything else is self-evaluating.
 
 
 (defun isconst (x)
