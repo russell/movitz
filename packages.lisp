@@ -1191,6 +1191,7 @@
 	   #:vector-u32
 	   #:pointer
 	   #:basic-restart
+	   #:illegal-object
 	   #:run-time-context
 	   
 	   make-funobj
