@@ -207,7 +207,8 @@
 		(:cmpw (:eax ,(bt:slot-offset 'movitz:movitz-vector 'movitz::num-elements)) :bx)
 		(:jae '(:sub-program ()
 			(:compile-form (:result-mode :ignore)
-			 (error "Index ~D out of bounds ~D." index (length vector)))))
+			 (error "Index ~D out of bounds ~D."
+			  index (array-dimension vector 0)))))
 
 		(:cmpl ,(movitz:vector-type-tag :any-t) :ecx)
 		(:jne 'not-any-t)
