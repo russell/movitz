@@ -219,7 +219,7 @@ completion-start and completion-end are bounding indexes into completion's name.
 		    (write-char #\space))
 		  (setf (cursor-x console) x
 			end pos)))
-	       ((#\delete #\^d)
+	       ((#\Rubout #\^d)
 		(when (< pos end)
 		  (dotimes (i (- end pos))
 		    (setf (char buffer (+ pos i))
