@@ -311,7 +311,7 @@
 			(,(car type)
 			 ,@(loop for subtype in (cdr type)
 			       collect `(typep ,object ',subtype)))))
-		    (t (warn "typep ~A" type)))))))
+		    (t (warn "compiling typep ~A" type)))))))
 	    form)))))
 
 #+ignore
