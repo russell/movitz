@@ -603,11 +603,7 @@
 	    (:addl :ecx :eax)
 	    (:shrl ,movitz::+movitz-fixnum-shift+ :eax) ; scale down address
 	    (,prefixes :movl (:eax) :ecx)
-	    (:cmpl ,movitz::+movitz-most-positive-fixnum+ :ecx)
-	    (:jg '(:sub-program (overflow) (:int 4)))
-	    (:leal ((:ecx ,movitz::+movitz-fixnum-factor+)
-		    :edi ,(- (movitz::image-nil-word movitz::*image*)))
-		   :eax)))
+	    (:call-global-constant box-u32-ecx)))
 	(:unsigned-byte16
 	 (cond
 	  ((and (eq 0 offset) (eq 0 index))
