@@ -839,7 +839,6 @@ where zot is not in foo's scope, but _is_ in foo's extent."
   (destructuring-bind (situations &body body)
       (cdr form)
     (when (member :compile-toplevel situations)
-;;;      (warn "EVAL-WHEN from ~S" body)
 ;;;      (warn "EVAL-WHEN: ~S" `(progn ,@(movitz::translate-program body :muerte.cl :cl
 ;;;								 :when :eval
 ;;;								 :remove-double-quotes-p t)))
@@ -847,9 +846,10 @@ where zot is not in foo's scope, but _is_ in foo's extent."
 	(dolist (toplevel-form (translate-program body :muerte.cl :cl
 						  :when :eval
 						  :remove-double-quotes-p t))
-	  (if *compiler-compile-eval-whens*
-	      (funcall (compile () `(lambda () ,toplevel-form)))
-	    (eval toplevel-form)))))
+	  (with-host-environment ()
+	    (if *compiler-compile-eval-whens*
+		(funcall (compile () `(lambda () ,toplevel-form)))
+	      (eval toplevel-form))))))
     (if (or (member :execute situations)
 	    (and (member :load-toplevel situations)
 		 top-level-p))
