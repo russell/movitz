@@ -270,12 +270,6 @@
     :map-binary-write 'movitz-intern-code-vector
     :map-binary-read-delayed 'movitz-word-code-vector
     :binary-tag :primitive-function)
-   (fast-eql
-    :binary-type code-vector-word
-    :initform nil
-    :map-binary-write 'movitz-intern-code-vector
-    :map-binary-read-delayed 'movitz-word-code-vector
-    :binary-tag :primitive-function)
    (trampoline-cl-dispatch-1or2
     :binary-type code-vector-word
     :initform nil
