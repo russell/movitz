@@ -1065,6 +1065,12 @@ this image will not be Multiboot compatible."
 				  name symbol)
 		   name)))
 	     (ensure-package (package-name lisp-package)
+	       (assert (not (member (package-name lisp-package)
+				    #+allegro '(excl common-lisp sys aclmop)
+				    #-allegro '(common-lisp)
+				    :test #'string=)) ()
+		 "I don't think you really want to dump the package ~A with Movitz."
+		 lisp-package)
 	       (setf (gethash lisp-package lisp-to-movitz-package)
 		 (or (gethash package-name packages-hash nil)
 		     (let ((p (funcall 'muerte::make-package-object
