@@ -831,13 +831,6 @@ integer (native lisp) value."
 		     (write-binary 'u32 stream
 				   (+ x (movitz-intern-code-vector (movitz-funobj-code-vector obj)))))))))
 
-;;;(defmethod print-object ((obj movitz-funobj) stream)
-;;;  (format stream "#<MOVITZ-FUNOBJ ~<ll: ~A~> ~<const: ~A~> ~<code: ~A~>>"
-;;;	  (movitz-funobj-lambda-list obj)
-;;;	  (movitz-funobj-const-list obj)
-;;;	  (movitz-funobj-code-vector obj))
-;;;  (call-next-method))
-
 (defmethod print-object ((object movitz-funobj) stream)
   (if (not (slot-boundp object 'name))
       (call-next-method)
