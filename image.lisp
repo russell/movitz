@@ -470,7 +470,12 @@
     :initform '(:inactive))
    (atomically-esp
     :binary-type lu32
-    :initform 0))
+    :initform 0)
+   (dynamic-unwind-next
+    :map-binary-write 'movitz-intern-code-vector
+    :binary-tag :primitive-function
+    :map-binary-read-delayed 'movitz-word-code-vector
+    :binary-type code-vector-word))
   (:slot-align null-symbol -5))
 
 (defun atomically-status-simple-pf (pf-name reset-status-p &rest registers)
