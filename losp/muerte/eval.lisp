@@ -127,22 +127,7 @@
   "Supposed to be the time macro."
   (cond
    ((cpu-featurep :tsc)
-    (let ((start-mem (malloc-cons-pointer)))
-      (multiple-value-bind (start-time-lo start-time-hi)
-	  (read-time-stamp-counter)
-	(multiple-value-prog1
-	    (eval-form form env)
-	  (multiple-value-bind (end-time-lo end-time-hi)
-	      (read-time-stamp-counter)
-	    (let ((clumps (- (malloc-cons-pointer) start-mem))
-		  (delta-hi (- end-time-hi start-time-hi))
-		  (delta-lo (- end-time-lo start-time-lo)))
-	      (format t "~&;; Time report:")
-	      (if (< delta-hi #x1f)
-		  (format t "~&;; CPU cycles: ~D.~%;; Space used: ~D clumps = ~/muerte:pprint-clumps/.~%"
-			  (+ (ash delta-hi 24) delta-lo) clumps clumps)
-		(format t "~&;; CPU cycles: ~D000.~%;; Space used: ~D clumps = ~/muerte:pprint-clumps/.~%"
-			(+ (ash delta-hi 14) (ash delta-lo -10)) clumps clumps))))))))
+    (time (eval-form form env)))
    (t (let ((start-mem (malloc-cons-pointer)))
 	(multiple-value-prog1
 	    (eval-form form env)
