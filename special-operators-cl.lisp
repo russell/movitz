@@ -740,7 +740,6 @@ where zot is not in foo's scope, but _is_ in foo's extent."
 			;; Now, install correct jumper within tagbody as target.
 			`((:addl ,(* 4 label-id) (:edx 8))))
 		    (:globally (:call (:edi (:edi-offset dynamic-unwind-next))))
-		    (:jnc '(:sub-program () (:int 63)))
 		    ;; have next-continuation in EAX, final-continuation in EDX
 		    (:locally (:movl :edx (:edi (:edi-offset raw-scratch0)))) ; final continuation
 		    (:locally (:movl :esi (:edi (:edi-offset scratch1))))
