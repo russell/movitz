@@ -47,6 +47,7 @@
 (require :muerte/streams)
 (require :muerte/restarts)
 (require :muerte/conditions)
+(require :muerte/bignums)
 (require :muerte/read)
 (require :muerte/interrupt)
 (require :muerte/scavenge)
