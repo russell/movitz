@@ -52,7 +52,7 @@
 (in-package muerte.ethernet)
 
 (defconstant +max-ethernet-frame-size+ 1514) ;  sans preamble and postable.
-(defconstant +min-ethernet-frame-size+ 64)
+(defconstant +min-ethernet-frame-size+ 60) ; except crc.
 (defconstant +broadcast-address+ #(#xff #xff #xff #xff #xff #xff))
 
 (defconstant +source-mac+ 6)
