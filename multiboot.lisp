@@ -37,10 +37,10 @@
 
 (define-binary-class multiboot-header (movitz-heap-object)
   ((scan-skip-header
-    :binary-type word
+    :binary-type lu32
     :initform +scan-skip-word+)
    (scan-skip-length
-    :binary-type word
+    :binary-type lu32
     :initform 0
     :map-binary-write (lambda (x type)
 			(declare (ignore x y))
