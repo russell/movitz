@@ -39,6 +39,7 @@
 
 (defparameter *debugger-hook* nil)
 (defvar *active-condition-handlers* nil)
+(defvar *multiboot-data* nil)
 
 (defvar internal-time-units-per-second)
 
