@@ -2658,7 +2658,7 @@ the sub-program options (&optional label) as secondary value."
 				(member binding (find-read-bindings i)
 					:test #'eq)))
 			 (cdr init-pc)
-			 :end 15))
+			 #-sbcl :end #-sbcl 15))
 	       (binding-destination (third load-instruction))
 	       (distance (position load-instruction (cdr init-pc))))
 	  (multiple-value-bind (free-registers more-later-p)
