@@ -840,7 +840,8 @@ s#+ignore
   (let ((*repl-readline-context* (make-readline-context :history-size 16))
 	(*backtrace-stack-frame-barrier* (stack-frame-uplink (current-stack-frame)))
 	#+ignore (*error-no-condition-for-debugger* t)
-	(*debugger-function* #'los0-debugger))
+	(*debugger-function* #'los0-debugger)
+	(*package* nil))
 
     (with-simple-restart (continue "Abort LOS0 boot-up initialization.")
       (setf *cpu-features*
