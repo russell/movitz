@@ -561,8 +561,12 @@ Returns list in EAX and preserves numargs in ECX."
 (define-primitive-function fast-class-of-character ()
   "Return the class of a character object."
   (with-inline-assembly (:returns :multiple-values)
-    (:globally (:movl (:edi (:edi-offset classes)) :eax))
-    (:movl (:eax #.(movitz::class-object-offset 'character)) :eax)
+    (:globally (:movl (:edi (:edi-offset classes)) :ebx))
+    (:cmpb #.(movitz:tag :character) :al)
+    (:jne '(:sub-program ()
+	    (:globally (:movl (:edi (:edi-offset complicated-class-of)) :esi))
+	    (:jmp (:esi #.(bt:slot-offset 'movitz::movitz-funobj 'movitz::code-vector%1op)))))
+    (:movl (:ebx #.(movitz::class-object-offset 'character)) :eax)
     (:ret)))
 
 (define-primitive-function fast-class-of-null ()
