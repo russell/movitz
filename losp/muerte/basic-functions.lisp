@@ -341,6 +341,18 @@
   "The location is the object's address divided by fixnum-factor."
   (object-location object))
 
+;;;(define-compiler-macro object-location-offset (object)
+;;;  "The offset from the object's location to it's true address."
+;;;  `(with-inline-assembly (:returns :register)
+;;;     (:compile-form (:result-mode :register) ,object)
+;;;     (:shll ,movitz:+movitz-fixnum-shift+ (:result-register))
+;;;     (:andl ,(* movitz:+movitz-fixnum-factor+
+;;;		movitz:+movitz-fixnum-zmask+)
+;;;	    (:result-register))))
+;;;
+;;;(defun object-location-offset (object)
+;;;  (object-location-offset object))
+
 (defun halt-cpu ()
   (halt-cpu))
 
