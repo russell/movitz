@@ -201,11 +201,14 @@
 		(symbol-not-nil
 		 (make-tag-typep :symbol))
 		(cons (make-tag-typep :cons))
+		(tag0 (make-tag-typep :tag0))
+		(tag1 (make-tag-typep :tag1))
 		(tag2 (make-tag-typep :tag2))
 		(tag3 (make-tag-typep :tag3))
 		(tag4 (make-tag-typep :tag4))
-		(tag5 (make-tag-typep :null))
-		(tag6 (make-tag-typep :other))
+		(tag5 (make-tag-typep :tag5))
+		(tag6 (make-tag-typep :tag6))
+		(tag7 (make-tag-typep :tag7))
 		(basic-restart (make-tag-typep :basic-restart))
 		(pointer
 		 (assert (equal (mapcar 'movitz::tag '(:cons :other :symbol))

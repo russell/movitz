@@ -27,17 +27,7 @@
   (memref x -6 1 :lisp))
 
 (defun copy-structure (object)
-  ;; (check-type object structure-object)
-  (let* ((length (structure-object-length object))
-	 (copy (malloc-pointer-words (+ 2 length))))
-    (setf (memref copy -6 0 :lisp)
-      (memref object -6 0 :lisp))
-    (setf (memref copy -6 1 :unsigned-byte32)
-      (memref object -6 1 :unsigned-byte32))
-    (dotimes (i length)
-      (setf (structure-ref copy i)
-	(structure-ref object i)))
-    copy))
+  (%shallow-copy-object object (+ 2 (structure-object-length object))))
 
 (defun struct-predicate-prototype (obj)
   "Prototype function for predicates of user-defined struct.

@@ -1182,15 +1182,10 @@ where zot is not in foo's scope, but _is_ in foo's extent."
 		    `((:pushl :ebp)	; push stack frame
 		      (:locally (:movl :esp (:edi (:edi-offset dynamic-env))))) ; install catch
 		    body-code
-		    `((:popl :ebp)	; This value is identical to current EBP.
-		      ,exit-point
-		      (:leal (:esp ,(+ -8 16)) :esp))
-		    (if (not *compiler-produce-defensive-code*)
-			`((:locally (:popl (:edi (:edi-offset dynamic-env)))))
-		      `((:xchgl :ecx (:esp))
-			(:locally (:bound (:edi (:edi-offset stack-bottom)) :ecx))
-			(:locally (:movl :ecx (:edi (:edi-offset dynamic-env))))
-			(:popl :ecx)))))))
+		    `(,exit-point
+		      (:popl :ebp)
+		      (:leal (:esp 8) :esp) ; Skip catch-tag and jumper
+		      (:locally (:popl (:edi (:edi-offset dynamic-env)))))))))
 
 (define-special-operator unwind-protect (&all all &form form &env env)
   (destructuring-bind (protected-form &body cleanup-forms)

@@ -35,7 +35,7 @@
 (defvar +++ nil)
 
 (defvar *read-base* 10)
-(defvar *package*)
+(defvar *package* nil)
 
 (defparameter *debugger-hook* nil)
 (defvar *active-condition-handlers* nil)

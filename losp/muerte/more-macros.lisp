@@ -341,15 +341,15 @@ respect to multiple threads."
 	 `(with-inline-assembly (:returns :untagged-fixnum-ecx)
 	    (:locally (:movl (:edi (:edi-offset ,slot-name)) :ecx))))))))
 
-(define-compiler-macro malloc-pointer-words (words)
-  `(with-inline-assembly (:returns :eax :type pointer)
-     (:compile-form (:result-mode :eax) ,words)
-     (:call-local-pf malloc-pointer-words)))
-
-(define-compiler-macro malloc-non-pointer-words (words)
-  `(with-inline-assembly (:returns :eax :type pointer)
-     (:compile-form (:result-mode :eax) ,words)
-     (:call-local-pf malloc-non-pointer-words)))
+;;;(define-compiler-macro malloc-pointer-words (words)
+;;;  `(with-inline-assembly (:returns :eax :type pointer)
+;;;     (:compile-form (:result-mode :eax) ,words)
+;;;     (:call-local-pf malloc-pointer-words)))
+;;;
+;;;(define-compiler-macro malloc-non-pointer-words (words)
+;;;  `(with-inline-assembly (:returns :eax :type pointer)
+;;;     (:compile-form (:result-mode :eax) ,words)
+;;;     (:call-local-pf malloc-non-pointer-words)))
 
 (define-compiler-macro read-time-stamp-counter ()
   `(with-inline-assembly-case ()
