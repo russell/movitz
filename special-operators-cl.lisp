@@ -724,6 +724,7 @@ where zot is not in foo's scope, but _is_ in foo's extent."
 				(t :eax)))
 	   (block-returns-mode (case block-result-mode
 				 (:function :multiple-values)
+				 (:ignore :nothing)
 				 (t block-result-mode)))
 	   (block-env (make-instance 'lexical-exit-point-env
 			:uplink env
