@@ -245,7 +245,7 @@ The unit clump is 8 bytes, or two words."
 	   (+ -1 object-location
 	      #.(movitz::movitz-type-word-size :movitz-funobj)
 	      (funobj-num-constants object))))
-      ((or vector-u8 string code-vector)
+      ((or string code-vector (simple-array (unsigned-byte 8)))
        (<= object-location
 	   location
 	   (+ -1 object-location
