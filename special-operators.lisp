@@ -598,7 +598,7 @@ The valid parameters are~{ ~S~}."
 			 (compiler-values ()
 			   :code code
 			   :returns returns
-			   :type type
+			   :type (translate-program type :muerte.cl :cl)
 			   :modifies modifies
 			   :functional-p (not side-effects))))))))))))
 
