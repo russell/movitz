@@ -15,6 +15,7 @@
 ;;;;------------------------------------------------------------------
 
 (require :x86-pc/package)
+(require :lib/net/ethernet)
 
 (defpackage muerte.x86-pc.ne2k
   (:use muerte.cl muerte muerte.lib muerte.x86-pc muerte.ethernet)
