@@ -741,7 +741,7 @@
 (defun truncate (number &optional (divisor 1))
   (numargs-case
    (1 (number)
-      number)
+      (values number 0))
    (t (number divisor)
       (with-inline-assembly (:returns :multiple-values)
 	(:compile-form (:result-mode :eax) number)
