@@ -188,6 +188,8 @@
 		(tag5 (make-tag-typep :null))
 		(tag6 (make-tag-typep :other))
 		(pointer
+		 (assert (equal (mapcar 'movitz::tag '(:cons :other :symbol))
+				'(1 6 7)))
 		 `(with-inline-assembly-case ()
 		    (do-case (t :boolean-zf=0 :labels (done))
 		      (:compile-form (:result-mode :eax) ,object)
