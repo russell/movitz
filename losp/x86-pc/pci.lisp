@@ -1,6 +1,6 @@
 ;;;;------------------------------------------------------------------
 ;;;; 
-;;;;    Copyright (C) 2003, 
+;;;;    Copyright (C) 2003-2004, 
 ;;;;    Department of Computer Science, University of Tromsoe, Norway.
 ;;;; 
 ;;;;    For distribution policy, see the accompanying file COPYING.
@@ -15,6 +15,8 @@
 ;;;;------------------------------------------------------------------
 
 (in-package muerte.x86-pc)
+
+(provide :x86-pc/pci)
 
 (defun bios32-find ()
   (loop for bios32 from #xe0000 to #xffff0 by 16

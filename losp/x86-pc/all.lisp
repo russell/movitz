@@ -23,6 +23,7 @@
 (require :x86-pc/pit8253)
 (require :x86-pc/interrupt)
 (require :x86-pc/cmos)
+(require :x86-pc/pci)
 ;; (require :x86-pc/serial)
 (require :x86-pc/textmode-console)
 (require :x86-pc/debugger)
