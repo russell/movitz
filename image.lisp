@@ -409,10 +409,10 @@
 			(declare (ignore x type))
 			(- (bt:slot-offset 'movitz-run-time-context 'non-pointers-end)
 			   (bt:slot-offset 'movitz-run-time-context 'non-pointers-start))))
+   (non-pointers-start :binary-type :label) ; ========= NON-POINTER-START =======
    (bochs-flags
     :binary-type lu32
     :initform 0)
-   (non-pointers-start :binary-type :label) ; ========= NON-POINTER-START =======
    ;; (align-segment-descriptors :binary-type 4)
    (segment-descriptor-table :binary-type :label)
    (segment-descriptor-0
