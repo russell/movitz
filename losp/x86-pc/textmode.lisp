@@ -19,11 +19,7 @@
 (require :x86-pc/package)
 (require :x86-pc/keyboard)
 (require :lib/package)
-
 (provide :x86-pc/textmode)
-
-(defpackage muerte.x86-pc
-  (:export textmode-console))
 
 (in-package muerte.x86-pc)
 

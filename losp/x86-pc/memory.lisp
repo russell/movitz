@@ -17,9 +17,6 @@
 (require :x86-pc/package)
 (provide :x86-pc/memory)
 
-(defpackage muerte.x86-pc
-  (:export memory-size))
-
 (in-package muerte.x86-pc)
 
 (defun memory-size ()

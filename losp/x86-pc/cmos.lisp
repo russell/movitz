@@ -14,14 +14,10 @@
 ;;;;                
 ;;;;------------------------------------------------------------------
 
+(require :x86-pc/package)
 (require :lib/named-integers)
 (require :lib/bcd)
 (provide :x86-pc/cmos)
-
-(defpackage muerte.x86-pc
-  (:use muerte.lib)
-  (:export rtc-register
-	   cmos-register))
 
 (in-package muerte.x86-pc)
 

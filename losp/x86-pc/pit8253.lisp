@@ -14,16 +14,9 @@
 ;;;;                
 ;;;;------------------------------------------------------------------
 
+(require :x86-pc/package)
 (require :lib/named-integers)
 (provide :x86-pc/pit8253)
-
-(defpackage muerte.x86-pc
-  (:use muerte.cl muerte.lib)
-  (:export pit8253-timer-mode
-	   pit8253-timer-count
-	   
-	   +pit8253-frequency+
-	   +pit8253-nanosecond-period+))
 
 (in-package muerte.x86-pc)
 

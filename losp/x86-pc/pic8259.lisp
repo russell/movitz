@@ -16,11 +16,6 @@
 
 (provide :x86-pc/pic8259)
 
-(defpackage muerte.x86-pc
-  (:export pic8259-irq-mask
-	   pic8259-end-of-interrupt
-	   init-pic8259))
-
 (in-package muerte.x86-pc)
 
 (defun pic8259-init-cycle (base icw1 icw2 icw3 &optional icw4)

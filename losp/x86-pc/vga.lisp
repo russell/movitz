@@ -17,12 +17,6 @@
 (require :x86-pc/package)
 (provide :x86-pc/vga)
 
-(defpackage muerte.x86-pc
-  (:export vga-cursor-location
-	   vga-crt-controller-register
-	   vga-graphics-register
-	   vga-memory-map))
-
 (in-package muerte.x86-pc)
 
 (defun (setf vga-crt-controller-register) (value register)

@@ -19,19 +19,6 @@
 (require :lib/net/ethernet)
 (provide :x86-pc/dp8390)
 
-(defpackage muerte.x86-pc.ne2k
-  (:use muerte.cl muerte muerte.lib muerte.x86-pc muerte.ethernet)
-  (:export #:with-dp8390
-	   #:with-dp8390-dma
-	   #:dp8390-initialize
-	   #:dp8390-device
-	   #:ring-start
-	   #:ring-stop
-	   #:io-base
-	   #:ring-overflow-count
-	   #:transmit-buffer
-	   ))
-
 (in-package muerte.x86-pc.ne2k)
 
 (defconstant +page0-read-map+

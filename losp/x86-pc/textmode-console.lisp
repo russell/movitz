@@ -1,6 +1,6 @@
 ;;;;------------------------------------------------------------------
 ;;;; 
-;;;;    Copyright (C) 2001, 2003, 
+;;;;    Copyright (C) 2001, 2003-2004, 
 ;;;;    Department of Computer Science, University of Tromsø, Norway.
 ;;;; 
 ;;;;    For distribution policy, see the accompanying file COPYING.
@@ -18,12 +18,7 @@
 (require :x86-pc/textmode)
 (provide :x86-pc/textmode-console)
 
-(defpackage muerte.x86-pc
-  (:export vga-text-console
-	   ))
-
 (in-package muerte.x86-pc)
-
 
 (defclass vga-text-console (console stream)
   ((base

@@ -1,6 +1,6 @@
 ;;;;------------------------------------------------------------------
 ;;;; 
-;;;;    Copyright (C) 2001-2003, 
+;;;;    Copyright (C) 2001-2004, 
 ;;;;    Department of Computer Science, University of Tromsø, Norway.
 ;;;; 
 ;;;;    For distribution policy, see the accompanying file COPYING.
@@ -14,9 +14,7 @@
 ;;;;                
 ;;;;------------------------------------------------------------------
 
-(defpackage muerte.x86-pc)
-(in-package muerte.x86-pc)
-
+(require :x86-pc/package)
 (require :x86-pc/memory)
 (require :x86-pc/keyboard)
 (require :x86-pc/vga)
