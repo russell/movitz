@@ -245,7 +245,7 @@ after the point that called this stack-frame."
 		  (test cdr)))
 	    (structure-object
 	     (and (typep y 'structure-object)
-		  (test structure-object-name)
+		  (test structure-object-class)
 		  (test structure-object-length)
 		  (dotimes (i (structure-object-length x) t)
 		    (unless (test structure-ref i)
