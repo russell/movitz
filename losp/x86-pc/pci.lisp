@@ -18,7 +18,7 @@
 
 (provide :x86-pc/pci)
 
-(defun bios32-find ()
+(defun find-bios32 ()
   (loop for bios32 from #xe0000 to #xffff0 by 16
       if (and (= (memref-int bios32 0 0 :unsigned-byte16 t) #x335f)
 	      (= (memref-int bios32 0 1 :unsigned-byte16 t) #x5f32)
