@@ -253,7 +253,8 @@
 		     (when deriver-function
 		       `(typep ,object ',(funcall deriver-function)))))))
 	     ((consp type)
-	      (let ((deriver-function (gethash (car type) *compiler-derived-typespecs*)))
+	      (let ((deriver-function (gethash (translate-program (car type) :cl :muerte.cl)
+					       *compiler-derived-typespecs*)))
 		(if deriver-function
 		    `(typep ,object ',(apply deriver-function (cdr type)))
 		  (case (car type)
@@ -372,7 +373,8 @@
 			(,(car type)
 			 ,@(loop for subtype in (cdr type)
 			       collect `(typep typep-object ',subtype)))))
-		    (t (warn "compiling typep ~A" type)))))))
+		    (t (warn "compiling typep ~S [~A]" type
+			     (package-name (symbol-package (car type))))))))))
 	    form)))))
 
 #+ignore
