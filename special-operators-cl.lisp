@@ -1,7 +1,7 @@
 ;;;;------------------------------------------------------------------
 ;;;; 
-;;;;    Copyright (C) 20012000, 2002-2004,
-;;;;    Department of Computer Science, University of Tromsø, Norway
+;;;;    Copyright (C) 2000-2004,
+;;;;    Department of Computer Science, University of Tromso, Norway
 ;;;; 
 ;;;; Filename:      special-operators-cl.lisp
 ;;;; Description:   Special operators in the COMMON-LISP package.
