@@ -987,6 +987,7 @@ a (lexical-extent) sub-function might care about its parent frame-map."
 	      ((some (lambda (label) (assoc label code-symtab))
 		     (mapcar #'car rest))
 	       (vector-push 0 code-vector))))
+      (check-locate-concistency code-vector)
       (setf (movitz-funobj-code-vector funobj)
 	    (make-movitz-vector (length code-vector)
 				:fill-pointer code-length
@@ -998,6 +999,13 @@ a (lexical-extent) sub-function might care about its parent frame-map."
 				     (slot-value funobj 'code-vector%2op)
 				     (slot-value funobj 'code-vector%3op)))))
   funobj)
+
+(defun check-locate-concistency (code-vector)
+  (loop for x from 0 below (length code-vector) by 8
+      do (when (and (= (tag :basic-vector) (aref code-vector x))
+		    (= (enum-value 'movitz-vector-element-type :code) (aref code-vector (1+ x))))
+	   (break "Code-vector can break %find-code-vector at offset ~D." x)))
+  (values))
 
 #+ignore
 (defun make-compiled-function-body-default (form funobj env top-level-p)
