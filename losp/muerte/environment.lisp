@@ -94,9 +94,10 @@
 				    (declare (dynamic-extent results))
 				    (let ((*trace-escape* t))
 				      (fresh-line *trace-output*)
-				      (dotimes (i *trace-level*)
+				      (dotimes (i (min *trace-level* 10))
 					(write-string "  " *trace-output*))
-				      (format *trace-output* "~&~D: =>~{ ~W~^,~}.~%" *trace-level* results)
+				      (format *trace-output* "~D: =>~{ ~W~^,~}.~%"
+					      *trace-level* results)
 				      (values-list results)))
 				(let ((*trace-level* (1+ *trace-level*))
 				      (*trace-escape* nil))
