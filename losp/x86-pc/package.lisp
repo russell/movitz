@@ -51,7 +51,14 @@
 	   #:+pit8253-nanosecond-period+
 	   
 	   #:textmode-console
-	   #:vga-text-console	   
+	   #:vga-text-console
+	   #:set-textmode
+	   #:+vga-state-80x25+
+	   #:+vga-state-80x50+
+	   #:+vga-state-40x25+
+	   #:+vga-state-40x50+
+	   #:+vga-state-90x30+
+	   #:+vga-state-90x60+
 	   
 	   #:pic8259-irq-mask
 	   #:pic8259-end-of-interrupt
