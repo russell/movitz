@@ -31,7 +31,7 @@
     (ldb (byte 32 0)
 	 (- +code-vector-word-offset+)))
 
-(defconstant +movitz-multiple-values-limit+ 127)
+(defvar +movitz-multiple-values-limit+ 63)
 
 (defvar *bq-level* 0)
 (defvar *default-image-init-file* #p"losp/los0.lisp")
