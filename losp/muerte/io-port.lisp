@@ -1,6 +1,6 @@
 ;;;;------------------------------------------------------------------
 ;;;; 
-;;;;    Copyright (C) 2001-2004, 
+;;;;    Copyright (C) 2001-2005, 
 ;;;;    Department of Computer Science, University of Tromso, Norway.
 ;;;; 
 ;;;;    For distribution policy, see the accompanying file COPYING.
@@ -165,7 +165,6 @@
 	      (:load-lexical (:lexical-binding ,value-var) :eax)
 	      (:std)
 	      (:shrl ,movitz::+movitz-fixnum-shift+ :edx)
-	      (:shrl ,movitz::+movitz-fixnum-shift+ :eax)
 	      (:shrl 8 :eax)
 	      (:outb :al :dx)
 	      (:movl :edi :edx)
