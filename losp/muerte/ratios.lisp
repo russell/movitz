@@ -26,7 +26,6 @@
   numerator denominator)
 
 (defun make-rational (numerator denominator)
-  (assert (not (eq 0 denominator)))
   (check-type numerator integer)
   (check-type denominator integer)
   (cond

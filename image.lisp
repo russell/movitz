@@ -298,6 +298,11 @@
     :binary-tag :global-function
     :map-binary-read-delayed 'movitz-word
     :map-binary-write 'movitz-intern)
+   (complicated-compare
+    :binary-type word
+    :binary-tag :global-function
+    :map-binary-read-delayed 'movitz-word
+    :map-binary-write 'movitz-intern)
    (num-values
     :binary-type word			; Fixnum
     :initform 0)
