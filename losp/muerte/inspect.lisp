@@ -404,6 +404,16 @@ Obviously, this correspondence is not guaranteed to hold e.g. across GC."
 	      #.(movitz::movitz-type-word-size :movitz-struct)
 	      (* 2 (truncate (+ (structure-object-length object) 1) 2))))))))
 
+(defun location-in-code-vector-p%unsafe (code-vector location)
+  (and (<= (object-location code-vector) location)
+       (<= location
+	   (+ -1 (object-location code-vector)
+	      #.(movitz::movitz-type-word-size 'movitz-basic-vector)
+	      (* 2 (truncate (+ (memref code-vector
+					(movitz-type-slot-offset 'movitz-basic-vector 'num-elements))
+				7)
+			     8))))))
+
 (defun current-control-stack-depth (&optional (start-frame (current-stack-frame)))
   "How deep is the stack currently?"
   (do ((frame start-frame (stack-frame-uplink nil frame)))
