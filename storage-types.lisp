@@ -72,8 +72,8 @@
   :funobj #x3a
   :std-instance #x40
   :run-time-context #x50
-  :infant-object #x65
   :illegal #x13
+  :infant-object #x23
 
   ;; :simple-vector #x20
   ;; :character-vector 
