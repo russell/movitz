@@ -109,27 +109,6 @@
 (defmacro muerte::movitz-backquote (form)
   (un-backquote form 0))
 
-(defun f1 (x) (cons 'f1 x))
-(defun f2 () (f1 'f2))
-(defun f3 () (cons (f1 'f3-arg) (f2)))
-(defun f4 () (values))
-(defun f5 () (values 'val1 'val2 'val3 'val4))
-
-
-(defconstant xx (list 'a 'b 'c))
-
-(defun pingle (val)
-  (case val
-    (1 'x)
-    (2 'y)))
-
-(let ((var 'top))
-  (defun s1 (val) (setf var val))
-  (defun r1 ()
-    var)
-  (setf var 'bot)
-  (defun r2 () var))
-
 #+allegro
 (excl:defsystem :movitz ()
   (:serial
