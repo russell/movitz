@@ -65,6 +65,12 @@
 
 ;;; Packet accessors
 
+(defmacro packet-ref (packet start offset type)
+  `(memref ,packet (+ (muerte:movitz-type-slot-offset 'movitz-basic-vector 'data)
+		      ,start ,offset)
+	   :endian :big
+	   :type ,type))
+
 (defun ether-destination (packet &optional (start 0))
   (subseq packet start (+ start 6)))
 
@@ -80,35 +86,31 @@
   source)
 
 (defun ether-type (packet &optional (start 0))
-  (bvref-u16 packet start 12)
-  #+ignore
-  (logior (ash (aref packet (+ start 12)) 8)
-	  (aref packet (+ start 13))))
+  (packet-ref packet start 12 :unsigned-byte16))
 
 (defun (setf ether-type) (type packet &optional (start 0))
-  (setf (aref packet (+ start 12)) (ldb (byte 8 8) type)
-	(aref packet (+ start 13)) (ldb (byte 8 0) type))
-  type)
+  (setf (packet-ref packet start 12 :unsigned-byte16)
+    type))
 
 (defun ether-802.3-p (packet &optional (start 0))
   "Is the packet a 802.3 type packet?"
   (<= (ether-type packet start) #x5dc))
 
 (defun ether-802.3-llc-type (packet &optional (start 0))
-  (aref packet (+ start 16)))
+  (packet-ref packet start 16 :unsigned-byte8))
 
 (defun ether-802.3-llc-dsap (packet &optional (start 0))
-  (aref packet (+ start 14)))
+  (packet-ref packet start 14 :unsigned-byte8))
 
 (defun ether-802.3-llc-ssap (packet &optional (start 0))
-  (aref packet (+ start 15)))
+  (packet-ref packet start 15 :unsigned-byte8))
 
 (defun ether-802.3-snap-p (packet &optional (start 0))
   (and (ether-802.3-p packet)
        (= #xAA (ether-802.3-llc-ssap packet start))))
 
 (defun ether-802.3-snap-type (packet &optional (start 0))
-  (bvref-u16 packet start 20))
+  (packet-ref packet start 20 :unsigned-byte16))
 
 ;;;
 
