@@ -430,7 +430,6 @@ Result in EAX, with tag :other."
     (:leal (:ebx :ecx) :edx)		; new roof to EDX
     (:cmpl :edx (:eax))			; end of buffer?
     (:jl '(:sub-program (failed)
-	   (:movl (:eax) :esi)
 	   (:int 112)
 	   (:halt)
 	   (:jmp 'failed)))
@@ -455,7 +454,6 @@ Result in EAX, with tag 6."
     (:leal (:ebx :ecx) :edx)		; new roof to EDX
     (:cmpl :edx (:eax))			; end of buffer?
     (:jl '(:sub-program (failed)
-	   (:movl (:eax) :esi)
 	   (:int 112)
 	   (:halt)
 	   (:jmp 'failed)))
