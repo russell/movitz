@@ -362,6 +362,13 @@ respect to multiple threads."
      (do-case (t :multiple-values)
        (:compile-form (:result-mode :multiple-values) (no-macro-call read-time-stamp-counter)))))
 
+(defmacro without-interrupts (&body body)
+  (let ((var (gensym "interrupts-enabled-p-")))
+    `(let ((,var (logbitp ,(position :if +eflags-map+) (eflags))))
+       (unwind-protect (progn (cli) ,@body)
+	 (when ,var (sti))))))
+
+
 ;;; Some macros that aren't implemented, and we want to give compiler errors.
 
 (defmacro define-unimplemented-macro (name)
