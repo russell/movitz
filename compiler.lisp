@@ -5369,7 +5369,7 @@ preceding code). As secondary value, returns the new :returns value."
 	   ((:single-value :eax :ebx)
 	    (values `((:addl ,(* 4 stack-displacement) :esp))
 		    :multiple-values)))) ; assume this addl will set CF=0
-	((:single-value :eax :ebx :ecx :edx :push :lexical-binding
+	((:single-value :eax :ebx :ecx :edx :push :lexical-binding :untagged-fixnum-ecx
 	  :boolean :boolean-branch-on-false :boolean-branch-on-true)
 	 (ecase returns
 	   (#.+boolean-modes+
