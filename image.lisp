@@ -847,6 +847,7 @@ a cons is an offset (the car) from some other code-vector (the cdr)."
   *image*)
 
 (defun set-file-position (stream position &optional who)
+  (declare (ignore who))
   (or (ignore-errors (file-position stream position))
       (let* ((end (file-position stream :end))
 	     (diff (- position end)))

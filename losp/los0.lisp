@@ -1187,6 +1187,8 @@ Can be used to measure the overhead of primitive function."
 ;;;		 (vector-push code-vector ts))))
       ;; (muerte::cli)
       (pic8259-end-of-interrupt 0)
+      (when (eql #\esc (muerte.x86-pc.keyboard:poll-char))
+	(break "Test-timer keyboard break."))
       (with-inline-assembly (:returns :nothing)
 	(:compile-form (:result-mode :ecx) muerte.x86-pc::*screen*)
 	(:shrl 2 :ecx)
