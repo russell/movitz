@@ -19,16 +19,17 @@
 (load (compile-file #p"../binary-types/binary-types"))
 
 (let ((*default-pathname-defaults* #p"../ia-x86/"))
-  #+cmu (let ((pwd (ext:default-directory)))
+  #+(or cmu sbcl)
+  (let ((pwd (ext:default-directory)))
+    (progn
+      (unwind-protect
 	  (progn
-	    (unwind-protect
-		(progn
-		  (setf (ext:default-directory) #p"../ia-x86/")
-		  (load "load"))
-	      (setf (ext:default-directory) pwd))))
-  #-cmu (load "load"))
+	    (setf (ext:default-directory) #p"../ia-x86/")
+	    (load "load"))
+	(setf (ext:default-directory) pwd))))
+  #-(or cmu sbcl) (load "load"))
 
-(load (compile-file #p"../infunix/procfs"))
+;; (load (compile-file #p"../infunix/procfs"))
 
 
 #+allegro (progn
@@ -56,7 +57,7 @@
 		      "storage-types"
 		      "image"
 		      "stream-image"
-		      "procfs-image"
+		      ;; "procfs-image"
 		      "assembly-syntax"
 		      "compiler-protocol"
 		      "compiler" "special-operators" "special-operators-cl")))
