@@ -20,8 +20,6 @@
 
 (in-package muerte)
 
-(defvar *package*)
-
 (defstruct (package
 	    (:predicate packagep)
 	    (:constructor make-package-object)

@@ -19,8 +19,6 @@
 
 (in-package muerte)
 
-(defvar *read-base* 10)
-
 (defun substring (string start end)
   (if (and (zerop start) (= end (length string)))
       string
