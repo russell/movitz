@@ -472,7 +472,12 @@ with the single member of <type-specifier>."
 	 (assert (= 2 (length type-specifier)))
 	 (multiple-value-bind (code integer-range members include complement)
 	     (type-specifier-encode (second type-specifier))
-	   (values code integer-range members include (not complement))))
+	   (cond
+	    ((encoded-allp code integer-range members include complement)
+	     (type-specifier-encode nil))
+	    ((encoded-emptyp code integer-range members include complement)
+	     (type-specifier-encode t))
+	    (t (values code integer-range members include (not complement))))))
 	(integer
 	 (flet ((integer-limit (s n)
 		  (let ((x (if (nthcdr n s)
@@ -523,8 +528,14 @@ with the single member of <type-specifier>."
 If it isn't, also return wether we _know_ it isn't empty."
   (let ((x (and (= 0 code) (not integer-range) (null members) t)))
     (cond
-     ((null include)
-      (values (if complement (not x) x) t))
+     ((and x (null include) (not complement))
+      (values t t))
+     ((and (null include) complement)
+      (cond
+       ((encoded-allp code integer-range members include nil)
+	(warn "Seeing an encoded (not t), should be ()")
+	(values t t))
+       (t (values nil t))))
      ((not (null include))
       (values nil nil)))))
 
