@@ -118,7 +118,7 @@
        ;; Read sectors into memory
        ;;
        
-       (:movw ,(+ 1 skip-sectors) (:bp ,+linear-sector+))
+       (:movw ,first-sector (:bp ,+linear-sector+))
        (:movl ,load-address (:bp ,+destination+))
 
        read-loop
@@ -143,6 +143,12 @@
        (:subb :cl :al)			; number of sectors (rest of track)
        (:incb :cl)
        (:addw :ax (:bp ,+linear-sector+)) ; update read pointer
+       (:movw (:bp ,+linear-sector+) :bx) ; subtract some if it's the last track.
+       (:subw ,last-sector :bx)
+       (:jc 'subtract-zero-sectors)
+       (:subw :bx :ax)
+       (:jz 'read-done)
+       subtract-zero-sectors
        (:movb 2 :ah)
 
        (:movw ,read-buffer-segment :bx)
