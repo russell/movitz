@@ -1166,19 +1166,6 @@ integer (native lisp) value."
 	    (third (movitz-struct-slot-values movitz-hash)) hash-sxhash)
       movitz-hash)))
 					     
-    
-
-;;;(define-binary-class movitz-dynamic-environment (movitz-heap-object-other)
-;;;  ((uplink :binary-type word
-;;;	   :map-binary-write movitz-read-and-intern
-;;;	   :initarg uplink
-;;;	   :initform nil)
-;;;   (alist  :binary-type word
-;;;	   :map-binary-write movitz-read-and-intern
-;;;	   :initarg alist
-;;;	   :initform nil)))
-
-
 ;;;
 
 (unless (typep *movitz-nil* 'movitz-nil)
