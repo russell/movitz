@@ -108,11 +108,8 @@ compile, using the host compiler, the code rather than just using eval.")
 						  (case label
 						    (:nil-value (image-nil-word *image*)))))))
     (make-movitz-vector (length code-vector)
-		     :element-type 'movitz-code
-		     :flags '(:code-vector-p)
-		     :alignment 16
-		     :alignment-offset 8
-		     :initial-contents code-vector)))
+			:element-type 'movitz-code
+			:initial-contents code-vector)))
 
 (defun register-function-code-size (funobj)
   (let* ((name (movitz-print (movitz-funobj-name funobj)))
@@ -875,9 +872,7 @@ a (lexical-extent) sub-function might care about its parent frame-map."
 			    :fill-pointer code-length
 			    :element-type 'movitz-code
 			    :initial-contents code-vector
-			    :flags '(:code-vector-p)
-			    :alignment 16
-			    :alignment-offset 8))))
+			    ))))
   funobj)
 
 #+ignore
