@@ -73,7 +73,8 @@
      (with-inline-assembly (:returns :nothing)
        (:movl :esi :edx)		; parameter for standard-gf-function.
        (:movl (:esi ,(bt:slot-offset 'movitz::movitz-funobj-standard-gf
-				     (intern (symbol-name to) :movitz))) :esi)
+				     (intern (symbol-name to) :movitz)))
+	      :esi)
        (:jmp (:esi ,(bt:slot-offset 'movitz::movitz-funobj
 				    (intern (symbol-name forward) :movitz)))))))
   
