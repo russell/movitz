@@ -195,18 +195,18 @@
      flags)))
 
 (defun symbol-special-variable-p (symbol)
-  (logbitp 0 (symbol-flags symbol)))
+  (logbitp 3 (symbol-flags symbol)))
 
 (defun (setf symbol-special-variable-p) (value symbol)
-  (setf (ldb (byte 1 0) (symbol-flags symbol))
+  (setf (ldb (byte 1 3) (symbol-flags symbol))
     (if value 1 0))
   value)
 
 (defun symbol-constant-variable-p (symbol)
-  (logbitp 1 (symbol-flags symbol)))
+  (logbitp 4 (symbol-flags symbol)))
 
 (defun (setf symbol-constant-variable-p) (value symbol)
-  (setf (ldb (byte 1 1) (symbol-flags symbol))
+  (setf (ldb (byte 1 4) (symbol-flags symbol))
     (if value 1 0))
   value)
 
