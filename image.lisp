@@ -1438,7 +1438,8 @@ this image will not be Multiboot compatible."
 		     (setf (gethash expr (image-string-constants *image*))
 		       (make-movitz-string expr))))
 	 (vector (make-movitz-vector (length expr)
-				     :initial-contents (map 'vector #'movitz-read expr)))
+				     :element-type (array-element-type expr)
+				     :initial-contents expr))
 	 (cons
 	  (or (gethash expr (image-cons-constants *image*))
 	      (setf (gethash expr (image-cons-constants *image*))
