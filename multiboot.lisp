@@ -36,7 +36,16 @@
 (defconstant +multiboot-header-magic-value+  #x1BADB002)
 
 (define-binary-class multiboot-header (movitz-heap-object)
-  ((magic
+  ((scan-skip-header
+    :binary-type word
+    :initform +scan-skip-word+)
+   (scan-skip-length
+    :binary-type word
+    :initform 0
+    :map-binary-write (lambda (x type)
+			(declare (ignore x y))
+			(- (sizeof 'multiboot-header) 8)))
+   (magic
     :accessor magic
     :initform +multiboot-header-magic-value+
     :initarg :magic
