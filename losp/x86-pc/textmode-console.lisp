@@ -62,14 +62,14 @@
 		 (* line (console-width console) 2)
 		 (* from-column 2))))
     (dotimes (i (- (console-width console) from-column))
-      (setf (memref-int dest 0 i :unsigned-byte16) #x0720))
+      (setf (memref-int dest :index i :type :unsigned-byte16) #x0720))
     nil))
 
 (defmethod (setf console-char) (character (console vga-text-console) x y)
   (when (and (below x (console-width console))
 	     (below y (console-height console)))
     (let ((index (+ x (* y (stride console)))))
-      (setf (memref-int (base console) 0 index :unsigned-byte16)
+      (setf (memref-int (base console) :index index :type :unsigned-byte16)
 	(logior (ash (color console) 8) (char-code character)))))
   character)
 
@@ -77,7 +77,7 @@
   (when (and (below x (console-width console))
 	     (below y (console-height console)))
     (let* ((index (+ x (* y (stride console))))
-	   (code (memref-int (base console) 0 index :unsigned-byte16)))
+	   (code (memref-int (base console) :index index :type :unsigned-byte16)))
       (code-char (ldb (byte 8 0) code)))))
 
 (defmethod put-string ((console vga-text-console) string x y
@@ -88,7 +88,7 @@
 	for column from x below (console-width console)
 	for i from start below end
 	as character = (char string i)
-	do (setf (memref-int base 0 cursor :unsigned-byte16)
+	do (setf (memref-int base :index cursor :type :unsigned-byte16)
 	     (logior color (char-code character)))))
   string)
 
@@ -97,7 +97,7 @@
     (loop with base = (base console)
 	for index upfrom (+ x (* y (stride console)))
 	for column from x below (console-width console)
-	do (setf (memref-int base 0 index :unsigned-byte16)
+	do (setf (memref-int base :index index :type :unsigned-byte16)
 	     #x0720))))
 
 (defmethod scroll-down ((console vga-text-console))
@@ -106,8 +106,8 @@
       for row from (base console) by ystride
       do (loop with next-row = (+ row ystride)
 	     for x below (console-width console)
-	     do (setf (memref-int row 0 x :unsigned-byte16)
-		  (memref-int next-row 0 x :unsigned-byte16))))
+	     do (setf (memref-int row :index x :type :unsigned-byte16)
+		  (memref-int next-row :index x :type :unsigned-byte16))))
   nil)
 
 (defmethod stream-read-char ((stream vga-text-console))

@@ -314,7 +314,7 @@
 
 (defun vmemwr (dst-off src start end)
   (loop for i from start below end as dst upfrom dst-off
-      do (setf (memref-int (vga-memory-map) 0 dst :unsigned-byte8 t)
+      do (setf (memref-int (vga-memory-map) :index dst :type :unsigned-byte8)
 	   (aref src i)))
   (values))
 
