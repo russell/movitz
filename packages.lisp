@@ -1141,11 +1141,7 @@
 
 	   #:map-heap-words
 	   #:map-stack-words
-	   #:malloc-buffer-start
-	   #:malloc-end
-	   
-	   #:malloc-pointer-words
-	   #:malloc-non-pointer-words
+
 	   #:%memory-map%
 	   #:%memory-map-roots%
 
