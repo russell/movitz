@@ -2821,7 +2821,8 @@ the sub-program options (&optional label) as secondary value."
 				      (unless (or (movitz-env-get variable 'ignore nil env nil)
 						  (movitz-env-get variable 'ignorable nil env nil)
 						  (typep binding 'hidden-rest-function-argument))
-					(warn "Unused variable: ~S" binding)))))
+					(warn "Unused variable: ~S"
+					      (binding-name binding))))))
 			   collect binding))
 		      (bindings-fun-arg-sorted
 		       (when (eq env function-env)
@@ -5884,7 +5885,7 @@ and a list of any intervening unwind-protect environment-slots."
 				 (and (typep binding 'forwarding-binding)
 				      (recursive-located-p (forwarding-binding-target b))))))
 		    (recursive-located-p binding)))
-	(warn "Unused variable: ~S." binding)))
+	(warn "Unused variable: ~S." (binding-name binding))))
      ((typep binding 'forwarding-binding)
       ;; No need to do any initialization because the target will be initialized.
       (assert (not (binding-lended-p binding)))
