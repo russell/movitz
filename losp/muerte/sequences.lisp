@@ -651,19 +651,20 @@
     (apply 'map-for-list function first-sequence more-sequences))
    (t (error "MAP not implemented."))))
 
-(defun fill (sequence item &key (start 0) (end (length sequence)))
+(defun fill (sequence item &key (start 0) end)
   "=> sequence"
   (sequence-dispatch sequence
     (list
-     (do ((p (nthcdr start sequence))
+     (do ((p (nthcdr start sequence) (cdr p))
 	  (i start (1+ i)))
-	 ((and end (>= i end)))
+	 ((or (null p) (and end (>= i end))))
        (setf (car p) item)))
     (vector
-     (with-subvector-accessor (sequence-ref sequence start end)
-       (do ((i start (1+ i)))
-	   ((>= i end))
-	 (setf (sequence-ref i) item)))))
+     (let ((end (or end (length sequence))))
+       (with-subvector-accessor (sequence-ref sequence start end)
+	 (do ((i start (1+ i)))
+	     ((>= i end))
+	   (setf (sequence-ref i) item))))))
   sequence)
 
 (defun replace (sequence-1 sequence-2 &key (start1 0) end1 (start2 0) end2)
