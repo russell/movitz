@@ -91,6 +91,16 @@ This is the setter corresponding to the sgdt getter."
 
 ;;;
 
+(defun control-register (name)
+  (macrolet ((creg (reg)
+	       `(with-inline-assembly (:returns :untagged-fixnum-ecx)
+		  (:movcr ,reg :ecx))))
+    (ecase name
+      (:cr0 (creg :cr0))
+      (:cr2 (creg :cr2))
+      (:cr3 (creg :cr3))
+      (:cr4 (creg :cr4)))))
+
 (defun control-register-lo12 (name)
   "Return the low 12 bits of an x86 control register, such as :cr0 or :cr1."
   (macrolet ((creg (reg)
