@@ -67,10 +67,9 @@
   "Probe for the presence of a NE2000 compatible card at IO-address io-base." 
   (with-dp8390 (dp8390 io-base)
     (let ((test-vector #(#xabba #x00ff #x5599 #x0123 #x45de #xadbe #xef23)))
-      (declare (dynamic-extent test-vector))
       ;; NE1000 has RAM buffer located at 8192
       ;; NE2000 has RAM buffer located at 16384
-      ;; We have detected NE2000, check if 16-bit access works:
+      ;; Check if 16-bit access works to NE2000 RAM works:
       (setf (dp8390 ($page0-write cr)) ($command page-0)
 	    (dp8390 ($page0-write dcr)) ($data-config fifo-threshold-8-bytes
 						      loopback-off
