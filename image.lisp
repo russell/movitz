@@ -464,6 +464,18 @@
    (atomically-esp
     :binary-type lu32
     :initform 0)
+   (get-cons-pointer
+    :binary-type code-vector-word
+    :initform nil
+    :map-binary-write 'movitz-intern-code-vector
+    :map-binary-read-delayed 'movitz-word-code-vector
+    :binary-tag :primitive-function)
+   (cons-commit
+    :binary-type code-vector-word
+    :initform nil
+    :map-binary-write 'movitz-intern-code-vector
+    :map-binary-read-delayed 'movitz-word-code-vector
+    :binary-tag :primitive-function)
    (bochs-flags
     :binary-type lu32
     :initform 0)
