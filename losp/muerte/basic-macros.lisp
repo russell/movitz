@@ -1041,5 +1041,11 @@ busy-waiting loop on P4."
        (:stc)
       boundp-done)))
 
+(defmacro define-global-variable (name init-form &optional docstring)
+  "A global variable will be accessed by ignoring local bindings."
+  `(progn
+     (defparameter ,name ,init-form ,docstring)
+     (define-symbol-macro ,name (%symbol-global-value ',name))))
+
 (require :muerte/setf)
 
