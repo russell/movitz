@@ -150,7 +150,7 @@
 (defun write (object &key stream case circle
 			  (array *print-array*) (base *print-base*)
 			  ((:escape *print-escape*) *print-escape*)
-			  ((:gensym *print-gensym*) *print-readably*)
+			  ((:gensym *print-gensym*) *print-gensym*)
 			  (length *print-length*)
 			  (level *print-level*) lines miser-width pprint-dispatch
 			  (pretty *print-pretty*) (radix *print-radix*)
