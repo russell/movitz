@@ -261,7 +261,6 @@ is off, e.g. because this interrupt/exception is routed through an interrupt gat
 
 (defun interrupt-default-handler (vector dit-frame)
   (declare (without-check-stack-limit))
-  (cli)
   (macrolet ((dereference (fixnum-address &optional (type :lisp))
 	       "Dereference the fixnum-address."
 	       `(memref ,fixnum-address 0 0 ,type)))
@@ -332,7 +331,7 @@ is off, e.g. because this interrupt/exception is routed through an interrupt gat
 			   new-bottom)
 		   (break "Stack overload exception ~D at EIP=~@Z, ESP=~@Z, bottom=#x~X, ENV=#x~X."
 			  vector $eip
-			  (dit-frame-esp dit-frame)
+			  (dit-frame-esp nil dit-frame)
 			  old-bottom
 			  old-dynamic-env))
 	       (format *debug-io* "~&Stack-warning: Resetting stack-bottom to #x~X.~%"
