@@ -1,6 +1,6 @@
 ;;;;------------------------------------------------------------------
 ;;;; 
-;;;;    Copyright (C) 2000-2004,
+;;;;    Copyright (C) 2000-2005,
 ;;;;    Department of Computer Science, University of Tromso, Norway
 ;;;; 
 ;;;; Filename:      typep.lisp
@@ -261,6 +261,10 @@
 		 (make-basic-vector-typep :u32))
 		(code-vector
 		 (make-basic-vector-typep :code))
+		(unbound-value
+		 `(with-inline-assembly (:returns :boolean-overflow)
+		    (:compile-form (:result-mode :eax) ,object)
+		    (:cmpl -1 :eax)))
 		(run-time-context
 		 (make-other-typep :run-time-context))
 		(structure-object
