@@ -55,7 +55,7 @@
 
 (defun length (sequence)
   (etypecase sequence
-    (basic-vector
+    (simple-array
      (macrolet
 	 ((do-it ()
 	    `(with-inline-assembly (:returns :eax)
