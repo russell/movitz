@@ -438,7 +438,7 @@ the function sets up itself. Its parent env. must be a funobj-env."))
 ;;; Accessor: movitz-env-symbol-function
 
 (defun movitz-env-symbol-function (symbol &optional env)
-  (gethash symbol (movitz-environment-function-cells (or env *movitz-global-environment*))))
+  (values (gethash symbol (movitz-environment-function-cells (or env *movitz-global-environment*)))))
 
 (defun (setf movitz-env-symbol-function) (value symbol &optional env)
   (setf (gethash symbol (movitz-environment-function-cells (or env *movitz-global-environment*)))
