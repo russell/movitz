@@ -1013,9 +1013,11 @@ busy-waiting loop on P4."
     `(with-inline-assembly (:returns :untagged-fixnum-ecx)
        (:globally (:movl (:edi (:edi-offset ,name)) :ecx)))))
 
-(define-compiler-macro halt-cpu ()
+(define-compiler-macro halt-cpu (&optional eax-form)
   (let ((infinite-loop-label (make-symbol "infinite-loop")))
     `(with-inline-assembly (:returns :nothing)
+       ,@(when eax-form
+	   `((:compile-form (:result-mode :eax) ,eax-form)))
        ,infinite-loop-label
        (:halt)
        (:jmp ',infinite-loop-label))))
