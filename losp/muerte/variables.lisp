@@ -35,6 +35,7 @@
 (defvar +++ nil)
 
 (defparameter *debugger-hook* nil)
+(defvar *active-condition-handlers* nil)
 
 (defvar internal-time-units-per-second)
 
