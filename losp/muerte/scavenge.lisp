@@ -53,13 +53,14 @@ start-location and end-location."
 	  (when verbose
 	    (format *terminal-io* " [at ~S: ~S]" scan x))
 	  (cond
-	   ((or (and (= 0 x2) (= 2 x))
-		(and (= #xffff x2) (= #xfffe x))))
 	   ((let ((tag (ldb (byte 3 0) x)))
 	      (or (= tag #.(movitz:tag :null))
 		  (= tag #.(movitz:tag :even-fixnum))
 		  (= tag #.(movitz:tag :odd-fixnum))
 		  (scavenge-typep x :character))))
+	   ((or (and (= 0 x2) (= 2 x))
+		(and (= #xffff x2) (= #xfffe x))
+		(and (= #x7fff x2) (= #xffff x))))
 	   ((scavenge-typep x :illegal)
 	    (error "Illegal word ~S at ~S." x scan))
 	   ((scavenge-typep x :bignum)
