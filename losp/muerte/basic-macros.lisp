@@ -464,6 +464,7 @@
 		 ',name
 		 (movitz::movitz-eval ',name)
 		 movitz-value))
+	 (proclaim `(special ,movitz-name))
 	 (setf (movitz::movitz-symbol-value movitz-symbol) (movitz::movitz-read movitz-value)
 	       (symbol-value movitz-name) movitz-value)))
      (declaim (muerte::constant-variable ,name))))
