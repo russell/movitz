@@ -1335,6 +1335,8 @@ Preserve EAX and EBX."
 	   (:xorl :ecx :ecx)
 	   (:movb 2 :cl)		; return values: qutient, remainder.
 	   (:stc)))
+	((positive-fixnum positive-bignum)
+	 (values 0 number))
 	((positive-bignum positive-fixnum)
 	 (macrolet
 	     ((do-it ()
