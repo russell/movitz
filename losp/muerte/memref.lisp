@@ -715,12 +715,14 @@
 	(:unsigned-byte16
 	 (cond
 	  ((and (eq 0 offset) (eq 0 index))
-	   `(with-inline-assembly (:returns :untagged-fixnum-ecx)
+	   `(with-inline-assembly (:returns :untagged-fixnum-ecx
+					    :type (unsigned-byte 16))
 	      (:compile-form (:result-mode :untagged-fixnum-ecx) ,address)
 	      (,prefixes :movzxw (:ecx) :ecx)))
 	  (t (let ((address-var (gensym "memref-int-address-")))
 	       `(let ((,address-var ,address))
-		  (with-inline-assembly (:returns :untagged-fixnum-ecx)
+		  (with-inline-assembly (:returns :untagged-fixnum-ecx
+						  :type (unsigned-byte 16))
 		    (:compile-two-forms (:eax :ecx) ,offset ,index)
 		    (:load-lexical (:lexical-binding ,address-var) :ebx)
 		    (:shll 1 :ecx)	; scale index
@@ -820,7 +822,7 @@
 	     `(let ((,value-var ,value)
 		    (,address-var ,address)
 		    (,index-var ,index))
-		(with-inline-assembly (:returns :untagged-fixnum-eax)
+		(with-inline-assembly (:returns :eax)
 		  (:load-lexical (:lexical-binding ,value-var) :eax) ; value
 		  (:load-lexical (:lexical-binding ,index-var) :ebx) ; index
 		  (:load-lexical (:lexical-binding ,address-var) :ecx) ; address
@@ -840,7 +842,7 @@
 		      (,address-var ,address)
 		      (,offset-var ,offset)
 		      (,index-var ,index))
-		  (with-inline-assembly (:returns :untagged-fixnum-eax)
+		  (with-inline-assembly (:returns :eax)
 		    (:load-lexical (:lexical-binding ,address-var) :ecx)
 		    (:load-lexical (:lexical-binding ,index-var) :ebx)
 		    (:load-lexical (:lexical-binding ,offset-var) :edx)
