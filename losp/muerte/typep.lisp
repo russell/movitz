@@ -242,6 +242,8 @@
 		 (make-basic-vector-typep :any-t))
 		((string simple-string)
 		 (make-basic-vector-typep :character))
+		((bit-vector simple-bit-vector)
+		 (make-basic-vector-typep :bit))
 		(vector-u8
 		 (make-basic-vector-typep :u8))
 		(vector-u16
@@ -268,6 +270,10 @@
 		       (cond
 			((movitz:movitz-subtypep et '(unsigned-byte 8))
 			 (make-basic-vector-typep :u8))
+			((movitz:movitz-subtypep et '(unsigned-byte 32))
+			 (make-basic-vector-typep :u32))
+			((movitz:movitz-subtypep et 'character)
+			 (make-basic-vector-typep :character))
 			(t (make-basic-vector-typep :any-t)))))
 		    ((integer)
 		     (destructuring-bind (&optional (lower-limit '*) (upper-limit '*))
@@ -482,6 +488,15 @@
 (define-simple-typep (vector vectorp) (obj)
   (typep obj 'vector))
 
+(define-simple-typep (simple-vector simple-vector-p) (obj)
+  (typep obj 'simple-vector))
+
+(define-simple-typep (simple-string simple-string-p) (obj)
+  (typep obj 'simple-string))
+
+(define-simple-typep (simple-bit-vector simple-bit-vector-p) (obj)
+  (typep obj 'simple-bit-vector))
+
 (define-simple-typep (pointer pointerp) (obj)
   (typep obj 'pointer))
 
@@ -489,7 +504,6 @@
   (and (typep x 'cons)
        (or (eq '* car) (typep (car x) car))
        (or (eq '* cdr) (typep (cdr x) cdr))))
-
 
 (define-simple-typep (atom atom) (x)
   (typep x 'atom))
