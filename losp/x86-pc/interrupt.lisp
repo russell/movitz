@@ -15,6 +15,7 @@
 ;;;;------------------------------------------------------------------
 
 (require :x86-pc/pic8259)
+(require :x86-pc/debugger)
 (provide :x86-pc/interrupt)
 
 (in-package muerte.x86-pc)
