@@ -1101,6 +1101,7 @@
 	   print-word
 	   fixnump below
 	   print-unreadable-movitz-object
+	   #:newline
 	   
 	   #:*print-safely*
 	   
@@ -1159,6 +1160,7 @@
 	   svref%unsafe
 	   bvref-u16
 	   object-location
+	   object-tag
 	   location-in-object-p
 	   inline-malloc
 	   define-compile-time-variable
