@@ -296,7 +296,7 @@
     :map-binary-read-delayed 'movitz-word
     :map-binary-write 'movitz-intern)
    (num-values
-    :binary-type lu32
+    :binary-type word			; Fixnum
     :initform 0)
    (values
     :binary-type #.(* 4 +movitz-multiple-values-limit+))
@@ -393,6 +393,14 @@
     :initform nil
     :map-binary-write 'movitz-read-and-intern
     :map-binary-read-delayed 'movitz-word)
+   (protect-non-pointer-area
+    :binary-type lu32
+    :initform 3)
+   (protect-non-pointer-count
+    :binary-type lu32
+    :initform (* 4 (- (bt:slot-offset 'movitz-constant-block 'non-pointers-end)
+		      (bt:slot-offset 'movitz-constant-block 'non-pointers-start))))
+   (non-pointers-start :binary-type :label) ; ========= NON-POINTER-START =======
    ;; (align-segment-descriptors :binary-type 4)
    (segment-descriptor-table :binary-type :label)
    (segment-descriptor-0
@@ -430,6 +438,15 @@
    (segment-descriptor-7
     :binary-type segment-descriptor
     :initform (make-segment-descriptor))
+   (bochs-flags
+    :binary-type lu32
+    :initform 0)
+   (scratch0				; A non-GC-root scratch register
+    :binary-type lu32
+    :initform 0)
+
+   (non-pointers-end :binary-type :label) ; ========= NON-POINTER-END =======
+   
    (atomically-status
     :binary-type (define-bitfield atomically-status (lu32)
 		   (((:enum :byte (3 2))
@@ -455,13 +472,7 @@
     :initform nil
     :map-binary-write 'movitz-intern-code-vector
     :map-binary-read-delayed 'movitz-word-code-vector
-    :binary-tag :primitive-function)
-   (bochs-flags
-    :binary-type lu32
-    :initform 0)
-   (scratch0				; A non-GC-root scratch register
-    :binary-type lu32
-    :initform 0))
+    :binary-tag :primitive-function))
   (:slot-align null-cons -1))
 
 (defun atomically-status-simple-pf (pf-name reset-status-p &rest registers)
