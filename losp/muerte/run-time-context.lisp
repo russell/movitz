@@ -98,10 +98,11 @@
   (let ((slot (find-run-time-context-slot context slot-name)))
     (ecase (second slot)
       (segment-descriptor
-       (let ((offset (+ -6 (* 4 (third slot)))))
-	 (+ (memref context offset 1 :unsigned-byte16)
-	    (ash (memref context offset 4 :unsigned-byte8) 16)
-	    (ash (memref context offset 7 :unsigned-byte8) 24)))))))
+       (let ((index8 (* 4 (third slot)))
+	     (index16 (* 2 (third slot))))
+	 (+ (memref context (+ -6 2) index16 :unsigned-byte16)
+	    (ash (memref context (+ -6 4) index8 :unsigned-byte8) 16)
+	    (ash (memref context (+ -6 7) index8 :unsigned-byte8) 24)))))))
 
 (defun (setf %run-time-context-segment-base) (value slot-name
 					     &optional (context (current-run-time-context)))
@@ -109,10 +110,11 @@
   (let ((slot (find-run-time-context-slot context slot-name)))
     (ecase (second slot)
       (segment-descriptor
-       (let ((offset (+ -6 (* 4 (third slot)))))
-	 (setf (memref context offset 1 :unsigned-byte16) (ldb (byte 16 0) value)
-	       (memref context offset 4 :unsigned-byte8) (ldb (byte 8 16) value)
-	       (memref context offset 7 :unsigned-byte8) (ldb (byte 6 24) value)))))
+       (let ((index8 (* 4 (third slot)))
+	     (index16 (* 2 (third slot))))
+	 (setf (memref context (+ -6 2) index16 :unsigned-byte16) (ldb (byte 16 0) value)
+	       (memref context (+ -6 4) index8 :unsigned-byte8) (ldb (byte 8 16) value)
+	       (memref context (+ -6 7) index8 :unsigned-byte8) (ldb (byte 6 24) value)))))
     value))
 
 (defun clone-run-time-context (&key (parent (current-run-time-context))
