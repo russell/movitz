@@ -457,13 +457,11 @@
 		     :restart-primitive-function 1 ; data = slot-offset of pf.
 		     :restart-jumper 2)	; data = ESI-relative jumper number.
 		    ((:bits) :reset-status-p 8
-			     :eax 9
-			     :ebx 10
-			     :ecx 11
-			     :edx 12)
+			     :esp 9
+			     :ebp 10)
 		    ((:numeric :data 16 16))))
     :initform '(:inactive))
-   (atomically-registers
+   (atomically-esp
     :binary-type lu32
     :initform 0)
    (bochs-flags
