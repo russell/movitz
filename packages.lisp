@@ -1114,6 +1114,10 @@
 	   
 	   *error-no-condition-for-debugger*
 	   formatted-error
+
+	   #:package-object-use-list
+	   #:package-object-internal-symbols
+	   #:package-object-external-symbols
 	   
 	   vector-element-type
 	   vector-element-size
