@@ -291,8 +291,9 @@
 		     $eax $ecx))
 	  (62 (error "Trying to save too many values: ~@Z." $ecx))
 	  ((5 55)
-	   (let* ((stack (%run-time-context-slot 'movitz::stack-vector))
-		  (old-bottom (stack-bottom))
+	   (let* ((old-bottom (prog1 (stack-bottom)
+				(setf (stack-bottom) 0)))
+		  (stack (%run-time-context-slot 'movitz::stack-vector))
 		  (real-bottom (- (object-location stack) 2))
 		  (stack-left (- old-bottom real-bottom))
 		  (new-bottom (cond
