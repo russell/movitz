@@ -37,6 +37,7 @@
 (require :muerte/los-closette)
 (require :muerte/defstruct)
 (require :muerte/hash-tables)
+(require :muerte/ratios)
 (require :muerte/packages)
 (require :muerte/format)
 (require :muerte/error)
