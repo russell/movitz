@@ -2841,6 +2841,9 @@ the sub-program options (&optional label) as secondary value."
 	 (init-pc (second count-init-pc)))
     ;; (warn "b ~S: count: ~D, init-pc: ~{~&~A~}" binding count init-pc)
     (cond
+     ((and (not *compiler-allow-transients*)
+	   (typep binding 'function-argument))
+      (values nil :never))
      ((binding-lended-p binding)
       ;; We can't lend a register.
       (values nil :never))
