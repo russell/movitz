@@ -217,6 +217,7 @@
 	(%io-port-write-succession (asic-io-base device) packet 2 start end :16-bit))
       (setf (io-register8x2 dp8390 ($page0-write tbcr1) ($page0-write tbcr0)) packet-length
 	    (dp8390 ($page0-write cr)) ($command transmit start abort-complete))
+      #+ignore
       (loop while (= (dp8390 ($page0-read cr))
 		     ($command start transmit abort-complete)))))
   nil)
