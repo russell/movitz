@@ -270,10 +270,6 @@ duo-space where each space is KB-SIZE kilobytes."
 	   (+ 1 (object-location space)
 	      (array-dimension space 0)))))
 
-(defun tenure ()
-  (install-old-consing)
-  (install-los0-consing))
-
 (defun report-nursery (x location)
   "Write a message if x is inside newspace."
   (when (object-in-space-p (%run-time-context-slot 'nursery-space) x)
@@ -293,6 +289,12 @@ duo-space where each space is KB-SIZE kilobytes."
 	     find-location x location))
     x))
 
+#+ignore
+(defun tenure ()
+  (install-old-consing)
+  (install-los0-consing))
+
+#+ignore
 (defun kill-the-newborns ()
   (let* ((oldspace (%run-time-context-slot 'nursery-space))
 	 (newspace (space-other oldspace)))
