@@ -269,7 +269,7 @@
     (let ((new-value (gensym))
 	  (indicator-var (gensym))
 	  (default-var (if default (gensym))))
-      (values `(,@temps ,indicator-var ,@(if default (list def-temp)))
+      (values `(,@temps ,indicator-var ,@(if default (list default-var)))
 	      `(,@values ,indicator ,@(if default (list default)))
 	      `(,new-value)
 	      `(let ((,(car stores) (putf ,getter ,indicator-var ,new-value)))
