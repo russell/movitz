@@ -1123,5 +1123,11 @@ busy-waiting loop on P4."
 	 (:locally (:movl 0 (:edi (:edi-offset atomically-continuation))))
 	 (:leal (:esp 16) :esp)))))
 
+(define-compiler-macro cli ()
+  `(with-inline-assembly (:returns :nothing) (:cli)))
+
+(define-compiler-macro sti ()
+  `(with-inline-assembly (:returns :nothing) (:sti)))
+
 (require :muerte/setf)
 
