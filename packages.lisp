@@ -1114,7 +1114,7 @@
 	   #:stack-frame-ref
 	   #:check-stack-limit
 	   #:interrupt-frame-ref
-	   #:interrupt-handler
+	   #:exception-handler
 
 	   #:*build-number*
 	   #:*error-no-condition-for-debugger*
