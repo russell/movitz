@@ -439,3 +439,8 @@ Return the variable, keyword, init-fom, and supplied-p-parameter."
 	      (setf (symbol-function name) function))
 	    t nil)))
 
+
+(defun proclaim (declaration)
+  ;; What do do?
+  (warn "Unknown declaration: ~S" declaration)
+  (values))
