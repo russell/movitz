@@ -609,7 +609,6 @@
 (define-compiler-macro second (x) `(cadr ,x))
 (define-compiler-macro third (x) `(caddr ,x))
 (define-compiler-macro fourth (x) `(cadddr ,x))
-(define-compiler-macro fifth (x) `(caddddr ,x))
 
 (define-compiler-macro (setf car) (value cell &environment env)
   (if (and (movitz:movitz-constantp value env)
