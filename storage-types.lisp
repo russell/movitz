@@ -449,14 +449,15 @@ integer (native lisp) value."
 	      8)))
 
 (defmethod print-object ((obj movitz-vector) stream)
-  (case (movitz-vector-element-type obj)
-    (:character
-     (format stream "#&~S" (map 'string #'identity
+  (print-unreadable-movitz-object (obj stream :type nil :identity t)
+    (case (movitz-vector-element-type obj)
+      (:character
+       (format stream "~S" (map 'string #'identity
 				(movitz-vector-symbolic-data obj))))
-    (t (format stream "#&[[ET:~A,NE:~A]~A]"
-	       (movitz-vector-element-type obj)
-	       (movitz-vector-num-elements obj)
-	       (movitz-vector-symbolic-data obj))))
+      (t (format stream "[ET:~A,NE:~A] ~A"
+		 (movitz-vector-element-type obj)
+		 (movitz-vector-num-elements obj)
+		 (movitz-vector-symbolic-data obj)))))
   obj)
 
 (defmethod movitz-storage-alignment ((obj movitz-vector))
