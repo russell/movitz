@@ -820,6 +820,7 @@ integer (native lisp) value."
     :accessor movitz-funobj-symtab)
    (borrowed-bindings
     :initarg :borrowed-bindings
+    :initform nil
     :accessor borrowed-bindings)
    (function-envs
     :accessor function-envs)

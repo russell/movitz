@@ -1578,10 +1578,10 @@ and <method2> is more specific?"
       (multiple-value-bind (body declarations)
 	  (movitz::parse-docstring-declarations-and-body decl-doc-body 'cl:declare)
 	(movitz::make-compiled-funobj name
-				   (translate-program lambda-list :cl :muerte.cl)
-				   (translate-program declarations :cl :muerte.cl)
-				   (translate-program (cons 'muerte.cl:progn body) :cl :muerte.cl)
-				   nil nil))))
+				      (translate-program lambda-list :cl :muerte.cl)
+				      (translate-program declarations :cl :muerte.cl)
+				      (translate-program (cons 'muerte.cl:progn body) :cl :muerte.cl)
+				      nil nil nil))))
   
 ;;;
 ;;; Bootstrap
