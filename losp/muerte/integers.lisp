@@ -1088,7 +1088,7 @@
     '(integer 0))
    ((typep size '(integer 1 *))
     (list 'integer 0 (1- (ash 1 size))))
-   (t (error "Illegal size for signed-byte."))))
+   (t (error "Illegal size for unsigned-byte."))))
 
 (define-simple-typep (bit bitp) (x)
   (or (eq x 0) (eq x 1)))
