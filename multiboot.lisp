@@ -43,7 +43,7 @@
     :binary-type lu32
     :initform 0
     :map-binary-write (lambda (x type)
-			(declare (ignore x y))
+			(declare (ignore x type))
 			(- (sizeof 'multiboot-header) 8)))
    (magic
     :accessor magic
