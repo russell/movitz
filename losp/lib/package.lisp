@@ -47,6 +47,7 @@
 	   ;; :lib/misc
 	   #:checksum-octets
 	   #:add-u16-ones-complement
+	   #:extract-zero-terminated-string
 	   #:make-counter-u32
 	   #:u32-add
 	   
