@@ -97,7 +97,7 @@
 
 ;;; Catch exit-point:
 ;;;   12: parent (no parent == #x0)
-;;;    8: eip
+;;;    8: jumper index (=> eip)
 ;;;    4: catch tag object/word
 ;;;    0: ebp/stack-frame
 
@@ -109,7 +109,7 @@
 
 ;;; Basic-restart entry:
 ;;;   12: parent
-;;;    8: eip
+;;;    8: jumper index (=> eip)
 ;;;    4: tag = #:basic-restart-tag
 ;;;    0: ebp/stack-frame
 ;;;   -4: name
