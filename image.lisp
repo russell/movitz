@@ -1434,6 +1434,7 @@ a cons is an offset (the car) from some other code-vector (the cdr)."
 			  `(muerte.cl:progn
 			     (muerte::with-inline-assembly (:returns :nothing)
 			       (:cli)
+			       (:cld)	; clear direction flag => "normal" register GC roots.
 
 			       (:movw ,(1- (* 8 8)) (:esp -6))
 			       (:movl ,(+ (image-ds-segment-base *image*)
