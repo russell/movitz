@@ -118,7 +118,7 @@
 	  (asic-io (asic-io-base device))
 	  (bnry (cached-bnry device))
 	  (packet (or packet (make-array +max-ethernet-frame-size+ :element-type 'muerte::u8))))
-      (check-type packet 'vector-u8)
+      (check-type packet vector-u8)
       (with-dp8390 (dp8390 (io-base device))
 	(multiple-value-bind (packet-status next-bnry packet-length)
 	    (with-dp8390-dma (dp8390 remote-read 4 (* 256 bnry))
