@@ -340,8 +340,9 @@ Obviously, this correspondence is not guaranteed to hold e.g. across GC."
 	      (* 2 (truncate (+ (structure-object-length object) 1) 2))))))))
 
 
-(defun copy-control-stack (&optional (stack (%run-time-context-slot 'stack-vector))
-				     (frame (current-stack-frame)))
+(defun copy-control-stack (&key (absolutep)
+				(stack (%run-time-context-slot 'stack-vector))
+				(frame (current-stack-frame)))
   (assert (location-in-object-p stack frame))
   (let* ((stack-start-location (+ 2 (object-location stack)))
 	 (frame-index (- frame stack-start-location))
@@ -357,7 +358,10 @@ Obviously, this correspondence is not guaranteed to hold e.g. across GC."
 	 (t (let ((uplink-index (- uplink-frame stack-start-location frame-index)))
 	      (assert (< -1 uplink-index (length copy)) ()
 		"Uplink-index outside copy: ~S, i: ~S" uplink-index i)
-	      (let ((x  (+ uplink-index copy-start-location)))
-		(assert (location-in-object-p copy x))
-		(setf (svref%unsafe copy i) x)
-		(setf i uplink-index)))))))))
+	      (setf (svref%unsafe copy i)
+		(if absolutep
+		    uplink-index
+		  (let ((x (+ uplink-index copy-start-location)))
+		    (assert (location-in-object-p copy x))
+		    (setf (svref%unsafe copy i) x))))
+	      (setf i uplink-index))))))))
