@@ -315,7 +315,7 @@ that the msb isn't zero. DO NOT APPLY TO NON-BIGNUM VALUES!"
 (defun copy-bignum (old)
   (check-type old bignum)
   (let* ((length (%bignum-bigits old))
-	 (new (malloc-data-words length)))
+	 (new (malloc-data-clumps (1+ (truncate length 2)))))
     (with-inline-assembly (:returns :eax)
       (:compile-two-forms (:eax :ebx) new old)
       (:compile-form (:result-mode :edx) length)
