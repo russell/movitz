@@ -226,6 +226,8 @@ the function sets up itself. Its parent env. must be a funobj-env."))
     :initarg :lexical-catch-tag-variable
     :reader movitz-env-lexical-catch-tag-variable)))
 
+(defclass tagbody-env (lexical-exit-point-env) ())
+
 (defclass unwind-protect-env (movitz-environment)
   ())
 
