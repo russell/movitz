@@ -308,7 +308,7 @@ Result in EAX, with tag :other."
 	    (:int 110)
 	    (:halt)
 	    (:jmp 'not-initialized)))
-    (:addl 7 :ebx)
+    (:addl 4 :ebx)
     (:andb #xf8 :bl)
     (:movl (:eax 4) :ecx)		; cons pointer to ECX
     (:leal (:ebx :ecx) :edx)		; new roof to EDX
@@ -353,7 +353,7 @@ Result in EAX, with tag 6."
   (check-type words (integer 2 *))
   (compiler-macro-call malloc-non-pointer-words words))
 
-(define-primitive-function muerte::get-cons-pointer ()
+(define-primitive-function get-cons-pointer ()
   "Return in EAX the next object location with space for EAX words, with tag 6.
 Preserve ECX."
   (macrolet
@@ -361,9 +361,14 @@ Preserve ECX."
 	 ;; Here we just call malloc, and don't care if the allocation
 	 ;; is never comitted.
 	 `(with-inline-assembly (:returns :multiple-values)
+	    ;; We need a stack-frame sice we're using the stack
+	    (:pushl :ebp)
+	    (:movl :esp :ebp)
+	    (:pushl 4)
 	    (:locally (:movl :ecx (:edi (:edi-offset scratch0))))
 	    (:call-local-pf malloc-pointer-words)
 	    (:locally (:movl (:edi (:edi-offset scratch0)) :ecx))
+	    (:leave)
 	    (:ret))))
     (do-it)))
 
