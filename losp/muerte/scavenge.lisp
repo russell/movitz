@@ -142,11 +142,7 @@ at the start-stack-frame location."
   (loop for nether-frame = start-stack-frame then frame
       and frame = (stack-frame-uplink start-stack-frame) then (stack-frame-uplink frame)
       while (plusp frame)
-      do (let ((funobj (stack-frame-funobj frame t)))
-	   #+ignore
-	   (format t "~&fill ~S frame for ~S"
-		   (aref (%run-time-context-slot 'nursery-space) 0)
-		   funobj)
+      do (let ((funobj (funcall function (stack-frame-funobj frame t) nil)))
 	   (typecase funobj
 	     (function
 	      (assert (= 0 (funobj-frame-num-unboxed funobj)))
@@ -162,7 +158,7 @@ at the start-stack-frame location."
 		;; 2. Pop to interrupted frame
 		(setf nether-frame frame
 		      frame (stack-frame-uplink frame))
-		(let ((interrupted-funobj (stack-frame-funobj frame))
+		(let ((interrupted-funobj (funcall function (stack-frame-funobj frame t) nil))
 		      (interrupted-esp (+ interrupt-frame 6)))
 		  (assert (typep interrupted-funobj 'function) ()
 		    "Interrupted frame was not a normal function: ~S"
