@@ -128,7 +128,7 @@
   ;; Must be located inside with-dp8390.
   `(multiple-value-prog1
        (macrolet ((dp8390-abort-dma ()
-		    `(setf (,dp8390-var ($page0-write cr)) ($command abort-complete))))
+		    `(setf (,',dp8390-var ($page0-write cr)) ($command abort-complete))))
 	 (initialize-dma ,dp8390-var ($command ,rdma-command) ,size ,address)
 	 ,@body)
      (wait-for-dma-completion ,dp8390-var ',rdma-command)))
