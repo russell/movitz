@@ -64,7 +64,7 @@
 				 (data-length (length data-vector))
 				 (breaker (lambda ()
 					    (eql #\esc (muerte.x86-pc.keyboard:poll-char)))))
-  "Low-level TFTP write data-vector to file-name on host ip using *ip4-nic*.
+  "TFTP write data-vector to file-name on host ip using *ip4-nic*.
 The host's MAC is looked up by ARP unless provided."
   (let ((speak (if quiet nil *query-io*))
 	(ip (ip4-address ip)))
