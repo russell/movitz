@@ -464,5 +464,5 @@ oldspace: ~Z, newspace: ~Z, i: ~D"
 ~/muerte:pprint-clumps/, freed: ~/muerte:pprint-clumps/.~%"
 		    old-size new-size (- old-size new-size))))
 	(initialize-space oldspace)
-	(fill oldspace #x3 :start 2))))
+	(fill oldspace #x13 :start 2))))
   (values))
