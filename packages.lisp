@@ -1088,8 +1088,7 @@
   (:use muerte.mop muerte.common-lisp)
   (:import-from common-lisp cl:nil)
   (:shadow get-setf-expansion)
-  (:export exact-throw
-	   translate-program
+  (:export translate-program
 	   decode-macro-lambda-list
 	   with-inline-assembly
 	   with-progn-results

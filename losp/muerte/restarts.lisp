@@ -119,8 +119,7 @@
 	   (function
 	    (apply function arguments))
 	   (symbol
-	    (exact-throw (load-global-constant restart-tag)
-			 (basic-restart->dynamic-context restart)
+	    (exact-throw (basic-restart->dynamic-context restart)
 			 (ecase function
 			   ((with-simple-restart)
 			    (values nil t))))))))

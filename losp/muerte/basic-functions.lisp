@@ -28,6 +28,26 @@
 (defun not (x)
   (not x))
 
+(defun find-catch-tag (catch-tag)
+  "Find the dynamic-env slot that matches the catch-tag, or 0 if unseen."
+  (with-inline-assembly (:returns :eax)
+    (:load-lexical (:lexical-binding catch-tag) :eax)
+    (:locally (:movl (:edi (:edi-offset dynamic-env)) :ecx))
+    (:jecxz 'search-done)
+   search-loop
+    (:cmpl :eax (:ecx 4))		; Does tag match entry?
+    (:jne 'search-next)			; if not, goto next.
+    (:testl 3 (:ecx))			; Is this really a catch entry?
+    (:jz 'search-done)			; if yes, we have found it.
+   search-next
+    (:movl (:ecx 12) :ecx)
+    (:testl :ecx :ecx)
+    (:jnz 'search-loop)
+    ;; Search failed, ECX=0
+   search-done
+    (:movl :ecx :eax)))
+    
+
 (defmacro numargs ()
   `(with-inline-assembly (:returns :ecx)
      (:movzxb :cl :ecx)
