@@ -57,4 +57,10 @@
 		     ((= i length) t)
 		   (unless (equalp (aref x i) (aref y i))
 		     (return nil)))))))
+    (structure-object
+     (and (eq (class-of x) (class-of y))
+	  (dotimes (i (structure-object-length x) t)
+	    (unless (equalp (structure-ref x i)
+			    (structure-ref y i))
+	      (return nil)))))
     (t (equal x y))))
