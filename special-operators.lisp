@@ -442,7 +442,7 @@ The valid parameters are~{ ~S~}."
 			    (translate-program ,expansion-var :cl :muerte.cl)))))))
 	      (setf (movitz-compiler-macro-function operator-name nil)
 		(movitz-macro-expander-make-function expander
-						     :name (gensym (format nil "~A-compiler-macro-" name))
+						     :name name
 						     :type :compiler-macro))))))))
   (compiler-values ()))
 
