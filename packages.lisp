@@ -1104,19 +1104,21 @@
 	   
 	   #:*print-safely*
 
-	   stack-ref
-	   with-each-dynamic-context
-	   stack-frame-uplink
-	   current-stack-frame
-	   current-dynamic-context
-	   stack-frame-funobj
-	   stack-frame-call-site
-	   stack-frame-ref
-	   check-stack-limit
+	   #:stack-ref
+	   #:with-each-dynamic-context
+	   #:stack-frame-uplink
+	   #:current-stack-frame
+	   #:current-dynamic-context
+	   #:stack-frame-funobj
+	   #:stack-frame-call-site
+	   #:stack-frame-ref
+	   #:check-stack-limit
+	   #:interrupt-frame-ref
+	   #:interrupt-handler
 
-	   *build-number*
-	   *error-no-condition-for-debugger*
-	   formatted-error
+	   #:*build-number*
+	   #:*error-no-condition-for-debugger*
+	   #:formatted-error
 
 	   #:package-object-use-list
 	   #:package-object-internal-symbols
@@ -1289,6 +1291,7 @@
 	   
 	   #:+movitz-fixnum-factor+
 	   #:+movitz-fixnum-shift+
+	   #:+movitz-fixnum-zmask+
 	   #:+scan-skip-word+
 	   #:constant0
 	   
