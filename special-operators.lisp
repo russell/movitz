@@ -1092,7 +1092,7 @@ on the current result."
 	  :forward all
 	  :form (+ (eval-form term1 env)
 		   (eval-form term2 env))))
-       ((and (movitz-constantp term1 env)	; first operand zero?
+       ((and (movitz-constantp term1 env) ; first operand zero?
 	     (zerop (eval-form term1 env)))
 	(compiler-call #'compile-form-unprotected
 	  :forward all
