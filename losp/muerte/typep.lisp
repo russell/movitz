@@ -578,6 +578,9 @@
 (define-simple-typep (hash-table hash-table-p))
 (define-simple-typep (package packagep))
 
+(define-simple-typep (code-vector code-vector-p) (x)
+  (typep x 'code-vector))
+
 ;;;
 
 (define-typep rational (x &optional (lower-limit '*) (upper-limit '*))
