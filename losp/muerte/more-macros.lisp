@@ -312,6 +312,15 @@ respect to multiple threads."
 	 ,@declarations-and-forms))))
 
 
+(define-compiler-macro %bignum-bigits (x)
+  `(with-inline-assembly (:returns :eax)
+     (:compile-form (:result-mode :eax) ,x)
+     (:movzxw (:eax ,(bt:slot-offset 'movitz::movitz-bignum
+				      'movitz::length))
+	      :ecx)
+     (:leal ((:ecx ,movitz:+movitz-fixnum-factor+))
+	    :eax)))
+
 ;;; Some macros that aren't implemented, and we want to give compiler errors.
 
 (defmacro define-unimplemented-macro (name)
