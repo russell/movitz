@@ -1210,15 +1210,17 @@ is zero (i.e. not found)."
 		      `((:load-lexical ,dynamic-slot-binding :edx)
 			(:locally (:movl :edx (:edi (:edi-offset raw-scratch0)))) ; final continuation
 			(:load-lexical ,next-continuation-step-binding :edx) ; next continuation-step
-			(:locally (:movl :esi (:edi (:edi-offset scratch1))))
-			(:locally (:movl :edx (:edi (:edi-offset dynamic-env)))) ; exit dynamic-env
-			(:movl :edx :esp) ; enter non-local jump stack mode.
-			  
-			(:movl (:esp) :edx) ; target stack-frame EBP
-			(:movl (:edx -4) :esi) ; get target funobj into ESI
-			  
-			(:movl (:esp 8) :edx) ; target jumper number
-			(:jmp (:esi :edx ,(slot-offset 'movitz-funobj 'constant0)))))))))
+			(:locally (:call (:edi (:edi-offset dynamic-jump-next))))))))))
+
+;;;			(:locally (:movl :esi (:edi (:edi-offset scratch1))))
+			
+
+;;;			(:locally (:movl :edx (:edi (:edi-offset dynamic-env)))) ; exit dynamic-env
+;;;			(:movl :edx :esp) ; enter non-local jump stack mode.
+;;;			(:movl (:esp) :edx) ; target stack-frame EBP
+;;;			(:movl (:edx -4) :esi) ; get target funobj into ESI
+;;;			(:movl (:esp 8) :edx) ; target jumper number
+;;;			(:jmp (:esi :edx ,(slot-offset 'movitz-funobj 'constant0)))))))))
 
 
 (define-special-operator muerte::with-basic-restart (&all defaults &form form &env env)
@@ -1297,10 +1299,10 @@ is zero (i.e. not found)."
 			  :form body)
 			`((:leal (:esp ,(+ -12 -4 (* 4 entry-size))) :esp)
 			  ,exit-point
+			  (:movl (:esp) :ebp)
 			  (:movl (:esp 12) :edx)
 			  (:locally (:movl :edx (:edi (:edi-offset dynamic-env))))
-			  (:popl :ebp)
-			  (:leal (:esp 12) :esp)
+			  (:leal (:esp 16) :esp)
 			  )))))))
 
 

@@ -1,6 +1,6 @@
 ;;;;------------------------------------------------------------------
 ;;;; 
-;;;;    Copyright (C) 2001,2000, 2002-2004,
+;;;;    Copyright (C) 2001,2000, 2002-2005,
 ;;;;    Department of Computer Science, University of Tromso, Norway.
 ;;;; 
 ;;;; Filename:      image.lisp
@@ -477,6 +477,11 @@
     :binary-type word
     :initform 0)
    (ret-trampoline
+    :binary-type code-vector-word
+    :map-binary-write 'movitz-intern-code-vector
+    :map-binary-read-delayed 'movitz-word-code-vector
+    :binary-tag :primitive-function)
+   (dynamic-jump-next
     :binary-type code-vector-word
     :map-binary-write 'movitz-intern-code-vector
     :map-binary-read-delayed 'movitz-word-code-vector
