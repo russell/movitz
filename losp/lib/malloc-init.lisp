@@ -20,7 +20,7 @@
 (in-package muerte.lib)
 
 (let ((memsize (muerte.x86-pc::memory-size))
-      (start (truncate (* 1 1024 1024) 4096)))
+      (start (truncate (* 2 1024 1024) 4096))) ; XXX We really should calcucalte this..
   ;; (format t "Memory: ~D MB.~%" memsize)
   (muerte:malloc-initialize start (- (* memsize #x100) start)))
 
