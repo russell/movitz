@@ -57,7 +57,13 @@
 		  finally (return (if (zerop constant-term)
 				      non-constant-operands
 				    (cons constant-term non-constant-operands))))))
-	 `(+ (+ ,(first operands) ,(second operands)) ,@(cddr operands))))))
+	 (cond
+	  ((null operands)
+	   0)
+	  ((not (cdr operands))
+	   (check-type (car operands) integer)
+	   (car operands))
+	  (t `(+ (+ ,(first operands) ,(second operands)) ,@(cddr operands))))))))
 
 (define-compiler-macro 1+ (number)
   `(+ 1 ,number))
