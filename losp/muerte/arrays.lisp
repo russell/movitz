@@ -689,8 +689,8 @@ and return accessors for that subsequence (fast & unsafe accessors, that is)."
 		       0 :unsigned-byte16)
 	   #.(movitz:vector-type-tag :character))
 	 (check-type array string)
-	 (when fill-pointer
-	   (setf (fill-pointer array) fill-pointer))
+	 (setf (fill-pointer array)
+	   (or fill-pointer dimensions))
 	 (cond
 	  (initial-element
 	   (check-type initial-element character)
@@ -731,8 +731,8 @@ and return accessors for that subsequence (fast & unsafe accessors, that is)."
 	 (setf (memref array #.(bt:slot-offset 'movitz::movitz-vector 'movitz::type)
 		       0 :unsigned-byte16)
 	   #.(movitz:vector-type-tag :u32))	 
-	 (when fill-pointer
-	   (setf (fill-pointer array) fill-pointer))
+	 (setf (fill-pointer array)
+	   (or fill-pointer dimensions))
 	 (cond
 	  (initial-element
 	   (dotimes (i dimensions)
