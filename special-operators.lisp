@@ -849,7 +849,9 @@ on the current result."
 	    :type nil
 	    :modifies modifies
 	    :returns :nothing)))
-       (t (let* ((cloaked-env (make-instance 'with-things-on-stack-env :uplink env :funobj funobj))
+       (t (let* ((cloaked-env (make-instance 'with-things-on-stack-env
+				:uplink env
+				:funobj funobj))
 		 (cloaked-code (loop for cloaked-form in cloaked-forms
 				   append (compiler-values-bind (&code code &modifies sub-modifies)
 					      (compiler-call #'compile-form-unprotected
@@ -942,11 +944,12 @@ on the current result."
 		:modifies modifies
 		:type cover-type
 		:code (append cover-code
-			      `((:globally (:call (:edi (:edi-offset push-current-values))))
-				(:pushl :ecx))
+			      (make-compiled-push-current-values)
+			      `((:pushl :ecx))
 			      cloaked-code
 			      `((:popl :ecx)
-				(:globally (:call (:edi (:edi-offset pop-current-values))))))))
+				(:globally (:call (:edi (:edi-offset pop-current-values))))
+				(:leal (:esp (:ecx 4)) :esp)))))
 	     ((and (not (cdr cloaked-code))
 		   (instruction-is (car cloaked-code) :incf-lexvar))
 	      (destructuring-bind (binding delta &key protect-registers)
