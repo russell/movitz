@@ -176,7 +176,12 @@
 		     (int-frame-ref int-frame :error-code :unsigned-byte32)
 		     $eax $ebx $ecx))
 	  (68 (warn "EIP: ~@Z EAX: ~@Z EBX: ~@Z  ECX: ~@Z EDX: ~@Z"
-		    $eip $eax $ebx $ecx $edx))
+		    $eip $eax $ebx $ecx $edx)
+	      (dotimes (i 100000)
+		(with-inline-assembly (:returns :nothing) (:nop))))
+	  (67 (muerte.debug:backtrace :fresh-lines nil :length 6)
+	      (dotimes (i 100000)
+		(with-inline-assembly (:returns :nothing) (:nop))))
 	  (66 (error "Unspecified type error in ~S with EAX=~@Z, ECX=~@Z."
 		     (@ (+ int-frame (int-frame-index :esi)))
 		     $eax $ecx))
