@@ -307,6 +307,16 @@ that the msb isn't zero. DO NOT APPLY TO NON-BIGNUM VALUES!"
       (:subl 4 :edx)
       (:jnc 'copy-bignum-loop))))
 
+(defun %make-bignum (bigits)
+  (macrolet
+      ((do-it ()
+	 `(with-inline-assembly (:returns :eax)
+	    (:compile-two-forms (:eax :ecx) (malloc-non-pointer-words (1+ bigits)) bigits)
+	    (:shll 16 :ecx)
+	    (:orl ,(movitz:tag :bignum 0) :ecx)
+	    (:movl :ecx (:eax ,movitz:+other-type-offset+)))))
+    (do-it)))
+
 (defun print-bignum (x)
   (check-type x bignum)
   (dotimes (i (1+ (%bignum-bigits x)))
