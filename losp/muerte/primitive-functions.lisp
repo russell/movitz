@@ -466,9 +466,8 @@ Returns list in EAX and preserves numargs in ECX."
     (:shrl 1 :eax)))
 
 (define-primitive-function fast-cons ()
-  "Call with car in eax and cdr in ebx. Preserves EDX."
+  "Allocate a cons cell. Call with car in eax and cdr in ebx."
   (with-inline-assembly (:returns :multiple-values)
-    (:pushl :edx)
     (:xchgl :eax :ecx)
     (:locally (:movl (:edi (:edi-offset malloc-buffer)) :eax))
     (:movl (:eax 4) :edx)
@@ -483,24 +482,21 @@ Returns list in EAX and preserves numargs in ECX."
     (:movl :ecx (:eax))
     (:movl :ebx (:eax 4))
     (:incl :eax)
-    (:popl :edx)
     (:ret)))
 
 (define-primitive-function ensure-heap-cons-variable ()
   "Call with lended variable (a cons) in EAX. Preserves EDX."
   (with-inline-assembly (:returns :multiple-values)
-    ;; (:movl (:ebp :ecx) :eax)		; stack-frame variable's content into eax
     (:cmpl :ebp :eax)			; is cons above stack-frame?
     (:jge 'return-ok)
     (:cmpl :esp :eax)			; is cons below stack-frame?
     (:jl 'return-ok)
     ;; must migrate cell onto heap
+    (:pushl :edx)
     (:movl (:eax 3) :ebx)		; cdr
     (:movl (:eax -1) :eax)		; car
-    ;; (:pushl :ecx)
     (:locally (:call (:edi (:edi-offset fast-cons))))
-    ;; (:popl :ecx)
-    ;; (:movl :eax (:ebx :ecx))
+    (:popl :edx)
     return-ok
     (:ret)))
 
