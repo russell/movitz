@@ -263,6 +263,16 @@ This is an illegal instruction on lesser CPUs, and a no-op on some, such as boch
 (defun eflags ()
   (eflags))
 
+(defconstant +eflags-map+
+    '(:cf nil :pf nil :af nil :zf :sf
+      :tf :if :df :of :iopl0 :iopl1 :nt nil
+      :rf :vm :ac :vif :vip :id))
+
+(defun decode-eflags (&optional (eflags (eflags)))
+  (loop for flag in +eflags-map+ as bit upfrom 0
+      when (and flag (logbitp bit eflags))
+      collect flag))
+
 (define-compiler-macro (setf eflags) (value)
   `(with-inline-assembly (:returns :register)
      (:compile-form (:result-mode :ecx) ,value)
