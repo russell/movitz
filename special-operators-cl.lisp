@@ -1014,7 +1014,7 @@ where zot is not in foo's scope, but _is_ in foo's extent."
 	 (multiple-value-bind (lambda-forms lambda-declarations)
 	     (parse-docstring-declarations-and-body (cddr name))
 	   (let ((lambda-funobj
-		  (make-compiled-funobj-pass1 '(:anonymous-lambda)
+		  (make-compiled-funobj-pass1 '(muerte.cl:lambda)
 					      (cadr name)
 					      lambda-declarations
 					      `(muerte.cl:progn ,@lambda-forms)
