@@ -2375,10 +2375,11 @@ of argument <argnum>."
 
 (defun new-binding-location (binding map &key (default nil default-p))
   (check-type binding (or binding (cons keyword binding)))
-  (cdr (or (assoc binding map)
-	   (if default-p
-	       default
-	     (error "No location for ~S." binding)))))
+  (let ((x (assoc binding map)))
+    (cond
+     (x (cdr x))
+     (default-p default)
+     (t (error "No location for ~S." binding)))))
 
 (defun make-binding-map () nil)
 
