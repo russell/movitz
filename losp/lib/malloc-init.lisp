@@ -31,7 +31,7 @@
   (muerte:malloc-initialize start-location end-location)
   (setf (cdar muerte::%memory-map%) end-location)
   (loop for x from kernel-end-location below start-location
-      do (setf (memref x 0 0 :unsigned-byte32) 0))
+      do (setf (memref x 0 :type :unsigned-byte32) 0))
   (values))
 
 

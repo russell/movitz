@@ -486,8 +486,8 @@
     done))
 
 (define-compiler-macro %ratio-numerator (x)
-  `(memref ,x ,(bt:slot-offset 'movitz::movitz-ratio 'movitz::numerator) 0 :lisp))
+  `(memref ,x (movitz-type-slot-offset 'movitz-ratio 'numerator)))
 
 (define-compiler-macro %ratio-denominator (x)
-  `(memref ,x ,(bt:slot-offset 'movitz::movitz-ratio 'movitz::denominator) 0 :lisp))
+  `(memref ,x (movitz-type-slot-offset 'movitz-ratio 'denominator)))
 

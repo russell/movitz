@@ -392,6 +392,13 @@
      (:leal ((:ecx #.movitz::+movitz-fixnum-factor+) :edi ,(- (movitz::image-nil-word movitz::*image*)))
 	    :eax)))
 
+(define-compiler-macro movitz-type-slot-offset (type slot &environment env)
+  (if (not (and (movitz:movitz-constantp type env)
+		(movitz:movitz-constantp slot env)))
+      (error "Non-constant movitz-type-slot-offset call.")
+    (bt:slot-offset (intern (symbol-name (movitz:movitz-eval type env)) :movitz)
+		    (intern (symbol-name (movitz:movitz-eval slot env)) :movitz))))
+
 
 (define-compiler-macro not (x)
   `(muerte::inlined-not ,x))

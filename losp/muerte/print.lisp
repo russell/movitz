@@ -395,12 +395,12 @@
     #.(cl:cons 'progn
 	       (cl:loop for octet from 3 downto 1
 		   collecting 
-		     `(let ((n (memref x 0 ,octet :unsigned-byte8)))
+		     `(let ((n (memref x 0 :index ,octet :type :unsigned-byte8)))
 			(when (setq z (or z (<= #x10 n)))
 			  (write-digit (ldb (byte 4 4) n) stream))
 			(when (setq z (or z (plusp n)))
 			  (write-digit (ldb (byte 4 0) n) stream)))))
-    (let ((n (memref x 0 0 :unsigned-byte8)))
+    (let ((n (memref x 0 :type :unsigned-byte8)))
       (when (or z (<= #x10 n))
 	(write-digit (ldb (byte 4 4) n) stream))
       (write-digit (ldb (byte 4 0) n) stream)))

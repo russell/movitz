@@ -96,9 +96,6 @@
   (if (not (plusp limit))
       0
     (typecase object
-      #+ignore
-      (std-instance
-       (memref object #x1e 2 :lisp))
       (cons
        (logxor (sxhash-limited (car object) (- limit 2))
 	       (sxhash-limited (cdr object) (1- limit))))

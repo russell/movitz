@@ -21,10 +21,10 @@
 
 (defun structure-object-length (object)
   (check-type object structure-object)
-  (memref object -4 0 :unsigned-byte14))
+  (memref object -4 :type :unsigned-byte14))
 
 (defun structure-object-class (x)
-  (memref x -6 1 :lisp))
+  (memref x -6 :index 1))
 
 (defun copy-structure (object)
   (%shallow-copy-object object (+ 2 (structure-object-length object))))

@@ -82,7 +82,7 @@ that the msb isn't zero. DO NOT APPLY TO NON-BIGNUM VALUES!"
 (defun print-bignum (x)
   (check-type x bignum)
   (dotimes (i (1+ (%bignum-bigits x)))
-    (format t "~8,'0X " (memref x -6 i :unsigned-byte32)))
+    (format t "~8,'0X " (memref x -6 :index i :type :unsigned-byte32)))
   (terpri)
   (values))
 
@@ -468,7 +468,8 @@ that the msb isn't zero. DO NOT APPLY TO NON-BIGNUM VALUES!"
 (defun bignum-set-zerof (bignum)
   (check-type bignum bignum)
   (dotimes (i (%bignum-bigits bignum))
-    (setf (memref bignum -2 i :lisp) 0))
+    (setf (memref bignum (movitz-type-slot-offset 'movitz-bignum 'bigit0)
+		  :index i :type :unsigned-byte32) 0))
   bignum)
 
 (defun %bignum= (x y)
