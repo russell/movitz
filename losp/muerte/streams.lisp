@@ -116,6 +116,10 @@
   " => char"
   (%read-char (input-stream-designator input-stream) eof-error-p eof-value recursive-p t))
 
+(defun read-key (&optional input-stream (eof-error-p t) eof-value recursive-p)
+  " => char, symbol, etc."
+  (%read-key (input-stream-designator input-stream) eof-error-p eof-value recursive-p t))
+
 (defun finish-output (&optional stream)
   "finish-output attempts to ensure that any buffered output sent to output-stream has reached its
 destination, and then returns."
