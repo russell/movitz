@@ -58,8 +58,7 @@
 (defun pointer-in-range (x)
   (with-inline-assembly (:returns :boolean-cf=1)
     (:compile-form (:result-mode :eax) x)
-    ;; (:subl #x100000 :eax)
-    (:cmpl #x1000000 :eax)))
+    (:cmpl #x10000000 :eax)))
 
     
 (defun code-vector-offset (code-vector address)
