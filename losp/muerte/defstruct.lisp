@@ -19,6 +19,10 @@
 
 (in-package muerte)
 
+(defun structure-object-length (obj)
+  (check-type obj structure-object)
+  (movitz-accessor-u16 obj movitz-struct length))
+
 (defun struct-predicate-prototype (obj)
   "Prototype function for predicates of user-defined struct.
 Parameters: struct-name."
