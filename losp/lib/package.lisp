@@ -14,8 +14,9 @@
 ;;;;                
 ;;;;------------------------------------------------------------------
 
-(defpackage muerte.lib
-  (:use muerte.cl muerte)
+(defpackage #:muerte.lib
+  (:nicknames #:lib)
+  (:use #:common-lisp #:muerte)
   (:export #:*scroll-offset*
 	   #:cursor-x cursor-y
 	   #:console-width console-height
@@ -58,12 +59,12 @@
 	   #:with-named-integers-syntax
 	   
 	   ;; :lib/repl
-	   #:*repl-level*
-	   #:*repl-prompter*
-	   #:*repl-prompt-context*
-	   #:*repl-print-format*
-	   #:*repl-readline-context*
-	   #:read-eval-print
+;;;	   #:*repl-level*
+;;;	   #:*repl-prompter*
+;;;	   #:*repl-prompt-context*
+;;;	   #:*repl-print-format*
+;;;	   #:*repl-readline-context*
+;;;	   #:read-eval-print
 	   ))
 
 (provide :lib/package)

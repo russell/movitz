@@ -18,7 +18,18 @@
 (require :lib/readline)
 (provide :lib/repl)
 
-(in-package muerte.lib)
+(defpackage #:muerte.repl
+  (:documentation "Implementation of Read Eval Print Loop.")
+  (:nicknames #:repl)
+  (:use #:common-lisp #:muerte)
+  (:export #:*repl-level*
+	   #:*repl-prompter*
+	   #:*repl-prompt-context*
+	   #:*repl-print-format*
+	   #:*repl-readline-context*
+	   #:read-eval-print))
+
+(in-package #:muerte.repl)
 
 (defparameter *repl-level* -1)
 (defparameter *repl-prompter* 'default-repl-prompter)
