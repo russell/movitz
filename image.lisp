@@ -161,11 +161,6 @@
     :map-binary-write 'movitz-intern-code-vector
     :map-binary-read-delayed 'movitz-word-code-vector
     :binary-tag :primitive-function)
-   (dynamic-variable-lookup-unbound
-    :map-binary-write 'movitz-intern-code-vector
-    :binary-tag :primitive-function
-    :map-binary-read-delayed 'movitz-word-code-vector
-    :binary-type code-vector-word)
    (dynamic-variable-lookup
     :map-binary-write 'movitz-intern-code-vector
     :binary-tag :primitive-function

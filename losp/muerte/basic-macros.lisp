@@ -446,6 +446,12 @@
 	 (:compile-two-forms (:eax :ebx) ,x ,y)
 	 (:cmpl :eax :ebx)))))
 
+#+ignore
+(define-compiler-macro eql (&whole form x y &environment env)
+  `(let ((x ,x) (y ,y))
+     (with-inline-assembly (:returns :boolean-zf=1)
+       (:eql (:lexical-binding x) (:lexical-binding y)))))
+
 (define-compiler-macro eql (&whole form x y &environment env)
   (cond
    ((and (movitz:movitz-constantp x env)
@@ -1078,7 +1084,7 @@ busy-waiting loop on P4."
        (:leal (:eax ,(- (movitz:tag :symbol))) :ecx)
        (:testb 7 :cl)
        (:jne '(:sub-program () (:int 66)))
-       (:call-local-pf dynamic-variable-lookup-unbound)
+       (:call-local-pf dynamic-variable-lookup)
        (:globally (:cmpl (:edi (:edi-offset unbound-value)) :eax)))))
 
 (defmacro define-global-variable (name init-form &optional docstring)

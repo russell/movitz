@@ -45,14 +45,16 @@
     (symbol
      (with-inline-assembly (:returns :eax)
        (:compile-form (:result-mode :eax) symbol)
-       (:call-local-pf dynamic-variable-lookup)))))
+       (:call-local-pf dynamic-variable-lookup)
+       (:locally (:cmpl :eax (:edi (:edi-offset unbound-value))))
+       (:je '(:sub-program (unbound) (:int 99)))))))
 
 (defun %unbounded-symbol-value (symbol)
   "Return the symbol's value without checking if it's bound or not."
   (check-type symbol symbol)
   (with-inline-assembly (:returns :eax)
     (:compile-form (:result-mode :eax) symbol)
-    (:call-local-pf dynamic-variable-lookup-unbound)
+    (:call-local-pf dynamic-variable-lookup)
    done))
 
 (defun (setf symbol-value) (value symbol)
