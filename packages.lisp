@@ -1322,6 +1322,7 @@
 	   #:*compiler-global-segment-prefix*
 	   #:*compiler-compile-eval-whens*
 	   #:*compiler-compile-macro-expanders*
+	   #:*compiler-allow-untagged-word-bits*
 	   )
   (:import-from muerte
 		#:translate-program
