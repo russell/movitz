@@ -342,10 +342,10 @@ integer (native lisp) value."
 		   :bit 5)
     :initarg :element-type
     :reader movitz-vector-element-type)
-   (fill-pointer
+   (num-elements
     :binary-type lu16
-    :initarg :fill-pointer
-    :accessor movitz-vector-fill-pointer)
+    :initarg :num-elements
+    :reader movitz-vector-num-elements)
    (flags
     :accessor movitz-vector-flags
     :initarg :flags
@@ -359,10 +359,10 @@ integer (native lisp) value."
     :initform 0
     :initarg :alignment-power
     :reader movitz-vector-alignment-power)
-   (num-elements
+   (fill-pointer
     :binary-type lu16
-    :initarg :num-elements
-    :reader movitz-vector-num-elements)
+    :initarg :fill-pointer
+    :accessor movitz-vector-fill-pointer)   
    (data
     :binary-lisp-type :label)		; data follows physically here
    (symbolic-data
