@@ -3847,7 +3847,7 @@ as the lexical variable-name, and add a new shadowing dynamic binding for <forma
 	       (append (when (and do-check-stack-p
 				  *compiler-auto-stack-checks-p*
 				  (not (without-check-stack-limit-p env)))
-			 `((,*compiler-global-segment-prefix*
+			 `((,*compiler-local-segment-prefix*
 			    :bound (:edi ,(global-constant-offset 'stack-bottom)) :esp)))
 		       (when use-stack-frame-p
 			`((:pushl :ebp)
