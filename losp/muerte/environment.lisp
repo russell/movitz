@@ -1,6 +1,6 @@
 ;;;;------------------------------------------------------------------
 ;;;; 
-;;;;    Copyright (C) 2001-2004, 
+;;;;    Copyright (C) 2001-2005, 
 ;;;;    Department of Computer Science, University of Tromso, Norway.
 ;;;; 
 ;;;;    For distribution policy, see the accompanying file COPYING.
@@ -52,10 +52,10 @@
 	      (get-global-property :setf-namespace)))))
 
 (defun match-caller (name)
-  (do ((frame (stack-frame-uplink (current-stack-frame))
-	      (stack-frame-uplink frame)))
+  (do ((frame (stack-frame-uplink nil (current-stack-frame))
+	      (stack-frame-uplink nil frame)))
       ((not (plusp frame)))
-    (let ((f (stack-frame-funobj frame)))
+    (let ((f (stack-frame-funobj nil frame)))
       (cond
        ((not (typep f 'function))
 	(return nil))
