@@ -771,7 +771,10 @@ integer (native lisp) value."
    (entry-protocol
     :initform :default
     :initarg :entry-protocol
-    :reader funobj-entry-protocol))
+    :reader funobj-entry-protocol)
+   (headers-on-stack-frame-p
+    :initform nil
+    :accessor headers-on-stack-frame-p))
   (:slot-align type #.+other-type-offset+))
 
 (defmethod write-binary-record ((obj movitz-funobj) stream)
