@@ -471,9 +471,6 @@ Side-effects each binding's binding-store-type."
 		 binding-usage))))
   toplevel-funobj)
 
-(defmethod (setf borrowed-bindings) :before (x y)
-  (break "About to set borroweds for ~S to ~S." y x))
-
 (defun resolve-borrowed-bindings (toplevel-funobj)
   "For <funobj>'s code, for every non-local binding used we create
 a borrowing-binding in the funobj-env. This process must be done
