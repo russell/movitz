@@ -81,12 +81,13 @@ that the msb isn't zero. DO NOT APPLY TO NON-BIGNUM VALUES!"
   (assert (plusp bigits))
   (macrolet
       ((do-it ()
-	 `(with-inline-assembly (:returns :eax)
-	    (:compile-two-forms (:eax :ecx) (malloc-non-pointer-words (1+ bigits)) bigits)
-	    (:shll 16 :ecx)
-	    (:orl ,(movitz:tag :bignum 0) :ecx)
-	    (:movl :ecx (:eax ,movitz:+other-type-offset+))
-	    )))
+	 `(let ((words (1+ bigits)))
+	    (with-non-pointer-allocation-assembly (words :fixed-size-p t
+							 :object-register :eax)
+	      (:load-lexical (:lexical-binding bigits) :ecx)
+	      (:shll 16 :ecx)
+	      (:orl ,(movitz:tag :bignum 0) :ecx)
+	      (:movl :ecx (:eax (:offset movitz-bignum type)))))))
     (do-it)))
 
 (defun print-bignum (x)
