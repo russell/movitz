@@ -684,6 +684,7 @@
   stream)
 
 (defun install-string-output-character-strategy (stream)
+  (declare (ignore stream))
   #| implement me |#)
 
 (defun string-read-char-e-crlf (stream eof-error-p eof-value blocking)

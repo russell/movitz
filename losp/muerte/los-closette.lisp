@@ -1810,7 +1810,7 @@ in an instance whose metaclass is standard-class."))
 	 (generic-function-methods
 	  (lambda (gf) (std-gf-slot-value gf 'methods)))
 	 (generic-function-method-combination
-	  (lambda (gf) nil))
+	  (lambda (gf) (declare (ignore gf)) nil))
 	 (accessor-method-slot-definition
 	  (lambda (method)
 	    (std-slot-value method 'slot-definition)))
