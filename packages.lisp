@@ -1152,6 +1152,8 @@
 	   #:%symbol-global-value
 	   #:define-global-variable
 	   
+	   #:movitz-type-slot-offset
+	   
 	   vector-element-type
 	   vector-element-size
 	   with-subvector-accessor
