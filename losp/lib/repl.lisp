@@ -80,7 +80,7 @@
 					 arg)
 			   until (eq arg '#0#)
 			   collect arg)))))))
-    #+ignore (muerte.readline::readline-break (c)
-	       (declare (ignore c))
-	       (values))))
+    (muerte.readline::readline-break (c)
+      (declare (ignore c))
+      (values))))
 
