@@ -235,7 +235,7 @@ It is quite possible to return success without having found the result-{register
 			    )))
 		(:* 1 ((:or ((:or (#x8b #x56 (:edx :esi)) ;     (:movl (:esi x) :edx)
 				  (#x8b #x54 #x37 (:edx :esi+edi))) ;#<asm MOVL [#x39+%EDI+%ESI] => %EDX>
-			     #x8b #x72 #xfd) ;     (:movl (:edx -3) :esi)
+			     #x8b #x72 #xf9) ;     (:movl (:edx -7) :esi)
 			    (#x8b #x74 #x7e (:any-offset)) ; #<asm MOVL [#x28+%ESI+%EDI*2] => %ESI>
 			    (#x8b #x76 (:any-offset))))) ; #<asm MOVL [#x56+%ESI] => %ESI>
 		(:* 1 ((:or (#xb1 (:cl-numargs))))) ; (:movb x :cl)
