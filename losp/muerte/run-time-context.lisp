@@ -56,7 +56,7 @@
       (word
        (memref context -6 (third slot) :lisp))
       (code-vector-word
-       (memref context -6 (third slot) :lisp-code-vector))
+       (%word-offset (memref context -6 (third slot) :lisp) -2))
       (lu32
        (memref context -6 (third slot) :unsigned-byte32)))))
 
