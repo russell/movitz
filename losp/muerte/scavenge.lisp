@@ -127,6 +127,7 @@ start-location and end-location."
 	  (incf scan)
 	  (let ((delta (memref scan 0 0 :lisp)))
 	    (check-type delta positive-fixnum)
+	    ;; (warn "at ~S skipping ~S to ~S." scan delta (+ scan delta))
 	    (incf scan delta)))
 	 ((typep x 'pointer)
 	  (let ((new (funcall function x scan)))
