@@ -1316,6 +1316,7 @@
 	   #:+movitz-most-positive-fixnum+
 	   #:+movitz-most-negative-fixnum+
 	   #:+movitz-fixnum-factor+
+	   #:+movitz-fixnum-bits+
 	   #:+movitz-fixnum-shift+
 	   #:+movitz-fixnum-zmask+
 	   #:+scan-skip-word+
@@ -1333,6 +1334,7 @@
 	   
 	   #:movitz-symbol
 	   #:movitz-string
+	   #:movitz-bignum
 
 	   #:movitz-character
 	   #:movitz-char
