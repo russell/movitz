@@ -326,55 +326,6 @@ with EAX still holding the tag."
    search-failed
     (:ret)))				; success: ZF=0, eax=value
 
-
-(define-primitive-function malloc-pointer-words ()
-  "Stupid allocator.. Number of words in EAX/fixnum.
-Result in EAX, with tag :other."
-  (with-inline-assembly (:returns :multiple-values)
-    (:movl :eax :ebx)
-    (:locally (:movl (:edi (:edi-offset nursery-space)) :eax))
-    (:testb #xff :al)
-    (:jnz '(:sub-program (not-initialized)
-	    (:int 110)
-	    (:halt)
-	    (:jmp 'not-initialized)))
-    (:addl 4 :ebx)
-    (:andb #xf8 :bl)
-    (:movl (:eax 4) :ecx)		; cons pointer to ECX
-    (:leal (:ebx :ecx) :edx)		; new roof to EDX
-    (:cmpl :edx (:eax))			; end of buffer?
-    (:jl '(:sub-program (failed)
-	   (:int 112)
-	   (:halt)
-	   (:jmp 'failed)))
-    (:movl :edx (:eax 4))		; new cons pointer
-    (:leal (:eax :ecx 6) :eax)
-    (:ret)))
-
-;;;(define-primitive-function malloc-non-pointer-words ()
-;;;  "Stupid allocator.. Number of words in EAX/fixnum.
-;;;Result in EAX, with tag 6."
-;;;  (with-inline-assembly (:returns :multiple-values)
-;;;    (:movl :eax :ebx)
-;;;    (:locally (:movl (:edi (:edi-offset nursery-space)) :eax))
-;;;    (:testb #xff :al)
-;;;    (:jnz '(:sub-program (not-initialized)
-;;;	    (:int 110)
-;;;	    (:halt)
-;;;	    (:jmp 'not-initialized)))
-;;;    (:addl 7 :ebx)
-;;;    (:andb #xf8 :bl)
-;;;    (:movl (:eax 4) :ecx)		; cons pointer to ECX
-;;;    (:leal (:ebx :ecx) :edx)		; new roof to EDX
-;;;    (:cmpl :edx (:eax))			; end of buffer?
-;;;    (:jl '(:sub-program (failed)
-;;;	   (:int 112)
-;;;	   (:halt)
-;;;	   (:jmp 'failed)))
-;;;    (:movl :edx (:eax 4))		; new cons pointer
-;;;    (:leal (:eax :ecx 6) :eax)
-;;;    (:ret)))
-
 (define-primitive-function get-cons-pointer ()
   "Return in EAX the next object location with space for EAX words, with tag 6.
 Preserve ECX."
