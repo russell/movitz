@@ -121,10 +121,7 @@
      (movitz-accessor symbol movitz-symbol package))))
 
 (defun boundp (symbol)
-  (etypecase symbol
-    (null nil)
-    (symbol
-     (not (eq (movitz-accessor symbol movitz-symbol value) 'unbound)))))
+  (boundp symbol))
 
 (defun makunbound (symbol)
   (setf (symbol-value symbol)

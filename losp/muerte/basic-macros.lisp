@@ -1027,5 +1027,19 @@ busy-waiting loop on P4."
      (:shrl ,(* 4 nibble) :eax)
      (:andl #xf :eax)))
 
+(define-compiler-macro boundp (symbol)
+  `(with-inline-assembly-case ()
+     (do-case (t :boolean-cf=1 :labels (boundp-done))
+       (:compile-form (:result-mode :eax) ,symbol)
+       (:cmpl :edi :eax)
+       (:je 'boundp-done)		; if ZF=0, then CF=0
+       (:call-global-constant dynamic-find-binding)
+       (:jc 'boundp-done)
+       (:movl (:eax #.(bt:slot-offset 'movitz:movitz-symbol 'movitz::value)) :eax)
+       (:globally (:cmpl (:edi (:edi-offset unbound-value)) :eax))
+       (:je 'boundp-done)
+       (:stc)
+      boundp-done)))
+
 (require :muerte/setf)
 
