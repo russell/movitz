@@ -423,6 +423,8 @@ with the single member of <type-specifier>."
     (cond
      ((atom type-specifier)
       (case type-specifier
+	(fixnum
+	 (type-values 'integer))
 	((t nil cons symbol keyword function array vector integer hash-table character)
 	 (type-values type-specifier))
 	(null
