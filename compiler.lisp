@@ -2618,7 +2618,8 @@ the sub-program options (&optional label) as secondary value."
 				   ((typep binding 'constant-object-binding))
 				   ((typep binding 'forwarding-binding))
 				   ((typep binding 'borrowed-binding))
-				   ((typep binding 'fixed-required-function-argument)
+				   ((and (typep binding 'fixed-required-function-argument)
+					 (plusp (or (car (gethash binding var-counts)) 0)))
 				    (prog1 nil ; may need lending-cons
 				      (setf (new-binding-location binding frame-map)
 					:argument-stack)))
