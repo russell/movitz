@@ -322,12 +322,31 @@ respect to multiple threads."
 			      ,format-control ,@format-arguments)
      ,@body))
 
+(define-compiler-macro %run-time-context-slot (&whole form &environment env slot-name
+					       &optional (context '(current-run-time-context)))
+  (if (not (and (movitz:movitz-constantp slot-name env)
+		(equal context '(current-run-time-context))))
+      form
+    (let ((slot-name (movitz::eval-form slot-name env)))
+      (ecase (bt:binary-slot-type 'movitz::movitz-constant-block (intern (symbol-name slot-name) :movitz))
+	(movitz::word
+	 `(with-inline-assembly (:returns :eax)
+	    (:locally (:movl (:edi (:edi-offset ,slot-name)) :eax))))
+	(movitz::code-vector-word
+	 `(with-inline-assembly (:returns :eax)
+	    (:locally (:movl (:edi (:edi-offset ,slot-name)) :eax))
+	    (:subl ,movitz::+code-vector-word-offset+ :eax)))
+	(movitz::lu32
+	 `(with-inline-assembly (:returns :untagged-fixnum-ecx)
+	    (:locally (:movl (:edi (:edi-offset ,slot-name)) :ecx))))))))
+
 ;;; Some macros that aren't implemented, and we want to give compiler errors.
 
 (defmacro define-unimplemented-macro (name)
   `(defmacro ,name (&rest args)
      (declare (ignore args))
-     (error ,(format nil "Macro ~A is not implemented yet." name))))
+     (with-simple-restart (continue "Proceed with a NIL expansion for ~S." ',name)
+       (error "Macro ~S is not implemented yet." ',name))))
 
 (define-unimplemented-macro with-open-file)
 (define-unimplemented-macro restart-case)

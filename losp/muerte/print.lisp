@@ -312,6 +312,10 @@
 			   (hash-table-count (package-object-external-symbols object))
 			   (hash-table-count (package-object-internal-symbols object))))
 	       (print-unreadable-object (object stream :identity t :type t))))
+	    (ratio
+	     (write-integer (ratio-numerator object) stream *print-base* *print-radix*)
+	     (write-char #\/ stream)
+	     (write-integer (ratio-denominator object) stream *print-base* nil))
 	    (t (if (not *never-use-print-object*)
 		   (print-object object stream)
 		 (print-unreadable-object (object stream :identity t)

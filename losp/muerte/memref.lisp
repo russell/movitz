@@ -628,9 +628,9 @@
 	    (:shll 2 :ecx)
 	    (:addl :ebx :eax)
 	    (:into)
-	    (:testb ,(cl:mask-field (cl:byte (cl:+ 2 movitz::+movitz-fixnum-shift+) 0) -1)
+	    (:testb ,(mask-field (byte (+ 2 movitz::+movitz-fixnum-shift+) 0) -1)
 		    :al)
-	    (:jnz '(:sub-program (unaligned) (:int 63)))
+	    (:jnz '(:sub-program () (:int 63)))
 	    (:addl :ecx :eax)
 	    (:shrl ,movitz::+movitz-fixnum-shift+ :eax) ; scale down address
 	    (,prefixes :movl (:eax) :ecx)
@@ -806,7 +806,9 @@
 	   ,@(unless (= 0 start2)
 	       `((:addl ,(* start2 movitz::+movitz-fixnum-factor+) :ebx)))
 	   (:testb ,movitz::+movitz-fixnum-zmask+ :dl)
-	   (:jnz '(:sub-program (no-fixnum) (:int 107)))
+	   (:jnz '(:sub-program ()
+		   (:movl :edx :eax)
+		   (:int 64)))
 	  copy-loop
 	   (:movl (:ebx :edx) :ecx)
 	   (:movl :ecx (:eax :edx))
@@ -824,7 +826,9 @@
 	   (:testl :edx :edx)
 	   (:jz 'done)
 	   (:testb ,movitz::+movitz-fixnum-zmask+ :dl)
-	   (:jnz '(:sub-program (no-fixnum) (:int 107)))
+	   (:jnz '(:sub-program ()
+		   (:movl :edx :eax)
+		   (:int 64)))
 	  copy-loop
 	   (:movl (:ebx :edx) :ecx)
 	   (:movl :ecx (:eax :edx))

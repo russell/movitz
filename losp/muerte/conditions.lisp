@@ -131,6 +131,18 @@
 		     (funobj-lambda-list (condition-function c))
 		     (condition-argument-count c)))))
 
+(define-condition index-out-of-range (error)
+  ((index
+    :initarg :index
+    :reader condition-index)
+   (range
+    :initarg :range
+    :reader condition-range))
+  (:report (lambda (c s)
+	     (format s "Index ~D is beyond range 0-~D."
+		     (condition-index c)
+		     (condition-range c)))))
+
 (define-condition stream-error (error)
   ((stream
     :initarg :stream

@@ -64,10 +64,10 @@ Parameters: struct-name."
 	    ;; type test passed, read slot
 	    ,@(if (= 4 movitz::+movitz-fixnum-factor+)
 		  `((:compile-form  (:result-mode :ebx) slot-number)
-		    (:movl (:eax :ebx #.(bt:slot-offset 'movitz::movitz-struct 'movitz::slot0))
+		    (:movl (:eax :ebx (:offset movitz-struct slot0))
 			   :eax))
 		`((:compile-form  (:result-mode :untagged-fixnum-ecx) slot-number)
-		  (:movl (:eax (:ecx 4) #.(bt:slot-offset 'movitz::movitz-struct 'movitz::slot0))
+		  (:movl (:eax (:ecx 4) (:offset movitz-struct slot0))
 			 :eax))))))
     (do-it)))
 
@@ -86,12 +86,12 @@ Parameters: struct-name."
 	    (:movzxw (:eax ,(bt:slot-offset 'movitz::movitz-struct 'movitz::length)) :ecx)
 	    (:leal ((:ecx ,movitz::+movitz-fixnum-factor+)) :ecx)
 	    (:testb ,movitz::+movitz-fixnum-zmask+ :bl)
-	    (:jnz '(:sub-program (not-fixnum) (:int 107)))
+	    (:jnz '(:sub-program (not-fixnum) (:movl :ebx :eax) (:int 64)))
 	    (:cmpl :ecx :ebx)
-	    (:jae '(:sub-program (out-of-range) (:int 61)))
-	    ;; type test passed, read slot
-	    (:compile-form (:result-mode :ecx) value)
-	    (:movl :ecx (:eax :ebx #.(bt:slot-offset 'movitz::movitz-struct 'movitz::slot0))))))
+	    (:jae '(:sub-program (out-of-range) (:int 65)))
+	    ;; type test passed, write slot
+	    (:compile-form (:result-mode :edx) value)
+	    (:movl :edx (:eax :ebx (:offset movitz-struct slot0))))))
     (do-it)))
 
 (defun struct-accessor-prototype (object)

@@ -31,24 +31,6 @@
       (when errorp
 	(error "No run-time-context slot named ~S in ~S." slot-name context))))
 
-(define-compiler-macro %run-time-context-slot (&whole form &environment env slot-name
-					       &optional (context '(current-run-time-context)))
-  (if (not (and (movitz:movitz-constantp slot-name env)
-		(equal context '(current-run-time-context))))
-      form
-    (let ((slot-name (movitz::eval-form slot-name env)))
-      (ecase (bt:binary-slot-type 'movitz::movitz-constant-block (intern (symbol-name slot-name) :movitz))
-	(movitz::word
-	 `(with-inline-assembly (:returns :eax)
-	    (:locally (:movl (:edi (:edi-offset ,slot-name)) :eax))))
-	(movitz::code-vector-word
-	 `(with-inline-assembly (:returns :eax)
-	    (:locally (:movl (:edi (:edi-offset ,slot-name)) :eax))
-	    (:subl ,movitz::+code-vector-word-offset+ :eax)))
-	(movitz::lu32
-	 `(with-inline-assembly (:returns :untagged-fixnum-ecx)
-	    (:locally (:movl (:edi (:edi-offset ,slot-name)) :ecx))))))))
-
 (defun %run-time-context-slot (slot-name &optional (context (current-run-time-context)))
   (check-type context run-time-context)
   (let ((slot (find-run-time-context-slot context slot-name)))

@@ -530,7 +530,7 @@ BUFFER-SIZE is the number of words in the buffer."
     (:locally (:movl (:edi (:edi-offset nursery-space)) :eax))
     (:testb 7 :al)
     (:jnz '(:sub-program ()
-	    (:int 107)))))
+	    (:int 63)))))
   
 (defun malloc-cons-pointer ()
   "Return current cons-pointer in 8-byte units since buffer-start."
@@ -633,10 +633,8 @@ BUFFER-SIZE is the number of words in the buffer."
 		   :ecx)
 	    (:ret)
 	   fail
-	    (:int 107))))
+	    (:int 64))))
     (do-it)))
-
-	    
 
 ;;;;
 

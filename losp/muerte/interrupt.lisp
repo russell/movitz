@@ -282,6 +282,8 @@
 	   (setf (@ $eax) (read *query-io*)))
 	  (62 (error "Trying to save too many values: ~@Z." $ecx))
 	  (63 (error "Primitive assertion error. EIP=~@Z, ESI=~@Z." $eip $esi))
+	  (64 (error 'type-error :datum (@ $eax) :expected-type 'integer))
+	  (65 (error 'index-out-of-range :index (@ $ebx) (@ $ecx)))
 	  (66 (error "Unspecified type error at ~@Z in ~S with EAX=~@Z, ECX=~@Z."
 		     $eip (@ (+ interrupt-frame (interrupt-frame-index :esi)))
 		     $eax $ecx))

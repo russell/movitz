@@ -33,7 +33,7 @@
   (with-inline-assembly (:returns :eax)
     (:compile-form (:result-mode :eax) code)
     (:testb #.movitz::+movitz-fixnum-zmask+ :al)
-    (:jnz '(:sub-program (not-fixnum) (:int 107)))
+    (:jnz '(:sub-program (not-fixnum) (:int 64)))
     (:shll #.(cl:- 8 movitz::+movitz-fixnum-shift+) :eax)
     (:movb #.(movitz::tag :character) :al)))
 
