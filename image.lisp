@@ -293,6 +293,12 @@
     :binary-tag :global-function
     :map-binary-write 'movitz-intern
     :map-binary-read-delayed 'movitz-word)
+   (complicated-eql
+    :initform 'muerte::complicated-eql
+    :binary-type word
+    :binary-tag :global-function
+    :map-binary-write 'movitz-intern
+    :map-binary-read-delayed 'movitz-word)
    (complicated-class-of
     :binary-type word
     :binary-tag :global-function
