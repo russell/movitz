@@ -198,7 +198,7 @@ the function sets up itself. Its parent env. must be a funobj-env."))
     (call-next-method))
    (t (print-unreadable-object (object stream :type t :identity t)
 	(format stream "of ~A binding~?"
-		(funobj-name (movitz-environment-funobj object))
+		(movitz-funobj-name (movitz-environment-funobj object))
 		"~#[ nothing~; ~S~; ~S and ~S~:;~@{~#[~; and~] ~S~^,~}~]"
 		(mapcar #'binding-name (mapcar #'cdr (movitz-environment-bindings object)))))
       object)))
