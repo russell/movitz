@@ -366,28 +366,38 @@ Return the variable, keyword, init-fom, and supplied-p-parameter."
     (unless b (error "Go-tag ~S is not visible." tag))
     (throw (cdr b) (values tag))))
 
+(defun eval-set-variable (variable-name value env)
+  "Perform e.g. (setq <variable-name> <value>) according to <env>. Return <value>."
+  (check-type variable-name symbol "a variable name")
+  (if (symbol-special-variable-p variable-name)
+      (set variable-name value)
+    (let ((binding (env-binding env variable-name)))
+      (if binding
+	  (setf (cdr binding) value)
+	;; We could emit a warning here, or whatever.
+	(set variable-name value)))))
 
 (defun eval-setq (form env)
   (do* ((p (cdr form) (cddr p))
-	(value nil))
-      ((null p) value)
+	(final-value nil))
+      ((null p) final-value)
     (assert (cdr p) (form)
       "Odd number of arguments to setq: ~W" form)
-    (setf value
-      (set (car p) (eval-form (cadr p) env)))))
+    (setf final-value
+      (eval-set-variable (car p) (eval-form (cadr p) env) env))))
 
 (defun eval-setf (form env)
   (do* ((p (cdr form) (cddr p))
-	(value nil))
-      ((null p) value)
+	(final-value nil))
+      ((null p) final-value)
     (assert (cdr p) (form)
       "Odd number of arguments to setf: ~W" form)
-    (setf value
+    (setf final-value
       (let ((place (first p))
 	    (value-form (second p)))
 	(if (symbolp place)
-	    (set place (eval-form value-form env))
-	  ;; eval subvalues before value-form..
+	    (eval-set-variable place (eval-form value-form env) env)
+	  ;; eval place's subforms before value-form..
 	  (let ((place-subvalues (eval-arglist (cdr place) env)))
 	    (apply (lookup-setf-function (caar p))
 		   (eval-form value-form env)
