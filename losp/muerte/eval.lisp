@@ -276,7 +276,7 @@ Return the variable, keyword, init-fom, and supplied-p-parameter."
 	special-values
 	(local-env env))
     (multiple-value-bind (body declarations)
-	declarations-and-body
+	(parse-declarations-and-body declarations-and-body)
       (dolist (var-spec var-specs)
 	(multiple-value-bind (var init-form)
 	    (if (atom var-spec)
