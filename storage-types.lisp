@@ -990,8 +990,8 @@ integer (native lisp) value."
 	 (incf result result)
 	 (incf result
 	       (if (evenp i)
-		   (char-code (aref object i))
-		 (* 7 (char-code (aref object i))))))
+		   (char-code (char-upcase (aref object i)))
+		 (* 7 (char-code (char-upcase (aref object i)))))))
        (ldb (byte 16 0)
 	    (+ (* #x10ad (length object))
 	       result))))
