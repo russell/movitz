@@ -159,7 +159,7 @@
 	  (*last-interrupt-frame* interrupt-frame))
       (block nil
 	(case number
-	  (0 (error "Division by zero."))
+	  (0 (error 'division-by-zero))
 	  (3 (break "Break instruction at ~@Z." $eip))
 	  (6 (error "Illegal instruction at ~@Z." $eip))
 	  (13 (error "General protection error. EIP=~@Z, error-code: #x~X, EAX: ~@Z, EBX: ~@Z, ECX: ~@Z"
