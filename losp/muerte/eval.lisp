@@ -54,6 +54,19 @@
       (or (and binding (cdr binding))
 	  (symbol-value form)))))
 
+;;;  block      let*                  return-from      
+;;;  catch      load-time-value       setq             
+;;;  eval-when  locally               symbol-macrolet  
+;;;  flet       macrolet              tagbody          
+;;;  function   multiple-value-call   the              
+;;;  go         multiple-value-prog1  throw            
+;;;  if         progn                 unwind-protect   
+;;;  labels     progv                                  
+;;;  let        quote                                  
+;;;
+;;;Figure 3-2. Common Lisp Special Operators
+
+
 (defun eval-cons (form env)
   "3.1.2.1.2 Conses as Forms"
   (case (car form)
@@ -69,6 +82,7 @@
     (go (eval-go form env))
     (setq (eval-setq form env))
     (setf (eval-setf form env))
+    ((defvar) (eval-defvar form env))
     (let (eval-let (cadr form) (cddr form) env))
     (time (eval-time (cadr form) env))
     ((defun) (eval-defun (cadr form) (caddr form) (cdddr form) env))
@@ -389,6 +403,15 @@ Return the variable, keyword, init-fom, and supplied-p-parameter."
 		   (eval-form value-form env)
 		   place-subvalues)))))))
 
+(defun eval-defvar (form env)
+  (let ((name (second form)))
+    (check-type name symbol "variable name")
+    (setf (symbol-special-variable-p name) t)
+    (when (and (cddr form) (not (boundp name)))
+      (setf (symbol-value name)
+	(eval-form (third form) env)))
+    name))
+
 (defun compile (name &optional definition)
   "=> function, warnings-p, failure-p"
   (let ((function (eval (or definition (symbol-function name)))))
@@ -398,3 +421,4 @@ Return the variable, keyword, init-fom, and supplied-p-parameter."
 		function
 	      (setf (symbol-function name) function))
 	    t nil)))
+
