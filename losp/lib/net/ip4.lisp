@@ -342,6 +342,8 @@
       (setf (ip4-ref packet start 6 :unsigned-byte16) checksum))
      ((eq t checksum)
       (setf (ip4-ref packet start 6 :unsigned-byte16) 0)
+      (when (oddp udp-length)		; Ensure zero-padding for checksum.
+	(setf (ip4-ref packet start udp-length :unsigned-byte8) 0))
       (setf (ip4-ref packet start 6 :unsigned-byte16)
 	(logxor #xffff
 		(add-u16-ones-complement (checksum-octets source)
@@ -472,7 +474,7 @@
   (unless *ip4-nic*
     (let ((ethernet
 	   (some #'muerte.x86-pc.ne2k:ne2k-probe
-		 muerte.x86-pc.ne2k:+ne2k-probe-addresses+)))
+		 muerte.x86-pc.ne2k:*ne2k-probe-addresses*)))
       (assert ethernet ethernet "No ethernet device.")
       (setf *ip4-nic* ethernet)))
   (unless *ip4-ip*
