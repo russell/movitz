@@ -122,7 +122,7 @@
      (assert (%basic-vector-has-fill-pointer-p vector) (vector)
        "Vector has no fill-pointer.")
      (%basic-vector-fill-pointer vector))
-    (vector
+    (old-vector
      (memref vector #.(bt:slot-offset 'movitz:movitz-vector 'movitz::fill-pointer) 0
 	     :unsigned-byte16))))
 
