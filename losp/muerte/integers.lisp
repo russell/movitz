@@ -2078,6 +2078,21 @@ Preserve EAX and EBX."
   "=> generalized-boolean"
   (not (= 0 (logand integer-1 integer-2))))
 
+(defun logcount (integer)
+  (etypecase integer
+    (positive-fixnum
+     (with-inline-assembly (:returns :untagged-fixnum-ecx :type (integer 0 29))
+       (:load-lexical (:lexical-binding integer) :eax)
+       (:xorl :ecx :ecx)
+      count-loop
+       (:shll 1 :eax)
+       (:adcl 0 :ecx)
+       (:testl :eax :eax)
+       (:jnz 'count-loop)))
+    (positive-bignum
+     (bignum-logcount integer))))
+	 
+
 (defun dpb (newbyte bytespec integer)
   (logior (mask-field bytespec (ash newbyte (byte-position bytespec)))
 	  (logandc2 integer (mask-field bytespec -1))))
