@@ -149,11 +149,11 @@
     :binary-type movitz-symbol
     :reader movitz-run-time-context-null-symbol
     :initarg :null-symbol)
-   (unbound-value
-    :binary-type word
-    :map-binary-read-delayed 'movitz-word
-    :map-binary-write 'movitz-read-and-intern
-    :initform 'muerte::unbound)
+   (new-unbound-value
+    :binary-type lu32
+;;;    :map-binary-read-delayed 'movitz-word
+;;;    :map-binary-write 'movitz-read-and-intern
+    :initform #x7fffffff)
    ;; primitive functions global constants
    (pop-current-values
     :binary-type code-vector-word
@@ -420,7 +420,7 @@
     :initform (make-segment-descriptor))
    (segment-descriptor-global-code	; 1: true flat code segment
     :binary-type segment-descriptor
-    :initform (make-segment-descriptor :base 0 :limit #xfffff :type 10 :dpl 0
+    :initform (make-segment-descriptor :base 0 :limit #xfffff :type 14 :dpl 0
 				       :flags '(s p d/b g)))
    (segment-descriptor-global-data	; 2: true flat data segment
     :binary-type segment-descriptor
@@ -626,7 +626,7 @@
 (defun unbound-value ()
   (declare (special *image*))
   (slot-value (image-run-time-context *image*)
-	      'unbound-value))
+	      'new-unbound-value))
 
 (defun edi-offset ()
   (declare (special *image*))
