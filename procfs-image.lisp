@@ -179,7 +179,7 @@
 	    ((or movitz-funobj movitz-struct movitz-std-instance)
 	     object)
 	    (t (movitz-print object))))
-      (t () (list :unknown-word word)))))
+      (t (c) (list :word-error word c)))))
 
 (defun backtrace (&key (reqs t) print-frames print-returns spartan)
   (format t "~&Backtracing from EIP = #x~X: "
@@ -233,7 +233,7 @@
   (unless (zerop (ldb (byte 2 0) address))
     (warn "Non-aligned address to GET-WORD: #x~8,'0X." address))
   (setf (image-stream-position *image* physicalp) address)
-  (read-binary 'word (image-stream *image*)))
+  (values (read-binary 'word (image-stream *image*))))
 
 (defun do-stack-frame (frame-address count)
   (warn "Frame ~D: #x~8,'0X" count frame-address)
