@@ -224,6 +224,8 @@
      (loop when (muerte.x86-pc.keyboard:poll-char) return it))
     (muerte::stream-read-char-no-hang
      (muerte.x86-pc.keyboard:poll-char))
+    (muerte::stream-read-key
+     (loop when (muerte.x86-pc.keyboard:poll-key) return it))
     (cursor-x (cursor-column))
     (cursor-y (cursor-row))
     (console-width *screen-width*)
