@@ -1004,6 +1004,7 @@ next-emf as its target for call-next-method."
 
 (defclass illegal-object (t) () (:metaclass built-in-class))
 (defclass infant-object (t) () (:metaclass built-in-class))
+(defclass unbound-value (t) () (:metaclass built-in-class))
 
 (defclass run-time-context (t)
   ()
