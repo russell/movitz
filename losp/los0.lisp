@@ -796,6 +796,15 @@ s#+ignore
       (dolist (x cl:/ (values-list cl:/))
 	(do-print x)))))
 
+(define-toplevel-command :z (&optional x-list)
+  (flet ((do-print (x)
+	   (format t "~&~Z => ~S" x x)
+	   x))
+    (if x-list
+	(do-print (eval x-list))
+      (dolist (x cl:/ (values-list cl:/))
+	(do-print x)))))
+
 (define-toplevel-command :pop ()
   (when *debugger-dynamic-context*
     (let ((r (find-restart-from-context 'abort *debugger-dynamic-context*)))
