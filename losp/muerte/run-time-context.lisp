@@ -117,6 +117,18 @@
 	       (memref context (+ -6 7) index8 :unsigned-byte8) (ldb (byte 6 24) value)))))
     value))
 
+(defun %run-time-context-ref (edi-offset)
+  "Get a run-time-context slot by its EDI-relative offset."
+  (with-inline-assembly (:returns :eax)
+    (:compile-form (:result-mode :eax) edi-offset)
+    (:leal (:eax #.(cl:* 1 movitz:+movitz-fixnum-factor+)) :ecx)
+    (:sarl #.movitz:+movitz-fixnum-shift+ :ecx)
+    (:testb 3 :cl)
+    (:jnz '(:sub-program ()
+	    (:compile-form (:result-mode :ignore)
+	     (error "Illegal edi-offset ~S" edi-offset))))
+    (:locally (:movl (:edi :ecx -1) :eax))))
+
 (defun clone-run-time-context (&key (parent (current-run-time-context))
 				    (name :anonymous))
   (check-type parent run-time-context)
