@@ -908,7 +908,7 @@ for a slot at position i.")
     (assert slot (slot-name)
       "No slot named ~S in class ~S." slot-name class)
     (let ((slot-location (slot-definition-location slot)))
-      (check-type slot-location (integer 0 *))
+      (check-type slot-location (integer 0 #xffff))
       (etypecase class
 	(standard-class
 	 (if (and (< slot-location (length *standard-effective-slot-readers*))

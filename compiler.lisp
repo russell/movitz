@@ -4786,12 +4786,9 @@ Return arg-init-code, need-normalized-ecx-p."
 					 :provider provider))
 	  (:untagged-fixnum-ecx
 	   (case (result-mode-type desired-result)
-	     ((:eax :ebx :ecx :edx)
-	      (values (append code `((:cmpl ,+movitz-most-positive-fixnum+ :ecx)
-				     (:ja '(:sub-program ()
-					    (:int 4)))
-				     (:leal ((:ecx ,+movitz-fixnum-factor+) :edi ,(edi-offset))
-					    ,desired-result)))
+	     ((:eax :single-value)
+	      (values (append code
+			      `((:call (:edi ,(global-constant-offset 'normalize-u32-ecx)))))
 		      desired-result))
 	     (t (make-result-and-returns-glue desired-result :eax
 					      (make-result-and-returns-glue :eax :untagged-fixnum-ecx code

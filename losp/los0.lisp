@@ -263,6 +263,24 @@
     (warn "exited: ~S" c)))
 
 
+(defun test-bignum ()
+  123456789123456)
+
+(defun ff32 ()
+  #xffffffff)
+
+(defun one32 ()
+  #x100000000)
+
+(defun test-nbignum ()
+  -123456789123456)
+
+(defun gt5 (x)
+  (<= x 5))
+
+(defun xplus (x)
+  (typep x '(integer 0 *)))
+
 (defstruct xxx
   x y (z 'init-z))
 

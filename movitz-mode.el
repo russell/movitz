@@ -301,6 +301,7 @@
   (put 'vector-double-dispatch tag '(like case))
   (put 'sequence-dispatch tag '(like case))
   (put 'sequence-double-dispatch tag '(like case))
+  (put 'number-double-dispatch tag '(like case))
   (put 'simple-stream-dispatch tag '(like case))
   (put 'with-inline-assembly tag '(like prog))
   (put 'with-inline-assembly-case tag '(like prog))

@@ -83,7 +83,8 @@
       (write-digit (rem x base) stream))))
 
 (defun write-lowlevel-integer (x stream base comma-char comma-interval mincol padchar sign-char pos)
-  (let ((bigit (truncate x base)))
+  (multiple-value-bind (bigit rem)
+      (truncate x base)
     (cond
      ((zerop bigit)
       (when mincol
@@ -94,8 +95,8 @@
       (when sign-char
 	(write-char sign-char stream)))
      (t (write-lowlevel-integer bigit stream base comma-char comma-interval
-				mincol padchar sign-char (1+ pos)))))
-  (write-digit (rem x base) stream)
+				mincol padchar sign-char (1+ pos))))
+    (write-digit rem stream))
   (when (and comma-interval (plusp pos) (zerop (rem pos comma-interval)))
     (write-char comma-char stream))
   nil)
@@ -239,7 +240,8 @@
 			(if (and (plusp (length name))
 				 (every (lambda (c)
 					  (or (upper-case-p c)
-					      (member c '(#\- #\% #\$ #\* #\@ #\. #\& #\< #\> #\=))
+					      (member c '(#\+ #\- #\% #\$ #\* #\@ #\. #\&
+							  #\/ #\< #\> #\=))
 					      (digit-char-p c)))
 					name)
 				 (not (every (lambda (c)

@@ -1283,6 +1283,7 @@
   (:export #:create-image
 	   #:dump-image
 
+	   #:class-object-offset
 	   #:other-type-byte
 	   #:+other-type-offset+
 	   #:parse-docstring-and-declarations
