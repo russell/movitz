@@ -204,6 +204,7 @@
 		(tag4 (make-tag-typep :tag4))
 		(tag5 (make-tag-typep :null))
 		(tag6 (make-tag-typep :other))
+		(basic-restart (make-tag-typep :basic-restart))
 		(pointer
 		 (assert (equal (mapcar 'movitz::tag '(:cons :other :symbol))
 				'(1 6 7)))
