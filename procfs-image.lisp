@@ -179,7 +179,7 @@
 	    ((or movitz-funobj movitz-struct movitz-std-instance)
 	     object)
 	    (t (movitz-print object))))
-      (t (c) (list :word-error word c)))))
+      (serious-condition (c) (list :word-error word c)))))
 
 (defun backtrace (&key (reqs t) print-frames print-returns spartan)
   (format t "~&Backtracing from EIP = #x~X: "
