@@ -1149,6 +1149,9 @@
 	   #:%run-time-context-slot
 	   #:shallow-copy
 	   
+	   #:%symbol-global-value
+	   #:define-global-variable
+	   
 	   vector-element-type
 	   vector-element-size
 	   with-subvector-accessor
@@ -1303,7 +1306,9 @@
 	   #:code-vector%3op
 	   #:code-vector-word
 	   #:lu32
-	   
+
+	   #:+movitz-most-positive-fixnum+
+	   #:+movitz-most-negative-fixnum+
 	   #:+movitz-fixnum-factor+
 	   #:+movitz-fixnum-shift+
 	   #:+movitz-fixnum-zmask+
