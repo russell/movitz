@@ -18,7 +18,7 @@
 (require :muerte/setf)
 (provide :muerte/functions)
 
-(In-package muerte)
+(in-package muerte)
 
 (defun identity (x) x)
 

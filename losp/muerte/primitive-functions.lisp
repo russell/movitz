@@ -19,6 +19,18 @@
 
 (in-package muerte)
 
+(defconstant +funobj-trampoline-table+
+    #(trampoline-funcall%1op
+      trampoline-funcall%2op
+      trampoline-funcall%3op
+      trampoline-cl-dispatch-1or2
+      assert-1arg
+      assert-2args
+      assert-3args
+      decode-args-1or2))
+
+(defconstant +funobj-trampoline-table-size+ 16)
+
 (define-primitive-function trampoline-funcall%1op ()
   "Call a function with 1 argument"
   (with-inline-assembly (:returns :nothing)
