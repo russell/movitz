@@ -1165,8 +1165,13 @@ where zot is not in foo's scope, but _is_ in foo's extent."
 		    body-code
 		    `((:popl :ebp)	; This value is identical to current EBP.
 		      ,exit-point
-		      (:leal (:esp ,(+ -8 16)) :esp)
-		      (:locally (:popl (:edi (:edi-offset dynamic-env)))))))))
+		      (:leal (:esp ,(+ -8 16)) :esp))
+		    (if (not *compiler-produce-defensive-code*)
+			`((:locally (:popl (:edi (:edi-offset dynamic-env)))))
+		      `((:xchgl :ecx (:esp))
+			(:locally (:bound (:edi (:edi-offset stack-bottom)) :ecx))
+			(:locally (:movl :ecx (:edi (:edi-offset dynamic-env))))
+			(:popl :ecx)))))))
 
 (define-special-operator unwind-protect (&all all &form form &env env)
   (destructuring-bind (protected-form &body cleanup-forms)
