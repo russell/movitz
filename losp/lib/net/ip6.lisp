@@ -574,7 +574,6 @@ Return as primary value the offset of the optional source link-layer address, if
   (let* ((link-local-address (link-local-address-by-mac (mac-address ne2000)))
 	 (solicited-node-address (solicited-node-address link-local-address))
 	 (neighbor-cache (make-neighbor-cache)))
-    ;; (ne2000-multicast-join ne2000 (mac-by-multicast-address solicited-node-address))
     (pushnew (mac-by-multicast-address solicited-node-address)
 	     (accept-multicast-addresses ne2000)
 	     :test #'equal)
@@ -594,7 +593,7 @@ Return as primary value the offset of the optional source link-layer address, if
 	       (setf (fill-pointer p) 0)
 	       (vector-push p packet-pool)))
 	(loop with timings = (make-array 20 :fill-pointer t)
-	    with eval-buffer = (make-array 16384 :element-type 'character :fill-pointer 0)
+	    with eval-buffer = (make-array 4096 :element-type 'character :fill-pointer 0)
 	    with eval-prev-seqno = 0
 	    with request-queue = nil
 	    with offset = 54
