@@ -135,12 +135,12 @@
     `(defparameter ,name ,value ,documentation)))
 
 (defmacro define-compile-time-variable (name value)
-  `(progn
-     (eval-when (:compile-toplevel)
-       (defparameter ,name ,value)
-       ;; (setf (symbol-value ',name) ,value)
-       (pushnew ',name (movitz::image-compile-time-variables movitz::*image*)))
-     (defparameter ,name (get-global-property ',name))))
+  (let ((the-value (eval value)))
+    `(progn
+       (eval-when (:compile-toplevel)
+	 (defparameter ,name ',the-value)
+	 (pushnew ',name (movitz::image-compile-time-variables movitz::*image*)))
+       (defparameter ,name ',the-value))))
 
 (defmacro let* (var-list &body body)
   (labels ((expand (rest-vars body)
