@@ -485,6 +485,11 @@
     :binary-type code-vector-word
     :map-binary-write 'movitz-intern-code-vector
     :map-binary-read-delayed 'movitz-word-code-vector
+    :binary-tag :primitive-function)
+   (copy-funobj-code-vector-slots
+    :binary-type code-vector-word
+    :map-binary-write 'movitz-intern-code-vector
+    :map-binary-read-delayed 'movitz-word-code-vector
     :binary-tag :primitive-function))
   (:slot-align null-symbol -5))
 
