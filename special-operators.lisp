@@ -994,16 +994,6 @@ on the current result."
 				;; pop the result back
 				`((:popl ,protected-register)))))))))))))
 
-(define-special-operator muerte::dynamic-unwind (&form form)
-  (let ((unwind-count (second form)))
-    (check-type unwind-count (integer 0 *))
-    (if (zerop unwind-count)
-	(compiler-values ())
-      (compiler-values ()
-	:returns :nothing
-	:code (append (make-immediate-move unwind-count :ecx)
-		      `((:globally (:call (:edi (:edi-offset dynamic-unwind))))))))))
-
 (define-special-operator muerte::with-local-env (&all all &form form)
   (destructuring-bind ((local-env) sub-form)
       (cdr form)

@@ -162,21 +162,6 @@ and also EDX must be preserved."
     ;; Default binding strategy is naive deep binding, so this is a NOP.
     (:ret)))
     
-(define-primitive-function dynamic-unwind ()
-  "Unwind ECX dynamic environment slots. Scratch EAX."
-  (with-inline-assembly (:returns :nothing)
-    (:jecxz 'done)
-   loop
-    (:locally (:movl (:edi (:edi-offset dynamic-env)) :eax))
-    (:testl :eax :eax)
-    (:jz '(:sub-program () (:int 255)))	; end of dynamic environment???
-    (:movl (:eax 12) :eax)		; get parent
-    (:locally (:movl :eax (:edi (:edi-offset dynamic-env))))
-    (:decl :ecx)
-    (:jnz 'loop)
-   done
-    (:ret)))
-    
 (define-primitive-function dynamic-load (symbol)
   "Load the dynamic value of SYMBOL into EAX."
   (with-inline-assembly (:returns :multiple-values)

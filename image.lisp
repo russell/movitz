@@ -181,11 +181,6 @@
     :binary-tag :primitive-function
     :map-binary-read-delayed 'movitz-word-code-vector
     :binary-type code-vector-word)
-   (dynamic-unwind
-    :map-binary-write 'movitz-intern-code-vector
-    :binary-tag :primitive-function
-    :map-binary-read-delayed 'movitz-word-code-vector
-    :binary-type code-vector-word)
    (dynamic-variable-install
     :map-binary-write 'movitz-intern-code-vector
     :binary-tag :primitive-function
