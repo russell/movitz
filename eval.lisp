@@ -97,7 +97,8 @@
   (declare (ignore top-level-p))
   (cond
    ((typep (movitz-binding form env) 'constant-object-binding)
-    (movitz-print (constant-object (movitz-binding form env))))
+    (translate-program (movitz-print (constant-object (movitz-binding form env)))
+		       :cl :muerte.cl))
    ((movitz-constantp form env)
     (symbol-value form))
 ;;;   ((movitz-lexical-binding form env)
