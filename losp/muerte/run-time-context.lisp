@@ -65,7 +65,7 @@
   (if (not (and (movitz:movitz-constantp slot-name env)
 		(equal context '(current-run-time-context))))
       form
-    (let ((slot-name (movitz::eval-form slot-name env)))
+    (let ((slot-name (movitz:movitz-eval slot-name env)))
       (ecase (bt:binary-slot-type 'movitz::movitz-constant-block (intern (symbol-name slot-name) :movitz))
 	(movitz:word
 	 `(with-inline-assembly (:returns :eax)
