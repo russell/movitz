@@ -1211,8 +1211,6 @@ on the current result."
 			;; *  8 target jumper number
 			;; *  4 target catch tag
 			;; *  0 target EBP
-;;;			`((:load-lexical ,dynamic-slot-binding :edx)
-;;;			  ())
 			`((:load-lexical ,dynamic-slot-binding :edx)
 			  (:locally (:movl :edx (:edi (:edi-offset raw-scratch0)))) ; final continuation
 			  (:load-lexical ,next-continuation-step-binding :edx) ; next continuation-step
