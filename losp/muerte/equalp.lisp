@@ -22,7 +22,9 @@
 (in-package muerte)
 
 (defun eql (x y)
-  (eql x y))
+  (if (typep x 'bignum)
+      (and (typep y 'bignum) (= x y))
+    (eq x y)))
 
 (defun equal (x y)
   (typecase x

@@ -420,8 +420,22 @@
 	 (:compile-two-forms (:eax :ebx) ,x ,y)
 	 (:cmpl :eax :ebx)))))
 
-(define-compiler-macro eql (x y)
-  `(eq ,x ,y))
+(define-compiler-macro eql (&whole form x y &environment env)
+  (cond
+   ((and (movitz:movitz-constantp x env)
+	 (movitz:movitz-constantp y env))
+    (eql (movitz:movitz-eval x env)
+	 (movitz:movitz-eval y env)))
+   ((movitz:movitz-constantp y env)
+    `(eql ,y ,x))
+   ((movitz:movitz-constantp x env)
+    (let ((x (movitz:movitz-eval x env)))
+      (typecase x
+	(number
+	 `(= ,x ,y))
+	(t `(eq ,x ,y)))))
+   (t form)))
+
 
 (define-compiler-macro values (&rest sub-forms)
   `(inline-values ,@sub-forms))
