@@ -179,6 +179,6 @@ after the point that called this stack-frame."
 	     (:globally (:call (:edi (:edi-offset malloc))))
 	     (:addl #.(movitz::tag :other) :eax))))
     (dotimes (i clumps)
-      (setf (memref x -6 i :lisp) nil
-	    (memref x -2 i :lisp) nil))
+      (setf (memref x -6 (* i 2) :lisp) nil
+	    (memref x -2 (* i 2) :lisp) nil))
     x))
