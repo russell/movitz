@@ -182,8 +182,8 @@
 	  (67 (muerte.debug:backtrace :fresh-lines nil :length 6)
 	      (dotimes (i 100000)
 		(with-inline-assembly (:returns :nothing) (:nop))))
-	  (66 (error "Unspecified type error in ~S with EAX=~@Z, ECX=~@Z."
-		     (@ (+ int-frame (int-frame-index :esi)))
+	  (66 (error "Unspecified type error at ~@Z in ~S with EAX=~@Z, ECX=~@Z."
+		     $eip (@ (+ int-frame (int-frame-index :esi)))
 		     $eax $ecx))
 	  (62 (error "Trying to save too many values: ~@Z." $ecx))
 	  ((5 55)
