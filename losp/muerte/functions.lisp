@@ -26,13 +26,24 @@
   (declare (ignore ignore))
   'value)
 
-(define-compiler-macro constantly (&whole form value-form)
+(defun constantly-true (&rest ignore) 
+  (declare (ignore ignore))
+  t)
+
+(defun constantly-false (&rest ignore) 
+  (declare (ignore ignore))
+  nil)
+
+(define-compiler-macro constantly (&whole form value-form &environment env)
   (cond
-   ((movitz:movitz-constantp value-form)
-    (let ((value (movitz:movitz-eval value-form)))
-      `(make-prototyped-function (constantly ,value)
-				 constantly-prototype
-				 (value ,value))))
+   ((movitz:movitz-constantp value-form env)
+    (let ((value (movitz:movitz-eval value-form env)))
+      (case (translate-program value :muerte.cl :cl)
+	((t) `(function constantly-true))
+	((nil) `(function constantly-false))
+	(t `(make-prototyped-function (constantly ,value)
+				      constantly-prototype
+				      (value ,value))))))
    (t (error "Non-constant constantly forms not yet supported: ~S" form)
       form)))
 
@@ -64,7 +75,7 @@
     (not (apply function args))))
 
 (defun unbound-function (&edx edx &rest args)
-  (declare (dynamic-extent args) (ignore args))
+  (declare (ignore args))
   (let ((function-name (typecase edx
 			 (symbol
 			  edx)
