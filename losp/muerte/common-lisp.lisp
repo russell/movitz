@@ -17,6 +17,7 @@
 
 (require :muerte/setf)
 (require :muerte/more-macros)
+(require :muerte/arithmetic-macros)
 (require :muerte/memref)
 (require :muerte/basic-functions)
 (require :muerte/variables)
