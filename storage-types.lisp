@@ -363,6 +363,11 @@ integer (native lisp) value."
     :accessor movitz-vector-symbolic-data))
   (:slot-align type -2))
 
+(defun vector-type-tag (element-type)
+  (dpb (enum-value 'movitz-vector-element-type element-type)
+       (byte 8 8)
+       (enum-value 'other-type-byte :vector)))
+
 (define-binary-class movitz-new-vector (movitz-heap-object-other)
   ((length
     :binary-type u32
