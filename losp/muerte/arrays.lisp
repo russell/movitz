@@ -516,9 +516,14 @@ and return accessors for that subsequence (fast & unsafe accessors, that is)."
 		       0 :unsigned-byte16)
 	   dimensions)
 	 (setf (fill-pointer a) fill-pointer)
-	 (when initial-element
+	 (cond
+	  (initial-element
+	   (check-type initial-element character)
 	   (dotimes (i dimensions)
 	     (setf (char%unsafe a i) initial-element)))
+	  (initial-contents
+	   (dotimes (i dimensions)
+	     (setf (char a i) (elt initial-contents i)))))
 	 a))
       ((member element-type '(u8 (unsigned-byte 8)) :test #'equal)
        (let ((a (inline-malloc (+ #.(bt:sizeof 'movitz::movitz-vector) dimensions)
