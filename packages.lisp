@@ -1103,6 +1103,20 @@
 	   print-unreadable-movitz-object
 	   
 	   #:*print-safely*
+	   
+	   #:*debugger-function*
+	   #:*debugger-condition*
+	   #:*backtrace-conflate-names*
+	   #:*backtrace-do-conflate*
+	   #:*backtrace-max-frames*
+	   #:*backtrace-max-args*
+	   #:*backtrace-on-error*
+	   #:*backtrace-stack-frame-barrier*
+	   #:*backtrace-do-fresh-lines*
+	   #:*backtrace-be-spartan-p*
+	   #:*backtrace-print-length*
+	   #:*backtrace-print-level*
+	   #:backtrace
 
 	   #:stack-ref
 	   #:with-each-dynamic-context
