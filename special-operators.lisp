@@ -1210,6 +1210,7 @@ is zero (i.e. not found)."
 		      `((:load-lexical ,dynamic-slot-binding :edx)
 			(:locally (:movl :edx (:edi (:edi-offset raw-scratch0)))) ; final continuation
 			(:load-lexical ,next-continuation-step-binding :edx) ; next continuation-step
+			(:locally (:movl :edx (:edi (:edi-offset dynamic-env)))) ; goto target dynamic-env
 			(:locally (:call (:edi (:edi-offset dynamic-jump-next))))))))))
 
 ;;;			(:locally (:movl :esi (:edi (:edi-offset scratch1))))

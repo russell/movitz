@@ -685,7 +685,7 @@ Final target is in raw-scratch0. Doesn't modify current-values."
   (with-inline-assembly (:returns :non-local-exit)
     (:movl :edi :esi)			; before bumping ESP, remove reference to funobj..
 					; ..in case it's stack-allocated.
-    (:locally (:movl :edx (:edi (:edi-offset dynamic-env)))) ; exit to next-env
+    (:locally (:movl :edx (:edi (:edi-offset scratch1)))) ; non-local stack-mode target entry.
     (:movl :edi :ebp)			; enter non-local jump stack mode.
     (:movl :edx :esp)			; 
     (:movl (:esp) :edx)			; target stack-frame EBP

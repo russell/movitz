@@ -769,7 +769,7 @@ where zot is not in foo's scope, but _is_ in foo's extent."
 		      (:locally (:call (:edi (:edi-offset dynamic-unwind-next))))
 		      ;; have next-continuation in EAX, final-continuation in EDX
 		      (:locally (:movl :edx (:edi (:edi-offset raw-scratch0)))) ; final continuation
-
+		      (:locally (:movl :eax (:edi (:edi-offset dynamic-env)))) ; new dynamic-env
 		      (:movl :eax :edx)
 		      (:clc)
 		      (:locally (:call (:edi (:edi-offset dynamic-jump-next))))))))))))
@@ -1304,6 +1304,7 @@ where zot is not in foo's scope, but _is_ in foo's extent."
 ;;;		   (:movl ',continue-label (:esp 8)) ; new jumper index
 
 		     (:load-lexical ,next-continuation-step-binding :edx)
+		     (:locally (:movl :edx (:edi (:edi-offset dynamic-env))))
 		     (:locally (:call (:edi (:edi-offset dynamic-jump-next))))
 		   
 ;;;		   (:locally (:movl :esi (:edi (:edi-offset scratch1))))
