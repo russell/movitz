@@ -79,8 +79,10 @@
 (defmethod print-object ((device io-space-device) stream)
   (print-unreadable-object (device stream :type t)
     (format stream "~@[ ~A~]~@[ @ I/O #x~X~]"
-	    (device-name device)
-	    (io-range-start (first (io-space device)))))
+	    (when (slot-boundp device 'device-name)
+	      (device-name device))
+	    (when (slot-boundp device 'allocated-io-space)
+	      (io-range-start (first (io-space device))))))
   device)
 
 (defvar *io-space-register* nil)	; a list of io-space devices.
