@@ -128,7 +128,23 @@
   (:report (lambda (c s)
 	     (format s "End of file encountered on ~W."
 		     (stream-error-stream c)))))
-		  
+
+(define-condition arithmetic-error (error)
+  ((operation
+    :initarg :operation
+    :initform nil
+    :reader arithmetic-error-operation)
+   (operands
+    :initarg :operands
+    :initform nil
+    :reader arithmetic-error-operands)))
+
+(define-condition division-by-zero (arithmetic-error)
+  ()
+  (:report (lambda (c s)
+	     (declare (ignore c))
+	     (format s "Division by zero."))))
+
 (defun make-condition (type &rest slot-initializations)
   (declare (dynamic-extent slot-initializations))
   (apply 'make-instance type slot-initializations))
