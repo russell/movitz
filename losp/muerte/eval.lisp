@@ -157,9 +157,10 @@ second the list of declaration-specifiers."
       (return t))))
 
 (defun eval-defun (name lambda-list body env)
-  (assert (not (eq (symbol-package name)
-		   (find-package 'common-lisp)))
-      () "Won't allow defun of a common-lisp symbol.")
+  (with-simple-restart (continue "Defun ~S anyway." name)
+    (assert (not (eq (symbol-package name)
+		     (find-package 'common-lisp)))
+	() "Won't allow defun of the Common Lisp symbol ~S." name))
   (setf (symbol-function name)
     (install-funobj-name name
 			 (lambda (&rest args)
