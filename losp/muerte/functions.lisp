@@ -56,8 +56,7 @@
 			       complement-prototype
 			       (function ,(movitz:movitz-eval (translate-program function-form
 									      :cl :muerte.cl)))))
-   (t #+ignore (error "Non-constant complement forms not yet supported: ~S" form)
-      form)))
+   (t form)))
 
 (defun complement (function)
   (lambda (&rest args)
@@ -72,8 +71,7 @@
 			 (compiled-function
 			  (funobj-name edx))
 			 (t '(unknown)))))
-    (error 'undefined-function :name function-name)
-    #+ignore (error "Unbound function-name ~S called with arguments ~S." function-name args)))
+    (error 'undefined-function :name function-name)))
 
 ;;; funobj object
 
