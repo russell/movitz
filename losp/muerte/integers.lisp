@@ -2228,7 +2228,7 @@ Preserve EAX and EBX."
 	  (values n 0)
 	(multiple-value-bind (r q)
 	    (floor (%ratio-numerator n) (%ratio-denominator n))
-	  (values r (%make-rational q (%ratio-denominator n))))))
+	  (values r (make-rational q (%ratio-denominator n))))))
    (2 (n divisor)
       (multiple-value-bind (q r)
 	  (truncate n divisor)

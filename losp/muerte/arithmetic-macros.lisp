@@ -486,3 +486,10 @@
      (:jnc 'done)
      (:addl ,movitz:+movitz-fixnum-factor+ :eax)
     done))
+
+(define-compiler-macro %ratio-numerator (x)
+  `(memref ,x ,(bt:slot-offset 'movitz::movitz-ratio 'movitz::numerator) 0 :lisp))
+
+(define-compiler-macro %ratio-denominator (x)
+  `(memref ,x ,(bt:slot-offset 'movitz::movitz-ratio 'movitz::denominator) 0 :lisp))
+
