@@ -230,13 +230,13 @@
     
        not-u8
 	(:cmpl #.(movitz:vector-type-tag :u16) :ecx)
-	(:je 'not-u16)
+	(:jne 'not-u16)
 	(:movzxw (:eax (:ebx 2) 2) :eax) ; u16
 	(:jmp 'done)
 
        not-u16
 	(:cmpl #.(movitz:vector-type-tag :u32) :ecx)
-	(:je 'not-u32)
+	(:jne 'not-u32)
 	(:movl (:eax (:ebx 4) 2) :ecx)	; u32
 	(:cmpl #.movitz::+movitz-most-positive-fixnum+ :ecx)
 	(:jg '(:sub-program (:overflowing-u32)
