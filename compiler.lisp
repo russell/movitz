@@ -5084,7 +5084,7 @@ Return arg-init-code, need-normalized-ecx-p."
 	       (:boolean-cf=1
 		(values (append code
 				`((:sbbl :ecx :ecx)
-				  (:movl (:edi (:ecx 4) ,(global-constant-offset 'null-cons))
+				  (:movl (:edi (:ecx 4) ,(global-constant-offset 'not-not-nil))
 					 ,desired-result)))
 			desired-result))
 	       (#.+boolean-modes+
