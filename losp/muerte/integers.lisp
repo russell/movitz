@@ -1,6 +1,6 @@
 ;;;;------------------------------------------------------------------
 ;;;; 
-;;;;    Copyright (C) 2000-2004,
+;;;;    Copyright (C) 2000-2005,
 ;;;;    Department of Computer Science, University of Tromso, Norway
 ;;;; 
 ;;;; Filename:      integers.lisp
@@ -1513,6 +1513,19 @@
 	       (:shrl ,movitz::+movitz-fixnum-shift+ :ecx)
 	       (:btl :ecx (:ebx (:offset movitz-bignum bigit0))))))))
     (do-it)))
+
+(define-compiler-macro logbitp (&whole form &environment env index integer)
+  (if (not (movitz:movitz-constantp index env))
+      form
+    (let ((index (movitz:movitz-eval index env)))
+      (check-type index (integer 0 *))
+      (typecase index
+	((integer 0 31)
+	 `(with-inline-assembly (:returns :boolean-cf=1)
+	    (:compile-form (:result-mode :untagged-fixnum-ecx) ,integer)
+	    (:btl ,index :ecx)))
+	(t form)))))
+
 
 (defun logand (&rest integers)
   (numargs-case
