@@ -166,7 +166,7 @@ This is the setter corresponding to the sgdt getter."
   (let ((offset (+ (* index 8) (movitz-type-slot-offset 'movitz-basic-vector 'data))))
     (logior (ash (memref table (+ 7 offset) :type :unsigned-byte8)
 		 24)
-	    (ash (memref table (+ 4 offset) :type :unsigned-byte16)
+	    (ash (memref table (+ 4 offset) :type :unsigned-byte8)
 		 16)
 	    (ash (memref table (+ 2 offset) :type :unsigned-byte16)
 		 0))))
