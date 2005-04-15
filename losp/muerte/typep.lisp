@@ -526,6 +526,9 @@
        (or (eq '* car) (typep (car x) car))
        (or (eq '* cdr) (typep (cdr x) cdr))))
 
+(deftype vector (&optional (element-type '*) (size '*))
+  `(simple-array ,element-type (,size)))
+
 (define-simple-typep (atom atom) (x)
   (typep x 'atom))
 
