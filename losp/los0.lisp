@@ -28,6 +28,8 @@
 (require :lib/net/ip4)
 (require :lib/repl)
 
+(require :ll-testing)
+
 (defpackage muerte.init
   (:nicknames #:los0)
   (:use #:common-lisp
