@@ -14,6 +14,7 @@
 ;;;;                
 ;;;;------------------------------------------------------------------
 
+(provide :ll-testing)
 (in-package muerte)
 
 (defun dump-global-segment-table (&key table entries nofill)
