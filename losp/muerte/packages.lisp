@@ -50,6 +50,13 @@
   (or (find-package name)
       (error "There is no package named ~S." (string name))))
 
+(defun list-all-packages ()
+  (let (pkgs)
+    (maphash (lambda (k v)
+               (pushnew v pkgs))
+             (get-global-property :packages))
+    pkgs))
+
 (defun find-symbol-string (name start end key &optional (package *package*))
   (check-type name string)
   (let ((package (assert-package package)))
