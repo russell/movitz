@@ -1330,6 +1330,8 @@ Can be used to measure the overhead of primitive function."
     (:movl 4 :eax)
    no-overflow))
 
+(defvar *segment-descriptor-table*)
+
 (defun genesis ()
   ;; (install-shallow-binding)
   (let ((extended-memsize 0))
@@ -1341,6 +1343,11 @@ Can be used to measure the overhead of primitive function."
     (format t "Extended memory: ~D KB~%" extended-memsize)
 
     (idt-init)
+    
+    (setf *segment-descriptor-table*	; Ensure we have a GDT with 16 entries, in static-space.
+      (muerte::install-global-segment-table
+       (muerte::dump-global-segment-table :entries 16)))
+    
     (install-los0-consing :kb-size 500)
     #+ignore
     (install-los0-consing :kb-size (max 50 (truncate (- extended-memsize 2048) 2))))
