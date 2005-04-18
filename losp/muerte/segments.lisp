@@ -215,13 +215,33 @@ This is the setter corresponding to the sgdt getter."
   "Access bits 52-55 of the segment descriptor."
   (check-type table (and vector (not simple-vector)))
   (ldb (byte 4 4)
-       (memref table (+ 5 (* index 8) (movitz-type-slot-offset 'movitz-basic-vector 'data))
+       (memref table (+ 6 (* index 8) (movitz-type-slot-offset 'movitz-basic-vector 'data))
 	       :type :unsigned-byte8)))
 
 (defun (setf segment-descriptor-avl-x-db-g) (bits table index)
   "Access bits 52-55 of the segment descriptor."
   (check-type table (and vector (not simple-vector)))
   (setf (ldb (byte 4 4)
-	     (memref table (+ 5 (* index 8) (movitz-type-slot-offset 'movitz-basic-vector 'data))
+	     (memref table (+ 6 (* index 8) (movitz-type-slot-offset 'movitz-basic-vector 'data))
 		     :type :unsigned-byte8))
     bits))
+
+(defun segment-descriptor (table index)
+  "Access entire segment descriptor as a 64-bit integer."
+  (check-type table (and vector (not simple-vector)))
+  (let ((offset (+ (* index 8) (movitz-type-slot-offset 'movitz-basic-vector 'data))))
+    (logior (ash (memref table offset :index 1 :type :unsigned-byte32)
+		 32)
+	    (ash (memref table offset :index 0 :type :unsigned-byte32)
+		 0))))
+
+(defun (setf segment-descriptor) (value table index)
+  "Access entire segment descriptor as a 64-bit integer."
+  (check-type table (and vector (not simple-vector)))
+  (let ((offset (+ (* index 8) (movitz-type-slot-offset 'movitz-basic-vector 'data))))
+    (setf (memref table offset :index 1 :type :unsigned-byte32)
+      (ldb (byte 32 32) value))
+    (setf (memref table offset :index 0 :type :unsigned-byte32)
+      (ldb (byte 32 0) value))
+    value))
+  
