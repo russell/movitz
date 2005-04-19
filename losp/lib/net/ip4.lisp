@@ -1,6 +1,6 @@
 ;;;;------------------------------------------------------------------
 ;;;; 
-;;;;    Copyright (C) 2001, 2003-2004, 
+;;;;    Copyright (C) 2001, 2003-2005, 
 ;;;;    Department of Computer Science, University of Tromso, Norway.
 ;;;; 
 ;;;;    For distribution policy, see the accompanying file COPYING.
@@ -480,7 +480,7 @@
     (setf *ne2000* nil))
   (values))
 
-(defun ip4-init ()
+(defun ip4-init (&optional (ip :129.242.19.151) (router :129.242.19.129))
   (unless *ip4-nic*
     (let ((ethernet
 	   (some #'muerte.x86-pc.ne2k:ne2k-probe
@@ -488,9 +488,9 @@
       (assert ethernet ethernet "No ethernet device.")
       (setf *ip4-nic* ethernet)))
   (unless *ip4-ip*
-    (setf *ip4-ip* (ip4-address :129.242.16.173)))
+    (setf *ip4-ip* (ip4-address ip)))
   (unless *ip4-router*
-    (setf *ip4-router* (ip4-address :129.242.16.1)))
+    (setf *ip4-router* (ip4-address router)))
   ;; This is to announce our presence on the LAN..
   (assert (polling-arp *ip4-router* (lambda ()
 				      (eql #\space (muerte.x86-pc.keyboard:poll-char))))
