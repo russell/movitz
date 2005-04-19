@@ -1,6 +1,6 @@
 ;;;;------------------------------------------------------------------
 ;;;; 
-;;;;    Copyright (C) 2001-2004, 
+;;;;    Copyright (C) 2001-2005, 
 ;;;;    Department of Computer Science, University of Tromso, Norway.
 ;;;; 
 ;;;;    For distribution policy, see the accompanying file COPYING.
@@ -337,15 +337,15 @@ Return the variable, keyword, init-fom, and supplied-p-parameter."
 								     :environment-p nil
 								     :recursive-p nil
 								     :whole-p nil))))))))))
-  
+
 (defun lookup-setf-function (name)
-  (let ((setf-name (gethash name (get-global-property :setf-namespace))))
+  (let ((setf-name (gethash name *setf-namespace*)))
     (assert setf-name (name)
       "No function (~S ~S) defined." 'setf name)
     setf-name))
 
 (defun setf-intern (name)
-  (values (gethash name (get-global-property :setf-namespace))))
+  (values (gethash name *setf-namespace* #+ignore (get-global-property :setf-namespace))))
 
 (defun special-operator-p (operator-name)			   
   (member operator-name '(quote function if progn tagbody go)))
