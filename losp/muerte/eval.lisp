@@ -345,7 +345,7 @@ Return the variable, keyword, init-fom, and supplied-p-parameter."
     setf-name))
 
 (defun setf-intern (name)
-  (values (gethash name *setf-namespace* #+ignore (get-global-property :setf-namespace))))
+  (values (gethash name *setf-namespace*)))
 
 (defun special-operator-p (operator-name)			   
   (member operator-name '(quote function if progn tagbody go)))

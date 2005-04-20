@@ -48,8 +48,7 @@
     (symbol
      function-name)
     ((cons (eql setf) (cons symbol null))
-     (gethash (cadr function-name) *setf-namespace*
-	      #+ignore (get-global-property :setf-namespace)))))
+     (gethash (cadr function-name) *setf-namespace*))))
 
 (defun match-caller (name)
   (do ((frame (stack-frame-uplink nil (current-stack-frame))

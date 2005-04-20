@@ -630,7 +630,7 @@ be provided for those cases."
 			  (location-in-object-p (%run-time-context-slot slot-name)
 						instruction-location))
 		 (return (values slot-name :run-time-context))))
-	(with-hash-table-iterator (hashis (get-global-property :setf-namespace))
+	(with-hash-table-iterator (hashis *setf-namespace*)
 	  (do () (nil)
 	    (multiple-value-bind (morep setf-name symbol)
 		(hashis)
