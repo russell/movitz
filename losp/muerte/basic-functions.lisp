@@ -350,6 +350,18 @@
 (defun object-tag (object)
   (object-tag object))
 
+
+(define-compiler-macro location-physical-offset ()
+  '(memref nil (movitz-type-slot-offset 'movitz-run-time-context
+		'physical-address-offset)
+    :type :lisp))
+
+(defun location-physical-offset ()
+  "The offset between physical and logical locations.
+A location is an 4-aligned address (32 bits whose two lsb are zero)
+interpreted as a lispval, and consequently a fixnum."
+  (location-physical-offset))
+
 (defun halt-cpu ()
   (halt-cpu))
 
