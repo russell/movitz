@@ -1,6 +1,6 @@
 ;;;;------------------------------------------------------------------
 ;;;; 
-;;;;    Copyright (C) 2001-2004, 
+;;;;    Copyright (C) 2001-2005, 
 ;;;;    Department of Computer Science, University of Tromso, Norway.
 ;;;; 
 ;;;;    For distribution policy, see the accompanying file COPYING.
@@ -91,6 +91,8 @@
 			(read-binary 'movitz-std-instance (image-stream image)))
 		       (:bignum
 			(read-binary 'movitz-bignum (image-stream image)))
+		       (:run-time-context
+			(read-binary 'movitz-run-time-context (image-stream image)))
 		       (t (warn "unknown other object: #x~X: ~S code #x~X."
 				word type-tag type-code)
 			  (make-instance 'movitz-fixnum :value (truncate word 4))))))

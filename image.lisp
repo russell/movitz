@@ -24,7 +24,7 @@
     :binary-type 3)
    (name
     :binary-type word
-    :initform :global
+    :initform :bootup
     :map-binary-write 'movitz-read-and-intern
     :map-binary-read-delayed 'movitz-word)
    (fast-car

@@ -1288,6 +1288,9 @@
 	   #:decode-eflags
 	   #:load-idt
 	   #:segment-register
+	   #:segment-descriptor
+	   #:segment-descriptor-base-location
+	   #:segment-descriptor-limit
 	   #:control-register-lo12
 	   #:control-register-hi20
 	   ))
