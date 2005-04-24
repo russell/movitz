@@ -47,9 +47,11 @@ This variable should be initialized during bootup initialization.")
     (+ (object-location stack) 2 index)))
 
 (defun stack-frame-uplink (stack frame)
-  (if (eq 0 (stack-frame-funobj stack frame))
-      (dit-frame-casf stack frame)
-    (stack-frame-ref stack frame 0)))
+  (cond
+   ((eq 0 frame) 0)
+   ((eq 0 (stack-frame-funobj stack frame))
+    (dit-frame-casf stack frame))
+   (t (stack-frame-ref stack frame 0))))
 
 (defun stack-vector-designator (stack)
   (etypecase stack
