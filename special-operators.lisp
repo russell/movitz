@@ -1115,9 +1115,12 @@ on the current result."
 	(t (multiple-value-bind (arguments-code stack-displacement arguments-modifies
 				 arguments-types arguments-functional-p)
 	       (make-compiled-argument-forms sub-forms (all :funobj) (all :env))
+	     (assert (not (minusp (- stack-displacement (- (length sub-forms) 2)))))
 	     (multiple-value-bind (stack-restore-code new-returns)
-		 (make-compiled-stack-restore stack-displacement result-mode :multiple-values)
-	       (declare (ignore stack-restore-code))
+		 (make-compiled-stack-restore (- stack-displacement
+						 (- (length sub-forms) 2))
+					      result-mode
+					      :multiple-values)
 	       (compiler-values ()
 		 :returns new-returns
 		 :type `(values ,@arguments-types)
@@ -1127,16 +1130,14 @@ on the current result."
 			       (loop for i from (- (length sub-forms) 3) downto 0
 				   collecting
 				     `(:locally (:popl (:edi (:edi-offset values ,(* i 4))))))
-			       (make-immediate-move (length sub-forms) :ecx)
-			       `((:leal ((:ecx ,+movitz-fixnum-factor+) ,(* -2 +movitz-fixnum-factor+))
-					:edx)
-				 (:locally (:movl :edx (:edi (:edi-offset num-values))))
+			       (make-immediate-move (* +movitz-fixnum-factor+ (- (length sub-forms) 2))
+						    :ecx)
+			       `((:locally (:movl :ecx (:edi (:edi-offset num-values))))
 				 (:stc))
 			       #+ignore
 			       (make-compiled-funcall-by-symbol 'muerte.cl::values
 								(length sub-forms)
 								(all :funobj))
-			       #+ignore
 			       stack-restore-code)))))))))
 
 (define-special-operator muerte::compiler-typecase (&all all &form form)
