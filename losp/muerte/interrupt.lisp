@@ -129,7 +129,7 @@ is off, e.g. because this interrupt/exception is routed through an interrupt gat
 	    (:locally (:pushl (:edi (:edi-offset dynamic-env))))
 	    (:locally (:pushl (:edi (:edi-offset atomically-continuation))))
 	    (:locally (:pushl (:edi (:edi-offset raw-scratch0))))
-	    (:locally (:pushl :ecx))
+	    (:pushl :ecx)
 	    (:movcr :cr2 :ecx)
 	    (:locally (:pushl :ecx))
 	    ,@(loop for reg in (sort (copy-list '(:eax :ebx :edx :esi))
