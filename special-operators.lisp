@@ -1132,12 +1132,9 @@ on the current result."
 				     `(:locally (:popl (:edi (:edi-offset values ,(* i 4))))))
 			       (make-immediate-move (* +movitz-fixnum-factor+ (- (length sub-forms) 2))
 						    :ecx)
-			       `((:locally (:movl :ecx (:edi (:edi-offset num-values))))
-				 (:stc))
-			       #+ignore
-			       (make-compiled-funcall-by-symbol 'muerte.cl::values
-								(length sub-forms)
-								(all :funobj))
+			       `((:locally (:movl :ecx (:edi (:edi-offset num-values)))))
+			       (make-immediate-move (length sub-forms) :ecx)
+			       `((:stc))
 			       stack-restore-code)))))))))
 
 (define-special-operator muerte::compiler-typecase (&all all &form form)
