@@ -367,6 +367,12 @@
 				      ,keyform
 				      ',(mapcar #'first clauses)))))
 
+(define-compiler-macro asm-register (register-name)
+  (if (member register-name '(:eax :ebx :ecx :untagged-fixnum-ecx :edx))
+      `(with-inline-assembly (:returns ,register-name) ())
+    `(with-inline-assembly (:returns :eax)
+       (:movl ,register-name :eax))))
+
 (defmacro movitz-accessor (object-form type slot-name)
   (warn "movitz-accesor deprecated.")
   `(with-inline-assembly (:returns :register :side-effects nil)
@@ -604,7 +610,6 @@
 (define-compiler-macro cdar (x)
   `(cdr (car ,x)))
 			     
-
 (define-compiler-macro rest (x) `(cdr ,x))
 (define-compiler-macro first (x) `(car ,x))
 (define-compiler-macro second (x) `(cadr ,x))
