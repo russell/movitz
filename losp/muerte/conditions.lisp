@@ -1,6 +1,6 @@
 ;;;;------------------------------------------------------------------
 ;;;; 
-;;;;    Copyright (C) 2001-2004, 
+;;;;    Copyright (C) 2001-2005, 
 ;;;;    Department of Computer Science, University of Tromso, Norway.
 ;;;; 
 ;;;;    For distribution policy, see the accompanying file COPYING.
@@ -270,7 +270,7 @@ Return the condition object, if there was one."
   (signal-simple 'simple-condition datum args)
   nil)
 
-(defun invoke-debugger (condition)
+(defun invoke-debugger (&optional condition)
   (when *debugger-hook*
     (let ((hook *debugger-hook*)
 	  (*debugger-hook* nil))
