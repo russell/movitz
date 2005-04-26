@@ -1,6 +1,6 @@
 ;;;;------------------------------------------------------------------
 ;;;; 
-;;;;    Copyright (C) 2001-2004, 
+;;;;    Copyright (C) 2001-2005, 
 ;;;;    Department of Computer Science, University of Tromso, Norway.
 ;;;; 
 ;;;;    For distribution policy, see the accompanying file COPYING.
@@ -25,7 +25,7 @@
 (defvar *error-no-condition-for-debugger* nil
   "If true, don't create a simple-error object just for the debugger,
  (presumably) since this might trigger another bug.")
-(defvar *disable-interrupts-on-error* t)
+(defvar *disable-interrupts-on-error* nil)
 
 (defun error (&rest arguments)
   (declare (dynamic-extent arguments))
