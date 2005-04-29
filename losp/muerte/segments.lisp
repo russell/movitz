@@ -18,6 +18,8 @@
 
 (in-package muerte)
 
+(defvar *initial-segment-descriptor-table*)
+
 (defun segment-register (segment-register-name)
   "Return the value of an x86 segment register, such as :cs or :ds."
   (macrolet ((sreg (reg)
