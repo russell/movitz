@@ -270,7 +270,7 @@ Return the condition object, if there was one."
   (signal-simple 'simple-condition datum args)
   nil)
 
-(defun invoke-debugger (&optional condition)
+(defun invoke-debugger (condition)
   (when *debugger-hook*
     (let ((hook *debugger-hook*)
 	  (*debugger-hook* nil))

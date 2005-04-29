@@ -392,6 +392,8 @@ duo-space where each space is KB-SIZE kilobytes."
 			   new)))))
 		  ((not (object-in-space-p oldspace x))
 		   x)
+		  ((when (typep x 'run-time-context)
+		     (warn "Scavengning ~S" x)))
 		  (t (or (and (eq (object-tag x)
 				  (ldb (byte 3 0)
 				       (memref (object-location x) 0 :type :unsigned-byte8)))
