@@ -33,8 +33,10 @@
   (or (and (< 6 (length fi:package))
 	   (string= "MUERTE." (upcase (substring fi:package 0 7))))
       (member (upcase fi:package)
-	      '("MUERTE" "X86" "X86-PC"))))
-
+	      '("MUERTE" "X86" "X86-PC"))
+      (member "MUERTE"
+	      (fi:eval-in-lisp
+	       "(cl:mapcar #'cl:package-name (cl:package-use-list \"%s\"))" (upcase fi:package)))))
 
 (defun movitz-defun-name-and-type ()
   (interactive)
