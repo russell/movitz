@@ -4,7 +4,7 @@
 ;;;;    Department of Computer Science, University of Tromso, Norway.
 ;;;; 
 ;;;; Filename:      image.lisp
-;;;; Description:   Construction of LispOS images.
+;;;; Description:   Construction of Movitz images.
 ;;;; Author:        Frode Vatvedt Fjeld <frodef@acm.org>
 ;;;; Created at:    Sun Oct 22 00:22:43 2000
 ;;;; Distribution:  See the accompanying file COPYING.
@@ -876,7 +876,7 @@ a cons is an offset (the car) from some other code-vector (the cdr)."
     (movitz-read (movitz-environment-setf-function-names *movitz-global-environment*) t))
   (setf (run-time-context-class (image-run-time-context *image*))
     (muerte::movitz-find-class 'muerte::run-time-context))
-  (setf (run-time-context-slots (image-run-time-context *image*)) #(1 2 3))
+  ;;  (setf (run-time-context-slots (image-run-time-context *image*)) #(1 2 3))
   (let ((load-address (image-start-address *image*)))
     (setf (image-cons-pointer *image*) (- load-address
 					  (image-ds-segment-base *image*))
