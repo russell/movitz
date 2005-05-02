@@ -689,6 +689,26 @@
     (1 `(cons ,(car elements) nil))
     (t form)))
 
+
+(defmacro unbound-protect (x &optional error-continuation &environment env)
+  (cond
+   ((movitz:movitz-constantp x env)
+    `(values ,x))
+   (movitz::*compiler-use-into-unbound-protocol*
+    (let ((unbound-continue (gensym "unbound-continue-")))
+      `(with-inline-assembly (:returns :register)
+	 (:compile-form (:result-mode :register) ,x)
+	 (:cmpl -1 (:result-register))
+	 (:jo '(:sub-program (unbound)
+		(:compile-form (:result-mode :eax) ,error-continuation)
+		(:jmp ',unbound-continue)))
+	 ,unbound-continue)))
+   (t (let ((var (gensym)))
+	`(let ((,var ,x))
+	   (if (not (eq ,var (load-global-constant new-unbound-value)))
+	       ,var
+	     ,error-continuation))))))
+
 #+ignore
 (define-compiler-macro apply (&whole form function &rest args)
   (if (and nil (consp function) (eq 'function (first function)) (symbolp (second function)))
