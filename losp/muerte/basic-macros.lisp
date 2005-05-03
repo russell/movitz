@@ -690,7 +690,7 @@
     (t form)))
 
 
-(defmacro unbound-protect (x &optional error-continuation &environment env)
+(defmacro with-unbound-protect (x &body error-continuation &environment env)
   (cond
    ((movitz:movitz-constantp x env)
     `(values ,x))
@@ -700,14 +700,14 @@
 	 (:compile-form (:result-mode :register) ,x)
 	 (:cmpl -1 (:result-register))
 	 (:jo '(:sub-program (unbound)
-		(:compile-form (:result-mode :eax) ,error-continuation)
+		(:compile-form (:result-mode :eax) (progn ,@error-continuation))
 		(:jmp ',unbound-continue)))
 	 ,unbound-continue)))
    (t (let ((var (gensym)))
 	`(let ((,var ,x))
 	   (if (not (eq ,var (load-global-constant new-unbound-value)))
 	       ,var
-	     ,error-continuation))))))
+	     (progn ,@error-continuation)))))))
 
 (define-compiler-macro current-run-time-context ()
   `(with-inline-assembly (:returns :register)
