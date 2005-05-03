@@ -610,11 +610,12 @@
 					    :direct-superclasses direct-superclasses)
       class))
   
-  (defun movitz-make-instance-run-time-context (metaclass &rest all-keys &key name direct-superclasses direct-slots size slot-map &allow-other-keys)
+  (defun movitz-make-instance-run-time-context (metaclass &rest all-keys &key name direct-superclasses direct-slots size slot-map plist &allow-other-keys)
     (declare (ignore all-keys))
     (let ((class (std-allocate-instance metaclass)))
       (when size (setf (std-slot-value class 'size) size))
-      (setf (std-slot-value class 'slot-map) slot-map)
+      (setf (std-slot-value class 'slot-map) slot-map
+	    (std-slot-value class 'plist) plist)
       (setf (movitz-class-name class) name)
       (setf (class-direct-subclasses class) ())
       (setf (class-direct-methods class) ())
