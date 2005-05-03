@@ -709,6 +709,10 @@
 	       ,var
 	     ,error-continuation))))))
 
+(define-compiler-macro current-run-time-context ()
+  `(with-inline-assembly (:returns :register)
+     (:locally (:movl (:edi (:edi-offset self)) (:result-register)))))
+
 #+ignore
 (define-compiler-macro apply (&whole form function &rest args)
   (if (and nil (consp function) (eq 'function (first function)) (symbolp (second function)))
