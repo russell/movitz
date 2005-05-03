@@ -130,7 +130,9 @@
      (map 'vector #'movitz-print (movitz-vector-symbolic-data expr)))
     (movitz-cons
      (cons (movitz-print (movitz-car expr))
-	   (movitz-print (movitz-cdr expr))))))
+	   (movitz-print (movitz-cdr expr))))
+    (movitz-funobj
+     expr)))
 
 
 (defmethod report-gdtr ((image bochs-image))

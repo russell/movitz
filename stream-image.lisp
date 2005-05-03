@@ -70,9 +70,12 @@
 		   (image-nil-object image))
 		  (:symbol
 		   ;; (warn "loading new symbol at ~S" word)
-		   (setf (image-stream-position image)
-		     (- word (tag :symbol)))
-		   (read-binary 'movitz-symbol (image-stream image)))
+		   (if (= word #x7fffffff)
+		       (make-instance 'movitz-unbound-value)
+		     (progn
+		       (setf (image-stream-position image)
+			 (- word (tag :symbol)))
+		       (read-binary 'movitz-symbol (image-stream image)))))
 		  (:other
 		   (setf (image-stream-position image)
 		     (+ 0 (extract-pointer word)))

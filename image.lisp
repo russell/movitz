@@ -1586,6 +1586,7 @@ In sum this accounts for ~,1F%, or ~D bytes.~%;;~%"
     (array expr)
     (cons (mapcar #'movitz-print expr))
     ((or (satisfies movitz-null) movitz-run-time-context) nil)
+    (movitz-unbound-value 'unbound)
     (movitz-fixnum
      (movitz-fixnum-value expr))
     (movitz-std-instance expr)
