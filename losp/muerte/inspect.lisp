@@ -53,10 +53,10 @@ This variable should be initialized during bootup initialization.")
     (dit-frame-casf stack frame))
    (t (stack-frame-ref stack frame 0))))
 
-(defun stack-vector-designator (stack)
-  (etypecase stack
-    (null (%run-time-context-slot 'stack-vector))
-    (vector stack)))
+;;;(defun stack-vector-designator (stack)
+;;;  (etypecase stack
+;;;    (null (%run-time-context-slot 'stack-vector))
+;;;    (vector stack)))
 
 (define-compiler-macro current-stack-frame ()
   `(with-inline-assembly (:returns :eax)

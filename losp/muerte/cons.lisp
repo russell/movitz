@@ -78,26 +78,6 @@ Cons cell is in EBX, which is preserved."
      :movl (:eax 3) :eax)
     (:ret)))
 
-(define-primitive-function fast-cdddr ()
-  "This is the actual CDR code."
-  (with-inline-assembly (:returns :eax)
-    (:leal (:eax -1) :ecx)
-    (:testb 3 :cl)
-    (:jnz '(:sub-program (not-cons) (:int 61)))
-    (#.movitz:*compiler-nonlocal-lispval-read-segment-prefix*
-     :movl (:eax 3) :eax)
-    (:leal (:eax -1) :ecx)
-    (:testb 3 :cl)
-    (:jnz '(:sub-program (not-cons) (:int 61)))
-    (#.movitz:*compiler-nonlocal-lispval-read-segment-prefix*
-     :movl (:eax 3) :eax)
-    (:leal (:eax -1) :ecx)
-    (:testb 3 :cl)
-    (:jnz '(:sub-program (not-cons) (:int 61)))
-    (#.movitz:*compiler-nonlocal-lispval-read-segment-prefix*
-     :movl (:eax 3) :eax)
-    (:ret)))
-
 (define-primitive-function fast-cdr-ebx ()
   "This is the actual CDR code.
 Cons cell is in EBX, which is preserved."
