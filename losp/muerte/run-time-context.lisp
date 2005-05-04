@@ -27,6 +27,7 @@
 (defclass run-time-context (t)
   ((name
     :initarg :name
+    :initform :anonymous
     :accessor run-time-context-name)
    (stack-vector
     :initarg :stack-vector))
@@ -92,8 +93,8 @@
   (let ((slot-location (slot-definition-location slot)))
     (check-type slot-location positive-fixnum)
     (lambda (instance)
-      (unbound-protect (svref (%run-time-context-slot 'slots instance) slot-location)
-		       (slot-unbound-trampoline instance slot-location)))))
+      (with-unbound-protect (svref (%run-time-context-slot 'slots instance) slot-location)
+	(slot-unbound-trampoline instance slot-location)))))
 
 (defmethod compute-effective-slot-writer ((class run-time-context-class) slot)
   (let ((slot-location (slot-definition-location slot)))
@@ -104,7 +105,7 @@
 
 (defmethod print-object ((x run-time-context) stream)
   (print-unreadable-object (x stream :type t :identity t)
-    (format stream " ~S" (%run-time-context-slot 'name x)))
+    (format stream "~S" (run-time-context-name x)))
   x)
 
 ;;;
@@ -142,7 +143,7 @@
 				    (name :anonymous))
   (check-type parent run-time-context)
   (let ((context (%shallow-copy-object parent (movitz-type-word-size 'movitz-run-time-context))))
-    (setf (%run-time-context-slot 'name context) name
+    (setf (%run-time-context-slot 'slots context) (copy-seq (%run-time-context-slot 'slots parent))
 	  (%run-time-context-slot 'self context) context
 	  (%run-time-context-slot 'atomically-continuation context) 0)
     context))
