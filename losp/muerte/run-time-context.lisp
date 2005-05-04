@@ -39,11 +39,9 @@
 
 (defmethod slot-value-using-class ((class run-time-context-class) object
 				   (slot standard-effective-slot-definition))
-  (let ((x (svref (%run-time-context-slot 'slots object)
-		  (slot-definition-location slot))))
-    (if (eq x (load-global-constant new-unbound-value))
-	(slot-unbound class object (slot-definition-name slot))
-      x)))
+  (with-unbound-protect (svref (%run-time-context-slot 'slots object)
+			       (slot-definition-location slot))
+    (slot-unbound class object (slot-definition-name slot))))
 
 (defmethod (setf slot-value-using-class) (new-value (class run-time-context-class) object
 					  (slot standard-effective-slot-definition))
