@@ -2317,6 +2317,7 @@ falling below the label."
 			 (setq p `((:call (:edi ,(global-constant-offset newf))))
 			       next-pc (nthcdr 2 pc))
 			 (explain nil "Changed [~S ~S] to ~S" i i2 newf)))
+		      #+ignore
 		      ((and (global-funcall-p i '(fast-cdr))
 			    (global-funcall-p i2 '(fast-cdr))
 			    (global-funcall-p i3 '(fast-cdr)))
