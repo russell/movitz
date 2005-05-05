@@ -346,8 +346,8 @@ duo-space where each space is KB-SIZE kilobytes."
       (without-interrupts
 	(let* ((space0 (%run-time-context-slot 'nursery-space))
 	       (space1 (space-other space0)))
-	  (check-type space0 vector-u32)
-	  (check-type space1 vector-u32)
+	  (check-type space0 (simple-array (unsigned-byte 32) 1))
+	  (check-type space1 (simple-array (unsigned-byte 32) 1))
 	  (assert (eq space0 (space-other space1)))
 	  (assert (= 2 (space-fresh-pointer space1)))
 	  (setf (%run-time-context-slot 'nursery-space) space1)
