@@ -94,18 +94,6 @@ NB! ensure that the table object isn't garbage-collected."
   (format *terminal-io* "~&Stack-stopper halt.")
   (loop (halt-cpu)))
 
-(defun control-stack-fixate (stack)
-  (let ((stack-base (+ 2 (object-location stack))))
-    (do ((frame (control-stack-ebp stack)))
-	((zerop (stack-frame-uplink stack frame)))
-      (assert (typep (stack-frame-funobj stack frame) 'function))
-      (let ((previous-frame frame))
-	(setf frame (stack-frame-uplink stack frame))
-	(incf (stack-frame-ref stack previous-frame 0)
-	      stack-base)))
-    (values (+ (control-stack-ebp stack) stack-base)
-	    (+ (control-stack-esp stack) stack-base))))	       
-
 (defun alloc-context (segment-descriptor-table)
   (let* ((fs-index 8)
 	 (thread (muerte::clone-run-time-context :name 'subthread)))

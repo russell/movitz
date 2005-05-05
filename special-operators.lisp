@@ -283,7 +283,7 @@ and the correspondig returns mode (secondary value)."
 	  (setf (movitz-symbol-value (movitz-read name)) code-vector)
 	  (when symtab-property
 	    (setf (movitz-env-get name :symtab)
-	      (translate-program symtab :movitz :muerte)))
+	      (muerte::translate-program symtab :movitz :muerte)))
 	  (compiler-values ()))))))
 
 (define-special-operator define-prototyped-function (&form form)

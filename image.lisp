@@ -572,8 +572,8 @@
     muerte:run-time-context
     muerte.mop:standard-effective-slot-definition
     muerte.mop:funcallable-standard-class
-    muerte:basic-restart
-    muerte:illegal-object))
+    muerte::basic-restart
+    muerte::illegal-object))
 
 (defun class-object-offset (name)
   (let ((name (translate-program name :cl :muerte.cl)))

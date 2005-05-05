@@ -613,9 +613,15 @@
   (defun movitz-make-instance-run-time-context (metaclass &rest all-keys &key name direct-superclasses direct-slots size slot-map plist &allow-other-keys)
     (declare (ignore all-keys))
     (let ((class (std-allocate-instance metaclass)))
-      (when size (setf (std-slot-value class 'size) size))
-      (setf (std-slot-value class 'slot-map) slot-map
-	    (std-slot-value class 'plist) plist)
+      (setf (std-slot-value class 'size)
+	(or size (bt:sizeof 'movitz::movitz-run-time-context)))
+      (setf (std-slot-value class 'slot-map)
+	(or slot-map
+	    (movitz::slot-map 'movitz::movitz-run-time-context
+			      (cl:+ (bt:slot-offset 'movitz::movitz-run-time-context
+						    'movitz::run-time-context-start)
+				    0))))
+      (setf (std-slot-value class 'plist) plist)
       (setf (movitz-class-name class) name)
       (setf (class-direct-subclasses class) ())
       (setf (class-direct-methods class) ())

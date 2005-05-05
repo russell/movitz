@@ -1,6 +1,6 @@
 ;;;;------------------------------------------------------------------
 ;;;; 
-;;;;    Copyright (C) 2001-2004, 
+;;;;    Copyright (C) 2001-2005, 
 ;;;;    Department of Computer Science, University of Tromso, Norway.
 ;;;; 
 ;;;;    For distribution policy, see the accompanying file COPYING.
@@ -22,7 +22,7 @@
 (defun idt-init ()
   (init-pic8259 32 40)
   (setf (pic8259-irq-mask) #xffff)
-  (load-idt (load-global-constant interrupt-descriptor-table))
+  (load-idt (muerte::load-global-constant muerte::interrupt-descriptor-table))
   nil)
 
 (defun timer-init ()

@@ -333,17 +333,11 @@ duo-space where each space is KB-SIZE kilobytes."
 
 
 (defparameter *x* #4000(nil))		; Have this in static space.
-(defparameter *xx* #4000(nil))		; Have this in static space.
+;;;(defparameter *xx* #4000(nil))		; Have this in static space.
 
 (defparameter *code-vector-foo* 0)
 (defvar *old-code-vectors* #250())
 (defvar *new-code-vectors* #250())
-
-(defun debug (location x)
-  (setf (dummy x)
-    (let ((new (shallow-copy x)))
-      (warn "[~S] Migrating code-vector ~Z => ~Z." location x new)
-      new)))
 
 (defun stop-and-copy (&optional evacuator)
   (setf (fill-pointer *x*) 0)
