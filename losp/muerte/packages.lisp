@@ -30,6 +30,8 @@
   shadowing-symbols-list
   use-list)
 
+(defvar *packages*)			; Set by dump-image.
+
 (defun package-name (object)
   (package-object-name (find-package object)))
 
@@ -42,9 +44,7 @@
     (find-package-string (string name))))
 
 (defun find-package-string (name &optional (start 0) (end (length name)) (key 'identity))
-  (values (gethash-string name start end
-			  (get-global-property :packages)
-			  nil key)))
+  (values (gethash-string name start end *packages* nil key)))
 
 (defun assert-package (name)
   (or (find-package name)
@@ -54,7 +54,7 @@
   (let (pkgs)
     (maphash (lambda (k v)
                (pushnew v pkgs))
-             (get-global-property :packages))
+             *packages*)
     pkgs))
 
 (defun find-symbol-string (name start end key &optional (package *package*))
@@ -117,7 +117,7 @@
 	(symbol-var (gensym))
 	(loop-tag (gensym))
 	(end-tag (gensym)))
-    `(with-hash-table-iterator (,next-package (get-global-property :packages))
+    `(with-hash-table-iterator (,next-package *packages*)
        (do () (nil)
 	 (multiple-value-bind (,more-packages-var ,dummy ,package-var)
 	     (,next-package)

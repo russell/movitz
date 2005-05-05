@@ -327,9 +327,6 @@
      x)
     (t (error "Not a function: ~S" x))))
 
-(defun get-global-property (property)
-  (getf (load-global-constant global-properties) property))
-
 (define-compiler-macro object-location (object)
   "The location is the object's address divided by fixnum-factor."
   `(with-inline-assembly (:returns :register :type fixnum)
