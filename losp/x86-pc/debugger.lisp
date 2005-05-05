@@ -460,7 +460,7 @@ be provided for those cases."
   (loop with location = (truncate eip 4)
       for (slot-name type) in (slot-value (class-of context) 'slot-map)
       do (when (eq type 'code-vector-word)
-	   (let ((code-vector (%run-time-context-slot slot-name)))
+	   (let ((code-vector (%run-time-context-slot nil slot-name)))
 	     (when (location-in-object-p code-vector location)
 	       (return (values slot-name (code-vector-offset code-vector eip))))))))
 
@@ -629,7 +629,7 @@ be provided for those cases."
 		     thereis (match-funobj (method-function m) instruction-location (1- limit))))))))
     (or (loop for (slot-name type) in (slot-value (class-of (current-run-time-context)) 'slot-map)
 	    do (when (and (eq type 'code-vector-word)
-			  (location-in-object-p (%run-time-context-slot slot-name)
+			  (location-in-object-p (%run-time-context-slot nil slot-name)
 						instruction-location))
 		 (return (values slot-name :run-time-context))))
 	(with-hash-table-iterator (hashis *setf-namespace*)
