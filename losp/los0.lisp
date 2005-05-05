@@ -1077,9 +1077,9 @@ The following prints ``The inner catch returns :SECOND-THROW'' and then returns 
    (t (describe x)))
   (values))
 
-(muerte.toplevel:define-toplevel-command :bochs-trace (form)
-  (muerte::with-bochs-tracing ()
-    (eval form)))
+;;;(muerte.toplevel:define-toplevel-command :bochs-trace (form)
+;;;  (muerte::with-bochs-tracing ()
+;;;    (eval form)))
 
 (muerte.toplevel:define-toplevel-command :mapkey (code-char-form)
   (let* ((code-char (eval code-char-form))
