@@ -226,17 +226,6 @@ respect to multiple threads."
        (error 'end-of-file :stream ,stream)
        ,eof-value))
 
-
-(defmacro with-bochs-tracing ((&optional (value 1)) &body body)
-  "Bochs magic."
-  `(let ((old-flags (muerte::%run-time-context-slot 'bochs-flags)))
-     (unwind-protect
-	 (progn
-	   (setf (muerte::%run-time-context-slot 'bochs-flags) ,value)
-	   ,@body)
-       (setf (muerte::%run-time-context-slot 'bochs-flags) old-flags))))
-
-
 (defmacro handler-bind (bindings &body forms)
   (if (null bindings)
       `(progn ,@forms)
