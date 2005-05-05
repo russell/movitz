@@ -332,7 +332,7 @@ duo-space where each space is KB-SIZE kilobytes."
       (values))))
 
 
-(defparameter *x* #4000(nil))		; Have this in static space.
+(defparameter *x* #1000(nil))		; Have this in static space.
 ;;;(defparameter *xx* #4000(nil))		; Have this in static space.
 
 (defparameter *code-vector-foo* 0)
@@ -364,6 +364,7 @@ duo-space where each space is KB-SIZE kilobytes."
 		   nil)
 		  ((object-in-space-p newspace x)
 		   x)
+		  #+ignore
 		  ((and (typep x 'code-vector)
 			(not (object-in-space-p oldspace x))
 			(not (object-in-space-p newspace x))
