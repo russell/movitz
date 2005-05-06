@@ -222,7 +222,7 @@ funcallable-instance will run the new function."
   (case class-name
     ((t) (setf (%run-time-context-slot nil 'the-class-t) class))
     (null (setf (%run-time-context-slot nil 'the-class-null) class))
-    (symbol (setf (%run-time-context-slot 'nil the-class-symbol) class))
+    (symbol (setf (%run-time-context-slot nil 'the-class-symbol) class))
     (fixnum (setf (%run-time-context-slot nil 'the-class-fixnum) class))
     (cons (setf (%run-time-context-slot nil 'the-class-cons) class)))
   (let ((map (load-global-constant classes)))
