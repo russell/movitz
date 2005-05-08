@@ -992,7 +992,7 @@ integer (native lisp) value."
 
 
 (defconstant +undefined-hash-key+
-    'muerte::hash-table-undefined-key)
+    'muerte::--no-hash-key--)
 
 (defun movitz-sxhash (object)
   "Must match the SXHASH function in :cl/hash-tables."

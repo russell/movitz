@@ -60,8 +60,7 @@
   (when index
     (do ((length (array-dimension bucket 0)))
 	((>= index length) nil)
-      (unless (eq (svref bucket index)
-		  '--no-hash-key--)
+      (unless (eq (svref bucket index) '--no-hash-key--)
 	(return (+ index 2)))
       (incf index 2))))
 

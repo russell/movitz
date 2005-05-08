@@ -1116,6 +1116,9 @@
 	   #:backtrace
 
 	   #:dit-frame-ref
+	   #:stack-frame-ref
+	   #:stack-frame-uplink
+	   #:stack-frame-funobj
 	   #:check-stack-limit
 	   #:current-stack-frame
 	   #:interrupt-default-handler
@@ -1148,6 +1151,7 @@
 	   #:object-location
 	   #:object-tag
 	   #:location-in-object-p
+	   #:location-physical-offset
 	   #:define-compile-time-variable
 	   #:define-primitive-function
 	   #:without-gc

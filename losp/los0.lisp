@@ -44,7 +44,8 @@
 ;; 	#:muerte.ip6
 	#:muerte.ip4
 	#:muerte.mop
-	#:muerte.x86-pc.serial))
+	#:muerte.x86-pc.serial
+	#:threading))
 
 (require :los0-gc)			; Must come after defpackage.
 
@@ -1365,7 +1366,7 @@ Can be used to measure the overhead of primitive function."
       (setf *package* (find-package "INIT"))
       (when muerte::*multiboot-data*
 	(set-textmode +vga-state-90x30+))
-      
+
       (cond
        ((not (cpu-featurep :tsc))
 	(warn "This CPU has no time-stamp-counter. Timer-related functions will not work."))
@@ -1379,6 +1380,10 @@ Can be used to measure the overhead of primitive function."
 		       *standard-input* s
 		       *terminal-io* s
 		       *debug-io* s)))
+    
+    (setf threading:*segment-descriptor-table-manager*
+      (make-instance 'threading:segment-descriptor-table-manager))
+    
 ;;;    (ignore-errors
 ;;;     (setf (symbol-function 'write-char)
 ;;;       (muerte.x86-pc.serial::make-serial-write-char :baudrate 38400))

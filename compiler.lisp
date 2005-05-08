@@ -1378,7 +1378,7 @@ a (lexical-extent) sub-function might care about its parent frame-map."
       (let* ((muerte.cl::*compile-file-pathname* path)
 	     (*package* (find-package :muerte))
 	     (funobj (make-instance 'movitz-funobj-pass1
-		       :name (intern (format nil "file-~A" path) :muerte)
+		       :name (intern (format nil "~A" path) :muerte)
 		       :lambda-list (movitz-read nil)))
 	     (funobj-env (make-local-movitz-environment nil funobj
 							:type 'funobj-env
