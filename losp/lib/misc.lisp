@@ -22,7 +22,7 @@
 (defun checksum-octets (packet &optional (start 0) (end (length packet)))
   "Generate sum of 16-bit big-endian words for a sequence of octets."
   (typecase packet
-    ((simple-array (unsigned-byte 8))
+    ((simple-array (unsigned-byte 8) 1)
      (assert (<= 0 start end (length packet)))
      (with-inline-assembly (:returns :eax)
        (:compile-form (:result-mode :ebx) packet)

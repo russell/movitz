@@ -1,6 +1,6 @@
 ;;;;------------------------------------------------------------------
 ;;;; 
-;;;;    Copyright (C) 2001-2004, 
+;;;;    Copyright (C) 2001-2005, 
 ;;;;    Department of Computer Science, University of Tromso, Norway.
 ;;;; 
 ;;;;    For distribution policy, see the accompanying file COPYING.
@@ -853,6 +853,15 @@ and return accessors for that subsequence (fast & unsafe accessors, that is)."
     (setf (fill-pointer vector) p)
     (aref vector p)))
 
+(defun vector-read (vector)
+  "Like vector-pop, only in the other direction."
+  (let ((x (aref vector (fill-pointer vector))))
+    (incf (fill-pointer vector))
+    x))
+
+(defun vector-read-more-p (vector)
+  (< (fill-pointer vector) (array-dimension vector 0)))
+
 (defun vector-push-extend (new-element vector &optional extension)
   (declare (ignore extension))
   (check-type vector vector)
@@ -916,3 +925,12 @@ and return accessors for that subsequence (fast & unsafe accessors, that is)."
 		     ((eq dim '*))
 		     ((= dim (array-dimension x d)))
 		     (t (return nil)))))))))
+
+(defun ensure-data-vector (vector start length)
+  (let ((end (typecase vector
+	       ((simple-array (unsigned-byte 8) 1)
+		(array-dimension vector 0))
+	       (t (error "Not a data vector: ~S" vector)))))
+    (assert (<= (+ start length) end) (vector)
+      "Data vector too small.")
+    vector))

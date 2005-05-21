@@ -1233,6 +1233,7 @@
 	   
 	   #:memref
 	   #:memref-int
+	   #:memrange
 
 	   #:io-port
 	   #:io-register8
@@ -1264,6 +1265,9 @@
 	   #:segment-descriptor-limit
 	   #:control-register-lo12
 	   #:control-register-hi20
+	   #:ensure-data-vector
+	   #:vector-read
+	   #:vector-read-more-p
 	   ))
 
 
