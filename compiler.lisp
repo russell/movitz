@@ -3986,9 +3986,17 @@ loading borrowed bindings."
 	     (let ((value (movitz-bignum-value object)))
 	       (make-immediate-move (ldb (byte 32 0) value) :ecx)))
 	    (:lexical-binding
-	     (append `((:movl ,(new-make-compiled-constant-reference movitz-obj funobj)
-			      :eax))
-		     (make-store-lexical result-mode :eax nil funobj frame-map)))
+	     (cond
+	      ((and (typep movitz-obj 'movitz-bignum)
+		    (eq :untagged-fixnum-ecx
+			(new-binding-location result-mode frame-map :default nil)))
+	       (make-immediate-move (ldb (byte 32 0) (movitz-bignum-value movitz-obj))
+				    :ecx))
+	      (t #+ignore (warn "load to ~S at ~S from ~S"
+		       result-mode (new-binding-location result-mode frame-map) movitz-obj)
+		 (append `((:movl ,(new-make-compiled-constant-reference movitz-obj funobj)
+				  :eax))
+			 (make-store-lexical result-mode :eax nil funobj frame-map)))))
 	    (:push
 	     `((:pushl ,(new-make-compiled-constant-reference movitz-obj funobj))))
 	    ((:eax :ebx :ecx :edx :esi)
