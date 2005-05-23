@@ -3694,10 +3694,15 @@ loading borrowed bindings."
 		   "store-lexical argnum can't be ~A." (function-argument-argnum binding))
 		 `((:movl ,source (:ebp ,(argument-stack-offset binding)))))
 		(:untagged-fixnum-ecx
-		 (append (unless (member source '(:ecx :untagged-fixnum-ecx))
-			   `((:movl ,source :ecx)))
-			 (unless (eq source :untagged-fixnum-ecx)
-			   `((:sarl ,+movitz-fixnum-shift+ :ecx)))))))))))))
+		 (cond
+		  ((eq source :untagged-fixnum-ecx)
+		   nil)
+		  ((eq source :eax)
+		   `((,*compiler-global-segment-prefix*
+		      :call (:edi ,(global-constant-offset 'unbox-u32)))))
+		  (t `((:movl ,source :eax)
+		       (,*compiler-global-segment-prefix*
+			:call (:edi ,(global-constant-offset 'unbox-u32)))))))))))))))
 
 (defun finalize-code (code funobj frame-map)
   ;; (print-code 'to-be-finalized code)
