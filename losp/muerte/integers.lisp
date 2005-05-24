@@ -427,6 +427,13 @@
     (list 'integer 0 (1- (ash 1 size))))
    (t (error "Illegal size for unsigned-byte."))))
 
+(define-typep rational (x &optional (lower-limit '*) (upper-limit '*))
+  (and (typep x 'rational)
+       (or (eq lower-limit '*)
+	   (<= lower-limit x))
+       (or (eq upper-limit '*)
+	   (<= x upper-limit))))
+
 (deftype real (&optional (lower-limit '*) (upper-limit '*))
   `(or (integer ,lower-limit ,upper-limit)
        (rational ,lower-limit ,upper-limit)))
