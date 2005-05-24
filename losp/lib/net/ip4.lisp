@@ -31,8 +31,8 @@
 	   #:*ip4-nic*
 	   #:*ip4-ip*
 	   #:*ip4-router*
-	   
-	   #:with-ip4-header))
+	   #:with-ip4-header
+	   #:dhcp-init))
 
 (in-package muerte.ip4)
 
