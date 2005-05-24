@@ -3990,10 +3990,16 @@ loading borrowed bindings."
 	      ((and (typep movitz-obj 'movitz-bignum)
 		    (eq :untagged-fixnum-ecx
 			(new-binding-location result-mode frame-map :default nil)))
+	       (unless (typep (movitz-bignum-value movitz-obj) '(unsigned-byte 32))
+		 (warn "Loading non-u32 ~S into ~S."
+		       (movitz-bignum-value movitz-obj)
+		       result-mode))
 	       (make-immediate-move (ldb (byte 32 0) (movitz-bignum-value movitz-obj))
 				    :ecx))
-	      (t #+ignore (warn "load to ~S at ~S from ~S"
-		       result-mode (new-binding-location result-mode frame-map) movitz-obj)
+	      (t (when (member (new-binding-location result-mode frame-map :default nil)
+			       '(:ebx :ecx :edx :esi))
+		   (warn "load to ~S at ~S from ~S"
+			 result-mode (new-binding-location result-mode frame-map) movitz-obj))
 		 (append `((:movl ,(new-make-compiled-constant-reference movitz-obj funobj)
 				  :eax))
 			 (make-store-lexical result-mode :eax nil funobj frame-map)))))
