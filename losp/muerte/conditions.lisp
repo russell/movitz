@@ -280,8 +280,9 @@ Return the condition object, if there was one."
     (setf *debugger-function* #'muerte.init::my-debugger))
   (cond
    ((not *debugger-function*)
-    (format t "~&No debugger in *debugger-function*. Trying to abort.")
-    (invoke-restart (or (find-restart 'abort)
+    (format t "~&No debugger in *debugger-function*. Trying to continue or abort.")
+    (invoke-restart (or (find-restart 'continue)
+			(find-restart 'abort)
 			(format t "~%Condition for debugger: ~Z" condition)
 			(format t "~%No abort restart is active. Halting CPU.")
 			(halt-cpu))))
