@@ -343,7 +343,8 @@ integer (native lisp) value."
 		   :u16 3
 		   :u32 4
 		   :bit 5
-		   :code 6)
+		   :code 6
+		   :indirects 7)
     :initarg :element-type
     :reader movitz-vector-element-type)
    (fill-pointer
