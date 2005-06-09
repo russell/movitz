@@ -26,6 +26,7 @@
 (require :lib/toplevel)
 ;; (require :lib/net/ip6)
 (require :lib/net/ip4)
+(require :lib/net/dhcp)
 (require :lib/repl)
 
 ;; (require :ll-testing)
@@ -876,16 +877,6 @@ The following prints ``The inner catch returns :SECOND-THROW'' and then returns 
 	    with end-time = (+ start-time (* seconds internal-time-units-per-second))
 	    while (< (get-internal-run-time) end-time)))))
   (values))
-
-
-;;;(defun get-internal-run-time ()
-;;;  (multiple-value-bind (lo mid hi)
-;;;      (read-time-stamp-counter)
-;;;    (declare (ignore lo))
-;;;    (dpb hi (byte 5 24) mid)))
-;;;
-;;;(defun get-internal-real-time ()
-;;;  (get-internal-run-time))
 
 
 (defun y-or-n-p (&optional control &rest arguments)

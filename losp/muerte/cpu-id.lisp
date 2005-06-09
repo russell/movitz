@@ -247,8 +247,7 @@ This is an illegal instruction on lesser CPUs, and a no-op on some, such as boch
   (setf (eflags) value))
 
 (defun load-idt (idt-vector)
-  (assert (= #.(bt:enum-value 'movitz::movitz-vector-element-type :u32)
-	     (vector-element-type idt-vector)))
+  (check-type idt-vector (simple-array (unsigned-byte 32) 1))
   (let ((limit (- (* (length idt-vector) 4)
 		  1)))
     ;; (format t "Load-idt: ~Z / ~D~%" idt-vector limit)
