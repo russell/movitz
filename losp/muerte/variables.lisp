@@ -1,6 +1,6 @@
 ;;;;------------------------------------------------------------------
 ;;;; 
-;;;;    Copyright (C) 2003-2004, 
+;;;;    Copyright (C) 2003-2005, 
 ;;;;    Department of Computer Science, University of Tromso, Norway.
 ;;;; 
 ;;;;    For distribution policy, see the accompanying file COPYING.
@@ -42,5 +42,7 @@
 (defvar *multiboot-data* nil)
 
 (defvar internal-time-units-per-second)
+
+(defvar *gc-hooks* nil)
 
 (declaim (special *build-number*))

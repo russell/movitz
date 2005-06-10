@@ -1253,6 +1253,7 @@
 	   #:cpu-featurep
 	   #:find-cpu-features
 	   #:*cpu-features*
+	   #:*gc-hooks*
 	   #:write-cpu-vendor-string
 	   #:read-time-stamp-counter
 	   #:clear-time-stamp-counter

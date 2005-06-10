@@ -493,7 +493,8 @@ oldspace: ~Z, newspace: ~Z, i: ~D"
 	  (format t "Old space: ~/muerte:pprint-clumps/, new space: ~
 ~/muerte:pprint-clumps/, freed: ~/muerte:pprint-clumps/.~%"
 		  old-size new-size (- old-size new-size))))
-
+      (dolist (hook *gc-hooks*)
+	(funcall hook))
       (initialize-space oldspace)
       (fill oldspace #x13 :start 2)
       ;; (setf *gc-stack2* *gc-stack*)
