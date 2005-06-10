@@ -33,8 +33,11 @@
   ((table
     :reader segment-descriptor-table
     :initarg :table
-    :initform (setf (muerte::global-segment-descriptor-table)
-		(muerte::dump-global-segment-table :entries 64)))
+    :initform (let ((table (muerte::dump-global-segment-table :entries 64)))
+		(push (lambda ()
+			(setf (muerte::global-segment-descriptor-table) table))
+		      *gc-hooks*)
+		(setf (muerte::global-segment-descriptor-table) table)))
    (clients
     :initform (make-array 64))
    (range-start
