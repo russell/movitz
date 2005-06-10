@@ -180,8 +180,12 @@ start-location and end-location."
 	      (setf *scan-last* (%word-offset scan #.(movitz:tag :other)))
 	      (incf scan (1+ (logand (1+ len) -2)))))
 	   ((scavenge-typep x :basic-vector)
-	    (if (scavenge-wide-typep x :basic-vector
-				     #.(bt:enum-value 'movitz:movitz-vector-element-type :any-t))
+	    (if (or (scavenge-wide-typep x :basic-vector
+					 #.(bt:enum-value 'movitz:movitz-vector-element-type
+							  :any-t))
+		    (scavenge-wide-typep x :basic-vector
+					 #.(bt:enum-value 'movitz:movitz-vector-element-type
+							  :indirects)))
 		(setf *scan-last* (%word-offset scan #.(movitz:tag :other)))
 	      (error "Scanned unknown basic-vector-header ~S at location #x~X." x scan)))
 	   ((and (eq x 3) (eq x2 0))
