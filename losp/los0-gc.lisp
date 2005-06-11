@@ -411,15 +411,14 @@ duo-space where each space is KB-SIZE kilobytes."
 	(dolist (range muerte::%memory-map-roots%)
 	  (map-header-vals evacuator (car range) (cdr range))))
       ;; Scan newspace, Cheney style.
-      (with-simple-restart (nil "Cheney-scanning newspace.")
-	(loop with newspace-location = (+ 2 (object-location newspace))
-	    with scan-pointer = 2
-	    as fresh-pointer = (space-fresh-pointer newspace)
-	    while (< scan-pointer fresh-pointer)
-	    do (map-header-vals evacuator
-				(+ newspace-location scan-pointer)
-				(+ newspace-location (space-fresh-pointer newspace)))
-	       (setf scan-pointer fresh-pointer)))
+      (loop with newspace-location = (+ 2 (object-location newspace))
+	  with scan-pointer = 2
+	  as fresh-pointer = (space-fresh-pointer newspace)
+	  while (< scan-pointer fresh-pointer)
+	  do (map-header-vals evacuator
+			      (+ newspace-location scan-pointer)
+			      (+ newspace-location (space-fresh-pointer newspace)))
+	     (setf scan-pointer fresh-pointer))
       ;; Consistency check..
       (map-stack-vector (lambda (x foo)
 			  (declare (ignore foo))
