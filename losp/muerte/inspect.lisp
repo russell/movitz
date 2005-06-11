@@ -257,7 +257,7 @@ Otherwise, stack-frame is an absolute location."
     (symbol
      (copy-symbol old t))
     (vector
-     (copy-vector old))
+     (shallow-copy-vector old))
     (function
      (copy-funobj old))
     (structure-object
