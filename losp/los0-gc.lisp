@@ -22,7 +22,7 @@
 (defvar *gc-running* nil)
 (defvar *gc-break* nil)
 (defvar *gc-trigger* nil)
-(defvar *gc-consitency-check* t) 
+(defvar *gc-consistency-check* nil)
 
     
 (defmacro space-fresh-pointer (space)
@@ -397,7 +397,7 @@ duo-space where each space is KB-SIZE kilobytes."
 				     forwarded-x)))
 			 (let ((forward-x (shallow-copy x)))
 			   (when (and (typep x 'muerte::pointer)
-				      *gc-consitency-check*)
+				      *gc-consistency-check*)
 			     (let ((a *x*))
 			       (vector-push (%object-lispval x) a)
 			       (vector-push (memref (object-location x) 0 :type :unsigned-byte32) a)
@@ -425,7 +425,7 @@ duo-space where each space is KB-SIZE kilobytes."
 			  x)
 			nil
 			(current-stack-frame))
-      (when *gc-consitency-check*
+      (when *gc-consistency-check*
 	(with-simple-restart (continue "Ignore failed GC consistency check.")
 	  (without-interrupts
 	    (let ((a *x*))
