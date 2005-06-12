@@ -1,6 +1,6 @@
 ;;;;------------------------------------------------------------------
 ;;;; 
-;;;;    Copyright (C) 20012000, 2002-2004,
+;;;;    Copyright (C) 20012000, 2002-2005,
 ;;;;    Department of Computer Science, University of Tromso, Norway
 ;;;; 
 ;;;; Filename:      lists.lisp
@@ -140,17 +140,6 @@
 
 (defun (setf nth) (value n list)
   (setf (car (nthcdr n list)) value))
-
-(defun tree-equal (tree-1 tree-2 &key (test 'equal))
-  (cond
-   ((atom tree-1)
-    (and (atom tree-2)
-	 (funcall test tree-1 tree-2)))
-   ((atom tree-2)
-    nil)
-   (t (and (tree-equal (car tree-1) (car tree-2) :test test)
-	   (tree-equal (cdr tree-1) (cdr tree-2) :test test)))))
-
 
 (defun nconc (&rest lists)
   (declare (dynamic-extent lists))
