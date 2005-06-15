@@ -3606,8 +3606,8 @@ loading borrowed bindings."
 			 (dest-location (new-binding-location destination frame-map :default nil)))
 		    (cond
 		     ((not dest-location) ; unknown, e.g. a borrowed-binding.
-		      (append (install-for-single-value binding binding-location :ecx nil)
-			      (make-store-lexical result-mode :ecx nil funobj frame-map)))
+		      (append (install-for-single-value binding binding-location :edx nil)
+			      (make-store-lexical result-mode :edx nil funobj frame-map)))
 		     ((equal binding-location dest-location)
 		      nil)
 		     ((member binding-location '(:eax :ebx :ecx :edx))
@@ -3655,6 +3655,8 @@ loading borrowed bindings."
 	  (if (not shared-reference-p)
 	      (let ((tmp-reg (chose-free-register protect-registers)
 			     #+ignore(if (eq source :eax) :ebx :eax)))
+		(when (eq :ecx source)
+		  (break "loading a word from ECX?"))
 		`((:movl (:esi ,(+ (slot-offset 'movitz-funobj 'constant0) (* 4 slot)))
 			 ,tmp-reg)
 		  (:movl ,source (-1 ,tmp-reg))))
