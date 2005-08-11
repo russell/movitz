@@ -280,6 +280,8 @@ Return the condition object, if there was one."
     (setf *debugger-function* #'muerte.init::my-debugger))
   (cond
    ((not *debugger-function*)
+    (let ((*never-use-print-object* t))
+      (backtrace :spartan t))
     (format t "~&No debugger in *debugger-function*. Trying to continue or abort.")
     (invoke-restart (or (find-restart 'continue)
 			(find-restart 'abort)
