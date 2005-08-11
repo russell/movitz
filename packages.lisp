@@ -1264,6 +1264,9 @@
 	   #:segment-descriptor
 	   #:segment-descriptor-base-location
 	   #:segment-descriptor-limit
+	   #:segment-descriptor-type-s-dpl-p
+	   #:segment-descriptor-avl-x-db-g
+	   #:global-segment-descriptor-table
 	   #:control-register-lo12
 	   #:control-register-hi20
 	   #:ensure-data-vector

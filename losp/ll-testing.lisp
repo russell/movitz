@@ -37,19 +37,6 @@
 
 
 
-
-(defun format-segment-table (table &key (start 0) (end (truncate (length table) 2)))
-  (loop for i from start below end
-      as selector = (* i 8)
-      do (format t "~&~3X: base: #x~8,'0X, limit: #x~5,'0X, type-s-dpl-p: ~8,'0b, avl-x-db-g: ~4,'0b~%"
-		 selector
-		 (* 4 (segment-descriptor-base-location table selector))
-		 (segment-descriptor-limit table selector)
-		 (segment-descriptor-type-s-dpl-p table selector)
-		 (segment-descriptor-avl-x-db-g table selector)))
-  (values))
-
-
 (defmacro control-stack-fs (stack)
   `(stack-frame-ref ,stack 0 2))
 
