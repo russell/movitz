@@ -206,7 +206,8 @@ that reads from <io-base-form> plus some offset."
     `(let ((,io-var ,io-base-form))
        ;; (check-type ,io-var (unsigned-byte 16))
        (symbol-macrolet ((,name ,io-var))
-	 (macrolet ((,name (offset) `(io-register8 ,',io-var ,offset)))
+	 (macrolet ((,name (offset &optional (type :unsigned-byte8))
+		      `(io-port (+ ,',io-var ,offset) ,type)))
 	   ,@body)))))
 
 (define-compiler-macro io-register8x2 (io-base offset-hi offset-lo)
