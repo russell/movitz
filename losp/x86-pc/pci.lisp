@@ -53,8 +53,8 @@
 (defvar *bios32-base* nil)
 (defvar *pcibios-entry* nil)
 
-(defun pci-far-call (address &key (cs 8) (eax 0) (ebx 0) (ecx 0) (edx 0) (esi 0) (edi 0)
-				  (ds (segment-register :gs)))
+(defun pci-far-call (address &key (eax 0) (ebx 0) (ecx 0) (edx 0) (esi 0) (edi 0)
+				  (cs 8) (ds (segment-register :gs)))
   "Make a 'far call' to cs:address with the provided values for eax and ebx.
 Returns the boolean status of CF, and the values of registers EAX, EBX, ECX, and EDX.
 The stack discipline is broken during this call, so we disable interrupts
