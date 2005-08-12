@@ -116,6 +116,8 @@ is off, e.g. because this interrupt/exception is routed through an interrupt gat
 	    (:pushl :ecx)
 	    (:movcr :cr2 :ecx)
 	    (:locally (:pushl :ecx))
+	    (:movw #x20 :cx)
+	    (:movw :cx :ds)
 	    ,@(loop for reg in (sort (copy-list '(:eax :ebx :edx :esi))
 				     #'>
 				     :key #'dit-frame-index)
