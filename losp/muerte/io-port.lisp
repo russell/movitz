@@ -46,6 +46,16 @@
 	  (:shll ,movitz:+movitz-fixnum-shift+ :eax)
 	  (:movl :edi :edx)
 	  (:cld)))
+      (:unsigned-byte32
+       `(with-inline-assembly (:returns :untagged-fixnum-ecx)
+	  (:compile-form (:result-mode :edx) ,port)
+	  (:std)
+	  (:shrl ,movitz::+movitz-fixnum-shift+ :edx)
+	  (:inl :dx :eax)
+	  (:movl :eax :ecx)
+	  (:movl :edi :eax)
+	  (:movl :edi :edx)
+	  (:cld)))
       (:character
        `(with-inline-assembly (:returns :eax)
 	  (:compile-form (:result-mode :edx) ,port)
@@ -64,6 +74,8 @@
      (io-port port :unsigned-byte8))
     (:unsigned-byte16
      (io-port port :unsigned-byte16))
+    (:unsigned-byte32
+     (io-port port :unsigned-byte32))
     (:character
      (io-port port :character))))
 
