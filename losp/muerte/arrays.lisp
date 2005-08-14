@@ -134,8 +134,17 @@
      (memref array (movitz-type-slot-offset 'movitz-basic-vector 'num-elements)))))
 
 (defun array-dimensions (array)
+  (let (r)
+    (dotimes (d (array-rank array))
+      (push (array-dimension array d) r))
+    (nreverse r)))
+
+(defun array-rank (array)
   (etypecase array
-    (vector 1)))
+    (indirect-vector
+     1)
+    ((simple-array * 1)
+     1)))
 
 (defun shrink-vector (vector new-size)
   (check-type vector vector)
