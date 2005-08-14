@@ -697,22 +697,23 @@
 
 (defun coerce (object result-type)
   "=> result"
-  (flet ((c (object result-type actual-type)
-	   (cond
-	    ((typep object result-type)
-	     object)
-	    ((member result-type '(list array vector))
-	     (map result-type #'identity object))
-	    ((and (consp result-type)
-		  (eq (car result-type) 'vector))
-	     (let* ((p (cdr result-type))
-		    (et (if p (pop p) t))
-		    (size (if p (pop p) nil)))
-	       (make-array (or size (length object))
-			   :initial-contents object
-			   :element-type et)))
-	    ((not (eq nil result-type))
-	     (c object (expand-type result-type) actual-type))
-	    (t (error "Don't know how to coerce ~S to ~S." object actual-type)))))
+  (labels
+      ((c (object result-type actual-type)
+	 (cond
+	  ((typep object result-type)
+	   object)
+	  ((member result-type '(list array vector))
+	   (map result-type #'identity object))
+	  ((and (consp result-type)
+		(eq (car result-type) 'vector))
+	   (let* ((p (cdr result-type))
+		  (et (if p (pop p) t))
+		  (size (if p (pop p) nil)))
+	     (make-array (or size (length object))
+			 :initial-contents object
+			 :element-type et)))
+	  ((not (eq nil result-type))
+	   (c object (expand-type result-type) actual-type))
+	  (t (error "Don't know how to coerce ~S to ~S." object actual-type)))))
     (c object result-type result-type)))
 
