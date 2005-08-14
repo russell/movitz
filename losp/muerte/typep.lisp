@@ -589,7 +589,7 @@
 	       ((eq nil aet) nil)
 	     (when (equal xet aet) (return t))))
        (or (eq dimension-spec '*)
-	   (if (integerp dimension-spec)
+	   (if (typep dimension-spec 'integer)
 	       (= dimension-spec (array-rank x))
 	     (and (= (length dimension-spec) (array-rank x))
 		  (every (lambda (xdim adim)
