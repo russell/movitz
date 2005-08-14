@@ -258,7 +258,7 @@
 				 (every (lambda (c)
 					  (or (upper-case-p c)
 					      (member c '(#\+ #\- #\% #\$ #\* #\@ #\. #\&
-							  #\/ #\< #\> #\=))
+							  #\/ #\< #\> #\= #\_))
 					      (digit-char-p c)))
 					name)
 				 (not (every (lambda (c)
