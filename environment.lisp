@@ -292,12 +292,14 @@ the function sets up itself. Its parent env. must be a funobj-env."))
 ;;;	(warn "..with body ~W" macro-function)
 	(let ((expansion (funcall macro-function form environment)))
 	  (cond
-;; 	    ((member (if (atom form) form (car form))
-;; 		     '(do) :test #'string=)
-;; 		     (warn "Expanded ~S to ~S" form expansion)
-;; 		     expansion)
+	   #+ignore ((member (if (atom form) form (car form))
+			     '(setf pcnet-reg) :test #'string=)
+		     (warn "Expanded ~S to ~S" form expansion)
+		     expansion)
 	   (t
-	    ;; (warn "Expanded macro named ~A." (if (atom form) form (car form)))
+	    #+ignore (warn "Expanded ~A:~%~S."
+			   (if (atom form) form (car form))
+			   expansion)
 	    expansion)))))
 
 (defun movitz-macroexpand-1 (form &optional env)
