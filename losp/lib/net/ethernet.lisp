@@ -170,6 +170,8 @@
 	(ether-type packet start) type)
   packet)
 
+(deftype mac-address ()
+  '(vector (unsigned-byte 8) 6))
 
 (defclass ethernet-device ()
   ((mac-address
