@@ -281,6 +281,30 @@ in a somewhat feeble attempt to avoid trouble."
   (setf (pci-bios-config-space bus device function register #xb10b 8)
     value))
 
+
+(defmacro pci-config (register)
+  (cdr (or (assoc register
+		  '((:interrupt-line . #x3c)
+		    (:interrupt-pin . #x3d)
+		    (:base-addr . #x10)
+		    (:memspace . #x00)
+		    (:iospace . #x01)
+		    (:type . #x06)
+		    (:memspace64 . #x01)))
+	   (error "Unknown pci-config register: ~S" register))))
+
+(defun pci-device-address-maps (bus device function)
+  (loop for i upfrom (pci-config :base-addr) by 4 repeat 6
+      as base = (pci-bios-config-space-dword bus device function i)
+      unless (= 0 base) collect
+	(cond
+	 ((logbitp 0 base)
+	  (cons :io (logand base -4)))
+	 ((= 1 (ldb (byte 2 1) base))
+	  (cons :mem64 (logand base -16)))
+	 (t
+	  (cons :mem32 (logand base -16))))))
+	    
 (defun scan-pci-bus (bus)
   (loop for device from 0 to 31
       do (multiple-value-bind (vendor-id return-code)
@@ -298,5 +322,6 @@ in a somewhat feeble attempt to avoid trouble."
 		       (ldb (byte 8 0) class-rev)
 		       status)
 	       (format *query-io* "    Class:~{ ~@[~A~]~}"
-		       (multiple-value-list (pci-class (ldb (byte 24 8) class-rev))))))))
+		       (multiple-value-list (pci-class (ldb (byte 24 8) class-rev))))
+	       (format *query-io* "~S" (pci-device-address-maps bus device 0))))))
   (values))
