@@ -107,9 +107,6 @@
 (define-compiler-macro cond (&body cond-body)
   (cons 'compiled-cond cond-body))
 
-(defmacro if (test-form then-form &optional else-form)
-  `(cond (,test-form ,then-form) (t ,else-form)))
-
 (define-compiler-macro if (test-form then-form &optional else-form &environment env)
   (when (and (movitz:movitz-constantp then-form env) (movitz:movitz-constantp else-form env))
     (warn "if: ~S // ~S" then-form else-form))
