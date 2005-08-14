@@ -190,6 +190,12 @@
     :initform nil
     :accessor promiscuous-p)))
 
+(defmethod print-object ((x ethernet-device) s)
+  (print-unreadable-object (x s :type t :identity t)
+    (when (slot-boundp x 'mac-address)
+      (pprint-mac s (mac-address x)))))
+
+
 (defgeneric transmit (device packet &optional start end))
 (defgeneric receive (device &optional packet start))
 (defgeneric packet-available-p (device))
