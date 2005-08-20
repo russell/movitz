@@ -590,10 +590,10 @@
 	     (when (equal xet aet) (return t))))
        (or (eq dimension-spec '*)
 	   (if (typep dimension-spec 'integer)
-	       (= dimension-spec (array-rank x))
-	     (and (= (length dimension-spec) (array-rank x))
+	       (eql dimension-spec (array-rank x))
+	     (and (eql (length dimension-spec) (array-rank x))
 		  (every (lambda (xdim adim)
-			   (or (eq xdim '*) (= xdim adim)))
+			   (or (eq xdim '*) (eql xdim adim)))
 			 dimension-spec
 			 (array-dimensions x)))))))
       
