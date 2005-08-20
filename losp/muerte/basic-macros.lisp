@@ -1194,5 +1194,10 @@ busy-waiting loop on P4."
 (define-compiler-macro sti ()
   `(with-inline-assembly (:returns :nothing) (:sti)))
 
+
+(defmacro check-the (type form)
+  (let ((x (gensym "check-the-")))
+    `(the ,type (let ((,x ,form)) (check-type ,x ,type) ,x))))
+
 (require :muerte/setf)
 
