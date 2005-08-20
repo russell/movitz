@@ -66,18 +66,29 @@ that the msb isn't zero. DO NOT APPLY TO NON-BIGNUM VALUES!"
   (check-type old bignum)
   (%shallow-copy-object old (1+ (%bignum-bigits old))))
 
-(defun %make-bignum (bigits)
-  (assert (plusp bigits))
-  (macrolet
-      ((do-it ()
-	 `(let ((words (1+ bigits)))
-	    (with-non-pointer-allocation-assembly (words :fixed-size-p t
-							 :object-register :eax)
-	      (:load-lexical (:lexical-binding bigits) :ecx)
-	      (:shll 16 :ecx)
-	      (:orl ,(movitz:tag :bignum 0) :ecx)
-	      (:movl :ecx (:eax (:offset movitz-bignum type)))))))
-    (do-it)))
+(defun %make-bignum (bigits &optional fill)
+  (numargs-case
+   (1 (bigits)
+      (check-type bigits (unsigned-byte 14))
+      (macrolet
+	  ((do-it ()
+	     `(let ((words (1+ bigits)))
+		(with-non-pointer-allocation-assembly (words :fixed-size-p t
+							     :object-register :eax)
+		  (:load-lexical (:lexical-binding bigits) :ecx)
+		  (:shll 16 :ecx)
+		  (:orl ,(movitz:tag :bignum 0) :ecx)
+		  (:movl :ecx (:eax (:offset movitz-bignum type)))))))
+	(do-it)))
+   (t (bigits &optional fill)
+      (let ((bignum (%make-bignum bigits)))
+	(when fill
+	  (check-type fill (unsigned-byte 8))
+	  (dotimes (i (* 4 bigits))
+	    (setf (memref bignum (movitz-type-slot-offset 'movitz-bignum 'bigit0)
+			  :index i :type :unsigned-byte8)
+	      fill)))
+	bignum))))
 
 (defun print-bignum (x)
   (check-type x bignum)
