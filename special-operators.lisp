@@ -1015,6 +1015,7 @@ on the current result."
 		       ((:lexical-binding) result-mode))))
 	(compiler-values ()
 	  :returns returns
+	  :type 'number
 	  :code `((:add ,(movitz-binding term1 env) ,(movitz-binding term2 env) ,returns)))))))
 
 (define-special-operator muerte::include (&form form)

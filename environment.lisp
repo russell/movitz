@@ -225,7 +225,7 @@ the function sets up itself. Its parent env. must be a funobj-env."))
       (find-function-env (movitz-environment-uplink env) funobj)))
 
 (defun sub-env-p (sub-env env)
-  "Check if sub-env is a sub-environment of env."
+  "Check if sub-env is a sub-environment (or eq) of env."
   (cond
    ((not sub-env)
     nil)
