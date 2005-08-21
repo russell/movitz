@@ -692,6 +692,9 @@
 (deftype bit ()
   '(integer 0 1))
 
+(deftype index (&optional (step 1))
+  `(integer 0 ,(- #x1fffffff step)))
+
 (defun type-of (x)
   (class-name (class-of x)))
 
