@@ -19,8 +19,8 @@
   
 (in-package muerte)
 
-(deftype index ()
-  '(integer 0 #x1ffffffe))
+(deftype index (&optional (step 1))
+  `(integer 0 ,(- #x1fffffff step)))
 
 (defun sequencep (x)
   (or (typep x 'vector)

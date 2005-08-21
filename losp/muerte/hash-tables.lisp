@@ -120,7 +120,7 @@
 	 (bucket-length (length bucket))
 	 (start-i2 (rem (ash (funcall (hash-table-sxhash hash-table) key) 1) bucket-length))
 	 (i2 start-i2))
-    (declare (type index i2))
+    (declare (type (index 2) i2))
     (do () (nil)
       (let ((k (svref%unsafe bucket i2)))
 	(cond
