@@ -1300,6 +1300,26 @@ In sum this accounts for ~,1F%, or ~D bytes.~%;;~%"
       "No load funobj found for module ~S." module)
     (movitz-disassemble-funobj funobj :name module)))
 
+(defun movitz-disassemble-method (name lambda-list &optional qualifiers)
+  (let* ((gf (or (movitz-env-named-function name)
+		 (error "No function named ~S." name)))
+	 (specializing-lambda-list
+	  (subseq lambda-list 0
+		  (position-if (lambda (x)
+				 (and (symbolp x)
+				      (char= #\& (char (string x) 0))))
+			       lambda-list)))
+	 (specializers (mapcar #'muerte::find-specializer
+			       (mapcar (lambda (x)
+					 (if (consp x)
+					     (second x)
+					   'muerte.cl::t))
+				       specializing-lambda-list)))
+	 (method (muerte::movitz-find-method gf qualifiers specializers))
+	 (funobj (muerte::movitz-slot-value method 'muerte::function))
+	 (*print-base* 16))
+    (movitz-disassemble-funobj funobj)))
+
 (defparameter *recursive-disassemble-remember-funobjs* nil)
 
 (defun movitz-disassemble-funobj (funobj &key (name (movitz-funobj-name funobj)) ((:image *image*) *image*)
