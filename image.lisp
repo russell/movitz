@@ -923,9 +923,9 @@ a cons is an offset (the car) from some other code-vector (the cdr)."
 							:cl :muerte.cl))))
 		     (t (warn "not a symbol for plist: ~S has ~S" symbol plist)))))
 	  ;; pull in global properties
-	  (loop for var in (image-compile-time-variables *image*)
+	  (loop for (var value) on (image-compile-time-variables *image*) by #'cddr
 	      do (let ((mname (movitz-read var))
-		       (mvalue (movitz-read (symbol-value var))))
+		       (mvalue (movitz-read value)))
 		   (setf (movitz-symbol-value mname) mvalue)))
 	  (setf (movitz-symbol-value (movitz-read 'muerte::*packages*))
 	    (movitz-read (make-packages-hash))))
