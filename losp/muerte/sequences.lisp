@@ -797,7 +797,7 @@
 		  (q (nthcdr (- length start2 size) reverse-list) (cdr q))
 		  (i 0 (1+ i)))
 		 ((>= i size) (nreverse reverse-list))
-	       (delcare (index i))
+	       (declare (index i))
 	       (setf (car p) (car q))))))))
      ;; (not (eq sequence-1 sequence-2)) ..
      (t (sequence-dispatch sequence-1
