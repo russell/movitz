@@ -27,7 +27,8 @@
 (define-compile-time-variable *the-slots-of-standard-class* nil)
 (define-compile-time-variable *the-position-of-standard-effective-slots* nil)
 (define-compile-time-variable *the-class-standard-class* nil)
-
+(define-compile-time-variable *the-standard-method-combination* nil)
+    
 (eval-when (:compile-toplevel)		; extends to EOF
 
   (defvar *classes-with-old-slot-definitions* nil)
@@ -524,7 +525,7 @@
 	   (slots (std-instance-slots instance)))
       (setf (svref slots location) (muerte::translate-program value :cl :muerte.cl))))
   
-  (defun movitz-slot-vale (object slot-name)
+  (defun movitz-slot-value (object slot-name)
     (std-slot-value object (translate-program slot-name :cl :muerte.cl)))
 
   (defun (setf movitz-slot-value) (new-value object slot-name)
