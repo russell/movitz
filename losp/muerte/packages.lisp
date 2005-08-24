@@ -143,7 +143,8 @@
 		   (setf ,package-hash-var internals)
 		   (go ,loop-tag))))))))))
 
-(defmacro do-external-symbols ((var &optional (package *package*) result-form) &body declarations-and-body)
+(defmacro do-external-symbols
+    ((var &optional (package *package*) result-form) &body declarations-and-body)
   (let ((next-var (gensym))
 	(more-var (gensym))
 	(key-var (gensym)))
@@ -170,6 +171,7 @@
 			      (t (let ((x (pop ,use-list-var)))
 				   (and x (package-object-external-symbols x)))))))
 	 ((not ,hash-table-var) ,result-form)
+       (declare (index ,state-var))
        (with-hash-table-iterator (,next-var ,hash-table-var)
 	 (do () (nil)
 	   (multiple-value-bind (,more-var ,key-var ,var) (,next-var)
@@ -177,7 +179,6 @@
 	     (if ,more-var
 		 (let () ,@declarations-and-body)
 	       (return))))))))
-
 
 (defun apropos (string &optional package)
   (flet ((apropos-symbol (symbol string)
