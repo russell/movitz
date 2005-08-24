@@ -1351,7 +1351,7 @@ Can be used to measure the overhead of primitive function."
       (setf (global-segment-descriptor-table)
 	(muerte::dump-global-segment-table :entries 16)))
 
-    (install-los0-consing :kb-size 500)
+    (install-los0-consing :kb-size (* 10 1024))
     #+ignore
     (install-los0-consing :kb-size (max 50 (truncate (- extended-memsize 2048) 2))))
 

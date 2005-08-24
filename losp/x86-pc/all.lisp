@@ -1,6 +1,6 @@
 ;;;;------------------------------------------------------------------
 ;;;; 
-;;;;    Copyright (C) 2001-2004, 
+;;;;    Copyright (C) 2001-2005, 
 ;;;;    Department of Computer Science, University of Tromso, Norway.
 ;;;; 
 ;;;;    For distribution policy, see the accompanying file COPYING.
@@ -23,7 +23,7 @@
 (require :x86-pc/pit8253)
 (require :x86-pc/interrupt)
 (require :x86-pc/cmos)
-(require :x86-pc/pci)
+(require :x86-pc/pci-device)
 ;; (require :x86-pc/serial)
 (require :x86-pc/textmode-console)
 (require :x86-pc/debugger)
