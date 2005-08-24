@@ -1010,7 +1010,7 @@ and return basic-vector and accessors for that subsequence."
 (defun vector-push (new-element vector)
   (check-type vector vector)
   (let ((p (fill-pointer vector)))
-    (declare (type (unsigned-byte 16) p))
+    (declare (index p))
     (when (< p (array-dimension vector 0))
       (setf (aref vector p) new-element
 	    (fill-pointer vector) (1+ p))
