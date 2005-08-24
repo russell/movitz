@@ -14,6 +14,7 @@
 ;;;;                
 ;;;;------------------------------------------------------------------
 
+(require :muerte/typep)
 (provide :muerte/memref)
 
 (in-package muerte)
