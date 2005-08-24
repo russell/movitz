@@ -140,7 +140,7 @@
 	   (clumps (and start-mem (- (malloc-cons-pointer) start-mem)))
 	   (delta-time (+ (ash (- end-time-hi start-time-hi) 29)
 			  (- end-time-lo start-time-lo skew))))
-      (format t "~&;; CPU cycles: ~D.~%~@[;; Space used: ~D clumps = ~/muerte:pprint-clumps/.~]~%"
+      (format t "~&;; CPU cycles: ~:D.~%~@[;; Space used: ~D clumps = ~/muerte:pprint-clumps/.~]~%"
 	      delta-time clumps clumps))))
 
 (defmacro time (form)
