@@ -6808,7 +6808,7 @@ and a list of any intervening unwind-protect environment-slots."
 	    (loc1 (new-binding-location (binding-target term1) frame-map :default nil)))
 	#+ignore
 	(warn "add: ~A for ~A" instruction result-type)
-
+	#+ignore
 	(warn "add for: ~S is ~A, from ~A/~A and ~A/~A."
 	      destination result-type
 	      term0 loc0
