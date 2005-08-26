@@ -1098,6 +1098,7 @@
 	   #:read-key
 	   #:fixnump
 	   #:newline
+	   #:check-the
 	   
 	   #:*print-safely*
 	   
