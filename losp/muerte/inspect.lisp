@@ -262,6 +262,9 @@ Otherwise, stack-frame is an absolute location."
      (copy-funobj old))
     (structure-object
      (copy-structure old))
+    (ratio
+     (make-ratio (%ratio-numerator old)
+		 (%ratio-denominator old)))
     (run-time-context
      (%shallow-copy-object old (movitz-type-word-size 'movitz-run-time-context)))))
 
