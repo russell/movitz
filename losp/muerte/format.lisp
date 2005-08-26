@@ -79,6 +79,7 @@
 	     (i 0 (1+ i)))
 	    ((or (and (not d) (plusp i) (zerop remainder))
 		 (> i last-i)))
+	  (declare (index i))
 	  (multiple-value-bind (next-digit next-remainder)
 	      (if (= i last-i)
 		  (round (* 10 remainder))

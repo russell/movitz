@@ -803,6 +803,7 @@
 		   (let ((result (%make-bignum (1+ (ceiling result-length 32)))))
 		     (let ((src-max-bigit (* 2 (%bignum-bigits integer))))
 		       (dotimes (i (* 2 (%bignum-bigits result)))
+			 (declare (index i))
 			 (let ((src (+ i long)))
 			   (setf (memref result -2 :index i :type :unsigned-byte16)
 			     (if (< src src-max-bigit)

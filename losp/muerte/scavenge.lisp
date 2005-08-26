@@ -55,6 +55,7 @@ start-location and end-location."
 	 (*scan-last* nil)		; Last scanned object, for debugging.
 	 (scan start-location (1+ scan)))
 	((>= scan end-location))
+      (declare (fixnum scan))
       (with-simple-restart (continue-map-header-vals
 			    "Continue map-header-vals at location ~S." (1+ scan))
 	(let ((x (memref scan 0 :type :unsigned-byte16))

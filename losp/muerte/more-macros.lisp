@@ -117,8 +117,8 @@
 	   ,@declarations-and-body
 	   ,result-form))
        (t `(do ((,var 0 (1+ ,var)))
-	       ((>= ,var ,count-form) ,result-form)
-	     (declare (type (integer 0 ,count-form) ,var))
+	       ((>= ,var ,count) ,result-form)
+	     (declare (type (integer 0 ,count) ,var))
 	     ,@declarations-and-body))))))
 
 (defmacro dotimes ((var count-form &optional result-form) &body declarations-and-body)
