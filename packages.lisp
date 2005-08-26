@@ -1099,6 +1099,7 @@
 	   #:fixnump
 	   #:newline
 	   #:check-the
+	   #:index
 	   
 	   #:*print-safely*
 	   
