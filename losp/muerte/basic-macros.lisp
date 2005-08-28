@@ -1083,10 +1083,11 @@ busy-waiting loop on P4."
 
 (defmacro word-nibble (word-form nibble)
   (check-type nibble (integer 0 7))
-  `(with-inline-assembly (:returns :untagged-fixnum-eax)
+  `(with-inline-assembly (:returns :untagged-fixnum-ecx)
      (:compile-form (:result-mode :eax) ,word-form)
-     (:shrl ,(* 4 nibble) :eax)
-     (:andl #xf :eax)))
+     (:movl :eax :ecx)
+     (:shrl ,(* 4 nibble) :ecx)
+     (:andl #xf :ecx)))
 
 (define-compiler-macro boundp (symbol)
   `(with-inline-assembly-case ()
