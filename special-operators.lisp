@@ -82,21 +82,19 @@ The set of modified bindings."
      ((not (null then-forms))
       (let ((skip-label (gensym (format nil "cond-skip-~D-" clause-num))))
 	(compiler-values-bind (&code test-code)
-	    (multiple-value-bind (test-result-mode)
-		(cond
-		 ((and last-clause-p
-		       (eq (operator result-mode)
-			   :boolean-branch-on-false))
-		  (cons :boolean-branch-on-false
-			(cdr result-mode)))
-		 (t (cons :boolean-branch-on-false
-			  skip-label)))
-	      (compiler-call #'compile-form
-		:result-mode test-result-mode
-		:modify-accumulate clause-modifies
-		:form test-form
-		:funobj funobj
-		:env env))
+	    (compiler-call #'compile-form
+	      :result-mode (cond
+			    ((and last-clause-p
+				  (eq (operator result-mode)
+				      :boolean-branch-on-false))
+			     (cons :boolean-branch-on-false
+				   (cdr result-mode)))
+			    (t (cons :boolean-branch-on-false
+				     skip-label)))
+	      :modify-accumulate clause-modifies
+	      :form test-form
+	      :funobj funobj
+	      :env env)
 	  (compiler-values-bind (&code then-code &returns then-returns)
 	      (compiler-call #'compile-form
 		:form (cons 'muerte.cl::progn then-forms)
@@ -134,8 +132,7 @@ and the correspondig returns mode (secondary value)."
 (define-special-operator compiled-cond
     (&form form &funobj funobj &env env &result-mode result-mode)
   (let ((clauses (cdr form)))
-    (let* ((cond-modifies nil)
-	   (cond-exit-label (gensym "cond-exit-"))
+    (let* ((cond-exit-label (gensym "cond-exit-"))
 	   (cond-result-mode (case (operator result-mode)
 			       (:values :multiple-values)
 			       ((:ignore :function :multiple-values :eax :ebx :ecx :edx
@@ -152,32 +149,28 @@ and the correspondig returns mode (secondary value)."
 				   '(:ignore
 				     :boolean-branch-on-true
 				     :boolean-branch-on-false))))
-      (loop for clause in clauses
+      (loop with last-clause-num = (1- (length clauses))
+	  for clause in clauses
 	  for clause-num upfrom 0
-	  with last-clause-num = (1- (length clauses))
-	  as (clause-code constantly-true-p clause-modifies) =
-	    (multiple-value-list (make-compiled-cond-clause clause
-							    clause-num
-							    (and only-control-p
-								 (= clause-num last-clause-num))
-							    cond-exit-label funobj env cond-result-mode))
+	  as (clause-code constantly-true-p) =
+	    (multiple-value-list
+	     (make-compiled-cond-clause clause
+					clause-num
+					(and only-control-p
+					     (= clause-num last-clause-num))
+					cond-exit-label funobj env cond-result-mode))
 	  append clause-code into cond-code
-	  do (setf cond-modifies
-	       (modifies-union cond-modifies clause-modifies))
 	  when constantly-true-p
 	  do (return (compiler-values ()
 		       :returns cond-returns
-		       :modifies cond-modifies
 		       :code (append cond-code
 				     (list cond-exit-label))))
 	  finally
 	    (return (compiler-values ()
 		      :returns cond-returns
-		      :modifies cond-modifies
 		      :code (append cond-code
 				    ;; no test succeeded => nil
 				    (unless only-control-p
-;;;				      (warn "doing default nil..")
 				      (compiler-call #'compile-form
 					:form nil
 					:funobj funobj
