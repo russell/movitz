@@ -131,14 +131,6 @@
 	  (dp8390 ($page0-write cr)) command))
   nil)
 
-(defun foo (io-base command size address)
-  (let ((io-base (the (unsigned-byte #x10)
-		   (let ((check-the-io-base io-base))
-		     (check-type check-the-io-base (unsigned-byte #x10))
-		     check-the-io-base))))
-    (setf (io-port (+ io-base 0) :unsigned-byte8) #o40))
-  nil)
-
 (defmacro with-dp8390-dma ((dp8390-var rdma-command size &optional address) &body body)
   ;; Must be located inside with-dp8390.
   `(multiple-value-prog1
