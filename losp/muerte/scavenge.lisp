@@ -52,6 +52,7 @@ start-location and end-location."
 				(movitz:tag primary))))
 		 `(= ,code ,x)))
 	     (record-scan (x)
+	       (declare (ignorable x))
 	       #+ignore `(setf *scan-last* ,x)))
     (do ((verbose *map-header-vals-verbose*)
 	 (*scan-last* nil)		; Last scanned object, for debugging.
@@ -149,8 +150,7 @@ start-location and end-location."
 		;; Jumpers
 		(let ((num-jumpers (memref scan 0 :type :unsigned-byte14))
 		      #+ignore (num-constants (memref scan 2 :type :unsigned-byte16)))
-		  (incf scan num-jumpers)
-		  #+ignore (warn "~D jumpers for ~S, ~S" num-jumpers *scan-last* scan))))))
+		  (incf scan num-jumpers))))))
 	   ((scavenge-typep x :infant-object)
 	    (assert (evenp scan) ()
 	      "Scanned infant ~S at odd location #x~X." x scan)
@@ -409,6 +409,7 @@ and whose return instruction-pointer is at location eip-index."
 					  debug-context)
   "Update the (raw) instruction-pointer at location,
 assuming the pointer refers to old-code-vector."
+  (declare (ignorable debug-context))
   ;; (check-type old-code-vector code-vector) ; Can't de-reference old objects..
   (let ((old-ip-location (memref location 0 :type :location)))
     (assert (location-in-code-vector-p%unsafe old-code-vector old-ip-location))
