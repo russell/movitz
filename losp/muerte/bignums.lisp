@@ -548,3 +548,19 @@ that the msb isn't zero. DO NOT APPLY TO NON-BIGNUM VALUES!"
 
 (defun %bignum-plus-fixnum-size (x fixnum-delta)
   (compiler-macro-call %bignum-plus-fixnum-size x fixnum-delta))
+
+(defun bignum-notf (x)
+  (check-type x bignum)
+  (macrolet
+      ((do-it ()
+	 `(with-inline-assembly (:returns :eax)
+	    (:load-lexical (:lexical-binding x) :eax)
+	    (:xorl :edx :edx)
+	    (:xorl :ecx :ecx)
+	    (:movw (:eax (:offset movitz-bignum length)) :cx)
+	   loop
+	    (:notl (:eax :edx (:offset movitz-bignum bigit0)))
+	    (:addl 4 :edx)
+	    (:cmpl :edx :ecx)
+	    (:ja 'loop))))
+    (do-it)))
