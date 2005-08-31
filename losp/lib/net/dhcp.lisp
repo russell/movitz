@@ -207,7 +207,8 @@
 			       (fill-pointer packet)
 			       (incf (fill-pointer packet) length)))))))))
 
-(defun format-dhcp-request (nic &rest dhcp-options &key (xid 0) (message-type :dhcpdiscover))
+(defun format-dhcp-request (nic &rest dhcp-options &key (xid 0)
+							#+ignore (message-type :dhcpdiscover))
   (let ((packet (make-ethernet-packet)))
     (with-ether-header (ether packet)
       (setf (ether :source) (mac-address nic)

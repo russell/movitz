@@ -636,6 +636,7 @@ be provided for those cases."
 	  (do () (nil)
 	    (multiple-value-bind (morep setf-name symbol)
 		(hashis)
+	      (declare (ignore setf-name))
 	      (cond
 	       ((not morep)
 		(return nil))

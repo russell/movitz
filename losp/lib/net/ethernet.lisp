@@ -85,7 +85,8 @@
 	 (start-var (gensym "ether-packet-start-")))
     `(let* ((,start-var ,start)
 	    (,packet-var (ensure-data-vector ,packet ,start-var 14))
-	    (,offset-var (+ ,start-var (movitz-type-slot-offset 'movitz-basic-vector 'data))))       
+	    (,offset-var (+ ,start-var (movitz-type-slot-offset 'movitz-basic-vector 'data))))
+       (declare (ignorable ,start-var ,packet-var ,offset-var))
        (macrolet ((,ether (slot)
 		    (ecase slot
 		      (:source

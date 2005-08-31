@@ -358,7 +358,7 @@ duo-space where each space is KB-SIZE kilobytes."
 	   (or evacuator
 	       (lambda (x location)
 		 "If x is in oldspace, migrate it to newspace."
-		 ;; (declare (ignore location))
+		 (declare (ignore location))
 		 (cond
 		  ((null x)
 		   nil)
