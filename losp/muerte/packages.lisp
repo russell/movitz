@@ -55,6 +55,7 @@
 (defun list-all-packages ()
   (let (pkgs)
     (maphash (lambda (k v)
+	       (declare (ignore k))
                (pushnew v pkgs))
              *packages*)
     pkgs))
