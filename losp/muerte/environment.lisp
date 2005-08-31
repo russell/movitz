@@ -164,3 +164,6 @@
 	    (funobj-name object)
 	    arglist)))
 
+(defun sleep (seconds)
+  (declare (ignore seconds))
+  (error "There is no default implementation of sleep."))
