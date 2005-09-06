@@ -3546,7 +3546,7 @@ loading borrowed bindings."
 			  (type-specifier-singleton decoded-type))
 		     #+ignore (warn "Immloadlex: ~S"
 				    (type-specifier-singleton decoded-type))
-		     (make-immediate-move (movitz-immediate-value
+		     (make-immediate-move (movitz-fixnum-value
 					   (car (type-specifier-singleton decoded-type)))
 					  :ecx))
 		    ((and binding-type
