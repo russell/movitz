@@ -1862,7 +1862,8 @@
 		     (:compile-form (:result-mode :ebx) integer)
 		     (:compile-form (:result-mode :ecx) position)
 		     (:shrl 5 :ecx) ; compute fixnum bigit-number in ecx
-		     (:cmpl #x4000 :ecx)
+		     (:cmpl ,(* #x4000 movitz:+movitz-fixnum-factor+)
+			    :ecx)
 		     (:jnc 'position-outside-integer)
 		     (:cmpw :cx (:ebx (:offset movitz-bignum length)))
 		     (:jbe '(:sub-program (position-outside-integer)
