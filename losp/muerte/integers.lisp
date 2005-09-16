@@ -2186,5 +2186,7 @@
     (positive-bignum
      (do ((i 0 (1+ i))
 	  (r 1 (* r base-number)))
-	 ((>= i power-number) r)))))
-  
+	 ((>= i power-number) r)))
+    ((integer * -1)
+     (/ (expt base-number (- power-number))))))
+
