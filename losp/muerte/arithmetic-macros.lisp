@@ -606,7 +606,9 @@
 (deftype real (&optional (lower-limit '*) (upper-limit '*))
   `(or (integer ,lower-limit ,upper-limit)
        (rational ,lower-limit ,upper-limit)))
-  
+
+(deftype number (&optional (lower-limit '*) (upper-limit '*))
+  `(real ,lower-limit ,upper-limit))
 
 (define-simple-typep (bit bitp) (x)
   (or (eq x 0) (eq x 1)))

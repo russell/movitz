@@ -2207,7 +2207,7 @@
      (do ((i 0 (1+ i))
 	  (r 1 (* r base-number)))
 	 ((>= i power-number) r)))
-    ((real * -1)
+    ((number * -1)
      (/ (expt base-number (- power-number))))
     (ratio
      (expt (rootn base-number (denominator power-number))
