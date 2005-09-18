@@ -7007,6 +7007,8 @@ and a list of any intervening unwind-protect environment-slots."
 		     ((eq :argument-stack (operator loc1))
 		      `((:addl ,constant0
 			       (:ebp ,(argument-stack-offset (binding-target term1))))))
+		     ((eq :untagged-fixnum-ecx (operator loc1))
+		      `((:addl ,(truncate constant0 +movitz-fixnum-factor+) :ecx)))
 		     (t (error "Don't know how to add this for loc1 ~S" loc1))))
 		   ((and constant0
 			 (integerp destination-location)
