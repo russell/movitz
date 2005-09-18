@@ -268,14 +268,14 @@
 	  (t `(no-macro-call * ,factor1 ,factor2)))))
     (t `(* (* ,(first operands) ,(second operands)) ,@(cddr operands)))))
 
-(define-compiler-macro byte (&whole form size position)
+
+(define-compiler-macro byte (&whole form size position &environment env)
   (cond
-   ((and (integerp size)
-	 (integerp position))
-    (+ (* size #x400) position))
-   ((integerp size)
-    `(+ ,position ,(* size #x400)))
-   (t form)))
+   ((and (movitz:movitz-constantp size env)
+	 (movitz:movitz-constantp position env))
+    `(quote ,(cons (movitz:movitz-eval size env)
+		   (movitz:movitz-eval position env))))
+   (t `(cons ,size ,position))))
 
 (define-compiler-macro logand (&whole form &rest integers &environment env)
   (let ((constant-folded-integers (loop for x in integers
