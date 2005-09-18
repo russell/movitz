@@ -337,6 +337,7 @@ that reads from <io-base-form> plus some offset."
   (let ((io-var (gensym "io-base-")))
     `(let ((,io-var (check-the (unsigned-byte 16) ,io-base-form)))
        (let ((,name ,io-var))
+	 (declare (ignorable ,name))
 	 (macrolet ((,name (offset &optional (type :unsigned-byte8))
 		      `(io-port (+ ,',io-var ,offset) ,type)))
 	   ,@body)))))
