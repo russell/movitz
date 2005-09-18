@@ -293,7 +293,18 @@
     (case (length constant-folded-integers)
       (0 0)
       (1 (first constant-folded-integers))
-      (2 `(no-macro-call logand ,(first constant-folded-integers) ,(second constant-folded-integers)))
+      (2 (cond
+	  ((typep (first constant-folded-integers)
+		  '(unsigned-byte 32))
+	   (let ((x (first constant-folded-integers)))
+	     `(with-inline-assembly (:returns :untagged-fixnum-ecx
+					      :type (unsigned-byte ,(integer-length x)))
+		(:compile-form (:result-mode :untagged-fixnum-ecx)
+			       ,(second constant-folded-integers))
+		(:andl ,x :ecx))))
+	  (t `(no-macro-call logand
+			     ,(first constant-folded-integers)
+			     ,(second constant-folded-integers)))))
       (t `(logand (logand ,(first constant-folded-integers) ,(second constant-folded-integers))
 		  ,@(cddr constant-folded-integers))))))
 
