@@ -2138,6 +2138,18 @@
 	   (rest (cdr integers) (cdr rest)))
 	  ((null rest) gcd)))))
 
+(defun lcm (&rest numbers)
+  "Returns the least common multiple of one or more integers.  LCM of no
+  arguments is defined to be 1."
+  (numargs-case
+   (1 (n)
+      (abs n))
+   (2 (n m)
+      (abs (* (truncate (max n m) (gcd n m)) (min n m))))
+   (t (&rest numbers)
+      (declare (dynamic-extent numbers))
+      (reduce #'lcm numbers))))
+
 (defun floor (n &optional (divisor 1))
   "This is floor written in terms of truncate."
   (numargs-case
