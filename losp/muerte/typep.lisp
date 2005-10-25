@@ -329,6 +329,8 @@
 			   (make-other-typep :basic-vector))
 			  ((movitz:movitz-subtypep et '(unsigned-byte 8))
 			   (make-basic-vector-typep :u8))
+			  ((movitz:movitz-subtypep et '(unsigned-byte 16))
+			   (make-basic-vector-typep :u16))
 			  ((movitz:movitz-subtypep et '(unsigned-byte 32))
 			   (make-basic-vector-typep :u32))
 			  ((movitz:movitz-subtypep et 'character)
