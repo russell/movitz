@@ -144,7 +144,7 @@ integer: that many words pushed on stack."
 
 (defun find-dynamic-extent-scope (env)
   (loop for e = env then (movitz-environment-uplink e)
-      while e
+      while (and e (not (typep e 'funobj-env)))
       do (when (typep e 'with-dynamic-extent-allocation-env)
 	   (return (allocation-env-scope e)))))
 
