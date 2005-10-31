@@ -270,6 +270,8 @@ completion-start and completion-end are bounding indexes into completion's name.
 	     (make-readline-buffer :string (make-string line-length))))
     context))
 
+(defvar *global-readline-context-state* nil)
+
 (defun replace-buffer (to from)
   (setf (readline-buffer-cursor-position to)
     (readline-buffer-cursor-position from))
@@ -293,7 +295,10 @@ completion-start and completion-end are bounding indexes into completion's name.
   (with-accessors ((scratch readline-context-state-scratch)
 		   (buffers readline-context-state-buffers)
 		   (current-buffer readline-context-state-current-buffer))
-      context
+      (or context
+	  *global-readline-context-state*
+	  (setf *global-readline-context-state*
+	    (make-readline-context)))
     (let* ((edit-buffer current-buffer)
 	   (buffer (readline-buffer-string (aref buffers edit-buffer))))
       (cond
