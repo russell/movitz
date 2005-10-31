@@ -53,9 +53,14 @@
   (handler-case
       (let ((previous-package *package*)
 	    (buffer-string
-	     (if *repl-readline-context*
-		 (muerte.readline:contextual-readline *repl-readline-context*)
-	       (muerte.readline:readline (make-string 256) *terminal-io*))))
+	     (handler-bind
+		 ((serious-condition
+		   (lambda (c)
+		     (backtrace :frame (muerte:current-stack-frame))
+		     (format *terminal-io* "~&Error during readline (~S): ~A" 
+			     *repl-readline-context* c)
+		     (muerte:halt-cpu))))
+	       (muerte.readline:contextual-readline *repl-readline-context*))))
 	(when (plusp (length buffer-string))
 	  (terpri)
 	  (multiple-value-bind (form buffer-pointer)
