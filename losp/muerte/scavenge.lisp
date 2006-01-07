@@ -362,8 +362,7 @@ and whose return instruction-pointer is at location eip-index."
 	      (scavenge-find-code-vector function
 					 (stack-frame-ref nil eip-index 0 :location)
 					 0 interrupted-esi
-					 nil))
-	     (new-code-vector (map-instruction-pointer function eip-index old-code-vector)))
+					 nil)))
 	;; (when atomically (we should be more clever about the stack..))
 	(multiple-value-bind (x0-location x0-tag)
 	    (stack-frame-ref nil next-frame-bottom 0 :signed-byte30+2)
