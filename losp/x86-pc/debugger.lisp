@@ -49,7 +49,7 @@
 
 (defvar *backtrace-do-conflate* t)
 (defvar *backtrace-length* 14)
-(defvar *backtrace-max-args* 10)
+(defvar *backtrace-max-args* 16)
 (defvar *backtrace-stack-frame-barrier* nil)
 (defvar *backtrace-do-fresh-lines* t)
 (defvar *backtrace-print-length* 3)
@@ -158,6 +158,10 @@
 		     ((and (= #x33 opcode0) (= #xc9 opcode1))
 		      ;; XORL :ECX :ECX
 		      0)
+		     ((eq funobj #'apply)
+		      (- (stack-frame-uplink stack frame)
+			 frame
+			 2))
 		     (t ;; now we should search further for where ecx may be set..
 		      (format *debug-io* "{no ECX at ~D in ~S, opcode #x~X #x~X}"
 			      call-site funobj opcode0 opcode1)
@@ -341,7 +345,7 @@ located in the caller's stack-frame or funobj-constants."
 	    (#x52 (:set-result (-2)))))))
 
 (defun funobj-stack-frame-map (funobj &optional numargs)
-  "Try funobj's stack-frame map, which is a list that says
+  "Try to find funobj's stack-frame map, which is a list that says
 what the stack-frame contains at that position. Some funobjs' map
 depend on the number of arguments presented to it, so numargs can
 be provided for those cases."
