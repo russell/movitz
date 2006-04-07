@@ -20,7 +20,11 @@
 (in-package muerte)
 
 (defvar *read-suppress*)
-(defvar *readtable*)
+(defvar *readtable* nil)
+
+(defun copy-readtable (&optional from-readtable to-readtable)
+  (declare (ignore from-readtable to-readtable))
+  nil)
 
 (defun substring (string start end)
   (if (and (zerop start) (= end (length string)))
