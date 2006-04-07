@@ -271,3 +271,7 @@ Cons cell is in EBX, which is preserved."
 		 (and (te (car tree-1) (car tree-2) test)
 		      (te (cdr tree-1) (cdr tree-2) test))))))
     (te tree-1 tree-2 (or test (and test-not (complement test-not)) #'eql))))
+
+(defun acons (key datum alist)
+  "=> new-alist"
+  (cons (cons key datum) alist))
