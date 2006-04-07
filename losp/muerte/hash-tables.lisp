@@ -42,7 +42,8 @@
 	       test)
 	(eq (values #'eq #'sxhash-eq))
 	(eql (values #'eql #'sxhash-eql))
-	(equal (values #'equal #'sxhash)))
+	(equal (values #'equal #'sxhash))
+	(equalp (values #'equalp #'sxhash)))
     (make-hash-table-object
      :test test
      :bucket (make-array (* 2 size) :initial-element '--no-hash-key--)
