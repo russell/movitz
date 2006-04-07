@@ -2250,3 +2250,13 @@
 (defun floatp (x)
   (declare (ignore x))
   nil)
+
+(defun realpart (number)
+  number)
+
+(defun imagpart (number)
+  (declare (ignore number))
+  0)
+
+(defun rational (number)
+  number)
