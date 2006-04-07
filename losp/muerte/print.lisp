@@ -201,6 +201,12 @@
 	    (print-unreadable-object (c *standard-output* :type t :identity t)
 	      (format t "(while printing ~Z)" object))))))))
 
+(defun write-to-string (object &rest args)
+  (declare (dynamic-extent args))
+  (apply 'write object
+	 :stream (make-array 24 :element-type 'character :fill-pointer 0 :adjustable t)
+	 args))
+
 (defun internal-write (object)
   (let ((stream *standard-output*))
     (cond
