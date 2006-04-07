@@ -52,6 +52,7 @@
 (require :muerte/interrupt)
 (require :muerte/scavenge)
 (require :muerte/simple-streams)
+(require :muerte/subtypep)
 
 (require :muerte/io-port)
 (require :muerte/cpu-id)
