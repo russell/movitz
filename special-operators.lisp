@@ -598,7 +598,7 @@ The valid parameters are~{ ~S~}."
 
 (define-special-operator muerte::declaim-compile-time (&form form &top-level-p top-level-p)
   (unless top-level-p
-    (error "DECLAIM not at top-level."))
+    (warn "DECLAIM not at top-level."))
   (let ((declaration-specifiers (cdr form)))
     (movitz-env-load-declarations declaration-specifiers *movitz-global-environment* :declaim))
   (compiler-values ()))
