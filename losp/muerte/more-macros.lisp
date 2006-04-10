@@ -431,3 +431,12 @@ respect to multiple threads."
 (define-unimplemented-macro with-open-file)
 (define-unimplemented-macro restart-case)
 
+(define-compiler-macro load (filespec &key verbose print if-does-not-exist external-format)
+  "hm..."
+  (assert (movitz:movitz-constantp filespec) (filespec)
+    "Can't load a non-constant filename: ~S" filespec)
+  (warn "load-compile: ~S" filespec)
+  `(funcall ',(movitz:movitz-compile-file (format nil "losp/ansi-tests/~A" filespec))))
+
+(defmacro locally (&body body)
+  `(let () ,@body))
