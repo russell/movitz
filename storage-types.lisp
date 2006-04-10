@@ -1309,6 +1309,10 @@ integer (native lisp) value."
   (assert (= (movitz-ratio-value object) lisp-object))
   object)
 
+(defmethod update-movitz-object ((object movitz-ratio) (lisp-object float))
+  (assert (= (movitz-ratio-value object) (rationalize lisp-object)))
+  object)
+
 (defmethod print-object ((x movitz-ratio) stream)
   (print-unreadable-object (x stream :type t)
     (format stream "~D" (slot-value x 'value)))
