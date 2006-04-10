@@ -56,6 +56,12 @@ make clear it's a Movitz object, with extra <..>"
 	 ,@body
 	 (write-char #\> ,stream-var)))))
 
+(defun movitz-syntax-sharp-dot (stream subchar arg)
+  (declare (ignore arg subchar))
+  (let ((form (read stream t nil t)))
+    (values (unless *read-suppress*
+	      (eval (muerte::translate-program form :muerte.cl :cl))))))
+
 (defmacro with-movitz-syntax (options &body body)
   (declare (ignore options))
   `(let ((*readtable* (copy-readtable)))
@@ -71,6 +77,11 @@ make clear it's a Movitz object, with extra <..>"
 				       (make-movitz-vector (length data)
 							   :element-type 'movitz-unboxed-integer-u8
 							   :initial-contents data))))
+     (set-dispatch-macro-character #\# #\. (lambda (stream subchar arg)
+					     (declare (ignore arg subchar))
+					     (let ((form (read stream t nil t)))
+					       (values (unless *read-suppress*
+							 (eval (muerte::translate-program form :muerte.cl :cl)))))))
      (set-macro-character #\` (lambda (stream char)
 				(declare (ignore char))
 				(let ((*bq-level* (1+ *bq-level*)))
