@@ -914,9 +914,9 @@
      (error "Array backquote not implemented."))
     (t (list 'quote form))))
 
-(define-compiler-macro find-class (&whole form &environment env symbol &optional (errorp t))
-  (declare (ignore errorp))
-  (if (not (movitz:movitz-constantp symbol env))
+(define-compiler-macro find-class (&whole form &environment env symbol &optional (errorp t) (environment nil envp))
+  (declare (ignore errorp environment))
+  (if (or envp (not (movitz:movitz-constantp symbol env)))
       form
     (let* ((type (movitz:movitz-eval symbol env))
 	   (movitz-type (movitz-program type))
