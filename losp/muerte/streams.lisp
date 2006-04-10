@@ -125,6 +125,7 @@
 destination, and then returns."
   (let ((stream (output-stream-designator stream)))
     (etypecase stream
+      (function)			; NOP
       (simple-stream
        (%finish-output stream)))))
 
