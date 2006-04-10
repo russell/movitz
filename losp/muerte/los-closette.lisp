@@ -99,6 +99,10 @@
 (defmacro push-on-end (value location)
   `(setf ,location (nconc ,location (list ,value))))
 
+
+(defmacro define-method-combination (name &rest options)
+  (declare (ignore options))
+  (warn "Method-combinations not implemented: ~S" name))
 ;;;
 
 
@@ -210,7 +214,8 @@ funcallable-instance will run the new function."
 
 ;;;
 
-(defun find-class (symbol &optional (errorp t))
+(defun find-class (symbol &optional (errorp t) environment)
+  (declare (ignore environment))
   (let ((class (gethash symbol *class-table*)))
     (if (and (null class) errorp)
 	(error "No class named ~S." symbol)
@@ -951,7 +956,9 @@ next-emf as its target for call-next-method."
 (defclass symbol (t) () (:metaclass built-in-class))
 (defclass sequence (t) () (:metaclass built-in-class))
 (defclass array (t) () (:metaclass built-in-class))
-(defclass character (t) () (:metaclass built-in-class))
+(defclass character (t) ()
+	  (:metaclass built-in-class)
+	  (:plist (:subtypes (base-char extended-char))))
 (defclass list (sequence) () (:metaclass built-in-class))
 (defclass null (symbol list) () (:metaclass built-in-class))
 (defclass cons (list) () (:metaclass built-in-class))
