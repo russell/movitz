@@ -319,10 +319,11 @@
 	      (let ((x (eval form)))
 		(format t "~&~W" x)
 		x)
-	    (invoke-debugger "Established Bochs session [pid=~D]. ~S is ~S"
-			     (image-pid image)
-			     '*previous-image*
-			     *previous-image*)))))))
+	    (invoke-debugger
+	     (format nil "Established Bochs session [pid=~D]. ~S is ~S"
+		     (image-pid image)
+		     '*previous-image*
+		     *previous-image*))))))))
 
 #+allegro
 (top-level:alias ("unbochs" 3) (&optional form)
