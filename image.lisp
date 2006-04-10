@@ -1495,7 +1495,9 @@ In sum this accounts for ~,1F%, or ~D bytes.~%;;~%"
 		   (mapcar #'(lambda (slot)
 			       (movitz-read (slot-value expr (if (consp slot) (car slot) slot))))
 			   slot-descriptions))
-		 movitz-object))))))))
+		 movitz-object)))
+	    (float			; XXX
+	     (movitz-read (rationalize expr))))))))
 
 ;;;
 
