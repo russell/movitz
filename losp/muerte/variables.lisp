@@ -45,4 +45,28 @@
 
 (defvar *gc-hooks* nil)
 
+(defvar *load-pathname* nil)
+
+
+(defvar most-positive-short-float 1000000)
+(defvar most-positive-single-float 1000000)
+(defvar most-positive-double-float 1000000)
+(defvar most-positive-long-float 1000000)
+
+(defvar short-float-epsilon 1/1000)
+(defvar single-float-epsilon 1/1000)
+(defvar double-float-epsilon 1/1000)
+(defvar long-float-epsilon 1/1000)
+
+(defvar short-float-negative-epsilon -1/1000)
+(defvar single-float-negative-epsilon -1/1000)
+(defvar double-float-negative-epsilon -1/1000)
+(defvar long-float-negative-epsilon -1/1000)
+
+
+(defconstant call-arguments-limit #xffff0)
+(defconstant lambda-parameters-limit #x1000) ; ?
+
+(defvar *print-pprint-dispatch* nil)
+
 (declaim (special *build-number*))
