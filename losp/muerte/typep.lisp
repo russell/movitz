@@ -704,7 +704,7 @@
 	 (cond
 	  ((typep object result-type)
 	   object)
-	  ((member result-type '(list array vector))
+	  ((member result-type '(list array vector simple-vector string simple-string))
 	   (map result-type #'identity object))
 	  ((and (consp result-type)
 		(eq (car result-type) 'vector))
