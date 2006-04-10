@@ -216,7 +216,7 @@
 		 ,@(loop repeat count
 		       append `((:addl (:result-register) (:result-register))
 				(:into)))))
-	     ((< 0 count #.(cl:1- movitz::+movitz-fixnum-bits+))
+	     ((< 0 count #.(1- movitz::+movitz-fixnum-bits+))
 	      `(with-inline-assembly (:returns :register :side-effects nil :type integer)
 		 ,@load-integer
 		 (:cmpl ,(ash 1 (- (- 31 0) count))
