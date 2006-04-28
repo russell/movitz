@@ -59,7 +59,11 @@
 		      (condition-format-control condition)
 		      (condition-format-arguments condition))))))
 
-(define-condition simple-condition (condition) ())
+(define-condition simple-condition (condition)
+  ((format-control
+    :reader simple-condition-format-control)
+   (format-arguments
+    :reader simple-condition-format-arguments)))
 (define-condition serious-condition () ())
 (define-condition error (serious-condition) ())
 (define-condition warning () ())
