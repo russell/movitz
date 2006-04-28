@@ -66,9 +66,11 @@
     (cons
      (let* ((compiler-macro-function (movitz-compiler-macro-function (car form) env))
 	    (compiler-macro-expansion (and compiler-macro-function
-					   (funcall *movitz-macroexpand-hook*
-						    compiler-macro-function
-						    form env))))
+					   (handler-case
+					       (funcall *movitz-macroexpand-hook*
+							compiler-macro-function
+							form env)
+					     (error () form)))))
        (or (let ((form (translate-program form :cl :muerte.cl)))
 	     (case (car form)
 	       ((muerte.cl:quote) t)
