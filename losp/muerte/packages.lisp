@@ -28,12 +28,16 @@
   external-symbols
   internal-symbols
   shadowing-symbols-list
-  use-list)
+  use-list
+  nicknames)
 
 (defvar *packages*)			; Set by dump-image.
 
 (defun package-name (object)
   (package-object-name (find-package object)))
+
+(defun package-nicknames (package-designator)
+  (package-object-nicknames (find-package package-designator)))
 
 (defun package-use-list (package-name)
   (package-object-use-list (find-package package-name)))

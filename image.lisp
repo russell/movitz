@@ -1117,7 +1117,7 @@ In sum this accounts for ~,1F%, or ~D bytes.~%;;~%"
 	  (pushnew :constant-variable (movitz-symbol-flags symbol))
 	  (setf (movitz-symbol-value symbol)
 	    (movitz-read (translate-program (symbol-value (translate-program name :muerte.cl :cl))
-					 :cl :muerte.cl))))
+					    :cl :muerte.cl))))
 	symbol)))
 
 (defun make-packages-hash (&optional (*image* *image*))
@@ -1143,16 +1143,20 @@ In sum this accounts for ~,1F%, or ~D bytes.~%;;~%"
 		 lisp-package context)
 	       (setf (gethash lisp-package lisp-to-movitz-package)
 		 (or (gethash package-name packages-hash nil)
-		     (let ((p (funcall 'muerte::make-package-object
-				       :name package-name
-				       :shadowing-symbols-list (package-shadowing-symbols lisp-package)
-				       :external-symbols (make-hash-table :test #'equal)
-				       :internal-symbols (make-hash-table :test #'equal)
-				       :use-list (mapcar #'(lambda (up) 
-							     (ensure-package (movitz-package-name (package-name up))
-									     up context))
-							 (package-use-list lisp-package)))))
+		     (let* ((nicks (mapcar #'movitz-package-name (package-nicknames lisp-package)))
+			    (p (funcall 'muerte::make-package-object
+					:name package-name
+					:shadowing-symbols-list (package-shadowing-symbols lisp-package)
+					:external-symbols (make-hash-table :test #'equal)
+					:internal-symbols (make-hash-table :test #'equal)
+					:nicknames nicks
+					:use-list (mapcar #'(lambda (up) 
+							      (ensure-package (movitz-package-name (package-name up))
+									      up context))
+							  (package-use-list lisp-package)))))
 		       (setf (gethash package-name packages-hash) p)
+		       (dolist (nick nicks)
+			 (setf (gethash nick packages-hash) p))
 		       p)))))
       (let ((movitz-cl-package (ensure-package (symbol-name :common-lisp)
 					       (find-package :muerte.common-lisp))))
