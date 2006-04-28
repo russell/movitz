@@ -431,7 +431,7 @@ respect to multiple threads."
 (define-unimplemented-macro with-open-file)
 (define-unimplemented-macro restart-case)
 
-(define-compiler-macro load (filespec &key verbose print if-does-not-exist external-format)
+(defmacro load (filespec &key verbose print if-does-not-exist external-format)
   "hm..."
   (assert (movitz:movitz-constantp filespec) (filespec)
     "Can't load a non-constant filename: ~S" filespec)
