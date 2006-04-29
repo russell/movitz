@@ -25,6 +25,12 @@
 (defun rest (x)
   (cdr x))
 
+(defun (setf first) (x y)
+  (setf (car x) y))
+
+(defun (setf rest) (x y)
+  (setf (cdr x) y))
+
 ;; Compiler-macros for first and rest in basic-macros.lisp.
 
 (defun second  (x) (cadr x))
