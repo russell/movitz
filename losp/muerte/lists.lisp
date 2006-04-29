@@ -25,10 +25,10 @@
 (defun rest (x)
   (cdr x))
 
-(defun (setf first) (x y)
+(defun (setf first) (y x)
   (setf (car x) y))
 
-(defun (setf rest) (x y)
+(defun (setf rest) (y x)
   (setf (cdr x) y))
 
 ;; Compiler-macros for first and rest in basic-macros.lisp.
@@ -431,8 +431,6 @@
 		     :test (if test-not
 			       (complement test-not)
 			     test)))
-
-  
   
 (defun subsetp (list-1 list-2 &key (key 'identity) (test 'eql) test-not)
   "=> generalized-boolean"
