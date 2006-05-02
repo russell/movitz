@@ -2260,3 +2260,6 @@
 
 (defun rational (number)
   number)
+
+(defun realp (x)
+  (typep x 'real))
