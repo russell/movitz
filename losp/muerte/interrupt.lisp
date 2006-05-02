@@ -391,6 +391,10 @@ is off, e.g. because this interrupt/exception is routed through an interrupt gat
 					(ldb (byte 8 24)
 					     (dit-frame-ref nil dit-frame :ecx :unsigned-byte32))
 				      code))))
+	  (101
+	   (error 'program-error
+		  :format-control "Illegal keyword argument [eax: ~S]"
+		  :format-arguments (list (dereference $eax))))
 	  (108
 	   (error 'throw-error :tag (dereference $eax)))
 	  (110
