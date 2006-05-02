@@ -203,9 +203,9 @@
 
 (defun write-to-string (object &rest args)
   (declare (dynamic-extent args))
-  (apply 'write object
-	 :stream (make-array 24 :element-type 'character :fill-pointer 0 :adjustable t)
-	 args))
+  (let ((string (make-array 24 :element-type 'character :fill-pointer 0 :adjustable t)))
+    (apply 'write object :stream string args)
+    string))
 
 (defun internal-write (object)
   (let ((stream *standard-output*))
