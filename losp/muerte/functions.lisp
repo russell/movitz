@@ -44,17 +44,11 @@
       (case (translate-program value :muerte.cl :cl)
 	((t) `(function constantly-true))
 	((nil) `(function constantly-false))
-	(t `(make-prototyped-function (constantly ,value)
-				      constantly-prototype
-				      (value ,value))))))
-   (t (let ((value-var (gensym "constantly-value-")))
-	`(let ((,value-var ,value-form))
-	   (lambda (&rest ignore)
-	     (declare (ignore ignore))
-	     ,value-var))))))
+	(t form))))
+   (t form)))
 
 (defun constantly (x)
-  (compiler-macro-call constantly x))
+  (lambda () x))
 
 (defun complement-prototype (&rest args)
   (declare (dynamic-extent args))
