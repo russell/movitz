@@ -186,6 +186,9 @@ lexical environment that a closure funobj captures."))
    (max-args
     :initform nil
     :accessor max-args)
+   (oddeven-args
+    :initform nil
+    :accessor oddeven-args)
    (allow-other-keys-p
     :accessor allow-other-keys-p)
    (edx-var
