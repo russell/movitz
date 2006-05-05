@@ -162,7 +162,7 @@
       `(do ((item ,item)
 	    (p ,list (cdr p)))
 	   ((endp p) nil)
-	 (when (,test (,key item) (car p))
+	 (when (,test (,key item) (,key (car p)))
 	   (return p))))
      (t form))))
 
