@@ -395,6 +395,10 @@ is off, e.g. because this interrupt/exception is routed through an interrupt gat
 	   (error 'program-error
 		  :format-control "Illegal keyword argument [eax: ~S]"
 		  :format-arguments (list (dereference $eax))))
+	  (102
+	   (error 'program-error
+		  :format-control "Missing keyword argument for ~S."
+		  :format-arguments (list (dereference (+ dit-frame (dit-frame-index :esi))))))
 	  (108
 	   (error 'throw-error :tag (dereference $eax)))
 	  (110
