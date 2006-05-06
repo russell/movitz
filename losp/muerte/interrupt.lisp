@@ -334,6 +334,10 @@ is off, e.g. because this interrupt/exception is routed through an interrupt gat
 		    $eip $eax $ebx $ecx $edx)
 	      (dotimes (i 100000)
 		(with-inline-assembly (:returns :nothing) (:nop))))
+	  (69 (error 'type-error
+		     :datum (dereference $eax)
+		     :expected-type (aref #(cons)
+					  (dereference $ecx :unsigned-byte8))))
 	  (70 (error "Unaligned memref access."))
 	  ((5 55)
 	   (let* ((old-bottom (prog1 (%run-time-context-slot nil 'stack-bottom)
