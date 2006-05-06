@@ -38,11 +38,10 @@
 		     else collect `((typep ,key-var ',type) ,@forms)))))))
 
 (defmacro etypecase (keyform &rest clauses)
-  `(typecase ,keyform ,@clauses
-	     (t (error "~S fell through an etypecase where the legal types were ~S."
-		       ,keyform
-		       ',(loop for c in clauses
-			     collect (car c))))))
+  (let ((key-var (make-symbol "etypecase-key-var-")))
+    `(let ((,key-var ,keyform))
+       (typecase ,key-var ,@clauses
+		 (t (etypecase-error ,key-var ',(loop for c in clauses collect (car c))))))))
 
 (define-compile-time-variable *simple-typespecs*
     ;; map symbol typespecs to typep-functions.

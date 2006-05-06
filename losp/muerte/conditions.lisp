@@ -115,6 +115,18 @@
 		     (type-error-datum c)
 		     (type-error-expected-type c)))))
 
+(define-condition etypecase-error (type-error)
+  ()
+  (:report (lambda (c s)
+	     (format s "The object '~S' fell through an etypecase where the legal types were ~S."
+		     (type-error-datum c)
+		     (type-error-expected-type c)))))
+
+(defun etypecase-error (datum expecteds)
+  (error 'etypecase-error
+	 :datum datum
+	 :expected-type (cons 'or expecteds)))
+
 (define-condition control-error (error) ())
 
 (define-condition throw-error (control-error)
