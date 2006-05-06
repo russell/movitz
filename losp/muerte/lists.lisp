@@ -125,7 +125,7 @@
 	  (with-funcallable (test (or (and test-not (complement test-not)) test))
 	    (do ((p list (cdr p)))
 		((endp p) nil)
-	      (when (test item (key (car p)))
+	      (when (test (key item) (key (car p)))
 		(return p)))))))))
 
 (defun last (list &optional (n 1))
