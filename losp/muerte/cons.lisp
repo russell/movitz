@@ -375,3 +375,12 @@ Cons cell is in EBX, which is preserved."
 
 (defun nsubst-if-not (new predicate tree &key key)
   (nsubst-if new (complement predicate) tree :key key))
+
+
+(defun adjoin (item list &key key (test 'eql) test-not)
+  "=> new-list
+  Tests whether item is the same as an existing element of list. If the item is not an existing element, adjoin adds it to
+list (as if by cons) and returns the resulting list; otherwise, nothing is added and the original list is returned."
+  (if (member item list :key key :test test :test-not test-not)
+      list
+    (cons item list)))

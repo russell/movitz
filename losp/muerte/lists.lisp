@@ -442,10 +442,4 @@
       (unless (member x list-2 :key key :test test)
 	(return nil)))))
 
-(defun adjoin (item list &key (key 'identity) (test 'eql) test-not)
-  "=> new-list"
-  (let ((test (if test-not (complement test-not) test)))
-    (if (member (funcall key item) list :test test)
-	list
-      (cons item list))))
 
