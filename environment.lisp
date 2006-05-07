@@ -359,6 +359,8 @@ the function sets up itself. Its parent env. must be a funobj-env."))
 (defun movitz-env-load-declarations (declarations environment context)
   (loop for (declaration-identifier . data) in declarations
       do (case declaration-identifier
+	   ((muerte.cl::ftype muerte.cl::optimize)
+	    nil)			; ignore for now
 	   (muerte.cl::ignore
 	    (dolist (var data)
 	      (check-type var symbol)
