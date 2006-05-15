@@ -238,11 +238,6 @@
 	do (format t "~& => ")))
   (values))
 
-(defun funobj-name (x)
-  (typecase x
-    (movitz-funobj
-     (movitz-funobj-name x))))
-
 (defun stack-frame (image)
   (do-stack-frame (image-register32 image :ebp) 0))
     

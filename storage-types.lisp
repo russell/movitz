@@ -820,6 +820,11 @@ integer (native lisp) value."
     :lambda-list lambda-list
     :name name))
 
+(defun funobj-name (x)
+  (typecase x
+    (movitz-funobj
+     (movitz-funobj-name x))))
+
 ;;;
 
 (define-binary-class movitz-funobj-standard-gf (movitz-funobj)
