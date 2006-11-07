@@ -82,7 +82,7 @@
 	  (declare (index i))
 	  (multiple-value-bind (next-digit next-remainder)
 	      (if (= i last-i)
-		  (round (* 10 remainder))
+		  (floor (+ 1/2 (* 10 remainder)))
 		(truncate (* 10 remainder)))
 	    (setf remainder next-remainder)
 	    (write-digit next-digit *standard-output*)))))))
