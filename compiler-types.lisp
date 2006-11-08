@@ -233,7 +233,7 @@ and any element of range1."
 ;;;
 
 (defparameter *tb-bitmap*
-    '(hash-table character function cons keyword symbol vector array integer :tail)
+    '(hash-table character function cons keyword symbol vector array integer ratio :tail)
   "The union of these types must be t.")
 
 (defun basic-typep (x type)
@@ -255,7 +255,9 @@ and any element of range1."
     (fixnum
      (typep x 'movitz-fixnum))
     (bignum
-     (typep x 'movitz-bignum))))
+     (typep x 'movitz-bignum))
+    (ratio
+     (typep x 'movitz-ratio))))
 
 (defun type-code (first-type &rest types)
   "Find the code (a bitmap) for (or ,@types)."
@@ -364,7 +366,7 @@ and any element of range1."
 		 (or (type-code-p 'integer code)
 		     (and integer-range
 			  (numscope-memberp integer-range (movitz-bignum-value x)))))
-		(t (dolist (bt '(symbol character function cons hash-table vector)
+		(t (dolist (bt '(symbol character function cons hash-table vector ratio)
 			     (error "Cant decide typep for ~S." x))
 		     (when (basic-typep x bt)
 		       (return (type-code-p bt code))))))
