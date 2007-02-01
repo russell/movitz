@@ -129,8 +129,9 @@ Doubly quoted forms are copied verbatim (sans the quotes)."
 (defun decode-normal-lambda-list (lambda-list &optional host-symbols-p)
   "3.4.1 Ordinary Lambda Lists.
 Returns the requireds, &optionals, &rests, &keys, and &aux formal variables,
-a boolean signalling whether &allow-other-keys was present, and finally
-the minimum and maximum number of arguments (or nil if max is infinite)."
+a boolean signalling whether &allow-other-keys was present, and then
+the minimum and maximum number of arguments (or nil if max is infinite).
+Finally, whether &key was present or not."
   ;; Movitz extension: &edx <var> may appear first in lambda-list
   (let ((edx-var nil))
     (when (eq 'muerte::&edx (first lambda-list))
@@ -178,10 +179,10 @@ the minimum and maximum number of arguments (or nil if max is infinite)."
 	      (when (> (length rests) 1)
 		(error "There can only be one &REST formal parameter."))
 	      (let ((maxargs (and (null rests) ; max num. of arguments, or nil.
-				   (null keys)
-				   (not allow-other-keys-p)
-				   (+ (length requireds)
-				      (length optionals))))
+				  (null keys)
+				  (not allow-other-keys-p)
+				  (+ (length requireds)
+				     (length optionals))))
 		    (minargs (length requireds)))
 		(return (values requireds
 				optionals
@@ -199,7 +200,9 @@ the minimum and maximum number of arguments (or nil if max is infinite)."
 				 ((assert (not maxargs)))
 				 ((evenp (+ (length requireds) (length optionals)))
 				  :even)
-				 (t :odd))))))))))
+				 (t :odd))
+				(not (eq :missing
+					 (getf results (key) :missing)))))))))))
 
 (defun decode-optional-formal (formal)
   "3.4.1.2 Specifiers for optional parameters.
