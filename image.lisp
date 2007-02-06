@@ -389,6 +389,13 @@
     :map-binary-read-delayed (lambda (x type)
 			       (declare (ignore x type))
 			       (movitz-read nil)))
+   (allow-other-keys-symbol
+    :binary-type word
+    :initform :allow-other-keys
+    :map-binary-write 'movitz-read-and-intern
+    :map-binary-read-delayed (lambda (x type)
+			       (declare (ignore x type))
+			       (movitz-read nil)))
    (self
     :binary-type word
     :initform 6
