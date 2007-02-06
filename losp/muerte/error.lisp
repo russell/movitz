@@ -44,6 +44,8 @@
      ((not *ignore-errors*)
       (let (#+ignore (*ignore-errors* t))
 	(let ((condition (signal-simple 'simple-error datum args)))
+	  (when *backtrace-on-error*
+	    (backtrace))
 	  (if condition
 	      (invoke-debugger condition)
 	    (apply 'invoke-debugger-on-designator 'simple-error datum args)))))
