@@ -1008,8 +1008,10 @@ integer (native lisp) value."
     (movitz-symbol
      (movitz-symbol-hash-key object))
     (movitz-string
-     (let ((object (movitz-print object))
-	   (result 0))
+     (let* ((object (movitz-print object))
+	    (result (if (not (> (length object) 8))
+			0
+		      (char-code (char-upcase (aref object (- (length object) 3)))))))
        (dotimes (i (min 8 (length object)))
 	 (incf result result)
 	 (incf result
