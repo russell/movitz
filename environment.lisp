@@ -191,6 +191,9 @@ lexical environment that a closure funobj captures."))
     :accessor oddeven-args)
    (allow-other-keys-p
     :accessor allow-other-keys-p)
+   (allow-other-keys-var
+    :initform nil
+    :accessor allow-other-keys-var)
    (edx-var
     :initform nil
     :accessor edx-var)
@@ -206,6 +209,11 @@ lexical environment that a closure funobj captures."))
    (key-vars
     :initform nil
     :accessor key-vars)
+   (key-decode-map
+    :initform nil
+    :accessor key-decode-map)
+   (key-decode-shift
+    :accessor key-decode-shift)
    (need-normalized-ecx-p
     :initarg :need-normalized-ecx-p
     :accessor need-normalized-ecx-p)
