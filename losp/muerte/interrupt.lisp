@@ -382,6 +382,14 @@ is off, e.g. because this interrupt/exception is routed through an interrupt gat
 	   (error "Not a function: ~S" (dereference $edx)))
 	  (70
 	   (error "[EIP=~@Z] Index ~@Z out of bounds ~@Z for ~S." $eip $ecx $ebx (dereference $eax)))
+	  (72
+	   (ecase (dereference $eax)
+	     (1 (error 'program-error
+		       :format-control "Illegal keyword argument."))
+	     (2 (error 'program-error
+		       :format-control "Keyword not a symbol."))
+	     (4 (error 'program-error
+		       :format-control "Odd number of keyword arguments."))))
 	  (98
 	   (let ((name (dereference $edx)))
 	     (when (symbolp name)
