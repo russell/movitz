@@ -779,7 +779,7 @@ a cons is an offset (the car) from some other code-vector (the cdr)."
 			:start-address start-address
 			:movitz-features '(:movitz)
 			:function-code-sizes
-			(if (boundp '*image*)
+			(if (and (boundp '*image*) *image*)
 			    (copy-hash-table (function-code-sizes *image*))
 			  (make-hash-table :test #'equal))
 			init-args)))
