@@ -232,6 +232,7 @@
 	  (setf (cdr new-tail) (cons (pop more-objects) nil)))))))
 
 (defun make-list (size &key initial-element)
+  (check-type size positive-fixnum)
   (do ((list nil (cons initial-element list))
        (c size (1- c)))
       ((<= c 0) list)))
