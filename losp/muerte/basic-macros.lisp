@@ -583,13 +583,13 @@
 
 (define-compiler-macro car (x)
   `(let ((cell ,x))
-     (with-inline-assembly-case (:side-effects nil)
+     (with-inline-assembly-case (:side-effects t)
        (do-case (t :register)
 	 (:cons-get :car (:lexical-binding cell) (:result-register))))))
 
 (define-compiler-macro cdr (x)
   `(let ((cell ,x))
-     (with-inline-assembly-case (:side-effects nil)
+     (with-inline-assembly-case (:side-effects t)
        (do-case (t :register)
 	 (:cons-get :cdr (:lexical-binding cell) (:result-register))))))
 
