@@ -243,9 +243,6 @@
     (when (eq indicator (car p))
       (return (cadr p)))))
 
-;;;(defun (setf getf) (value plist indicator &optional default)
-;;;  (error "Must be implemented as a macro.."))
-
 (defsetf getf (plist indicator &optional default) (new-value)
   `(do ((p ,plist (cddr p)))
        ((null p)
