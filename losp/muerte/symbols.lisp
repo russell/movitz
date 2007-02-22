@@ -253,3 +253,6 @@
   (declare (ignore default))
   (setf (getf (symbol-plist symbol) indicator)
     value))
+
+(defun remprop (symbol indicator)
+  (remf (symbol-plist symbol) indicator))
