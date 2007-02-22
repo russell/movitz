@@ -265,7 +265,7 @@ Cons cell is in EBX, which is preserved."
 (defun tree-equal (tree-1 tree-2 &key test test-not)
   (labels ((te (tree-1 tree-2 test)
 	     (if (not (consp tree-1))
-		 (funcall test tree-1 tree-2)
+		 (values (funcall test tree-1 tree-2))
 	       (if (not (consp tree-2))
 		   nil
 		 (and (te (car tree-1) (car tree-2) test)
