@@ -348,7 +348,8 @@
 		   (:jmp (:esi (:ecx 4) 'basic-vector-dispatcher
 			       ,(bt:slot-offset 'movitz:movitz-funobj 'movitz::constant0)))
 		   
-		   (() () '(:sub-program (unknown) (:int 100)))
+		   (:jnever '(:sub-program (unknown)
+			      (:int 100)))
 		  :u32
 		   (:movl (:eax :ebx ,(bt:slot-offset 'movitz:movitz-basic-vector 'movitz::data))
 			  :ecx)
