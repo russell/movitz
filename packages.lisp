@@ -1299,6 +1299,8 @@
 	   #:movitz-subtypep
 
 	   #:movitz-compile-file
+           #:movitz-compile-stream
+           #:movitz-disassemble
 	   
 	   #:movitz-std-instance
 	   #:movitz-struct
