@@ -444,3 +444,17 @@ Return the variable, keyword, init-fom, and supplied-p-parameter."
   ;; What do do?
   (warn "Unknown declaration: ~S" declaration)
   (values))
+
+
+(defun constantp (form &optional environment)
+  (typecase form
+    (boolean t)
+    (keyword t)
+    (symbol nil)
+    (cons (eq 'quote (car form)))
+    (t t)))
+
+(defun macro-function (symbol &optional environment)
+  "=> function"
+  (declare (ignore symbol environment))
+  nil)
