@@ -328,7 +328,7 @@ The valid parameters are~{ ~S~}."
 	(multiple-value-bind (cl-body declarations doc-string)
 	    (parse-docstring-declarations-and-body cl-macro-body 'cl:declare)
 	  (declare (ignore doc-string))
-	  (setf (movitz-env-get access-fn :setf-expander nil)
+	  (setf (movitz-env-get access-fn 'muerte::setf-expander nil)
 	    (let* ((form-formal (or wholevar (gensym)))
 		   (env-formal (or envvar (gensym)))
 		   (expander (if (null cl-lambda-list)
