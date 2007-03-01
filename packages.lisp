@@ -1301,6 +1301,7 @@
 	   #:movitz-compile-file
            #:movitz-compile-stream
            #:movitz-disassemble
+           #:movitz-disassemble-method
 	   
 	   #:movitz-std-instance
 	   #:movitz-struct
