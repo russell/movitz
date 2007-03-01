@@ -1312,7 +1312,8 @@ In sum this accounts for ~,1F%, or ~D bytes.~%;;~%"
 					   +movitz-fixnum-factor+))))
 		  
 (defun movitz-disassemble (name  &rest args &key ((:image *image*) *image*) &allow-other-keys)
-  (let* ((funobj (movitz-env-named-function name)))
+  (let* ((funobj (or (movitz-env-named-function name)
+                     (error "~S has no function definition." name))))
     (declare (special *image*))
     (apply #'movitz-disassemble-funobj funobj :name name args)))
 
