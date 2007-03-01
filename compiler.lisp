@@ -1370,11 +1370,11 @@ a (lexical-extent) sub-function might care about its parent frame-map."
 (defun optimize-code (unoptimized-code &rest args)
   #+ignore (print-code 'to-optimize unoptimized-code)
   (if (not *compiler-do-optimize*)
-      unoptimized-code
-    (apply #'optimize-code-internal
-	   (optimize-code-dirties
-	    (layout-program (optimize-code-unfold-branches unoptimized-code)))
-	   0 args)))
+      (layout-program (optimize-code-unfold-branches unoptimized-code))
+      (apply #'optimize-code-internal
+             (optimize-code-dirties
+              (layout-program (optimize-code-unfold-branches unoptimized-code)))
+             0 args)))
 
 (defun optimize-code-unfold-branches (unoptimized-code)
   "This particular optimization should be done before code layout:
@@ -1472,7 +1472,7 @@ initially."
 
 (defun optimize-code-internal (unoptimized-code recursive-count &rest key-args
 			       &key keep-labels stack-frame-size)
-  "Peephole optimizer. Based on a lot of rather random techniques."
+  "Peephole optimizer. Based on a lot of rather random heuristics."
   (declare (ignore stack-frame-size))
   (when (<= 20 recursive-count)
     (error "Peephole-optimizer recursive count reached ~D.
