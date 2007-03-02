@@ -30,7 +30,7 @@
   (defun get-setf-expansion (place &optional environment)
     (let* ((name (and (consp place)
 		      (movitz::translate-program (car place) :cl :muerte.cl)))
-	   (expander (and name (movitz::movitz-env-get name :setf-expander nil environment))))
+	   (expander (and name (movitz::movitz-env-get name 'setf-expander nil environment))))
       (if expander
 	  (funcall expander place environment)
 	(multiple-value-bind (expansion expanded-p)
