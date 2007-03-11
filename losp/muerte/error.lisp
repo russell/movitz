@@ -59,3 +59,9 @@
 (defun formatted-error (type format-control &rest format-arguments)
   (declare (dynamic-extent format-arguments))
   (error type :format-control format-control :format-arguments format-arguments))
+
+(defun cerror (continue-format-control datum &rest arguments)
+  (declare (dynamic-extent arguments))
+  (with-simple-restart (continue "~?" continue-format-control arguments)
+    (apply 'error datum arguments))
+  nil)
