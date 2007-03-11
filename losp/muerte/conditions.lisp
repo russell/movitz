@@ -28,7 +28,7 @@
 
 (defmacro define-condition (name parent-types slot-specs &rest options)
   `(progn
-     (defclass ,name ,(or parent-types '(condition)) ,slot-specs)
+     (defclass ,name ,(or parent-types '(condition)) ,slot-specs (:metaclass read-only-class))
      ,@(let ((reporter (cadr (assoc :report options))))
 	 (when reporter
 	   `((defmethod print-object ((condition ,name) stream)
