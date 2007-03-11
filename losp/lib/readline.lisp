@@ -128,15 +128,12 @@ completion-start and completion-end are bounding indexes into completion's name.
       (write-string buffer t :end end)
       (setf (cursor-x console) (+ cursor-origin pos)))
     (loop with previous-key-was-tab-p = nil
-	with keypress-condition = (when *readline-signal-keypresses*
-				    (make-condition 'readline-keypress))
 	and displayed-completions-p = nil
 	as key = (muerte:read-key console)
 	do (with-saved-excursion (console)
-	     (when keypress-condition
-	       (setf (readline-keypress-key keypress-condition) key)
+	     (when *readline-signal-keypresses*
 	       (with-simple-restart (continue "Proceed with interactive READLINE.")
-		 (signal keypress-condition))))
+		 (signal 'readline-keypress :key key))))
 	   (when (characterp key)
 	     (unless (char= key #\tab)
 	       (setf previous-key-was-tab-p nil))
