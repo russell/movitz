@@ -551,6 +551,7 @@
 						direct-slots direct-superclasses
 		       &allow-other-keys)
     (declare (dynamic-extent all-keys))
+    (remf all-keys :metaclass)
     (let ((old-class (movitz-find-class name nil)))
       (if (and old-class
 	       (eq metaclass *the-class-standard-class*))
@@ -568,6 +569,9 @@
 			      'movitz-make-instance)
 			     ((eq metaclass (movitz-find-class 'run-time-context-class nil))
 			      'movitz-make-instance)
+                             ((member *the-class-standard-class*
+                                      (class-precedence-list metaclass))
+                              'make-instance-standard-class)
 			     (t (break "Unknown metaclass: ~S" metaclass)
 				#+ignore 'make-instance-built-in-class
 				'movitz-make-instance))
@@ -676,7 +680,7 @@
 						      default-initargs-function
 						      documentation)
     (declare (ignore metaclass documentation))
-    (let ((class (std-allocate-instance *the-class-standard-class*)))
+    (let ((class (std-allocate-instance metaclass)))
       (setf (movitz-class-name class) name)
       (setf (class-direct-subclasses class) ())
       (setf (class-direct-methods class) ())
@@ -684,6 +688,16 @@
       (setf (movitz-slot-value class 'plist)
 	(when default-initargs-function
 	  (list :default-initargs-function default-initargs-function)))
+      (dolist (slot (class-slots (movitz-class-of class)))
+        (let ((slot-name (slot-definition-name slot))
+              (slot-initform (muerte::translate-program (slot-definition-initform slot)
+                                                        '#:muerte.cl '#:cl)))
+          (when slot-initform
+            (warn "init slot: ~S: ~S => ~S"
+                  slot-name
+                  slot-initform
+                  (movitz::eval-form slot-initform))
+            (setf (movitz-slot-value class slot-name) (movitz::eval-form slot-initform)))))
       (std-after-initialization-for-classes class
 					    :direct-slots direct-slots
 					    :direct-superclasses direct-superclasses)
@@ -708,8 +722,10 @@
 	(dolist (writer (slot-definition-writers direct-slot))
 	  (add-writer-method 
 	   class writer (slot-definition-name direct-slot)))))
-    (funcall (if (or (eq (movitz-class-of class) *the-class-standard-class*)
-		     (subclassp (movitz-class-of class) (movitz-find-class 'std-slotted-class)))
+    (funcall (if (or (eq (movitz-class-of class)
+                         *the-class-standard-class*)
+		     (subclassp (movitz-class-of class)
+                                (movitz-find-class 'std-slotted-class)))
 		 #'std-finalize-inheritance
 	       #'finalize-inheritance)
 	     class)
