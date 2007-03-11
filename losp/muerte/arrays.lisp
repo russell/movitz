@@ -564,8 +564,7 @@
 	    (:jne 'not-basic-simple-vector)
 	    (:cmpl :edx (:ebx (:offset movitz-basic-vector num-elements)))
 	    (:jbe 'illegal-index)
-	    (:movl :eax
-		   (:ebx :edx ,(bt:slot-offset 'movitz:movitz-basic-vector 'movitz::data))))))
+	    (:movl :eax (:ebx :edx (:offset movitz-basic-vector data))))))
     (do-it)))
 
 ;;; string accessors
