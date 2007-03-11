@@ -149,9 +149,10 @@
 	     (mapcar (lambda (sub-form)
 		       (movitz-eval sub-form env nil))
 		     (cdr form))))
-     ((member operator '(muerte.cl:coerce))
-      (apply #'coerce
-	     (mapcar (lambda (arg) (translate-program (movitz-eval arg env nil) :muerte.cl :cl))
+     ((member operator '(muerte.cl:coerce muerte.cl:make-hash-table))
+      (apply (translate-program operator :muerte.cl :cl)
+	     (mapcar (lambda (arg)
+                       (translate-program (movitz-eval arg env nil) :muerte.cl :cl))
 		     (cdr form))))
      ((and compiler-macro-function
 	   (not (movitz-env-get (car form) 'notinline nil env))
