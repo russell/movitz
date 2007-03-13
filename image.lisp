@@ -779,9 +779,9 @@ a cons is an offset (the car) from some other code-vector (the cdr)."
 			:start-address start-address
 			:movitz-features '(:movitz)
 			:function-code-sizes
-			(if (and (boundp '*image*) *image*)
+			(if *image*
 			    (copy-hash-table (function-code-sizes *image*))
-			  (make-hash-table :test #'equal))
+                            (make-hash-table :test #'equal))
 			init-args)))
     (setf (image-nil-word *image*)
       (+ 5 (- (slot-offset 'movitz-run-time-context 'null-symbol)
@@ -824,7 +824,7 @@ a cons is an offset (the car) from some other code-vector (the cdr)."
 		   (when init-file
 		     (movitz-compile-file init-file))
 		   *image*)
-	 *i* (when (boundp '*image*) *image*))
+	 *i* *image*)
   (when gc
     #+allegro (setf (sys:gsgc-parameter :generation-spread) 8)
     #+allegro (excl:gc :tenure)

@@ -18,7 +18,7 @@
 (defvar *i* nil)			; These hold the previous built images,
 (defvar *ii* nil)			; for interactive use.
 
-(defvar *image*)
+(defvar *image* nil)
 
 (define-symbol-macro *movitz-nil*
     (image-nil-object *image*))
