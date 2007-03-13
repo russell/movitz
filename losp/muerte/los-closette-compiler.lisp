@@ -693,10 +693,6 @@
               (slot-initform (muerte::translate-program (slot-definition-initform slot)
                                                         '#:muerte.cl '#:cl)))
           (when slot-initform
-            (warn "init slot: ~S: ~S => ~S"
-                  slot-name
-                  slot-initform
-                  (movitz::eval-form slot-initform))
             (setf (movitz-slot-value class slot-name) (movitz::eval-form slot-initform)))))
       (std-after-initialization-for-classes class
 					    :direct-slots direct-slots
