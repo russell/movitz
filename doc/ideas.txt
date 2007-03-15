@@ -14,6 +14,12 @@
 ##                
 ######################################################################
 
+** Symbols and global variables
+
+  - I'm starting to suspect that there should be no global
+    symbol-value cell. I don't think they're required, and perhaps
+    there's really no scenario where they're the adequate solution.
+
 ** Method dispatch caching
 
   - Can we make the cache per caller funobj? This should be possible
