@@ -74,3 +74,8 @@
     (ratio (%ratio-denominator x))))
 
 (defconstant pi #xea7632a/4aa1a8b)
+
+(defconstant least-positive-short-float 1/1000)
+(defconstant least-positive-single-float 1/1000)
+(defconstant least-positive-double-float 1/1000)
+(defconstant least-positive-long-float 1/1000)
