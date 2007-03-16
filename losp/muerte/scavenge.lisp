@@ -60,7 +60,7 @@ start-location and end-location."
 	((>= scan end-location))
       (declare (fixnum scan))
       (let ((x (memref scan 0 :type :unsigned-byte16))
-            (x2 (memref scan 1 :type :unsigned-byte16)))
+            (x2 (memref scan 2 :type :unsigned-byte16)))
         (when verbose
           (format *terminal-io* " [at ~S: ~S]" scan x))
         (cond
