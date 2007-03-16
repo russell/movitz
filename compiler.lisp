@@ -5986,26 +5986,7 @@ fifth:  all compiler-values for form1, as a list."
 	   :code nil
 	   :final-form binding
 	   :returns binding
-	   :functional-p t))
-      #+ignore
-      (t (let ((returns (ecase (result-mode-type result-mode)
-			  ((:function :multiple-values :eax)
-			   :eax)
-			  (:lexical-binding
-			   result-mode)
-			  ((:ebx :ecx :edx :esi :push
-			    ;; :untagged-fixnum-eax
-			    :untagged-fixnum-ecx
-			    :boolean-branch-on-true
-			    :boolean-branch-on-false)
-			   result-mode)
-			  (:boolean
-			   :boolean=zf=0))))
-	   (compiler-values ()
-	     :code (make-compiled-lexical-load binding returns)
-	     :final-form binding
-	     :returns returns
-	     :functional-p t))))))
+	   :functional-p t)))))
 
 (defun make-compiled-lexical-load (binding result-mode &rest key-args)
   "Do what is necessary to load lexical binding <binding>."
@@ -6131,13 +6112,6 @@ fifth:  all compiler-values for form1, as a list."
 	   :type nil))
 	(t (compiler-values (self-eval)
 	     :returns binding))))))
-;;;	((:eax :single-value :multiple-values :function)
-;;;	 (compiler-values (self-eval)
-;;;	   :code `((:load-lexical ,binding :eax))
-;;;	   :returns :eax))
-;;;	(t (compiler-values (self-eval)
-;;;	     :code `((:load-lexical ,binding ,result-mode))
-;;;	     :returns result-mode))))))
 
 (define-compiler compile-implicit-progn (&all all &form forms &top-level-p top-level-p
 					      &result-mode result-mode)
@@ -6563,14 +6537,7 @@ and a list of any intervening unwind-protect environment-slots."
     (cond
      ((not (new-binding-located-p binding frame-map))
       (unless (or (movitz-env-get (binding-name binding) 'ignore nil (binding-env binding))
-		  (movitz-env-get (binding-name binding) 'ignorable nil (binding-env binding))
-		  #+ignore
-		  (labels ((recursive-located-p (b)
-			     (or (new-binding-located-p b frame-map)
-				 (and (typep binding 'forwarding-binding)
-				      (recursive-located-p (forwarding-binding-target b))))))
-		    (recursive-located-p binding)))
-	#+ignore (warn "Unused variable: ~S." (binding-name binding))))
+		  (movitz-env-get (binding-name binding) 'ignorable nil (binding-env binding)))))
      ((typep binding 'forwarding-binding)
       ;; No need to do any initialization because the target will be initialized.
       (assert (not (binding-lended-p binding)))
