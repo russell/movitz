@@ -180,6 +180,14 @@ start-location and end-location."
                      "Scanned basic-vector at ~S with illegal length ~S." scan len)
              (record-scan (%word-offset scan #.(movitz:tag :other)))
              (incf scan (1+ (logand (1+ len) -2)))))
+          ((scavenge-wide-typep x :basic-vector #.(bt:enum-value 'movitz:movitz-vector-element-type :bit))
+           (assert (evenp scan) ()
+                   "Scanned bit-vector-header ~S at odd location #x~X." x scan)
+           (let ((len (memref scan 4)))
+             (assert (typep len 'positive-fixnum) ()
+                     "Scanned basic-vector at ~S with illegal length ~S." scan len)
+             (record-scan (%word-offset scan #.(movitz:tag :other)))
+             (incf scan (1+ (* 2 (truncate (+ 63 len) 64))))))
           ((scavenge-typep x :basic-vector)
            (if (or (scavenge-wide-typep x :basic-vector
                                         #.(bt:enum-value 'movitz:movitz-vector-element-type
