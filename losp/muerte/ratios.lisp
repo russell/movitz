@@ -21,9 +21,7 @@
 
 (in-package muerte)
 
-(defun make-ratio (numerator denominator)
-  (check-type numerator integer)
-  (check-type denominator (integer 1 *))
+(defun %make-ratio (numerator denominator)
   (macrolet
       ((do-it ()
 	 `(with-allocation-assembly (4 :fixed-size-p t
@@ -35,6 +33,11 @@
 	    (:movl :ebx (:eax (:offset movitz-ratio numerator)))
 	    (:movl :edx (:eax (:offset movitz-ratio denominator))))))
     (do-it)))
+
+(defun make-ratio (numerator denominator)
+  (check-type numerator integer)
+  (check-type denominator (integer 1 *))
+  (%make-ratio numerator denominator))
 
 (defun ratio-p (x)
   (typep x 'ratio))
