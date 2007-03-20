@@ -523,8 +523,9 @@
 	   (cond
 	    ((and (movitz:movitz-constantp n1 env)
 		  (movitz:movitz-constantp n2 env))
-	     (list ',2op-name (movitz:movitz-eval n1 env) (movitz:movitz-eval n2 env)))
-	    ((movitz:movitz-constantp n1 env)
+             (if (funcall name (movitz:movitz-eval n1 env) (movitz:movitz-eval n2 env))
+                 t nil))
+            ((movitz:movitz-constantp n1 env)
 	     (let ((n1 (movitz::movitz-eval n1 env)))
 	       (check-type n1 number)
 	       (if (typep n1 '(signed-byte 30))
