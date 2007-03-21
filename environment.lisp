@@ -217,6 +217,9 @@ lexical environment that a closure funobj captures."))
     :accessor key-decode-map)
    (key-decode-shift
     :accessor key-decode-shift)
+   (aux-vars
+    :initform nil
+    :accessor aux-vars)
    (need-normalized-ecx-p
     :initarg :need-normalized-ecx-p
     :accessor need-normalized-ecx-p)
