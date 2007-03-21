@@ -22,6 +22,7 @@
 
 (defun segment-register (segment-register-name)
   "Return the value of an x86 segment register, such as :cs or :ds."
+  (declare (without-check-stack-limit))
   (macrolet ((sreg (reg)
 	       `(with-inline-assembly (:returns :untagged-fixnum-ecx)
 		  (:xorl :ecx :ecx)
@@ -37,6 +38,7 @@
 (defun (setf segment-register) (value segment-register-name)
   "This function indiscriminately sets a segment register,
 which is a great way to crash the machine. So know what you're doing."
+  (declare (without-check-stack-limit))
   (check-type value (unsigned-byte 16))
   (macrolet ((set-sreg (reg)
 	       `(with-inline-assembly (:returns :nothing)
@@ -64,6 +66,7 @@ which is a great way to crash the machine. So know what you're doing."
 (defun %sgdt ()
   "Return the location of the GDT, and the limit.
 Error if the GDT location is not zero modulo 4."
+  (declare (without-check-stack-limit))
   (eval-when (:compile-toplevel)
     (assert (= 4 movitz:+movitz-fixnum-factor+)))
   (without-interrupts
@@ -85,6 +88,7 @@ Error if the GDT location is not zero modulo 4."
 (defun %lgdt (base-location limit)
   "Set the GDT according to base-location and limit.
 This is the setter corresponding to the sgdt getter."
+  (declare (without-check-stack-limit))
   (eval-when (:compile-toplevel)
     (assert (= 4 movitz:+movitz-fixnum-factor+)))
   (check-type base-location fixnum)
