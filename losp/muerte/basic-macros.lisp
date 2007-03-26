@@ -755,6 +755,7 @@
       not-symbol
        (:cmpb 7 :cl)
        (:jne '(:sub-program (not-funobj)
+               (:movb 1 :cl)
 	       (:int 69)))
        (:cmpb ,(movitz:tag :funobj) (:edx ,movitz:+other-type-offset+))
        (:jne 'not-funobj)
@@ -805,6 +806,7 @@
 	    (:leal (:edx -6) :ecx)
 	    (:testb 7 :cl)
 	    (:jne '(:sub-program (not-funobj)
+                    (:movb 1 :cl)
 		    (:int 69)))
 	    (:cmpb ,(movitz::tag :funobj) (:edx ,movitz:+other-type-offset+))
 	    (:jne 'not-funobj)
@@ -827,6 +829,7 @@
 	  not-symbol
 	   (:cmpb 7 :cl)
 	   (:jnz '(:sub-program (not-funobj)
+                   (:movb 1 :cl)
 		   (:int 69)))
 	   (:cmpb ,(movitz::tag :funobj) (:edx ,movitz:+other-type-offset+))
 	   (:jne 'not-funobj)
@@ -849,6 +852,7 @@
 	  not-symbol
 	   (:cmpb 7 :cl)
 	   (:jnz '(:sub-program (not-funobj)
+                   (:movb 1 :cl)
 		   (:int 69)))
 	   (:cmpb ,(movitz::tag :funobj) (:edx ,movitz:+other-type-offset+))
 	   (:jne 'not-funobj)

@@ -344,7 +344,7 @@ is off, e.g. because this interrupt/exception is routed through an interrupt gat
 		(with-inline-assembly (:returns :nothing) (:nop))))
 	  (69 (error 'type-error
 		     :datum (dereference $eax)
-		     :expected-type (aref #(cons)
+		     :expected-type (aref #(cons function)
 					  (dereference $ecx :unsigned-byte8))))
 	  (70 (error "Unaligned memref access."))
 	  ((5 55)
