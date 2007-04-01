@@ -43,9 +43,7 @@
      (:testb 1 :cl)))
 
 (define-compiler-macro + (&whole form &rest operands &environment env)
-  (flet ((term (x) (if (and nil (symbolp x))
-		       (gensym (format nil "term-~A-" x))
-		     (gensym "term-"))))
+  (flet ((term (x) (gensym "term-")))
     (case (length operands)
       (0 0)
       (1 (first operands))
