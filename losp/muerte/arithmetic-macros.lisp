@@ -257,7 +257,6 @@
 	   `(* ,(movitz:movitz-eval factor2 env) ,factor1))
 	  ((movitz:movitz-constantp factor1 env)
 	   (let ((f1 (movitz:movitz-eval factor1 env)))
-	     (check-type f1 integer)
 	     (case f1
 	       (0 `(progn ,factor2 0))
 	       (1 factor2)
