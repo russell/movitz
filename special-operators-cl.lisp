@@ -860,7 +860,9 @@ where zot is not in foo's scope, but _is_ in foo's extent."
       (compiler-values-bind (&code block-code &functional-p block-no-side-effects-p)
 	  (compiler-call #'compile-form
 	    :defaults forward
-	    :result-mode block-result-mode
+	    :result-mode (case block-result-mode
+                           (:function :multiple-values) ; must restore stack
+                           (t block-result-mode))
 	    :form `(muerte.cl:progn ,@body)
 	    :env block-env)
 	(let ((label-set-name (gensym "block-label-set-"))
