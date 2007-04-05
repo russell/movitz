@@ -7417,7 +7417,7 @@ but it's requested to be in ~S."
 				 (:pushl 0) ; %3op
 				 (:pushl 0) ; %2op
 				 (:pushl 0) ; %1op
-				 (:pushl 0) ; (default)
+				 (:pushl 2) ; (default) 2 is recognized by map-header-vals as non-initialized funobj.
 				 
 				 (:pushl (:eax ,(slot-offset 'movitz-funobj 'type)))
 				 (:leal (:esp ,(tag :other)) :ebx)
