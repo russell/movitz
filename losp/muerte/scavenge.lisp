@@ -40,6 +40,11 @@
 	       (unless (eq object new-object)
 		 (setf (memref location 0) new-object)))))))
 
+(defun map-header-vals* (function &optional (vector (%run-time-context-slot nil 'nursery-space)))
+  (check-type vector (vector (unsigned-byte 32)))
+  (let ((location (+ 2 (object-location vector))))
+    (map-header-vals function location (+ location (length vector)))))
+
 (defun map-header-vals (function start-location end-location)
   "Map function over each potential pointer word between
 start-location and end-location."
@@ -106,7 +111,9 @@ start-location and end-location."
            (record-scan (%word-offset scan #.(movitz:tag :other)))
            ;; Process code-vector pointers specially..
            (let* ((old-code-vector (memref (incf scan) 0 :type :code-vector))
-                  (new-code-vector (map-instruction-pointer function scan old-code-vector)))
+                  (new-code-vector (if (eq 0 old-code-vector)
+                                       0 ; i.e. a non-initialized funobj.
+                                       (map-instruction-pointer function scan old-code-vector))))
              (cond
 	       ((not (eq new-code-vector old-code-vector))
 		;; Code-vector%1op
