@@ -622,7 +622,7 @@
       (macrolet
 	  ((do-it ()
 	     `(number-double-dispatch (minuend subtrahend)
-		((t (eql 0))
+		((number (eql 0))
 		 minuend)
 		(((eql 0) t)
 		 (- subtrahend))
