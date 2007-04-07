@@ -268,22 +268,24 @@ Otherwise, stack-frame is an absolute location."
     (run-time-context
      (%shallow-copy-object old (movitz-type-word-size 'movitz-run-time-context)))))
 
-(defun objects-equalp (x y)
+(defun objects-equalp (x y &optional (limit 20))
   "Basically, this verifies whether x is a shallow-copy of y, or vice versa."
   (assert (not (with-inline-assembly (:returns :boolean-zf=1)
 		 (:load-lexical (:lexical-binding x) :eax)
 		 (:cmpl #x13 :eax)))
       (x) "Checking illegal ~S for object-equalp." x)
-  (or (eql x y)
+  (or (= 0 (decf limit))
+      (eql x y)
       (cond
-       ((not (objects-equalp (class-of x) (class-of y)))
+       ((not (objects-equalp (class-of x) (class-of y) limit))
 	nil)
        ((not (and (typep x 'pointer)
 		  (typep y 'pointer)))
 	nil)
        (t (macrolet ((test (accessor &rest args)
 		       `(objects-equalp (,accessor x ,@args)
-					(,accessor y ,@args))))
+					(,accessor y ,@args)
+                                        limit)))
 	    (typecase x
 	      (bignum
 	       (= x y))
