@@ -246,6 +246,14 @@
      (make-symbol (format nil "~A~D" x (prog1 *gensym-counter*
 					 (incf *gensym-counter*)))))))
 
+(defvar *gentemp-counter* 0)
+
+(defun gentemp (&optional (prefix "T") (package *package*))
+  (intern (do ((name #0=(format nil "~A~D" prefix *gentemp-counter*) #0#))
+              ((not (find-symbol name package)) name)
+            (incf *gentemp-counter*))
+          package))
+
 (defun get (symbol indicator &optional default)
   (getf (symbol-plist symbol) indicator default))
 
