@@ -308,7 +308,7 @@ in a somewhat feeble attempt to avoid trouble."
 	 (t
 	  (list (pop mem-keys) (logand base -16))))))
 	    
-(defun scan-pci-bus (bus)
+(defun scan-pci-bus (&optional (bus 0))
   (loop for device from 0 to 31
       do (multiple-value-bind (vendor-id return-code)
 	     (pci-bios-config-space-word bus device 0 0)
