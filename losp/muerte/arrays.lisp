@@ -1100,7 +1100,6 @@ and return basic-vector and accessors for that subsequence."
                          (do-it))))
            (cond
              ((integerp fill-pointer)
-              (warn "sfp len: ~s" (array-dimension array 0))
               (setf (fill-pointer array) fill-pointer))
              ((or (eq t fill-pointer)
                   (array-has-fill-pointer-p array))
