@@ -240,6 +240,17 @@
 (defun write-word-lowlevel (word dest)
   (write-word-lowlevel-macro word dest))
 
+(defun e9-output (op &rest args)
+  (declare (dynamic-extent args))
+  (ecase op
+    (muerte::stream-write-char
+     (setf (io-port #xe9 :unsigned-byte8) (char-code (car args))))
+    (muerte::stream-fresh-line
+     (e9-output 'muerte::stream-write-char #\Newline)
+     t)
+    (local-echo-p
+     nil)))
+
 (defun textmode-console (op &rest args)
   "This function can act as *terminal-io* without/before CLOS support."
   (declare (dynamic-extent args))
