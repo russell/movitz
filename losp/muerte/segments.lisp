@@ -229,9 +229,10 @@ NB! you need to ensure that the table object isn't garbage-collected."
   (let ((offset (+ (logand #xfff8 selector)
 		   (movitz-type-slot-offset 'movitz-basic-vector 'data))))
     (setf (memref table (+ 6 offset) :type :unsigned-byte8)
-      (ldb (byte 4 16) limit))
-    (setf (memref table (+ 0 offset) :type :unsigned-byte8)
-      (ldb (byte 16 0) limit))
+          (logior (ldb (byte 4 16) limit)
+                  (ash (segment-descriptor-avl-x-db-g table selector) 4)))
+    (setf (memref table (+ 0 offset) :type :unsigned-byte16)
+          (ldb (byte 16 0) limit))
     limit))
 
 (defun segment-descriptor-type-s-dpl-p (table selector)
