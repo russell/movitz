@@ -1131,20 +1131,23 @@
 
 ;; set a pixel to a colour of our choice
 ;; write to the NEXT page
-(defun (setf pixel) (col x y)
-  (cond ((< x (nth 0 (viewport))) (return-from pixel nil))
-		((> x (nth 1 (viewport))) (return-from pixel nil))
-		((< y (nth 2 (viewport))) (return-from pixel nil))
-		((> y (nth 3 (viewport))) (return-from pixel nil))
-		(t (set-plane (logand x 3))
-		   (setf (memref-int (vga-memory-map)
-							 :index (+ (* (truncate *vga-width* 4) y) ; pixel
-									   (truncate x 4)
-									   (* (truncate *vga-width* 2) ; page
-										  *vga-height*
-										  *vga-current-page*))
-							 :type :unsigned-byte8)
-				 col))))
+(defun (setf pixel) (color x y)
+  (cond
+    ((< x (nth 0 (viewport))))
+    ((>= x (nth 1 (viewport))))
+    ((< y (nth 2 (viewport))))
+    ((>= y (nth 3 (viewport))))
+    (t (set-plane (logand x 3))
+       (setf (memref-int (vga-memory-map)
+              :index (+ (* (truncate *vga-width* 4) y) ; pixel
+                        (truncate x 4)
+                        (* (truncate *vga-width* 2) ; page
+                           *vga-height*
+                           *vga-current-page*))
+              :type :unsigned-byte8)
+             color)))
+  color)
+
 
 
 ; return the current viewport as a list
