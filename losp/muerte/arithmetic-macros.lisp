@@ -110,8 +110,12 @@
        ((minusp min)
 	`(let ((x ,x))
 	   (and (<= ,min x) (<= x ,max))))
-       ((or (not (typep min 'fixnum))
-	    (not (typep max 'fixnum)))
+       ((or (not (<= movitz:+movitz-most-negative-fixnum+
+		     min
+		     movitz:+movitz-most-positive-fixnum+))
+	    (not (<= movitz:+movitz-most-negative-fixnum+
+		     max
+		     movitz:+movitz-most-positive-fixnum+)))
 	`(let ((x ,x))
 	   (and (<=%2op ,min x)
 		(<=%2op x ,max))))
