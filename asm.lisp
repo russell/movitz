@@ -47,10 +47,10 @@
   (typep operand 'register-operand))
 
 (deftype indirect-operand ()
-  'cons)
+  '(and cons (not (cons (eql quote)))))
 
 (defun indirect-operand-p (operand)
-  (consp operand))
+  (typep operand 'indirect-operand))
 
 (define-condition unresolved-symbol ()
   ((symbol
