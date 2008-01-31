@@ -304,9 +304,10 @@
      x)
     (symbol-reference
      (let ((s (symbol-reference-symbol x)))
-       (cdr (or (assoc s *symtab*)
-		(error 'unresolved-symbol 
-		       :symbol s)))))))
+       (loop (with-simple-restart (retry-symbol-resolve "Retry resolving ~S." s)
+	       (return (cdr (or (assoc s *symtab*)
+				(error 'unresolved-symbol 
+				       :symbol s))))))))))
 
 (defun resolve-and-encode (x type &key size)
   (encode-integer (cond
