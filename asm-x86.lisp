@@ -1358,6 +1358,13 @@
 (define-operator* (:32 :movzxw) (src dst)
   (reg-modrm dst src #x0fb7))
 
+;;;;;;;;;;; MUL
+
+(define-operator/32 :mull (factor product1 &optional product2)
+  (when (and (eq product1 :eax)
+	     (eq product2 :edx))
+    (modrm factor #xf7 4)))
+
 ;;;;;;;;;;; NEG
 
 (define-operator/8 :negb (dst)
