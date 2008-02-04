@@ -1445,6 +1445,20 @@
 (define-operator* (:16 :popfw :32 :popfl :64 :popfr) ()
   (opcode #x9d))
 
+;;;;;;;;;;; PRFETCH
+
+(define-operator :prefetch-nta (m8)
+  (modrm m8 #x0f18 0))
+
+(define-operator :prefetch-t0 (m8)
+  (modrm m8 #x0f18 1))
+
+(define-operator :prefetch-t1 (m8)
+  (modrm m8 #x0f18 2))
+
+(define-operator :prefetch-t2 (m8)
+  (modrm m8 #x0f18 3))
+
 ;;;;;;;;;;; PUSH
 
 (define-operator* (:16 :pushw :32 :pushl) (src)
