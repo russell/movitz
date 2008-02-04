@@ -392,7 +392,7 @@ that the msb isn't zero. DO NOT APPLY TO NON-BIGNUM VALUES!"
 		     :eax)
 	      (:xorl :edx :edx)
 	      (:shldl :cl :eax :edx)
-	      (jnz 'overflow)
+	      (:jnz 'overflow)
 	     shift-short-loop
 	      (:movl (:ebx :esi (:offset movitz-bignum bigit0 -4))
 		     :eax)
