@@ -77,6 +77,21 @@
   (warn "X: ~S" (memref-int bios32))
   (warn "X: ~S" (= (memref-int bios32) #x5f32335f)))
 
+(defun setfint (x o)
+  (setf (memref x o :type :unsigned-byte32) 0))
+
+(defun fint (x)
+  (memref-int x :type :unsigned-byte32 :physicalp t))
+
+(defun good ()
+  (with-inline-assembly (:returns :untagged-fixnum-ecx)
+    ((:gs-override) :movl (#x1000000) :ecx)))
+
+(defun (setf good) (x)
+  (with-inline-assembly (:returns :untagged-fixnum-ecx)
+    (:compile-form (:result-mode :untagged-fixnum-ecx) x)
+    ((:gs-override) :movl :ecx (#x1000000))))
+
 (defun test2 ()
   (funcall
    (compile
@@ -862,8 +877,8 @@ The following prints ``The inner catch returns :SECOND-THROW'' and then returns 
 Can be used to measure the overhead of primitive function."
   (with-inline-assembly (:returns :eax)
     (:load-lexical (:lexical-binding x) :eax)
-    (% bytes 8 #xff #x97)		; (:call-local-pf ret-trampoline)
-    (% bytes 32 #.(bt:slot-offset 'movitz::movitz-run-time-context 'movitz::ret-trampoline))))
+    (:% :bytes 8 #xff #x97)		; (:call-local-pf ret-trampoline)
+    (:% :bytes 32 #.(bt:slot-offset 'movitz::movitz-run-time-context 'movitz::ret-trampoline))))
 
 (defun my-test-labels (x)
   (labels (#+ignore (p () (print x))
