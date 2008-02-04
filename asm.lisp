@@ -102,11 +102,11 @@
 ;;;;;;;;;;;;
 
 
-(defun proglist-encode (proglist &key corrections (start-pc 0) (cpu-package '#:asm-x86))
+(defun proglist-encode (proglist &key ((:symtab incoming-symtab) *symtab*) corrections (start-pc 0) (cpu-package '#:asm-x86))
   "Encode a proglist, using instruction-encoder in symbol encode-instruction from cpu-package."
   (let ((encoder (find-symbol (string '#:encode-instruction) cpu-package))
 	(*pc* start-pc)
-	(*symtab* corrections)
+	(*symtab* (append incoming-symtab corrections))
 	(assumptions nil)
 	(new-corrections nil)
 	(sub-programs nil))
@@ -186,11 +186,13 @@
 		 finally
 		 (cond
 		   ((not (null assumptions))
+		    (warn "prg: ~{~%~A~}" proglist)
 		    (error "Undefined symbol~P: ~{~S~^, ~}"
 			   (length assumptions)
 			   (mapcar #'car assumptions)))
 		   ((not (null new-corrections))
 		    (return (proglist-encode proglist
+					     :symtab incoming-symtab
 					     :start-pc start-pc
 					     :cpu-package cpu-package
 					     :corrections (nconc new-corrections corrections))))))
