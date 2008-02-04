@@ -1899,26 +1899,26 @@
 		     (:shrl 5 :ecx)	; compute msb bigit index/fixnum in ecx
 		     (:addl 4 :ecx)
 		     (:cmpw :cx (:ebx (:offset movitz-bignum length)))
-		     (je '(:sub-program (equal-size-maybe-return-same)
-			   (:testl :edx :edx) ; Can only return same if (zerop position).
-			   (:jnz 'adjust-size)
-			   (:movl :eax :ecx) ; size/fixnum
-			   (:shrl ,movitz:+movitz-fixnum-shift+ :ecx)
-			   (:andl 31 :ecx)
-			   (:jz 'yes-return-same)
-			   (:std)	; <================
-			   ;; we know EDX=0, now generate mask in EDX
-			   (:addl 1 :edx)
-			   (:shll :cl :edx)
-			   (:movzxw (:ebx (:offset movitz-bignum length))
-			    :ecx)
-			   (:cmpl :edx (:ebx :ecx (:offset movitz-bignum bigit0 -4)))
-			   (:movl 0 :edx) ; Safe value, and correct if we need to go to adjust-size.
-			   (:cld)	; =================>
-			   (:jnc 'adjust-size) ; nope, we have to generate a new bignum.
-			   yes-return-same
-			   (:movl :ebx :eax) ; yep, we can return same bignum.
-			   (:jmp 'ldb-done)))
+		     (:je '(:sub-program (equal-size-maybe-return-same)
+			    (:testl :edx :edx) ; Can only return same if (zerop position).
+			    (:jnz 'adjust-size)
+			    (:movl :eax :ecx) ; size/fixnum
+			    (:shrl ,movitz:+movitz-fixnum-shift+ :ecx)
+			    (:andl 31 :ecx)
+			    (:jz 'yes-return-same)
+			    (:std)	; <================
+			    ;; we know EDX=0, now generate mask in EDX
+			    (:addl 1 :edx)
+			    (:shll :cl :edx)
+			    (:movzxw (:ebx (:offset movitz-bignum length))
+			     :ecx)
+			    (:cmpl :edx (:ebx :ecx (:offset movitz-bignum bigit0 -4)))
+			    (:movl 0 :edx) ; Safe value, and correct if we need to go to adjust-size.
+			    (:cld)	   ; =================>
+			    (:jnc 'adjust-size) ; nope, we have to generate a new bignum.
+			    yes-return-same
+			    (:movl :ebx :eax) ; yep, we can return same bignum.
+			    (:jmp 'ldb-done)))
 		     (:jnc 'size-ok)
 		     ;; We now know that (+ size position) is beyond the size of the bignum.
 		     ;; So, if (zerop position), we can return the bignum as our result.
