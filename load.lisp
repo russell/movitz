@@ -28,6 +28,10 @@
 
 (load (compile-file #p"../binary-types/binary-types"))
 
+(load (compile-file #p"asm")) ; these are here for now, because
+(load (compile-file #p"asm-x86")) ; ia-x86 needs them while testing/migrating.
+
+
 (let ((*default-pathname-defaults* (merge-pathnames #p"../ia-x86/")))
   #+(or cmu) (let ((pwd (ext:default-directory)))
 	       (progn
