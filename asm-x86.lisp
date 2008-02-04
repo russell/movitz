@@ -207,7 +207,9 @@
                (default-rex nil))
            (declare (ignorable operator-mode default-rex))
            (block operator
-             ,@body)))
+             ,@body
+	     (error "Unable to encode ~S." (list operator ,@(remove #\& lambda-list
+								    :key (lambda (x) (char (string x) 0))))))))
        (setf (gethash ',operator *instruction-encoders*)
 	     ',defun-name)
        ',operator)))
