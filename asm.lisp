@@ -127,7 +127,7 @@
 
 
 (defun resolve-operand (operand)
-  (etypecase operand
+  (typecase operand
     (integer
      operand)
     (symbol-reference
@@ -139,7 +139,8 @@
     (funcall-operand
      (apply (funcall-operand-operator operand)
 	    (mapcar #'resolve-operand
-		    (funcall-operand-operands operand))))))
+		    (funcall-operand-operands operand))))
+    (t operand)))
 ;;;;;;;;;;;;
 
 
