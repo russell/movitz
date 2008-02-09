@@ -1313,7 +1313,7 @@ In sum this accounts for ~,1F%, or ~D bytes.~%;;~%"
 		    (format nil "branch to ~S at ~D" label x)
 		  (format nil "branch to ~D" x)))
       when (and (typep operand 'ia-x86::operand-immediate)
-		(<= 256 (ia-x86::operand-value operand))
+		(<= #x100 (ia-x86::operand-value operand) #x10000)
 		(= (tag :character) (mod (ia-x86::operand-value operand) 256)))
       collect (format nil "#\\~C" (code-char (truncate (ia-x86::operand-value operand) 256)))
       when (and (typep operand 'ia-x86::operand-immediate)
