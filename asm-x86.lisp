@@ -2098,7 +2098,7 @@
 ;;;;;;;;;;; TEST
 
 (define-operator/8 :testb (mask dst)
-  (imm mask #xa8 (xint 8) (mask :al))
+  (imm mask #xa8 (xint 8) (dst :al))
   (imm-modrm mask dst #xf6 0 (xint 8))
   (reg-modrm mask dst #x84))
 
