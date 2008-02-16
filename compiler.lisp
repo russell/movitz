@@ -1553,8 +1553,10 @@ There is (propably) a bug in the peephole optimizer." recursive-count))
 	   "If i is a branch, return the label."
 	   (when jmp (push :jmp branch-types))
 	   (let ((i (ignore-instruction-prefixes i)))
-	     (or (and (listp i) (member (car i) branch-types)
-		      (listp (second i)) (member (car (second i)) '(quote muerte.cl::quote))
+	     (or (and (listp i)
+		      (listp (second i))
+		      (member (car (second i)) '(quote muerte.cl::quote))
+		      (member (car i) branch-types)
 		      (second (second i)))
 		 #+ignore
 		 (and (listp i)
