@@ -133,7 +133,7 @@ is off, e.g. because this interrupt/exception is routed through an interrupt gat
 	    
 	    ;; Do RET promotion of EIP.
 	    (:movl (:ebp ,(dit-frame-offset :eip)) :ecx)
-	    ((:cs-override) :cmpb ,(realpart (ia-x86:asm :ret)) (:ecx))
+	    ((:cs-override) :cmpb ,@(asm-x86:assemble-instruction '(:ret)) (:ecx))
 	    (:jne 'not-at-ret-instruction)
 	    (:globally (:movl (:edi (:edi-offset ret-trampoline)) :ecx))
 	    (:movl :ecx (:ebp ,(dit-frame-offset :eip)))
