@@ -32,15 +32,15 @@
 (load (compile-file #p"asm-x86")) ; ia-x86 needs them while testing/migrating.
 
 
-(let ((*default-pathname-defaults* (merge-pathnames #p"../ia-x86/")))
-  #+(or cmu) (let ((pwd (ext:default-directory)))
-	       (progn
-		 (unwind-protect
-		     (progn
-		       (setf (ext:default-directory) #p"../ia-x86/")
-		       (load "load"))
-		   (setf (ext:default-directory) pwd))))
-  #-(or cmu) (load "load"))
+#+ia-x86 (let ((*default-pathname-defaults* (merge-pathnames #p"../ia-x86/")))
+	   #+(or cmu) (let ((pwd (ext:default-directory)))
+			(progn
+			  (unwind-protect
+			       (progn
+				 (setf (ext:default-directory) #p"../ia-x86/")
+				 (load "load"))
+			    (setf (ext:default-directory) pwd))))
+	   #-(or cmu) (load "load"))
 
 #+allegro (progn
 	    (load (compile-file #p"../infunix/procfs"))
