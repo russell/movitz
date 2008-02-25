@@ -19,6 +19,9 @@
 	   #:immediate-operand
 	   #:indirect-operand-p
 	   #:indirect-operand
+	   #:indirect-operand-offset
+	   #:instruction-operands
+	   #:instruction-operator
 	   #:register-operand
 	   #:resolve-operand
 	   #:unresolved-symbol
@@ -111,6 +114,12 @@
 
 (defun indirect-operand-p (operand)
   (typep operand 'indirect-operand))
+
+(defun indirect-operand-offset (operand)
+  (check-type operand indirect-operand)
+  (reduce #'+ operand
+	  :key (lambda (x)
+		 (if (integerp x) x 0))))
 
 (deftype pc-relative-operand ()
   '(cons (eql :pc+)))
