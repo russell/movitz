@@ -288,11 +288,11 @@
 	     (let ((bit-pos (* 8 (1- (ceiling (integer-length pos) 8)))))
 	       (if (not (plusp bit-pos))
 		   (progn
-		     (unless (or (eq nil decoder)
-				 (eq nil (svref table pos))
-				 (equal decoder (svref table pos)))
-		       (warn "Redefining disassembler for ~@[~(~A~) ~]opcode #x~X from ~{~S ~}to ~{~S~^ ~}."
-			     operator-mode opcode (svref table pos) decoder))
+		     #+(or) (unless (or (eq nil decoder)
+					(eq nil (svref table pos))
+					(equal decoder (svref table pos)))
+			      (warn "Redefining disassembler for ~@[~(~A~) ~]opcode #x~X from ~{~S ~}to ~{~S~^ ~}."
+				    operator-mode opcode (svref table pos) decoder))
 		     (setf (svref table pos) decoder))
 		   (set-it (or (svref table (ldb (byte 8 bit-pos) pos))
 			       (setf (svref table (ldb (byte 8 bit-pos) pos))
