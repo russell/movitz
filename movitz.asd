@@ -28,6 +28,8 @@
   :license "BSD-like, see accopanying file COPYING."
   :description "An (dis-)assembler framework, with support for x86 in 16, 32, and 64-bit modes."
   :serial t
+  :perform (load-op :after (op c)
+		    (provide 'movitz-asm))
   :components ((:file "asm")
 	       (:file "asm-x86")))
 
@@ -43,6 +45,8 @@
   :default-component-class movitz-source-file
   :serial t
   :depends-on (binary-types movitz-asm)
+  :perform (load-op :after (op c)
+		    (provide 'movitz))
   :components ((:file "packages")
 	       (:file "movitz")
 	       (:file "parse")
