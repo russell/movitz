@@ -1276,6 +1276,11 @@
 	   #:vector-read-more-p
 	   ))
 
+(print '(muerte::un-backquote ; make asdf/sbcl realize that these symbols exists..
+	 muerte::backquote-comma
+	 muerte::backquote-comma-at
+	 muerte::backquote-comma-dot)
+       (make-broadcast-stream))
 
 (defpackage #:movitz
   (:use :common-lisp :binary-types)
