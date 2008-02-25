@@ -42,7 +42,7 @@
   :description "A compiler, run-time, and libraries for Common Lisp on the x86."
   :default-component-class movitz-source-file
   :serial t
-  :depends-on (binary-types)
+  :depends-on (binary-types movitz-asm)
   :components ((:file "packages")
 	       (:file "movitz")
 	       (:file "parse")
