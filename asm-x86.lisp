@@ -217,7 +217,8 @@
 	     (cond
 	       ((atom body)
 		nil)
-	       ((member (car body) '(reg-modrm modrm opcode imm-modrm imm opcode-reg pc-rel moffset sreg-modrm))
+	       ((member (car body) '(reg-modrm modrm opcode imm-modrm imm opcode-reg
+				     opcode-reg-imm pc-rel moffset sreg-modrm))
 		(list body))
 	       (t (mapcan #'find-forms body)))))
     (let ((defun-name (intern (format nil "~A-~A" 'instruction-encoder operator))))
@@ -899,6 +900,15 @@
 				 :extra extra-operand))
 	  code))
 
+(defun decode-opcode-reg-imm (code operator opcode operand-size address-size rex operand-ordering imm-type)
+  (declare (ignore address-size rex))
+  (values (list* operator
+		 (order-operands operand-ordering
+				 :reg (nth (ldb (byte 3 0) opcode)
+					   (register-set-by-mode operand-size))
+				 :imm (code-call (decode-integer code imm-type))))
+	  code))
+
 (defun decode-reg-modrm-16 (code operand-size)
   (let* ((modrm (pop-code code mod/rm))
 	 (mod (ldb (byte 2 6) modrm))
@@ -1259,8 +1269,18 @@
 					   (t default-rex))))))))))
 
 (defmacro opcode-reg-imm (opcode op-reg op-imm type)
-  `(return-when
-    (encode-opcode-reg-imm operator legacy-prefixes ,opcode ,op-reg ,op-imm ',type operator-mode default-rex)))
+  `(progn
+     (assembler
+      (return-when
+       (encode-opcode-reg-imm operator legacy-prefixes ,opcode ,op-reg ,op-imm ',type operator-mode default-rex)))
+     (disassembler
+      (loop for reg from #b000 to #b111
+	 do (define-disassembler (operator (logior ,opcode reg) operator-mode)
+		decode-opcode-reg-imm
+	      (operand-ordering operand-formals
+				:reg ',op-reg
+				:imm ',op-imm)
+	      ',type)))))
 
 (defmacro far-pointer (opcode segment offset offset-type &rest extra)
   `(when (and (immediate-p ,segment)
