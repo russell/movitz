@@ -1674,28 +1674,16 @@
 ;;;;;;;;;;; IN
 
 (define-operator/8 :inb (port dst)
-  (when (eq :al dst)
-    (typecase port
-      ((eql :dx)
-       (opcode #xec))
-      ((uint 8)
-       (imm port #xe4 (uint 8) (dst :al))))))
+  (opcode #xec (port :dx) (dst :al))
+  (imm port #xe4 (uint 8) (dst :al)))
 
 (define-operator/16 :inw (port dst)
-  (when (eq :ax dst)
-    (typecase port
-      ((eql :dx)
-       (opcode #xed))
-      ((uint 8)
-       (imm port #xe5 (uint 8) (dst :ax))))))
+  (opcode #xed (port :dx) (dst :ax))
+  (imm port #xe5 (uint 8) (dst :ax)))
 
 (define-operator/32 :inl (port dst)
-  (when (eq :eax dst)
-    (typecase port
-      ((eql :dx)
-       (opcode #xed))
-      ((uint 8)
-       (imm port #xe5 (uint 8) (dst :eax))))))
+  (opcode #xed (port :dx) (dst :eax))
+  (imm port #xe5 (uint 8) (dst :eax)))
 
 ;;;;;;;;;;; INC
 
