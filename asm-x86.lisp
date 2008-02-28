@@ -894,7 +894,7 @@
 	(segment (code-call (decode-integer code '(uint 16)))))
     (values (list operator
 		  segment
-		  offset)
+		  (list offset))
 	    code)))
 
 (defun decode-pc-rel (code operator opcode operand-size address-size rex type)
@@ -1216,11 +1216,13 @@
 
 
 
-(defmacro opcode (opcode &optional fixed-operand &rest extras)
+(defmacro opcode (opcode &optional fixed-operand fixed-operand2 &rest extras)
   `(progn
      (assembler
       (when (and ,@(when fixed-operand
-			 `((eql ,@fixed-operand))))
+			 `((eql ,@fixed-operand)))
+		 ,@(when fixed-operand2
+			 `((eql ,@fixed-operand2))))
 	(return-values-when
 	 (encoded-values :opcode ,opcode
 			 ,@extras
@@ -1228,7 +1230,8 @@
      (disassembler
       (define-disassembler (operator ,opcode)
 	  decode-no-operands
-	,(second fixed-operand)))))
+	,(second fixed-operand)
+	,(second fixed-operand2)))))
 
 (defmacro opcode* (opcode &rest extras)
   `(return-values-when
@@ -1726,7 +1729,8 @@
 ;;;;;;;;;;; IRET
 
 (define-operator* (:16 :iret :32 :iretd :64 :iretq) ()
-  (opcode #xcf () :rex default-rex))
+  (opcode #xcf () ()
+	  :rex default-rex))
 
 ;;;;;;;;;;; Jcc
 
@@ -1964,28 +1968,16 @@
 ;;;;;;;;;;; OUT
 
 (define-operator/8 :outb (src port)
-  (when (eq :al src)
-    (typecase port
-      ((eql :dx)
-       (opcode #xee))
-      ((uint 8)
-       (imm port #xe6 (uint 8) (src :al))))))
+  (opcode #xee (src :al) (port :dx))
+  (imm port #xe6 (uint 8) (src :al)))
 
 (define-operator/16 :outw (src port)
-  (when (eq :ax src)
-    (typecase port
-      ((eql :dx)
-       (opcode #xef))
-      ((uint 8)
-       (imm port #xe7 (uint 8) (src :ax))))))
+  (opcode #xef (src :ax) (port :dx))
+  (imm port #xe7 (uint 8) (src :ax)))
 
 (define-operator/32 :outl (src port)
-  (when (eq :eax src)
-    (typecase port
-      ((eql :dx)
-       (opcode #xef))
-      ((uint 8)
-       (imm port #xe7 (uint 8) (src :eax))))))
+  (opcode #xef (src :eax) (port :dx))
+  (imm port #xe7 (uint 8) (src :eax)))
 
 ;;;;;;;;;;; POP
 
