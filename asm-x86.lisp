@@ -941,14 +941,14 @@
 		  (ecase mod
 		    (#b00
 		     (case r/m
-		       (#b110 (code-call (decode-integer code '(uint 16))))
+		       (#b110 (list (code-call (decode-integer code '(uint 16)))))
 		       (t (operands r/m))))
 		    (#b01
 		     (append (operands r/m)
-			     (code-call (decode-integer code '(sint 8)))))
+			     (list (code-call (decode-integer code '(sint 8))))))
 		    (#b10
 		     (append (operands r/m)
-			     (code-call (decode-integer code '(uint 16))))))))
+			     (list (code-call (decode-integer code '(uint 16)))))))))
 	    code)))
 
 (defun decode-reg-modrm-32 (code operand-size)
@@ -1088,12 +1088,12 @@
 		    (assert (= code-size (length code)))
 		    (append extra-prefixes code))))))))))
 
-(defmacro pc-rel (opcode operand type &rest extras)
+(defmacro pc-rel (opcode operand type &optional (mode 'operator-mode) &rest extras)
   `(progn
      (assembler
       (return-when (encode-pc-rel operator legacy-prefixes ,opcode ,operand ',type ,@extras)))
      (disassembler
-      (define-disassembler (operator ,opcode operator-mode)
+      (define-disassembler (operator ,opcode ,mode)
 	  decode-pc-rel
 	',type))))
 
@@ -1313,7 +1313,7 @@
 				:imm ',op-imm)
 	      ',type)))))
 
-(defmacro far-pointer (opcode segment offset offset-type &rest extra)
+(defmacro far-pointer (opcode segment offset offset-type &optional mode &rest extra)
   `(progn
      (assembler
       (when (and (immediate-p ,segment)
@@ -1327,7 +1327,7 @@
 								    (encode-integer segment '(uint 16)))
 						 ,@extra)))))))
      (disassembler
-      (define-disassembler (operator ,opcode operator-mode)
+      (define-disassembler (operator ,opcode ,(or mode 'operator-mode))
 	  decode-far-pointer
 	',offset-type))))
 
@@ -1728,9 +1728,9 @@
     (when (or (and (eq *cpu-mode* :32-bit)
 		   *use-jcc-16-bit-p*)
 	      (eq *cpu-mode* :16-bit))
-      (pc-rel ,opcode2 dst (sint 16)
+      (pc-rel ,opcode2 dst (sint 16) nil
 	      :operand-size :16-bit))
-    (pc-rel ,opcode2 dst (sint 32)
+    (pc-rel ,opcode2 dst (sint 32) nil
 	    :operand-size (case *cpu-mode*
 			    ((:16-bit :32-bit)
 			     :32-bit)))))
@@ -1768,7 +1768,7 @@
 (define-jcc :jz #x74)
 
 (define-operator* (:16 :jcxz :32 :jecxz :64 :jrcxz) (dst)
-  (pc-rel #xe3 dst (sint 8)
+  (pc-rel #xe3 dst (sint 8) nil
 	  :operand-size operator-mode
 	  :rex default-rex))
   
@@ -1778,16 +1778,16 @@
   (cond
     (dst
      (when (eq *cpu-mode* :16-bit)
-       (far-pointer #xea seg-dst dst (uint 16)))
+       (far-pointer #xea seg-dst dst (uint 16) :16-bit))
      (when (eq *cpu-mode* :32-bit)
-       (far-pointer #xea seg-dst dst (xint 32))))
+       (far-pointer #xea seg-dst dst (xint 32) :32-bit)))
     (t (let ((dst seg-dst))
 	 (pc-rel #xeb dst (sint 8))
 	 (when (or (and (eq *cpu-mode* :32-bit)
 			*use-jcc-16-bit-p*)
 		   (eq *cpu-mode* :16-bit))
-	   (pc-rel #xe9 dst (sint 16)))
-	 (pc-rel #xe9 dst (sint 32))
+	   (pc-rel #xe9 dst (sint 16) :16-bit))
+	 (pc-rel #xe9 dst (sint 32) :32-bit)
 	 (when (or (not *position-independent-p*)
 		   (indirect-operand-p dst))
 	   (let ((operator-mode :32-bit))
