@@ -48,6 +48,33 @@
     (:movl :ecx :eax)))
     
 
+(defun d-bind-veryfy-keys (args keys)
+  (do ((allow-allow-p t)
+       (mismatches nil))
+      ((null args)
+       (when mismatches
+	 (error "Unexpected destructuring keys ~{~S~^, ~}, expected ~{~S~^, ~}."
+		mismatches keys)))
+    (let ((a (pop args))
+	  (v (pop args)))
+      (cond
+	((eq a :allow-other-keys)
+	 (when (and v allow-allow-p)
+	   (return))
+	 (setf allow-allow-p nil))
+	((not (member a keys))
+	 (pushnew a mismatches))))))
+
+(defun d-bind-lookup-key (key list)
+  (do ()
+      ((endp list)
+       nil)
+    (unless (cdr list)
+      (error "Odd number of keyword arguments."))
+    (when (eq key (pop list))
+      (return list))
+    (setf list (cdr list))))
+
 (defmacro numargs ()
   `(with-inline-assembly (:returns :ecx)
      (:movzxb :cl :ecx)

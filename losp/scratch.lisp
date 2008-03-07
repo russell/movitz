@@ -15,6 +15,16 @@
 
 (in-package los0)
 
+(defun test-bq (x y)
+  `(+ ,x ,y))
+
+
+#+ignore
+(defun d-bind (x)
+  (destructuring-bind (a (b &optional c) d &rest e &key f)
+      x
+    (values a b c d e f)))
+
 #+ignore
 (defun set.2 ()
   (let ((*var-used-in-set-tests* 'a)
