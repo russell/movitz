@@ -170,6 +170,9 @@
 		(gen-optvars var sub-lambda-list))
 	       ((pop-match '&rest sub-lambda-list)
 		(gen-restvar var sub-lambda-list))
+	       ((pop-match '&aux sub-lambda-list)
+		(dolist (b sub-lambda-list)
+		  (push b bindings)))
 	       ((consp (car sub-lambda-list)) ; recursive lambda-list?
 		(let ((sub-var (gensym)))
 		  (push (list sub-var `(pop ,var))
@@ -194,6 +197,9 @@
 		(gen-restvar var sub-lambda-list))
 	       ((pop-match '&key sub-lambda-list)
 		(gen-keyvars var sub-lambda-list))
+	       ((pop-match '&aux sub-lambda-list)
+		(dolist (b sub-lambda-list)
+		  (push b bindings)))
 	       (t (multiple-value-bind (opt-var init-form supplied-var)
 		      (let ((b (pop sub-lambda-list)))
 			(if (atom b)
@@ -212,8 +218,12 @@
 	     (let ((rest-var (pop* sub-lambda-list)))
 	       (push (list rest-var var)
 		     bindings))
-	     (when (pop-match '&key sub-lambda-list)
-	       (gen-keyvars var sub-lambda-list)))
+	     (cond
+	       ((pop-match '&key sub-lambda-list)
+		(gen-keyvars var sub-lambda-list))
+	       ((pop-match '&aux sub-lambda-list)
+		(dolist (b sub-lambda-list)
+		  (push b bindings)))))
 	   (gen-keyvars (var sub-lambda-list &optional keys)
 	     (cond
 	       ((endp sub-lambda-list)
@@ -225,6 +235,9 @@
 	       ((pop-match '&allow-other-keys sub-lambda-list)
 		(when sub-lambda-list
 		  (error "Bad destructuring lambda-list; junk after ~S." '&allow-other-keys)))
+	       ((pop-match '&aux sub-lambda-list)
+		(dolist (b sub-lambda-list)
+		  (push b bindings)))
 	       (t (multiple-value-bind (key-var key-name init-form supplied-var)
 		      (let ((b (pop sub-lambda-list)))
 			(cond
