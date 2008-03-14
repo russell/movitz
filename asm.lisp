@@ -289,7 +289,7 @@ Secondarily, return the symtab."
 												symtab)))))
 								     `(quote ,(car entry)))))))))))))
     (values (loop for (pc data-instruction) on proglist0 by #'cddr
-	       for (data . instruction) = data-instruction
+	       for instruction = (cdr data-instruction)
 	       for label = (when collect-labels
 			     (rassoc pc symtab))
 	       when label
