@@ -873,7 +873,7 @@ is no unspecialized method was called."))
   (equal '(:around) (method-qualifiers method)))
 
 
-(defmacro define-effective-slot-reader (name location)
+(defmacro/cross-compilation define-effective-slot-reader (name location)
   (if movitz::*compiler-use-into-unbound-protocol*
       `(defun ,name (instance)
 	 (with-inline-assembly (:returns :multiple-values)
@@ -1002,6 +1002,7 @@ next-emf as its target for call-next-method."
 (defclass funcallable-standard-class (std-slotted-class) ())
 
 (defclass function (t) () (:metaclass built-in-class))
+(defclass macro-function (function) () (:metaclass built-in-class))
 (defclass funcallable-standard-object (standard-object function) ())
 (defclass generic-function (metaobject funcallable-standard-object) ())
 (defclass standard-generic-function (generic-function)

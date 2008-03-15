@@ -673,7 +673,8 @@ integer (native lisp) value."
     :binary-type (define-enum movitz-funobj-type (u8)
 		   :standard-function 0
 		   :generic-function 1
-		   :method-function 2)
+		   :method-function 2
+		   :macro-function 3)
     :initform :standard-function
     :accessor movitz-funobj-type)
    (debug-info

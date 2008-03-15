@@ -196,7 +196,7 @@
 (defun write-word-bottom3 (word)
   (write-word-lowlevel word #.(cl:+ 140 #xb8000 (cl:* 24 160))))
 
-(defmacro write-word-lowlevel-macro (word dest)
+(define-compiler-macro write-word-lowlevel-macro (word dest)
   (let ((loop-label (make-symbol "write-word-loop"))
 	(l1 (make-symbol "write-word-l1"))
 	(l2 (make-symbol "write-word-l2"))

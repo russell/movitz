@@ -60,7 +60,7 @@
 		  ,@(cdr dual-clause))
 		 (t ,@(cdr string-clause))))))))
 
-(defmacro with-stream-class ((class-name &optional stream) &body body)
+(defmacro/cross-compilation with-stream-class ((class-name &optional stream) &body body)
   (if stream
       (let ((stream-var (gensym "stream-"))
 	    (slots-var (gensym "stream-slots-")))

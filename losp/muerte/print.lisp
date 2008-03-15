@@ -230,29 +230,31 @@
 	    ((or cons tag5)
 	     (let ((level *print-level*))
 	       (cond
-		((and level (minusp level))
-		 (write-char #\# stream))
-		((and (eq 'quote (car object))
-		      (not (cddr object)))
-		 (write-char #\' stream)
-		 (write (cadr object)))
-		(t (labels ((write-cons (c stream length)
-			      (cond
-			       ((and length (= 0 length))
-				(write-string "...)"))
-			       (t (write (car c))
-				  (typecase (cdr c)
-				    (null
-				     (write-char #\) stream))
-				    (cons
-				     (write-char #\space stream)
-				     (write-cons (cdr c) stream (minus-if length 1)))
-				    (t
-				     (write-string " . " stream)
-				     (write (cdr c))
-				     (write-char #\) stream)))))))
-		     (write-char #\( stream)
-		     (write-cons object stream *print-length*))))))
+		 ((and (not do-escape-p)
+		       level
+		       (minusp level))
+		  (write-char #\# stream))
+		 ((and (eq 'quote (car object))
+		       (not (cddr object)))
+		  (write-char #\' stream)
+		  (write (cadr object)))
+		 (t (labels ((write-cons (c stream length)
+			       (cond
+				 ((and length (= 0 length))
+				  (write-string "...)"))
+				 (t (write (car c))
+				    (typecase (cdr c)
+				      (null
+				       (write-char #\) stream))
+				      (cons
+				       (write-char #\space stream)
+				       (write-cons (cdr c) stream (minus-if length 1)))
+				      (t
+				       (write-string " . " stream)
+				       (write (cdr c))
+				       (write-char #\) stream)))))))
+		      (write-char #\( stream)
+		      (write-cons object stream *print-length*))))))
 	    (integer
 	     (write-integer object stream *print-base* *print-radix*))
 	    (string
@@ -326,6 +328,9 @@
 	    (standard-gf-instance
 	     (print-unreadable-object (object stream)
 	       (format stream "gf ~S" (funobj-name object))))
+	    (macro-function
+	     (print-unreadable-object (object stream)
+	       (format stream "macro-function ~S" (funobj-name object))))
 	    (compiled-function
 	     (print-unreadable-object (object stream)
 	       (format stream "function ~S" (funobj-name object))))

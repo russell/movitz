@@ -70,7 +70,7 @@
 	    (return-from char/= nil)))))))
 
 
-(defmacro define-char-cmp (name mode not-branch)
+(defmacro/cross-compilation define-char-cmp (name mode not-branch)
   `(defun ,name (first-character &rest more-characters)
      (numargs-case
       (1 (x) (declare (ignore x)) t)

@@ -265,6 +265,8 @@
 		(std-instance 
 		 (make-other-typep :std-instance)
 		 #+ignore (make-tag-typep :std-instance))
+		(macro-function
+		 (make-function-typep :macro-function))
 		(standard-gf-instance
 		 (make-function-typep :generic-function))
 		(list
@@ -647,6 +649,9 @@
 
 (define-simple-typep (function functionp) (x)
   (typep x 'function))
+
+(define-simple-typep (macro-function macro-function-p) (x)
+  (typep x 'macro-function))
 
 (define-simple-typep (hash-table hash-table-p))
 (define-simple-typep (package packagep))

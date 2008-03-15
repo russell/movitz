@@ -21,22 +21,20 @@
 
 (in-package muerte)
 
-(defmacro vector-double-dispatch ((s1 s2) &rest clauses)
+(defmacro/cross-compilation vector-double-dispatch ((s1 s2) &rest clauses)
   (flet ((make-double-dispatch-value (et1 et2)
 	   (+ (* #x100 (bt:enum-value 'movitz::movitz-vector-element-type et1))
 	      (bt:enum-value 'movitz::movitz-vector-element-type et2))))
-    `(progn
-       #+ignore
-       (warn "vdd: ~X" (+ (* #x100 (vector-element-type ,s1))
-	      (vector-element-type ,s2)))
-       (case (+ (ash (vector-element-type-code ,s1) 8)
-		(vector-element-type-code ,s2))
-	 ,@(loop for (keys . forms) in clauses
-	       if (atom keys)
-	       collect (cons keys forms)
-	       else
-	       collect (cons (make-double-dispatch-value (first keys) (second keys))
-			     forms))))))
+    `(case (+ (ash (vector-element-type-code ,s1) 8)
+	      (vector-element-type-code ,s2))
+       ,@(mapcar (lambda (clause)
+		   (destructuring-bind (keys . forms)
+		       clause
+		     (if (atom keys)
+			 (cons keys forms)
+			 (cons (make-double-dispatch-value (first keys) (second keys))
+			       forms))))
+		 clauses))))
 
 (defmacro with-indirect-vector ((var form &key (check-type t)) &body body)
   `(let ((,var ,form))

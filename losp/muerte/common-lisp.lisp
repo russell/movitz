@@ -21,6 +21,7 @@
 (require :muerte/integers)
 (require :muerte/basic-functions)
 (require :muerte/variables)
+(require :muerte/runtime-defmacro)
 (require :muerte/primitive-functions)
 (require :muerte/equalp)
 (require :muerte/typep)

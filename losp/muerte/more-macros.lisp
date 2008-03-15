@@ -171,6 +171,8 @@
 	       ((or (pop-match '&rest sub-lambda-list)
 		    (pop-match '&body sub-lambda-list))
 		(gen-restvar var sub-lambda-list))
+	       ((pop-match '&key sub-lambda-list)
+		(gen-keyvars var sub-lambda-list))
 	       ((pop-match '&aux sub-lambda-list)
 		(dolist (b sub-lambda-list)
 		  (push b bindings)))
@@ -293,47 +295,6 @@
 	 (when (,test (,key item) (,key (car p)))
 	   (return p))))
      (t form))))
-
-(defmacro letf* (bindings &body body &environment env)
-  "Does what one might expect, saving the old values and setting the generalized
-  variables to the new values in sequence.  Unwind-protects and get-setf-method
-  are used to preserve the semantics one might expect in analogy to let*,
-  and the once-only evaluation of subforms."
-  (labels ((do-bindings
-            (bindings)
-            (cond ((null bindings) body)
-                  (t (multiple-value-bind (dummies vals newval setter getter)
-			 (get-setf-expansion (caar bindings) env)
-                       (let ((save (gensym)))
-                         `((let* (,@(mapcar #'list dummies vals)
-                                  (,(car newval) ,(cadar bindings))
-                                  (,save ,getter))
-                             (unwind-protect
-                               (progn ,setter
-                                      ,@(do-bindings (cdr bindings)))
-                               (setq ,(car newval) ,save)
-                               ,setter)))))))))
-    (car (do-bindings bindings))))
-
-(defmacro with-letf (clauses &body body)
-  "Each clause is (<place> &optional <value-form> <prev-var>).
-Execute <body> with alternative values for each <place>.
-Note that this scheme does not work well with respect to multiple threads.
-XXX This should actually be using get-setf-expansion etc. to deal with
-proper evaluation of the places' subforms."
-  (let ((place-value-save (loop for (place . value-save) in clauses
-			      if value-save
-			      collect (list place `(progn ,(first value-save))
-					    (or (second value-save) (gensym)))
-			      else collect (list place nil (gensym)))))
-    `(let (,@(loop for (place nil save-var) in place-value-save
-		 collect `(,save-var ,place)))
-       (unwind-protect
-	   (progn (setf ,@(loop for (place value) in place-value-save
-			      append `(,place ,value)))
-		  ,@body)
-	 (setf ,@(loop for (place nil save) in place-value-save
-		     append `(,place ,save)))))))
 
 (defmacro with-alternative-fdefinitions (clauses &body body)
   "Each clause is (<name> <definition>). Execute <body> with alternative

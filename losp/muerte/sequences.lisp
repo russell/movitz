@@ -46,11 +46,13 @@
 (defmacro sequence-double-dispatch ((seq0 seq1) &rest clauses)
   `(case (logior (if (typep ,seq0 'list) 2 0)
 		 (if (typep ,seq1 'list) 1 0))
-     ,@(loop for ((type0 type1) . forms) in clauses
-	   as index = (logior (ecase type0 (list 2) (vector 0))
-			      (ecase type1 (list 1) (vector 0)))
-	   collect
-	     `(,index ,@forms))
+     ,@(mapcar (lambda (clause)
+		 (destructuring-bind ((type0 type1) . forms)
+		     clause
+		   (list* (logior (ecase type0 (list 2) (vector 0))
+				  (ecase type1 (list 1) (vector 0)))
+			  forms)))
+	       clauses)
      (t (sequence-double-dispatch-error ,seq0 ,seq1))))
 
 (defun length (sequence)

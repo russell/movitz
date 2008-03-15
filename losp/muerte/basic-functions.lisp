@@ -75,16 +75,22 @@
       (return list))
     (setf list (cdr list))))
 
-(defmacro numargs ()
-  `(with-inline-assembly (:returns :ecx)
-     (:movzxb :cl :ecx)
-     (:shll ,movitz::+movitz-fixnum-shift+ :ecx)))
+(defun verify-macroexpand-call (key name)
+  "Used by macro-expander functions to separate bona fide macro-expansions
+from regular function-calls."
+  (when (eq key name)
+    (error 'undefined-function-call
+	   :name name
+	   :arguments :unknown)))
 
-(defmacro call-function-from-lexical (lexical)
-  `(with-inline-assembly (:returns :multiple-values)
-     (:compile-form (:result-mode :esi) ,lexical)
-     (:xorb :cl :cl)
-     (:call (:esi ,(movitz::slot-offset 'movitz::movitz-funobj 'movitz::code-vector)))))
+(defun call-macroexpander (form env expander)
+  "Call a macro-expander for a bona fide macro-expansion."
+  (with-inline-assembly (:returns :multiple-values)
+    (:compile-form (:result-mode :edx) 'verify-macroexpand-call)
+    (:load-lexical (:lexical-binding expander) :esi)
+    (:load-lexical (:lexical-binding form) :eax)
+    (:load-lexical (:lexical-binding env) :ebx)
+    (:call (:esi (:offset movitz-funobj code-vector%2op)))))
 
 (defun funcall%0ops (function)
   (with-inline-assembly (:returns :multiple-values)
