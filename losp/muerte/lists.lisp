@@ -312,6 +312,18 @@
 	    result)))
    (t (error "mapcar not fully implemented."))))
 
+
+(defun mapcan (function first-list &rest more-lists)
+  (declare (dynamic-extent more-lists))
+  (cond
+   ((null more-lists)
+    ;; 1 list
+    (do ((result nil)
+	 (p first-list (cdr p)))
+	((endp p) result)
+      (setf result (nconc result (funcall function (car p))))))
+   (t (error "~S not implemented." 'mapcan))))
+
 (defun mapc (function first-list &rest more-lists)
   (numargs-case
    (2 (function first-list)
