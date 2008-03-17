@@ -72,7 +72,7 @@
   (let ((macro-function (macro-function (car form))))
     (if macro-function
 	(eval-form (funcall macro-function form nil)
-		   nil)
+		   env)
 	(case (car form)
 	  (quote (cadr form))
 	  (function (eval-function (second form) env))
