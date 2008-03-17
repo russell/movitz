@@ -24,9 +24,12 @@
 
 (defmacro number-double-dispatch ((x y) &rest clauses)
   `(let ((x ,x) (y ,y))
-     (cond ,@(loop for ((x-type y-type) . then-body) in clauses
-		 collect `((and (typep x ',x-type) (typep y ',y-type))
-			   ,@then-body))
+     (cond ,@(mapcar (lambda (clause)
+		       (destructuring-bind ((x-type y-type) . then-body)
+			   clause
+			 `((and (typep x ',x-type) (typep y ',y-type))
+			   ,@then-body)))
+		     clauses)
 	   (t (error "Not numbers or not implemented: ~S or ~S." x y)))))
 
 
@@ -517,7 +520,7 @@
 
 ;;;
 
-(defmacro define-number-relational (name 2op-name condition &key (defun-p t) 3op-name)
+(defmacro/cross-compilation define-number-relational (name 2op-name condition &key (defun-p t) 3op-name)
   `(progn
      ,(when condition
 	`(define-compiler-macro ,2op-name (n1 n2 &environment env)

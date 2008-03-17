@@ -20,8 +20,9 @@
 (require :muerte/arithmetic-macros)
 
 (require :muerte/defmacro-runtime)
-;; (include :muerte/basic-macros)
+(include :muerte/basic-macros)
 (include :muerte/more-macros)
+(include :muerte/arithmetic-macros)
 
 (require :muerte/memref)
 (require :muerte/integers)
