@@ -37,6 +37,7 @@
 (defvar *read-base* 10)
 (defvar *package* nil)
 
+(defvar *macroexpand-hook* 'funcall)
 (defparameter *debugger-hook* nil)
 (defvar *active-condition-handlers* nil)
 (defvar *multiboot-data* nil)
