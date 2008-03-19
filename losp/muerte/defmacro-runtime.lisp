@@ -16,7 +16,6 @@
 (provide :muerte/defmacro-runtime)
 
 (defmacro defmacro (name lambda-list &body macro-body)
-  (warn "rmacro: ~S" name)
   `(progn
      (defmacro/runtime ,name ,lambda-list ,@macro-body)
      (defmacro-compile-time ,name ,lambda-list ,macro-body)
