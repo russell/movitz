@@ -123,7 +123,7 @@
      (unwind-protect
 	  (eval-form (second form) env)
        (eval-progn (cddr form) env)))
-    ((macrolet symbol-macrolet)
+    ((macrolet symbol-macrolet let*)
      (error "Special operator ~S not implemented in ~S." (car form) 'eval))
     (t (eval-funcall form env))))
 
