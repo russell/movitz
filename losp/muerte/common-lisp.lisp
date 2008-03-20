@@ -44,6 +44,8 @@
 (require :muerte/run-time-context)
 (require :muerte/defstruct)
 (require :muerte/hash-tables)
+(require :muerte/pathnames)
+(require :muerte/complexes)
 (require :muerte/ratios)
 (require :muerte/packages)
 (require :muerte/format)
