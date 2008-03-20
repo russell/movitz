@@ -698,6 +698,9 @@
 (deftype bit ()
   '(integer 0 1))
 
+(deftype float ()
+  'real)
+
 (defun type-of (x)
   (class-name (class-of x)))
 
