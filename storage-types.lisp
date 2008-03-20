@@ -1218,6 +1218,9 @@ integer (native lisp) value."
 	       :stream stream))))
   object)
 
+(defmethod update-movitz-object ((object movitz-std-instance) lisp-object)
+  object)
+
 ;;;;
 
 (define-binary-class movitz-bignum (movitz-heap-object-other)
