@@ -1084,6 +1084,11 @@
 	   yes-or-no-p
 	   zerop))
 
+(defpackage muerte.common-lisp-user
+  (:nicknames muerte.cl-user)
+  (:use muerte.common-lisp))
+
+
 (defpackage muerte
   (:use muerte.mop muerte.common-lisp)
   (:import-from common-lisp cl:nil)
@@ -1100,6 +1105,8 @@
 	   #:newline
 	   #:check-the
 	   #:index
+	   
+	   #:defmacro/cross-compilation
 	   
 	   #:*print-safely*
 	   
