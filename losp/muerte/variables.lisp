@@ -65,8 +65,8 @@
 (defvar long-float-negative-epsilon -1/1000)
 
 
-(defconstant call-arguments-limit #xffff0)
-(defconstant lambda-parameters-limit #x1000) ; ?
+(defconstant call-arguments-limit 512)
+(defconstant lambda-parameters-limit 512) ; ?
 
 (defvar *print-pprint-dispatch* nil)
 
