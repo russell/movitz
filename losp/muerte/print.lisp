@@ -216,6 +216,8 @@
      (t (let ((do-escape-p (or *print-escape* *print-readably*))
 	      (*print-level* (minus-if *print-level* 1)))
 	  (typecase object
+	    (unbound-value
+	     (write-string "#<unbound!>" stream))
 	    (character
 	     (if (not do-escape-p)
 		 (write-char object stream)
