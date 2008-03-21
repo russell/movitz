@@ -60,6 +60,14 @@
                              `(funcall #'(setf ,(car place)) ,store-var ,@arglist)
                              (list* (car place) arglist)))))))))))
 
+(eval-when (:load-toplevel)
+  (defun get-setf-expansion (place &optional env)
+    (cond
+      ((symbolp place)
+       (let ((store-var (gensym "store-var-")))
+	 (values nil nil (list store-var) `(setq ,place ,store-var) place)))
+      (t (error "Place ~S not implemented.")))))
+
 
 ;;;(defsetf subseq (sequence start &optional end) (new-sequence)
 ;;;  `(progn (replace ,sequence ,new-sequence
