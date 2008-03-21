@@ -138,7 +138,7 @@ it's supposed to have been found by e.g. dynamic-locate-catch-tag."
     
    search-loop
     (:jecxz '(:sub-program () (:int 63)))
-    (:locally (:bound (:edi (:edi-offset stack-bottom)) :ecx))
+    ;; (:locally (:bound (:edi (:edi-offset stack-bottom)) :ecx))
 
     (:cmpl :ecx :eax)
     (:je 'found-dynamic-env)
