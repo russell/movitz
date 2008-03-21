@@ -1799,7 +1799,9 @@ quick-sort with cut-off greater than 1."
 	(replace r s :start1 i)
 	(incf i (length s)))
       r))
-   (t (error "Can't concatenate ~S yet: ~:S" result-type sequences))))
+   (t (error "Can't concatenate ~S yet: ~:S"
+	     result-type
+	     (copy-list sequences))))) ; no more dynamic-extent.
 
 
 (defun substitute (newitem olditem sequence
