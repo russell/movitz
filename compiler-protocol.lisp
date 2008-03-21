@@ -30,7 +30,9 @@
 	:boolean-zf=0
 	:boolean-cf=1
 	:boolean-cf=0
-	:boolean-ecx))
+	:boolean-ecx
+	:boolean-overflow
+	:boolean-no-overflow))
   
   (defconstant +multiple-value-result-modes+
       '(:multiple-values

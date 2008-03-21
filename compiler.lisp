@@ -4951,7 +4951,9 @@ or when there's a non-dynamic-extent &rest binding."
        (:boolean-zf=1          :boolean-zf=0)
        (:boolean-zf=0          :boolean-zf=1)
        (:boolean-cf=1          :boolean-cf=0)
-       (:boolean-cf=0          :boolean-cf=1)))
+       (:boolean-cf=0          :boolean-cf=1)
+       (:boolean-overflow      :boolean-no-overflow)
+       (:boolean-no-overflow   :boolean-overflow)))
     (cons
      (let ((args (cdr mode)))
        (ecase (car mode)
@@ -4976,7 +4978,9 @@ or when there's a non-dynamic-extent &rest binding."
 	  (:boolean-zf=0          :jnz)
 	  (:boolean-cf=1          :jc)
 	  (:boolean-cf=0          :jnc)
-	  (:boolean-true          :jmp))
+	  (:boolean-true          :jmp)
+	  (:boolean-overflow      :jo)
+	  (:boolean-no-overflow   :jno))
 	(list 'quote label)))
 
 
