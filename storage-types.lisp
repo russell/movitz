@@ -68,7 +68,8 @@
   :null 5
   :other 6
   :symbol 7
-  
+
+  ;; The lower 3 bits of these are significant in mysterious ways.
   :basic-vector #x22
   :defstruct #x2a
   :funobj #x3a
@@ -76,7 +77,7 @@
   :ratio #x52
   :complex #x5a
   :std-instance #x40
-  :run-time-context #x50
+  :run-time-context #x62
   :illegal #x13
   :infant-object #x23
   :basic-restart #x32
@@ -342,9 +343,10 @@ integer (native lisp) value."
 		   :u8 2
 		   :u16 3
 		   :u32 4
-		   :bit 5
-		   :code 6
-		   :indirects 7)
+		   :stack 5
+		   :bit 6
+		   :code 7
+		   :indirects 8)
     :initarg :element-type
     :reader movitz-vector-element-type)
    (fill-pointer
@@ -396,7 +398,7 @@ integer (native lisp) value."
 
 (defun movitz-vector-element-type-size (element-type)
   (ecase element-type
-    ((:any-t :u32) 32)
+    ((:any-t :u32 :stack) 32)
     ((:character :u8 :code) 8)
     (:u16 16)
     (:bit 1)))
