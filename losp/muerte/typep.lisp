@@ -287,6 +287,8 @@
 		 (make-other-typep :funobj))
 		((vector)
 		 (make-other-typep :basic-vector))
+		(stack-vector
+		 (make-basic-vector-typep :stack))
 		(indirect-vector
 		 (make-basic-vector-typep :indirects))
 		(simple-vector

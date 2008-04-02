@@ -89,8 +89,7 @@
     (setf (segment-descriptor-base-location (segment-descriptor-table *segment-descriptor-table-manager*)
 					    segment-selector)
       (+ (object-location thread) (location-physical-offset)))
-    (let ((stack (control-stack-init-for-yield (make-array stack-size
-							   :element-type '(unsigned-byte 32))
+    (let ((stack (control-stack-init-for-yield (make-stack-vector stack-size)
 					       function args)))
       (multiple-value-bind (ebp esp)
 	  (control-stack-fixate stack)

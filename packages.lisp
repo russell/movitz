@@ -1105,6 +1105,8 @@
 	   #:newline
 	   #:check-the
 	   #:index
+	   #:make-stack-vector
+	   #:stack-vector
 	   
 	   #:defmacro/cross-compilation
 	   

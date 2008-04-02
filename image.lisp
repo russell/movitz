@@ -957,7 +957,7 @@ a cons is an offset (the car) from some other code-vector (the cdr)."
 				 :num-elements #x3ffe
 				 :fill-pointer 0
 				 :symbolic-data nil
-				 :element-type :u32))
+				 :element-type :stack))
 		 (image-start (file-position stream)))
 	    (dump-image-core *image* stream) ; dump the kernel proper.
 	    ;; make a stack-vector for the root run-time-context
