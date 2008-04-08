@@ -1013,7 +1013,7 @@
 
 (defun find-if-not (predicate sequence &rest key-args)
   (declare (dynamic-extent key-args))
-  (apply (complement predicate) sequence key-args))
+  (apply #'find-if (complement predicate) sequence key-args))
   
 (defun count (item sequence &key (start 0) end (test 'eql) (key 'identity) test-not from-end)
   (declare (ignore test-not))
