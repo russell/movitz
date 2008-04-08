@@ -287,7 +287,8 @@ from regular function-calls."
       ;; spread out args.
       (cond
        ((null args)
-	(error "Too few arguments to APPLY."))
+	(error 'program-error
+	       :format-control "Too few arguments to APPLY."))
        ((null (cdr args))
 	(apply function (car args)))
        (t (let* ((second-last-cons (last args 2))
