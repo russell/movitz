@@ -188,6 +188,18 @@
 	     (declare (ignore c))
 	     (format s "Division by zero."))))
 
+(define-condition package-error (error)
+  ((package
+    :initarg :package
+    :initform nil
+    :reader package-error-package)))
+
+(define-condition file-error (error)
+  ((pathname
+    :initarg :pathname
+    :initform nil
+    :reader file-error-pathname)))
+
 (defun make-condition (type &rest slot-initializations)
   (declare (dynamic-extent slot-initializations))
   (apply 'make-instance type slot-initializations))
