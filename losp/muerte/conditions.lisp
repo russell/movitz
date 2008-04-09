@@ -127,6 +127,18 @@
 	 :datum datum
 	 :expected-type (cons 'or expecteds)))
 
+(define-condition ecase-error (type-error)
+  ()
+  (:report (lambda (c s)
+	     (format s "The object '~S' fell through an ecase where the legal cases were ~S."
+		     (type-error-datum c)
+		     (type-error-expected-type c)))))
+
+(defun ecase-error (datum expecteds)
+  (error 'ecase-error
+	 :datum datum
+	 :expected-type (cons 'member expecteds)))
+
 (define-condition control-error (error) ())
 
 (define-condition throw-error (control-error)
