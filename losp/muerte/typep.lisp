@@ -652,6 +652,9 @@
 (define-simple-typep (function functionp) (x)
   (typep x 'function))
 
+(define-simple-typep (compiled-function compiled-function-p) (x)
+  (typep x 'compiled-function))
+
 (define-simple-typep (macro-function macro-function-p) (x)
   (typep x 'macro-function))
 
