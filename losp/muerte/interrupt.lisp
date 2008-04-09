@@ -381,7 +381,7 @@ is off, e.g. because this interrupt/exception is routed through an interrupt gat
 			   (- old-bottom new-bottom)
 			   new-bottom)
 		   (backtrace :length 5 :spartan t)
-		   (break "Stack overload exception ~D at EIP=~@Z, ESP=~@Z, bottom=#x~X, ENV=#x~X."
+		   (error "Stack overload exception ~D at EIP=~@Z, ESP=~@Z, bottom=#x~X, ENV=#x~X."
 			  vector $eip
 			  (dit-frame-esp nil dit-frame)
 			  old-bottom
