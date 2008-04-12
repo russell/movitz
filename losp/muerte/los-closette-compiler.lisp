@@ -1009,6 +1009,7 @@
       (:method-class
        (list ':method-class
 	     `(movitz-find-class ',(cadr option))))
+      (:method nil)
       (t (list `',(car option) `',(cadr option)))))
 
 ;;; ensure-generic-function

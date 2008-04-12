@@ -32,10 +32,15 @@
 		     ,@(canonicalize-defclass-options options env name)))))
 
 (defmacro defgeneric (function-name lambda-list &rest options)
-  `(eval-when (:compile-toplevel)
-     (movitz-ensure-generic-function ',function-name 
-				  :lambda-list ',lambda-list
-				  ,@(canonicalize-defgeneric-options options))))
+  `(progn
+     (eval-when (:compile-toplevel)
+       (movitz-ensure-generic-function ',function-name 
+				       :lambda-list ',lambda-list
+				       ,@(canonicalize-defgeneric-options options)))
+     ,@(mapcan (lambda (option)
+		 (when (eq :method (car option))
+		   (list `(defmethod ,function-name ,@(cdr option)))))
+	       options)))
 
 (defmacro defmethod (&rest args &environment env)
   (multiple-value-bind (name qualifiers lambda-list specializers body declarations documentation)
