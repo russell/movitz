@@ -348,7 +348,7 @@ The valid parameters are~{ ~S~}."
 	      (movitz-macro-expander-make-function expander :type :setf :name access-fn)))))))
   (compiler-values ()))
 
-(define-special-operator muerte::defmacro-compile-time (&form form)
+(define-special-operator muerte::defmacro/compile-time (&form form)
   (destructuring-bind (name lambda-list macro-body)
       (cdr form)
     (check-type name symbol "a macro name")

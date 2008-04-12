@@ -13,8 +13,8 @@
 
 (provide :muerte/defmacro-bootstrap)
 
-(muerte::defmacro-compile-time muerte.cl:defmacro (name lambda-list &body macro-body)
-  (`(muerte::defmacro-compile-time ,name ,lambda-list ,macro-body)))
+(muerte::defmacro/compile-time muerte.cl:defmacro (name lambda-list &body macro-body)
+  (`(muerte::defmacro/compile-time ,name ,lambda-list ,macro-body)))
 
 (muerte.cl:defmacro muerte.cl:in-package (name)
   `(progn
@@ -25,13 +25,13 @@
 
 (defmacro defmacro/cross-compilation (name lambda-list &body body)
   `(progn
-     (defmacro-compile-time ,name ,lambda-list ,body)
+     (defmacro/compile-time ,name ,lambda-list ,body)
      ',name))
 
 (defmacro defmacro (name lambda-list &body body)
   `(defmacro/cross-compilation ,name ,lambda-list ,@body))
 
-(defmacro defmacro/runtime (name lambda-list &body body)
+(defmacro defmacro/run-time (name lambda-list &body body)
   (multiple-value-bind (real-body declarations docstring)
       (movitz::parse-docstring-declarations-and-body body 'cl:declare)
     (let* ((block-name (compute-function-block-name name))

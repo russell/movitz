@@ -17,6 +17,6 @@
 
 (defmacro defmacro (name lambda-list &body macro-body)
   `(progn
-     (defmacro/runtime ,name ,lambda-list ,@macro-body)
-     (defmacro-compile-time ,name ,lambda-list ,macro-body)
+     (defmacro/run-time ,name ,lambda-list ,@macro-body)
+     (defmacro/compile-time ,name ,lambda-list ,macro-body)
      ',name))
