@@ -36,6 +36,9 @@
       (movitz::parse-docstring-declarations-and-body body 'cl:declare)
     (let* ((block-name (compute-function-block-name name))
 	   (ignore-var (gensym))
+	   (whole-var (when (eq '&whole (car lambda-list))
+			(list (pop lambda-list)
+			      (pop lambda-list))))
 	   (form-var (gensym "form-"))
 	   (env-var nil)
 	   (operator-var (gensym))
@@ -54,14 +57,27 @@
 	      (values env-var nil)
 	      (let ((e (gensym)))
 		(values e (list e))))
-	`(make-named-function ,name
-			      (&edx edx &optional ,form-var ,env-var &rest ,ignore-var)
-			      ((ignore ,ignore-var ,@ignore-env))
-			      ,docstring
-			      (block ,block-name
-				(verify-macroexpand-call edx ',name)
-				(destructuring-bind ,destructuring-lambda-list
-				    ,form-var
-				  (declare (ignore ,operator-var) ,@declarations)
-				  ,@real-body))
-			      :type :macro-function)))))
+	(cond
+	  ((and whole-var
+		(null lambda-list))
+	   `(make-named-function ,name
+				 (&edx edx &optional ,form-var ,env-var &rest ,ignore-var)
+				 ((ignore ,ignore-var ,@ignore-env))
+				 ,docstring
+				 (block ,block-name
+				   (verify-macroexpand-call edx ',name)
+				   (let ((,(second whole-var) ,form-var))
+				     (declare ,@declarations)
+				     ,@real-body))
+				 :type :macro-function))
+	  (t `(make-named-function ,name
+				   (&edx edx &optional ,form-var ,env-var &rest ,ignore-var)
+				   ((ignore ,ignore-var ,@ignore-env))
+				   ,docstring
+				   (block ,block-name
+				     (verify-macroexpand-call edx ',name)
+				     (destructuring-bind ,(append whole-var destructuring-lambda-list)
+					 ,form-var
+				       (declare (ignore ,operator-var) ,@declarations)
+				       ,@real-body))
+				   :type :macro-function)))))))
