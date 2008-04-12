@@ -69,9 +69,13 @@
   :other 6
   :symbol 7
 
-  ;; The lower 3 bits of these are significant in mysterious ways.
+  ;; The lower 2 bits of these are significant in mysterious ways.
+  ;; 10: Requires GC parsing.
+  ;; 00: Requires no GC parsing (all GC-safe lisp-vals).
+  ;; 11: Illegal/special values
   :basic-vector #x22
   :defstruct #x2a
+  :basic-restart #x32
   :funobj #x3a
   :bignum #x4a
   :ratio #x52
@@ -79,9 +83,7 @@
   :std-instance #x40
   :run-time-context #x62
   :illegal #x13
-  :infant-object #x23
-  :basic-restart #x32
-  )
+  :infant-object #x23)
 
 (defconstant +fixnum-tags+ '(:even-fixnum :odd-fixnum))
 (defparameter +scan-skip-word+ #x00000003)
