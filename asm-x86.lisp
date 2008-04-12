@@ -1050,9 +1050,11 @@
 
 
 (defun compute-extra-prefixes (operator pc size)
-  (let ((ff (assoc operator *instruction-compute-extra-prefix-map*)))
-    (when ff
-      (funcall (cdr ff) pc size))))
+  (loop for (pattern . function) in *instruction-compute-extra-prefix-map*
+     when (or (eq pattern t)
+	      (eq pattern operator))
+     return (funcall function pc size)))
+	      
 
 (defun encode-pc-rel (operator legacy-prefixes opcode operand type &rest extras)
   (when (typep operand '(or pc-relative-operand symbol-reference))
