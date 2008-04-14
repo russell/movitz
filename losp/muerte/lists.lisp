@@ -197,6 +197,13 @@
 	     (unless copied-result
 	       (setf copied-result copy))))))))
 
+(defun revappend (list tail)
+  "=> result-list"
+  (do () ((null list)
+	  tail)
+    (push (pop list)
+	  tail)))
+
 (defun copy-list (list)
   (if (null list)
       nil
