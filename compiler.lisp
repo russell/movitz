@@ -6377,7 +6377,7 @@ and a list of any intervening unwind-protect environment-slots."
 
 (defun ensure-local-binding (binding funobj)
   "When referencing binding in funobj, ensure we have the binding local to funobj."
-  (if (typep binding '(or (not binding) constant-object-binding))
+  (if (typep binding '(or (not binding) constant-object-binding funobj-binding))
       binding ; Never mind if "binding" isn't a binding, or is a constant-binding.
       (let ((target-binding (binding-target binding)))
         (cond
@@ -7145,7 +7145,9 @@ and a list of any intervening unwind-protect environment-slots."
 but it's requested to be in ~S."
 			   destreg)
 			 (let ((srcloc (new-binding-location (binding-target src) frame-map)))
-			   (unless (eql srcloc loc1) (break))
+			   (unless (eql srcloc loc1)
+			     #+ignore (break)
+			     (warn "add srcloc: ~S, loc1: ~S" srcloc loc1))
 			   (if (integerp srcloc)
 			       `((:addl (:ebp ,(stack-frame-offset srcloc))
 					,destreg)
