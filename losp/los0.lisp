@@ -56,7 +56,7 @@
 (in-package los0)
 
 ;; (defun load-ansi-tests ()
-;;   (load "../ansi-tests.lisp"))
+;;   (load "ansi-tests.lisp"))
 
 (defun assess-cpu-frequency ()
   "Assess the CPU's frequency in units of 1024 Hz."
@@ -470,7 +470,9 @@
 		       *standard-input* s
 		       *terminal-io* s
 		       *debug-io* s)))
-    
+    (when (fboundp 'muerte::make-ansi-loop-universe)
+      (setf muerte::*loop-ansi-universe*
+	    (muerte::make-ansi-loop-universe nil)))
     (setf threading:*segment-descriptor-table-manager*
       (make-instance 'threading:segment-descriptor-table-manager))
     
