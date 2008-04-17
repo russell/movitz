@@ -102,6 +102,11 @@
 
 (define-condition program-error (error) ())
 
+(defun simple-program-error (format-control &rest format-arguments)
+  (error 'program-error
+	 :format-control format-control
+	 :format-argumetns format-arguments))
+
 (define-condition type-error (error)
   ((expected-type
     :initarg :expected-type
