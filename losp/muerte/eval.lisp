@@ -487,7 +487,7 @@ Return the variable, keyword, init-fom, and supplied-p-parameter."
   (declare (ignore))
   (let* ((tag (cadr form))
 	 (b (cdr (op-env-binding env tag +eval-binding-type-go-tag+))))
-    (unless b (error "Go-tag ~S is not visible." tag))
+    (assert b () "Go-tag ~S is not visible." tag)
     (throw (cdr b) (values tag))))
 
 (defun eval-set-variable (variable-name value env)
