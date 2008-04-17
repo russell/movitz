@@ -86,7 +86,7 @@
 				(fresh-line *trace-output*)
 				(dotimes (i *trace-level*)
 				  (write-string "  " *trace-output*))
-				(format *trace-output* "~D: (~S~{ ~S~})~%"
+				(format *trace-output* "~&~D: (~S~{ ~S~})~%"
 					*trace-level* function-name args))
 			      (multiple-value-call
 				  (lambda (&rest results)
@@ -95,7 +95,7 @@
 				      (fresh-line *trace-output*)
 				      (dotimes (i (min *trace-level* 10))
 					(write-string "  " *trace-output*))
-				      (format *trace-output* "~D: =>~{ ~W~^,~}.~%"
+				      (format *trace-output* "~&~D: =>~{ ~W~^,~}.~%"
 					      *trace-level* results)
 				      (values-list results)))
 				(let ((*trace-level* (1+ *trace-level*))
