@@ -564,9 +564,11 @@ The valid parameters are~{ ~S~}."
 			     nil))
 		       (setf (assembly-macro-expander :lexical-store amenv)
 			 (lambda (expr)
-			   (destructuring-bind (var reg &key (type t))
+			   (destructuring-bind (var reg &key (type t) protect-registers)
 			       (cdr expr)
-			     `((:store-lexical ,(movitz-binding var env) ,reg :type ,type)))))
+			     `((:store-lexical ,(movitz-binding var env) ,reg
+					       :type ,type
+					       :protect-registers ,protect-registers)))))
 		       (setf (assembly-macro-expander :lexical-binding amenv)
 			 (lambda (expr)
 			   (destructuring-bind (var)
