@@ -575,6 +575,3 @@ respect to multiple threads."
 	 (*read-suppress* nil)
 	 #+ignore (*readtable* nil))
      ,@body))
-
-(defmacro/run-time loop (&rest clauses)
-  (error "Loop not implemented."))
