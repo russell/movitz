@@ -2300,14 +2300,6 @@
   (declare (ignore integer-1))
   integer-2)
 
-(defun logandc1 (integer-1 integer-2)
-  (logand (lognot integer-1)
-	  integer-2))
-
-(defun logandc2 (integer-1 integer-2)
-  (logand integer-1
-	  (lognot integer-2)))
-
 (defun boole-c1 (integer-1 integer-2)
   (declare (ignore integer-2))
   (lognot integer-1))
