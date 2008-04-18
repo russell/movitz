@@ -1169,8 +1169,8 @@ and return basic-vector and accessors for that subsequence."
                      dimensions)
                     ((and (consp dimensions) (null (cdr dimensions)))
                      (car dimensions))
-                    (t
-                     (error "Multi-dimensional arrays not supported.")))))
+                    (t (warn "Array of rank ~D not supported." (length dimensions))
+		       (return-from make-array nil))))) ; XXX
     (cond
      (displaced-to
       (make-indirect-vector displaced-to displaced-index-offset fill-pointer size))
