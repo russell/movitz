@@ -142,3 +142,15 @@
 
 (defun sin (x)
   (cos (- x (/ pi 2))))
+
+(defun ffloor (number &optional (divisor 1))
+  (floor number divisor))
+
+(defun ftruncate (number &optional (divisor 1))
+  (truncate number divisor))
+
+(defun fround (number &optional (divisor 1))
+  (round number divisor))
+
+(defun fceiling (number &optional (divisor 1))
+  (ceiling number divisor))
