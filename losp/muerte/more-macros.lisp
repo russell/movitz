@@ -575,3 +575,9 @@ respect to multiple threads."
 	 (*read-suppress* nil)
 	 #+ignore (*readtable* nil))
      ,@body))
+
+(defmacro/run-time define-compiler-macro (name &rest ignore)
+  (declare (ignore ignore))
+  'compiler-macro
+  name)
+  
