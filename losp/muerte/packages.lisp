@@ -100,7 +100,7 @@
 	  (when (eq package (find-package :keyword))
 	    (setf (symbol-flags symbol)
 	      #.(bt:enum-value 'movitz::movitz-symbol-flags '(:constant-variable)))
-	    (setf (symbol-value symbol)
+	    (setf (%symbol-global-value symbol)
 	      symbol))))
       (unless (symbol-package symbol)
 	(setf (memref symbol (movitz-type-slot-offset 'movitz-symbol 'package)) package))
