@@ -33,6 +33,8 @@
 (defvar *print-pretty* t)
 (defvar *print-circle* nil)
 (defvar *print-case* :upcase)
+(defvar *print-lines* nil)
+(defvar *print-miser-width* nil)
 
 (defvar *print-safely* nil)
 
