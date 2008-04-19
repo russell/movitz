@@ -334,3 +334,7 @@ Parameters: struct-name."
 			(slot-number ,slot-number)))
 		',struct-name))
 	    ))))))
+
+(defmacro/run-time defstruct (&rest ignore)
+  (identity 'structure); just to reference the symbol.
+  (error "Defstruct not implemented."))
