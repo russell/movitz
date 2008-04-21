@@ -1234,6 +1234,7 @@
 	   #:decode-keyword-formal
 	   #:parse-declarations-and-body
 	   #:parse-docstring-declarations-and-body
+           #:parse-macro-lambda-list
 	   #:compute-function-block-name
 	   
 	   #:movitz-accessor
@@ -1391,6 +1392,7 @@
 		muerte::decode-keyword-formal
 		muerte::parse-declarations-and-body
 		muerte::parse-docstring-declarations-and-body
+                muerte::parse-macro-lambda-list
 		muerte::unfold-circular-list
 		muerte::compute-function-block-name
 		))

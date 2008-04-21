@@ -38,6 +38,33 @@
 	(parse-declarations-and-body forms declare-symbol)
       (values body declarations docstring))))
 
+(defun parse-macro-lambda-list (lambda-list)
+  (let* ((whole-var (when (eq '&whole (car lambda-list))
+                      (pop lambda-list)
+                      (pop lambda-list)))
+         (env-var nil)
+         (operator-var (gensym))
+         (destructuring-lambda-list
+          (do ((l lambda-list)
+               (r nil))
+              ((atom l)
+               (cons operator-var
+                     (nreconc r l)))
+            (let ((x (pop l)))
+              (if (eq x '&environment)
+                  (setf env-var (pop l))
+                  (push x r)))))
+         (ignore-env-var
+          (when (not env-var)
+            (gensym))))
+    (values destructuring-lambda-list
+            whole-var
+            (or env-var
+                ignore-env-var)
+            (when ignore-env-var
+              (list ignore-env-var))
+            (list operator-var))))
+
 (defun unfold-circular-list (list)
   "If LIST is circular (through cdr), return (a copy of) the non-circular portion of LIST, and the index (in LIST) of the cons-cell pointed to by (cdr (last LIST))."
   (flet ((find-cdr (l c end)
