@@ -7248,7 +7248,7 @@ but it's requested to be in ~S."
 		(:boolean-branch-on-false
 		 (when (not eql)
 		   `((:jmp ',(operands return-mode)))))
-		(t (break "Constant EQL: ~S ~S" (car x-singleton) (car y-singleton))))))
+		(t (warn "Constant EQL: ~S ~S" (car x-singleton) (car y-singleton))))))
 	   ((and x-singleton
 		 (eq :untagged-fixnum-ecx y-loc))
 	    (let ((value (etypecase (car x-singleton)
