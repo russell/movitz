@@ -601,7 +601,9 @@
 			   (or (eq xdim '*) (eql xdim adim)))
 			 dimension-spec
 			 (array-dimensions x)))))))
-      
+
+(defun arrayp (x)
+  (typep x 'array))      
 
 (define-simple-typep (atom atom) (x)
   (typep x 'atom))
@@ -704,6 +706,18 @@
   '(integer 0 1))
 
 (deftype float ()
+  'real)
+
+(deftype short-float ()
+  'real)
+
+(deftype long-float ()
+  'real)
+
+(deftype single-float ()
+  'real)
+
+(deftype double-float ()
   'real)
 
 (defun type-of (x)
