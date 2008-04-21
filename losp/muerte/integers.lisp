@@ -2170,7 +2170,8 @@
       (abs (* (truncate (max n m) (gcd n m)) (min n m))))
    (t (&rest numbers)
       (declare (dynamic-extent numbers))
-      (reduce #'lcm numbers))))
+      (reduce #'lcm numbers
+              :initial-value 1))))
 
 (defun floor (n &optional (divisor 1))
   "This is floor written in terms of truncate."
