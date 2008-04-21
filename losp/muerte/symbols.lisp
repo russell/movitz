@@ -247,6 +247,7 @@
 (defvar *gentemp-counter* 0)
 
 (defun gentemp (&optional (prefix "T") (package *package*))
+  (check-type prefix string)
   (intern (do ((name #0=(format nil "~A~D" prefix *gentemp-counter*) #0#))
               ((not (find-symbol name package)) name)
             (incf *gentemp-counter*))
