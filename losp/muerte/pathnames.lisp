@@ -11,11 +11,14 @@
 ;;;;------------------------------------------------------------------
 
 (require :muerte/basic-macros)
-(require :muerte/defstruct)
+(require :muerte/los-closette)
 
 (in-package muerte)
 
 (provide :muerte/pathnames)
 
-(defstruct (pathname (:constructor make-pathname-object))
-  name)
+(defclass pathname ()
+  ((name)))
+
+(defclass logical-pathname (pathname)
+  ())
