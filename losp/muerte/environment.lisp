@@ -169,4 +169,5 @@
   (error "There is no default implementation of sleep."))
 
 (defstruct random-state state)
-(defstruct pathname name)
+
+
