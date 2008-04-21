@@ -59,7 +59,8 @@
    ((minusp denominator)
     (make-rational (- numerator) (- denominator)))
    ((= 0 denominator)
-    (error 'division-by-zero))
+    (error 'division-by-zero
+           :operands (list numerator denominator)))
    (t (let ((gcd (gcd numerator denominator)))
 	(if (= denominator gcd)
 	    (values (truncate numerator denominator))
@@ -78,21 +79,7 @@
 
 ;;; "Floats"
 
-(defconstant most-negative-short-float most-negative-fixnum)
-(defconstant most-negative-single-float most-negative-fixnum)
-(defconstant most-negative-long-float most-negative-fixnum)
-(defconstant most-negative-double-float most-negative-fixnum)
-
-(defconstant least-positive-short-float 1/100000)
-(defconstant least-positive-single-float 1/100000)
-(defconstant least-positive-double-float 1/100000)
-(defconstant least-positive-long-float 1/100000)
-
-;;;
-
 (defconstant pi #xea7632a/4aa1a8b)
-
-(defvar long-float-epsilon 1/10000)
 
 (defun float (x &optional proto)
   (declare (ignore proto))
@@ -137,7 +124,7 @@
         (term 1 (/ (expt rad n2)
                    denominator))
         (sum 1 (+ sum (* sign term))))
-       ((<= term long-float-epsilon)
+       ((<= term 1/100)
         sum)))
 
 (defun sin (x)
