@@ -18,6 +18,14 @@
 (provide :muerte/complexes)
 
 (defstruct (complex (:constructor make-complex-number)
-		    (:conc-name ""))
+		    (:conc-name #:||))
   realpart
   imagpart)
+
+(defun complex (realpart &optional (imagpart 0))
+  (check-type realpart real)
+  (check-type imagpart real)
+  (if (= 0 imagpart)
+      realpart
+      (make-complex-number :realpart realpart
+                           :imagpart imagpart)))
