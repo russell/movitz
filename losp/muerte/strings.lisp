@@ -21,6 +21,9 @@
 
 (in-package muerte)
 
+(deftype string-designator ()
+  '(or string symbol character))
+
 (defun string= (string1 string2 &key (start1 0) end1 (start2 0) end2)
   (setf string1 (string string1)
 	end1 (or end1 (length string1))
@@ -56,7 +59,9 @@
     (string name)
     (symbol (symbol-name name))
     (character (make-string 1 :initial-element name))
-    (t (error "Not a string designator: ~S" name))))
+    (t (error 'type-error
+              :datum name
+              :expected-type 'string-designator))))
 	    
 (defun make-string (size &key initial-element (element-type 'character))
   (if (not initial-element)
