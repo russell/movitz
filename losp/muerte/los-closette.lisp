@@ -986,6 +986,7 @@ next-emf as its target for call-next-method."
 (defclass unbound-value (t) () (:metaclass built-in-class))
 
 (defclass stream () ())
+(defclass readtable () ())
 
 ;;;
 
