@@ -22,6 +22,17 @@
 
 ;;;
 
+(defun number-double-dispatch-error (x y)
+  (when (not (typep x 'number))
+    (error 'type-error
+           :datum x
+           :expected-type 'number))
+  (when (not (typep y 'number))
+    (error 'type-error
+           :datum y
+           :expected-type 'number))
+  (error "Operation not implemented for numbers ~S and ~S." x y))
+
 (defmacro number-double-dispatch ((x y) &rest clauses)
   `(let ((x ,x) (y ,y))
      (cond ,@(mapcar (lambda (clause)
@@ -30,7 +41,7 @@
 			 `((and (typep x ',x-type) (typep y ',y-type))
 			   ,@then-body)))
 		     clauses)
-	   (t (error "Not numbers or not implemented: ~S or ~S." x y)))))
+	   (t (number-double-dispatch-error x y)))))
 
 
 (define-compiler-macro evenp (x)
