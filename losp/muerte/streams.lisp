@@ -129,3 +129,46 @@ destination, and then returns."
       (simple-stream
        (%finish-output stream)))))
 
+(defclass string-stream (stream) ())
+
+(defun make-string-input-stream (string &optional (start 0) (end nil))
+  )
+
+(defun make-string-output-stream ())
+
+
+(defclass broadcast-stream (stream)
+  ((streams
+    :reader concatenated-stream-streams
+    :initarg :streams)))
+
+(defclass concatenated-stream (stream)
+  ((streams
+    :reader concatenated-stream-streams
+    :initarg :streams)))
+
+(defclass echo-stream (stream)
+  ((input-stream
+    :reader echo-stream-input-stream
+    :initarg :input-stream)
+   (output-stream
+    :reader echo-stream-output-stream
+    :initarg :output-stream)))
+
+(defclass file-stream (stream)
+  ())
+
+(defclass synonym-stream (stream)
+  ((symbol
+    :initarg :symbol
+    :reader synonym-stream-symbol)))
+
+(defclass two-way-stream (stream)
+  ((input
+    :initarg :input
+    :reader two-way-stream-input-stream)
+   (output
+    :initarg :output
+    :reader two-way-stream-output-stream)))
+
+
