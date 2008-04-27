@@ -50,6 +50,10 @@
      :sxhash sxhash
      :count 0)))
 
+(defun hash-table-size (hash-table)
+  (values (truncate (length (hash-table-bucket hash-table))
+		    2)))
+
 (defun hash-table-iterator (bucket index)
   (when index
     (let ((index (check-the (index 2) index)))
