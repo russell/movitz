@@ -80,7 +80,7 @@ Cons cell is in EBX, which is preserved."
 
 (define-primitive-function fast-cdr-ebx ()
   "This is the actual CDR code.
-Cons cell is in EBX, which is preserved."
+Cons cell is in EBX, which is preserved. Result in EAX."
   (with-inline-assembly (:returns :eax)
     (:leal (:ebx -1) :ecx)
     (:testb 3 :cl)
