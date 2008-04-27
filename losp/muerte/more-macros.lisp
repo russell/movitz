@@ -580,4 +580,9 @@ respect to multiple threads."
   (declare (ignore ignore))
   'compiler-macro
   name)
-  
+
+(defmacro movitz-macroexpand (&rest args)
+  `(macroexpand ,@args))
+
+(defmacro movitz-macroexpand-1 (&rest args)
+  `(macroexpand-1 ,@args))
