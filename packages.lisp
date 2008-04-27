@@ -1236,6 +1236,10 @@
 	   #:parse-docstring-declarations-and-body
            #:parse-macro-lambda-list
 	   #:compute-function-block-name
+	   #:movitz-macroexpand
+	   #:movitz-macroexpand-1
+	   #:decode-optional-formal
+	   #:decode-keyword-formal
 	   
 	   #:movitz-accessor
 	   #:%object-lispval
@@ -1395,6 +1399,10 @@
                 muerte::parse-macro-lambda-list
 		muerte::unfold-circular-list
 		muerte::compute-function-block-name
+		muerte::movitz-macroexpand
+		muerte::movitz-macroexpand-1
+		muerte::decode-optional-formal
+		muerte::decode-keyword-formal
 		))
 
 
