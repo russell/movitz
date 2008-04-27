@@ -659,6 +659,33 @@
 		     :test (if test-not
 			       (complement test-not)
 			     test)))
+
+(defun set-exclusive-or (list-1 list-2 &key (key 'identity) (test 'eql) test-not)
+  (union (set-difference list-1 list-2
+			 :key key
+			 :test test
+			 :test-not test-not)
+	 (set-difference list-2 list-1
+			 :key key
+			 :test test
+			 :test-not test-not)
+	 :key key
+	 :test test
+	 :test-not test-not))
+
+(defun nset-exclusive-or (list-1 list-2 &key (key 'identity) (test 'eql) test-not)
+  (nunion (nset-difference list-1 list-2
+			   :key key
+			   :test test
+			   :test-not test-not)
+	  (nset-difference list-2 list-1
+			   :key key
+			   :test test
+			   :test-not test-not)
+	 :key key
+	 :test test
+	 :test-not test-not))
+
   
 (defun subsetp (list-1 list-2 &key (key 'identity) (test 'eql) test-not)
   "=> generalized-boolean"
