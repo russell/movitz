@@ -992,7 +992,8 @@ where zot is not in foo's scope, but _is_ in foo's extent."
 	      :top-level-p top-level-p
 	      :form body)
 	  (compiler-values ()))
-      (when (member :compile-toplevel situations)
+      (when (and (member :compile-toplevel situations)
+		 top-level-p)
 	(with-compilation-unit ()
 	  (dolist (toplevel-form (translate-program body :muerte.cl :cl
 						    :when :eval
