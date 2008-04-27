@@ -237,13 +237,6 @@ integer (native lisp) value."
   (print-unreadable-object (x stream)
     (format stream "MOVITZ-CHARACTER: ~S" (movitz-char x))))
 
-(defun movitz-eql (x y)
-  (if (and (typep x 'movitz-immediate-object)
-	   (typep y 'movitz-immediate-object))
-      (= (movitz-immediate-value x)
-	 (movitz-immediate-value y))
-    (eq x y)))
-
 ;;; Code element
 
 (define-binary-class movitz-code (movitz-immediate-object)
