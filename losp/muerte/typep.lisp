@@ -601,6 +601,8 @@
 			   (or (eq xdim '*) (eql xdim adim)))
 			 dimension-spec
 			 (array-dimensions x)))))))
+(defun bit-vector-p (x)
+  (typep x 'bit-vector))
 
 (defun arrayp (x)
   (typep x 'array))      
