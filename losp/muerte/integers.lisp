@@ -309,14 +309,23 @@
 
 (define-number-relational /= /=%2op nil :defun-p nil)
 
-(defun /= (&rest numbers)
-  (declare (dynamic-extent numbers))
-  (do ((p (cdr numbers) (cdr p)))
-      ((null p) t)
-    (do ((v numbers (cdr v)))
-	((eq p v))
-      (when (= (car p) (car v))
-	(return-from /= nil)))))
+(defun /= (first-number &rest more-numbers)
+  (numargs-case
+   (1 (x)
+      (declare (ignore x))
+      t)
+   (2 (x y)
+      (/=%2op x y))
+   (t (first-number &rest more-numbers)
+      (declare (dynamic-extent more-numbers))
+      (dolist (y more-numbers)
+	(when (= first-number y)
+	  (return nil)))
+      (do ((p more-numbers (cdr p)))
+	  ((null p) t)
+	(dolist (q (cdr p))
+	  (when (= (car p) q)
+	    (return nil)))))))
 
 
 ;;;;
