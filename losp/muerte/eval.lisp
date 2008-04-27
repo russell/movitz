@@ -214,7 +214,7 @@
                   (push x r)))))
          (ignore-env-var
           (when (not env-var)
-            (gensym))))
+            (gensym "ignore-env-"))))
     (values destructuring-lambda-list
             whole-var
             (or env-var
@@ -276,9 +276,7 @@ second the list of declaration-specifiers, third any docstring."
 					     :whole-p nil)))))
   name)
 
-
-
-(defun parse-optional-formal (formal)
+(defun decode-optional-formal (formal)
   "3.4.1.2 Specifiers for optional parameters.
 Parse {var | (var [init-form [supplied-p-parameter]])}
 Return the variable, init-form, and suplied-p-parameter."
@@ -286,7 +284,7 @@ Return the variable, init-form, and suplied-p-parameter."
     (symbol (values formal nil nil))
     (cons (values (first formal) (second formal) (third formal)))))
 
-(defun parse-keyword-formal (formal)
+(defun decode-keyword-formal (formal)
   "3.4.1.4 Specifiers for keyword parameters.
 Parse {var | ({var | (keyword-name var)} [init-form [supplied-p-parameter]])}
 Return the variable, keyword, init-fom, and supplied-p-parameter."
@@ -345,7 +343,7 @@ Return the variable, keyword, init-fom, and supplied-p-parameter."
 			   env))
 		    (&optional
 		     (multiple-value-bind (var init-form supplied-p-parameter)
-			 (parse-optional-formal p)
+			 (decode-optional-formal p)
 		       (when supplied-p-parameter
 			 (push (cons supplied-p-parameter
 				     (not (null values)))
@@ -359,7 +357,7 @@ Return the variable, keyword, init-fom, and supplied-p-parameter."
 			   env))
 		    (&key
 		     (multiple-value-bind (var key init-form supplied-p-parameter)
-			 (parse-keyword-formal p)
+			 (decode-keyword-formal p)
 		       (let* ((x (member key values :test #'eq))
 			      (present-p (not (null x)))
 			      (value (if present-p
