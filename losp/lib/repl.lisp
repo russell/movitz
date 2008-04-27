@@ -98,8 +98,9 @@
 		 (restart
 		  (invoke-restart-interactively restart))
 		 ((not (keywordp form))
-		  (multiple-value-call #'process-expresion
-		    form previous-package t (eval form)))
+		  (let ((- form))
+		    (multiple-value-call #'process-expresion
+		      form previous-package t (eval form))))
 		 (t (multiple-value-call #'process-expresion
 		      form previous-package nil
 		      (apply 'muerte.toplevel:invoke-toplevel-command

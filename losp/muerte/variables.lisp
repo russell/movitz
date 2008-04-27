@@ -30,6 +30,7 @@
 (defvar // nil)
 (defvar /// nil)
 
+(defvar - nil)
 (defvar + nil)
 (defvar ++ nil)
 (defvar +++ nil)
