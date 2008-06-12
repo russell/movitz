@@ -166,8 +166,8 @@
 
 (defun format-ethernet-packet (packet source destination type &key (start 0) (source-start 0)
 								   (destination-start 0))
-  (setf (ether-source packet start source-start) source
-	(ether-destination packet start destination-start) destination
+  (setf (ether-source packet start :source-start source-start) source
+	(ether-destination packet start :destination-start destination-start) destination
 	(ether-type packet start) type)
   packet)
 
