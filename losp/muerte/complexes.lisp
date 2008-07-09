@@ -18,7 +18,8 @@
 (provide :muerte/complexes)
 
 (defstruct (complex (:constructor make-complex-number)
-		    (:conc-name #:||))
+		    (:conc-name #:||)
+		    (:predicate complexp))
   realpart
   imagpart)
 
