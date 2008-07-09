@@ -586,3 +586,8 @@ respect to multiple threads."
 
 (defmacro movitz-macroexpand-1 (&rest args)
   `(macroexpand-1 ,@args))
+
+(defmacro/run-time defun (name lambda-list &body body)
+  `(setf (symbol-function ',name)
+	 (install-funobj-name ',name
+			      (lambda ,lambda-list ,@body))))
