@@ -37,6 +37,7 @@
 
 (defvar *read-base* 10)
 (defvar *read-eval* t)
+(defvar *read-suppress* nil)
 (defvar *package* nil)
 
 (defvar *macroexpand-hook* 'funcall)
