@@ -90,7 +90,7 @@
       `(compiled-cond (,test-form ,then-form) (t ,else-form))
     `(compiled-cond (,test-form ,then-form))))
 
-(defmacro throw (tag result-form)
+(defmacro/cross-compilation throw (tag result-form)
   (let ((tag-var (gensym "throw-tag-")))
     `(let ((,tag-var ,tag))
        (exact-throw (find-catch-tag ,tag-var)
