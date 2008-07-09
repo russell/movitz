@@ -117,11 +117,12 @@
 
 (defun cos (x)
   "http://mathworld.wolfram.com/Cosine.html"
-  (do* ((rad (mod x 44/7))
-        (n2 0 (+ n2 2))
+  (do* ((rad2 (expt (mod x 44/7) 2))
+	(n2 0 (+ n2 2))
+	(rad-n2 1 (* rad-n2 rad2))
         (sign 1 (- sign))
         (denominator 1 (* denominator (1- n2) n2))
-        (term 1 (/ (expt rad n2)
+        (term 1 (/ rad-n2
                    denominator))
         (sum 1 (+ sum (* sign term))))
        ((<= term 1/100)
