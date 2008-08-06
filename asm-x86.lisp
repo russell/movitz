@@ -2029,6 +2029,11 @@
 (define-operator* (:16 :pushfw :32 :pushfl :64 :pushfr) ()
   (opcode #x9c))
 
+;;;;;;;;;;; RDMSR
+
+(define-operator/none :rdmsr ()
+  (opcode #x0f32))
+
 ;;;;;;;;;;; RDTSC
 
 (define-operator/none :rdtsc ()
