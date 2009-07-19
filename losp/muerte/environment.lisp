@@ -189,4 +189,7 @@
 
 (defstruct random-state state)
 
+(defvar *random-state* #s(random-state :state 0))
 
+(defmethod documentation (x doc-type)
+  nil)
