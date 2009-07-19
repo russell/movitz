@@ -17,8 +17,7 @@
 
 (provide :muerte/complexes)
 
-(defstruct (complex (:constructor make-complex-number)
-		    (:conc-name #:||)
+(defstruct (complex (:constructor make-complex (realpart imagpart))
 		    (:predicate complexp))
   realpart
   imagpart)
@@ -28,5 +27,23 @@
   (check-type imagpart real)
   (if (= 0 imagpart)
       realpart
-      (make-complex-number :realpart realpart
-                           :imagpart imagpart)))
+      (make-complex realpart imagpart)))
+
+(defmethod print-object ((x complex) stream)
+  (format stream "#c(~W ~W)"
+          (complex-realpart x)
+          (complex-imagpart x)))
+
+(defun realpart (x)
+  (etypecase x
+    (complex
+     (complex-realpart x))
+    (real
+     x)))
+
+(defun imagpart (x)
+  (etypecase x
+    (complex
+     (complex-imagpart x))
+    (real
+     0)))
