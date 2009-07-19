@@ -79,6 +79,8 @@
 			 (compiled-function
 			  (funobj-name edx))
 			 (t '(unknown)))))
+;;     (when los0::*funbound-counter*
+;;       (incf (gethash function-name los0::*funbound-counter* 0)))
     (with-simple-restart (continue "Return NIL from ~S." function-name)
       (error 'undefined-function-call
 	     :name function-name
@@ -92,7 +94,13 @@
   (with-inline-assembly (:returns :untagged-fixnum-ecx)
     (:xorl :ecx :ecx)
     (:compile-form (:result-mode :eax) funobj)
-    (:movb (:eax #.(bt::slot-offset 'movitz:movitz-funobj 'movitz:funobj-type)) :cl)))
+    (:movb (:eax (:offset movitz-funobj funobj-type)) :cl)))
+
+(defun (setf funobj-type) (type funobj)
+  (check-type funobj function)
+  (with-inline-assembly (:returns :untagged-fixnum-ecx)
+    (:compile-two-forms (:eax :untagged-fixnum-ecx) funobj type)
+    (:movb :cl (:eax (:offset movitz-funobj funobj-type)))))
 
 (defun funobj-code-vector (funobj)
   (check-type funobj function)
@@ -490,4 +498,16 @@ so that we can be reasonably sure of dst's size."
 
 (defun fmakunbound (function-name)
   (setf (fdefinition function-name)
-    (load-global-constant unbound-function)))
+    (load-global-constant unbound-function))
+  function-name)
+
+(defun make-macro-function (expander name)
+  "From a regular function, such as a (lambda (form env) ...), make a bona fide macro-function."
+  (let ((macro-function (install-funobj-name name
+                                             (lambda (&edx edx &optional form env (first-extra nil extras-p) &rest more-extras)
+                                               (declare (ignore first-extra more-extras))
+                                               (verify-macroexpand-call edx name extras-p)
+                                               (funcall expander form env)))))
+    (setf (funobj-type macro-function)
+          #.(bt:enum-value 'movitz::movitz-funobj-type :macro-function))
+    macro-function))
