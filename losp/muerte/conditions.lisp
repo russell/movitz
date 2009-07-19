@@ -179,7 +179,7 @@
     :initarg :argument-count
     :reader condition-argument-count))
   (:report (lambda (c s)
-	     (format s "Function ~S ~:A received ~D arguments."
+	     (format s "Function ~S ~:A received ~:[an incorrect number of~;~:*~D~] arguments."
 		     (funobj-name (condition-function c))
 		     (funobj-lambda-list (condition-function c))
 		     (condition-argument-count c)))))
