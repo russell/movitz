@@ -270,8 +270,8 @@ from regular function-calls."
 	  (:subl :esp :ecx)
 	  (:shrl 2 :ecx)
 	  ;; Encode ECX
-	  (:testb :cl :cl)
-	  (:jns 'ecx-ok)
+          (:testl #xffffff80 :ecx)
+	  (:jz 'ecx-ok)
 	  (:shll 8 :ecx)
 	  (:movb #xff :cl)
 	 ecx-ok
