@@ -15,7 +15,7 @@
 
 (provide :muerte/defmacro-runtime)
 
-(defmacro defmacro (name lambda-list &body macro-body)
+(defmacro/cross-compilation defmacro (name lambda-list &body macro-body)
   `(progn
      (defmacro/run-time ,name ,lambda-list ,@macro-body)
      (defmacro/compile-time ,name ,lambda-list ,macro-body)
