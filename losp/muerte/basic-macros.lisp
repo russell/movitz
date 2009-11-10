@@ -375,6 +375,19 @@
 		`(compiled-case ,keyform ,@clauses))))))
     (t `(compiled-case ,keyform ,@clauses))))
 
+(defmacro ecase (keyform &rest clauses) 	 
+  (let ((ecase-var (gensym))) 	 
+    `(let ((,ecase-var ,keyform)) 	 
+       (case ,ecase-var 	 
+	 ,@clauses 	 
+	 (t (ecase-error ,ecase-var 	 
+			 ',(mapcan (lambda (clause) 	 
+				     (let ((x (car clause))) 	 
+				       (if (atom x) 	 
+					   (list x) 	 
+					   (copy-list x)))) 	 
+				   clauses)))))))
+
 (define-compiler-macro asm-register (register-name)
   (if (member register-name '(:eax :ebx :ecx :untagged-fixnum-ecx :edx))
       `(with-inline-assembly (:returns ,register-name) ())
