@@ -73,7 +73,7 @@
     (loop for x on list as i upfrom 0
 	as cdr-index = (find-cdr list (cdr x) i)
 	until cdr-index
-	finally (return (values (subseq list 0 (1+ i))
+	finally (return (values (loop repeat (1+ i) collect (pop list))
 				cdr-index)))))
 
 (defun symbol-package-fix-cl (symbol)
